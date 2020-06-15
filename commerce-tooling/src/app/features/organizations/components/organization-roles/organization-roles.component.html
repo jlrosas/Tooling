@@ -1,0 +1,61 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+
+<form [formGroup]="rolesForm" autocomplete="off" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<div class="bx--row hc-paper-section">
+				<div class="select-group-content bx--col-lg-6">
+					<div class="hc-type-text">
+						{{'ORGANIZATIONS.SELECT_ROLES' | translate}}
+					</div>
+					<mat-form-field appearance="outline">
+						<mat-label>{{'ORGANIZATIONS.AVAILABLE_ROLES'| translate}}</mat-label>
+						<input matInput id="availableRoles"
+								#availableRolesInput
+								formControlName="availableRoles"
+								[matChipInputFor]="assignedRolesList"
+								placeholder="{{'ORGANIZATIONS.SELECT_ROLE_PLACEHOLDER' | translate}}"
+								[matAutocomplete]="availableRolesAutocomplete">
+						<mat-autocomplete #availableRolesAutocomplete="matAutocomplete" (optionSelected)="selectRole($event.option.value)">
+							<mat-option *ngFor="let role of filteredAvailableRoleList" [value]="role">
+								{{role.content}}
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+				</div>
+				<div class="select-group-content bx--col-lg-5">
+					<div class="hc-type-label">{{'ORGANIZATIONS.SELECTED_ROLES'| translate}}</div>
+					<div class="hc-chip-list-section">
+						<span *ngIf="!assignedRoles.length">{{'GENERAL.NO_SELECTION_MADE'| translate}}</span>
+						<mat-chip-list #assignedRolesList>
+							<mat-chip *ngFor="let assignedRole of assignedRoles" [selectable]="false"
+									[removable]="true" (removed)="removeRole(assignedRole)">
+									{{assignedRole.roleName}}
+								<mat-icon matChipRemove>cancel</mat-icon>
+							</mat-chip>
+						</mat-chip-list>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" type="button" matStepperPrevious *ngIf="mode === 'create'">{{'ORGANIZATIONS.BACK' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" matStepperNext *ngIf="mode === 'create'">{{'ORGANIZATIONS.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'ORGANIZATIONS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

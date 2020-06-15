@@ -1,0 +1,73 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'STORE_PREVIEW.PREVIEW_SETTINGS' | translate}}</h4>
+<mat-dialog-content>
+	<form [formGroup]="previewSettingsForm" autocomplete="off">
+		<mat-form-field appearance="outline" class="store-url">
+			<mat-label>{{'STORE_PREVIEW.STORE_URL'| translate}}</mat-label>
+			<input matInput formControlName="storeURL">
+		</mat-form-field>
+	
+		<div class="row-layout">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'STORE_PREVIEW.PREVIEW_DATE'| translate}}</mat-label>
+				<input matInput [matDatepicker]="previewDatePicker"
+						placeholder="{{'STORE_PREVIEW.PREVIEW_DATE_PLACEHOLDER'| translate}}"
+						formControlName="previewDate">
+				<mat-datepicker-toggle *ngIf="!previewDate.value" matSuffix [for]="previewDatePicker"></mat-datepicker-toggle>
+				<mat-datepicker #previewDatePicker></mat-datepicker>
+				<button *ngIf="previewDate.value" matTooltip="{{'STORE_PREVIEW.CLEAR' | translate}}" matSuffix mat-icon-button
+						(click)="previewDate.setValue(null)">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'STORE_PREVIEW.PREVIEW_TIME'| translate}}</mat-label>
+				<input matInput formControlName="previewTime"
+						placeholder="{{'STORE_PREVIEW.PREVIEW_TIME_PLACEHOLDER'| translate}}">
+				<button *ngIf="previewTime.value" matTooltip="{{'STORE_PREVIEW.CLEAR' | translate}}" matSuffix mat-icon-button
+						(click)="previewTime.setValue('')">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+		</div>
+		<mat-slide-toggle color="primary" formControlName="isTimeElapsing">
+			<span *ngIf="!isTimeElapsing.value">{{'STORE_PREVIEW.TIME_ELAPSE_OFF' | translate}}</span>
+			<span *ngIf="isTimeElapsing.value">{{'STORE_PREVIEW.TIME_ELAPSE_ON' | translate}}</span>
+		</mat-slide-toggle>
+		<div class="hc-type-label">
+			{{'STORE_PREVIEW.CUSTOMER_SEGMENTS' | translate}}
+		</div>
+		<div class="customer-segment-selected-row" >
+			<div class="customer-segment-selected" *ngIf="showSetting && selectedCustomerSegmentList.length > 0">
+				<li *ngFor="let custSegment of selectedCustomerSegmentList" class="customer-segment-list">{{custSegment.displayName ? custSegment.displayName.value : custSegment.id}}</li>
+			</div>
+			<div class="customer-segment" *ngIf="!showSetting">
+				<cdk-virtual-scroll-viewport itemSize="25" class="customer-segment-viewport">
+					<div *cdkVirtualFor="let custSegment of customerSegmentList" class="customer-segment-item">
+						<mat-checkbox [checked]="custSegment.isChecked" (change)="changeCustomerSegment(custSegment, $event)">
+							{{custSegment.displayName ? custSegment.displayName.value : custSegment.id}}
+						</mat-checkbox>
+					</div>
+				</cdk-virtual-scroll-viewport>
+			</div>
+			<div>
+				<button class="mat-flat-button" type="button" *ngIf="showSetting" (click)="showSetting=false">{{'STORE_PREVIEW.SELECT_CUSTOMER_SEGMENTS' | translate}}</button>
+				<button class="mat-flat-button" type="button" *ngIf="!showSetting" (click)="showSetting=true">{{'STORE_PREVIEW.BACK' | translate}}</button>
+			</div>
+		</div>
+	</form>
+</mat-dialog-content>
+<mat-dialog-actions>
+	<button class="mat-flat-button" (click)="cancel()">{{'STORE_PREVIEW.CANCEL' | translate}}</button>
+	<button class="mat-flat-button mat-primary secondbtn" (click)="applySettings()">{{'STORE_PREVIEW.APPLY_SETTINGS' | translate}}</button>
+</mat-dialog-actions>

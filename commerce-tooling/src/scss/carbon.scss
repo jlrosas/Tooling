@@ -1,0 +1,22 @@
+/*
+ *-------------------------------------------------------------------
+ * Licensed Materials - Property of HCL Technologies
+ *
+ * HCL Commerce
+ *
+ * (C) Copyright HCL Technologies Limited 1996, 2020
+
+ *-------------------------------------------------------------------
+ */
+ 
+$feature-flags: (
+);
+
+@import '~carbon-components/scss/globals/scss/vendor/@carbon/elements/scss/themes/theme-maps';
+// $carbon--theme: $carbon--theme--g100;
+// $carbon--theme: $carbon--theme--g90;
+$carbon--theme: $carbon--theme--g10;
+
+$field-01: #f4f7fb;
+$disabled-01: #f4f7fb;
+@import "~carbon-components/scss/globals/scss/styles";

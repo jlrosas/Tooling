@@ -1,0 +1,34 @@
+.mat-icon {
+    vertical-align: middle;
+    color: map-get($hc-color-blue, 100);
+
+    &.stop-icon,
+    &.failed-status,
+    &.rejected-status {
+        color: map-get($hc-color, red);
+    }
+
+    &.pending-status {
+        color: map-get($hc-color, orange);
+    }
+
+    &.archived-status,
+    &.approved-status {
+        color: map-get($hc-color, green);
+    }
+}
+
+.approved-status,
+.rejected-status,
+.pending-status,
+.failed-status,
+.archived-status {
+	font-size: 12px;
+	height: 12px;
+	width: 12px;
+	margin-right: 2px;
+}
+
+.mat-step-icon .mat-icon {
+    color: white;
+}

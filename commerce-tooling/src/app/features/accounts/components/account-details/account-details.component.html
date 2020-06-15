@@ -1,0 +1,80 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="detailsForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+
+			<mat-form-field appearance="outline">
+				<mat-label>{{'ACCOUNTS.ORGANIZATION' | translate}}</mat-label>
+				<input matInput id="organization"
+							#organizationInput
+							formControlName="organization"
+							[matAutocomplete]="organizationAutoComplete"
+							(input)="searchOrganizations($event.target.value)"
+							placeholder="{{'ACCOUNTS.FIND_ORGANIZATION' | translate}}"
+							required>
+				<mat-autocomplete #organizationAutoComplete="matAutocomplete" (optionSelected)="selectOrganization($event.option.value)">
+					<mat-option *ngFor="let org of organizationList" [value]="org">
+						{{org.organizationName}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="organization.errors && organization.errors.invalidOrganization">
+					{{'ACCOUNTS.INVALID_ORGANIZATION' | translate }}
+				</mat-error>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline">
+				<mat-label>{{'ACCOUNTS.CONTACT' | translate}} {{'ACCOUNTS.OPTIONAL' | translate}}</mat-label>
+				<input matInput id="contact"
+							#contactInput
+							formControlName="contact"
+							[matAutocomplete]="contactAutoComplete"
+							(input)="searchUsers($event.target.value)"
+							placeholder="{{'ACCOUNTS.FIND_CONTACT' | translate}}">
+				<mat-autocomplete #contactAutoComplete="matAutocomplete" (optionSelected)="selectContact($event.option.value)">
+					<mat-option *ngFor="let user of userList" [value]="user">
+						{{user.logonId}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="contact.errors && contact.errors.invalidContact">
+					{{'ACCOUNTS.INVALID_CONTACT' | translate }}
+				</mat-error>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" class="textarea">
+				<mat-label>{{'ACCOUNTS.CONTACT_INFORMATION'| translate}} {{'ACCOUNTS.OPTIONAL' | translate}}</mat-label>
+				<textarea matInput id="contactInformation" rows="4" formControlName="contactInformation" (input)="validateContactInformation()"></textarea>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" class="textarea">
+				<mat-label>{{'ACCOUNTS.COMMENTS'| translate}} {{'ACCOUNTS.OPTIONAL' | translate}}</mat-label>
+				<textarea matInput id="comment" rows="4" formControlName="comment" (input)="validateComments()"></textarea>
+			</mat-form-field>
+
+			<mat-checkbox formControlName="allowDefaultContract" (change)="changeAllowDefaultContract($event)">
+				{{'ACCOUNTS.ALLOW_DEFAULT_CONTRACT' | translate}}
+			</mat-checkbox>
+
+			<mat-checkbox formControlName="baseContractAccount" (change)="changeBaseContractAccount($event)">
+				{{'ACCOUNTS.BASE_CONTRACT_ACCOUNT' | translate}}
+			</mat-checkbox>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button mat-primary" type="button" (click)="next()" *ngIf="mode === 'create'">{{'ACCOUNTS.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'ACCOUNTS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

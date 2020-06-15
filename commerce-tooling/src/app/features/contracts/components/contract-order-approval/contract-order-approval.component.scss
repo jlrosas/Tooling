@@ -1,0 +1,24 @@
+/*
+ *-------------------------------------------------------------------
+ * Licensed Materials - Property of HCL Technologies
+ *
+ * HCL Commerce
+ *
+ * (C) Copyright HCL Technologies Limited 1996, 2020
+
+ *-------------------------------------------------------------------
+ */
+.contract-order-approvalMinimumValue,
+.contract-order-approvalCurrency {
+    display: inline-block;
+}
+
+.contract-order-approvalMinimumValue {
+    width: 250px;
+}
+
+.contract-order-approvalCurrency {
+    width: 134px;
+    margin-top: 0;
+    margin-left: 16px;
+}

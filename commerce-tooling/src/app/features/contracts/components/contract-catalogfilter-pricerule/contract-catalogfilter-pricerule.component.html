@@ -1,0 +1,68 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="filterPriceForm" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<mat-form-field appearance="outline" class="icon-suffix">
+				<mat-label>{{'CONTRACTS.CATALOG_FILTER'| translate}}</mat-label>
+				<input matInput id="catalogFilter" #catalogFilterInput
+						formControlName="catalogFilter"
+						[matAutocomplete]="catalogFilterAutocomplete"
+						(input)="searchCatalogFilters($event.target.value)"
+						placeholder="{{'CONTRACTS.FIND_CATALOG_FILTER' | translate}}">
+				<mat-autocomplete #catalogFilterAutocomplete="matAutocomplete" (optionSelected)="selectCatalogFilter($event.option.value)">
+					<mat-option *ngFor="let catalogFilter of catalogFilterList" [value]="catalogFilter">
+						{{catalogFilter.name}}
+					</mat-option>
+                </mat-autocomplete>
+				<mat-icon matSuffix>search</mat-icon>
+				<span class="filter-clear" *ngIf="catalogFilter.value" (click)="clearCatalogFilterSearch()">
+					<mat-icon>clear</mat-icon>
+					<span class="clear-margin">{{'CONTRACTS.CLEAR' | translate}}</span>
+				</span>
+				<mat-error *ngIf="catalogFilter.errors && catalogFilter.errors.invalidCatalogFilter">
+					{{'CONTRACTS.INVALID_CATALOG_FILTER' | translate }}
+				</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="icon-suffix">
+				<mat-label>{{'CONTRACTS.PRICE_RULE'| translate}}</mat-label>
+				<input matInput id="priceRule"
+						formControlName="priceRule"
+						[matAutocomplete]="priceRuleAutocomplete"
+						(input)="searchPriceRules($event.target.value)"
+						placeholder="{{'CONTRACTS.FIND_PRICE_RULE' | translate}}">
+				<mat-autocomplete #priceRuleAutocomplete="matAutocomplete" (optionSelected)="selectPriceRule($event.option.value)">
+					<mat-option *ngFor="let priceRule of priceRuleList" [value]="priceRule">
+						{{priceRule.name}} - {{priceRule.storeName}}
+					</mat-option>
+                </mat-autocomplete>
+                <mat-icon matSuffix>search</mat-icon>
+				<span class="filter-clear" *ngIf="priceRule.value" (click)="clearPriceRuleSearch()">
+					<mat-icon>clear</mat-icon>
+					<span class="clear-margin">{{'CONTRACTS.CLEAR' | translate}}</span>
+				</span>
+				<mat-error *ngIf="priceRule.errors && priceRule.errors.invalidPriceRule">
+					{{'CONTRACTS.INVALID_PRICE_RULE' | translate }}
+				</mat-error>
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" matStepperPrevious *ngIf="mode === 'create'">{{'CONTRACTS.BACK' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="next()" *ngIf="mode === 'create'">{{'CONTRACTS.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'CONTRACTS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

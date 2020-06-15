@@ -1,0 +1,21 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'EXTENDED_SITES.DELETE_EXTENDED_SITE' | translate}}</h4>
+
+<form [formGroup]="deleteExtendedSiteForm" autocomplete="off">
+	<mat-label>{{'EXTENDED_SITES.DELETE_EXTENDED_SITE_CONFIRMATION'| translate: {name: extendedSiteName} }}</mat-label>
+</form>
+
+<mat-dialog-actions>
+	<button type="button" class="mat-flat-button" type="button" (click)="cancel()">{{'EXTENDED_SITES.CANCEL' | translate}}</button>
+	<button type="button" class="mat-flat-button mat-primary"(click)="deleteExtendedSite()">{{'EXTENDED_SITES.DELETE' | translate}}</button>
+</mat-dialog-actions>

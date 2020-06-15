@@ -1,0 +1,56 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+    <h1 class="hc-type-h1">
+        {{'CONTRACTS.CONTRACTS' | translate}}
+    </h1>
+	<div class="hc-stepper-section hc-paper">
+		<div class="hc-stepper-actions">
+            <h2 class="hc-type-h2">
+				{{'CONTRACTS.NEW_CONTRACT' | translate}}
+			</h2>
+			<div class="action-buttons">
+                <button class="mat-flat-button" type="button" (click)="cancel()">{{'CONTRACTS.CANCEL' | translate}}</button>
+                <button class="mat-flat-button mat-primary" type="button" (click)="submit()">{{'CONTRACTS.FINISH' | translate}}</button>
+			</div>
+		</div>
+        <mat-vertical-stepper [linear]="true" #stepper>
+            <ng-template matStepperIcon="edit">
+                <mat-icon>check</mat-icon>
+            </ng-template>
+            <mat-step #detailsStep label="{{'CONTRACTS.DETAILS' | translate}}">
+                <hc-contract-details [stepper]="stepper" [step]="detailsStep" mode="create">
+                </hc-contract-details>
+            </mat-step>
+            <mat-step optional #participantsStep label="{{'CONTRACTS.PARTICIPANTS' | translate}}  {{'CONTRACTS.OPTIONAL' | translate}}">
+                <hc-contract-participants *ngIf="stepper.selected === participantsStep" [stepper]="stepper" [step]="participantsStep" mode="create">
+                </hc-contract-participants>
+            </mat-step>
+            <mat-step optional #filterPriceStep label="{{'CONTRACTS.CATALOGFILTER_PRICERULE' | translate}} {{'CONTRACTS.OPTIONAL' | translate}}">
+                <hc-contract-filter-price *ngIf="stepper.selected === filterPriceStep" [stepper]="stepper" [step]="filterPriceStep" mode="create">
+                </hc-contract-filter-price>
+            </mat-step>
+            <mat-step optional #paymentBillingStep label="{{'CONTRACTS.PAYMENTS_BILLING' | translate}} {{'CONTRACTS.OPTIONAL' | translate}}">
+                <hc-contract-payment-billing *ngIf="stepper.selected === paymentBillingStep" [step]="paymentBillingStep" mode="create">
+                </hc-contract-payment-billing>
+            </mat-step>
+            <mat-step optional #shippingStep label="{{'CONTRACTS.SHIPPING' | translate}} {{'CONTRACTS.OPTIONAL' | translate}}">
+                <hc-contract-shipping *ngIf="stepper.selected === shippingStep" [step]="shippingStep" mode="create">
+                </hc-contract-shipping>
+            </mat-step>
+            <mat-step optional #orderApprovalStep label="{{'CONTRACTS.ORDER_APPROVAL' | translate}} {{'CONTRACTS.OPTIONAL' | translate}}">
+                <hc-contract-order-approval *ngIf="stepper.selected === orderApprovalStep" [step]="orderApprovalStep" mode="create" (save)="submit()">
+                </hc-contract-order-approval>
+            </mat-step>
+        </mat-vertical-stepper>
+    </div>
+</div>

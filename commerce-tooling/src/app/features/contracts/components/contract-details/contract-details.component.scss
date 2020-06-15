@@ -1,0 +1,28 @@
+/*
+ *-------------------------------------------------------------------
+ * Licensed Materials - Property of HCL Technologies
+ *
+ * HCL Commerce
+ *
+ * (C) Copyright HCL Technologies Limited 1996, 2020
+
+ *-------------------------------------------------------------------
+ */
+ 
+.datepicker-section {
+	width: 192px;
+	margin-top: 16px;
+	display: inline-block;
+
+	&:first-child {
+		margin-right: 16px;
+	}
+
+	mat-form-field {
+		margin-top: 8px;
+	}
+
+	.mat-form-field-appearance-outline {
+		max-width: 100%;
+	}
+}

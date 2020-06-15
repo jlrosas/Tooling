@@ -1,0 +1,90 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="accountForm" autocomplete="off" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-6 bx--col-lg-4">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.LOGIN_ID'| translate}}</mat-label>
+				<input matInput #logonIdInput id="logonId" formControlName="logonId" (input)="validateLogonId()" required autocomplete="off">
+				<mat-error *ngIf="logonId.errors && logonId.errors.duplicateLoginId">
+					{{'USER_MANAGEMENT.LOGONID_ERROR' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.EMAIL'| translate}}</mat-label>
+				<input matInput #emailInput id="email" formControlName="email1" (input)="validateEmail()" required autocomplete="off">
+				<mat-error *ngIf="email1.errors && email1.errors.email">
+					{{'USER_MANAGEMENT.EMAIL_ERROR' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field *ngIf="!passwordVisible" appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.PASSWORD'| translate}}</mat-label>
+				<input matInput type="password" id="password" formControlName="password" (input)="validatePassword()" [required]="mode==='create'" autocomplete="off">
+				<mat-icon matSuffix (click)="passwordVisible = !passwordVisible" class="action-icon">{{passwordVisible ? 'visibility' : 'visibility_off'}}</mat-icon>
+				<mat-error *ngIf="password.errors && password.errors.minlength">
+					{{'USER_MANAGEMENT.PASSWORD_ERROR' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field *ngIf="passwordVisible" appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.PASSWORD'| translate}}</mat-label>
+				<input matInput type="text" id="password" formControlName="password" (input)="validatePassword()" [required]="mode==='create'" autocomplete="off">
+				<mat-icon matSuffix (click)="passwordVisible = !passwordVisible" class="action-icon">{{passwordVisible ? 'visibility' : 'visibility_off'}}</mat-icon>
+				<mat-error *ngIf="password.errors && password.errors.minlength">
+					{{'USER_MANAGEMENT.PASSWORD_ERROR' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline"*ngIf="mode === 'create'">
+				<mat-label>{{'USER_MANAGEMENT.PARENT_ORGANIZATION'| translate}}</mat-label>
+				<input matInput id="parentOrganization"
+						formControlName="parentOrganization"
+						[matAutocomplete]="organizationAutoComplete"
+						(input)="searchParentOrganizations($event.target.value)"
+						required>
+				<mat-autocomplete #organizationAutoComplete="matAutocomplete" (optionSelected)="selectParentOrganization($event.option.value)">
+					<mat-option *ngFor="let org of organizationList" [value]="org">
+						{{org.organizationName}}
+					</mat-option>
+					<mat-option *ngIf="!organizationsLoading && organizationList && organizationList.length == 0" [value]="null">
+						{{'USER_MANAGEMENT.NO_MATCHING_RECORDS_FOUND' | translate }}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="parentOrganization.errors && parentOrganization.errors.invalidParentOrganization">
+					{{'ORGANIZATIONS.PARENT_ORGANIZATION_ERROR' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline" *ngIf="mode === 'edit'">
+				<mat-label>{{'ORGANIZATIONS.PARENT_ORGANIZATION'| translate}}</mat-label>
+				<input matInput id="parentOrganization" formControlName="parentOrganization">
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.ACCOUNT_POLICY'| translate}}</mat-label>
+				<mat-select	id="accountPolicy"
+						placeholder="{{'USER_MANAGEMENT.ACCOUNT_POLICY_PLACEHOLDER'| translate}}"
+						formControlName="policy"
+						(selectionChange)="selectAccountPolicy($event.value)"
+						required>
+					<mat-option *ngFor="let accountPolicy of accountPolicyList" [value]="accountPolicy">
+						{{accountPolicy.content}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button mat-primary" (click)="next()" *ngIf="mode === 'create'">{{'USER_MANAGEMENT.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'USER_MANAGEMENT.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

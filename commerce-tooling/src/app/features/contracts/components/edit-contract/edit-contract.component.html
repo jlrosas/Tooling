@@ -1,0 +1,56 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+    <h1 class="hc-type-h1">
+		{{'CONTRACTS.CONTRACTS' | translate}}
+	</h1>
+	<div class="hc-stepper-section hc-paper">
+		<div class="hc-stepper-actions">
+			<h2 class="hc-type-h2">
+				{{'CONTRACTS.EDIT_CONTRACT' | translate}}
+			</h2>
+			<div class="action-buttons">
+                <button class="mat-flat-button" type="button" (click)="cancel()">{{'CONTRACTS.CANCEL' | translate}}</button>
+                <button class="mat-flat-button mat-primary" (click)="save()">{{'CONTRACTS.SAVE' | translate}}</button>
+			</div>
+		</div>
+        <mat-vertical-stepper #stepper (selectionChange)="handleSelectionChange($event)">
+            <ng-template matStepperIcon="edit">
+                <mat-icon>check</mat-icon>
+            </ng-template>
+            <mat-step #detailsStep label="{{'CONTRACTS.CONTRACT_DETAILS' | translate}}">
+                <hc-contract-details [stepper]="stepper" [step]="detailsStep" mode="edit" (save)="save()">
+                </hc-contract-details>
+            </mat-step>
+            <mat-step #participantsStep label="{{'CONTRACTS.PARTICIPANTS' | translate}}">
+                <hc-contract-participants *ngIf="stepper.selected === participantsStep" [stepper]="stepper" [step]="participantsStep" mode="edit" (save)="save()">
+                </hc-contract-participants>
+            </mat-step>
+            <mat-step #filterPriceStep label="{{'CONTRACTS.CATALOGFILTER_PRICERULE' | translate}}">
+                <hc-contract-filter-price *ngIf="stepper.selected === filterPriceStep" [step]="filterPriceStep" mode="edit" (save)="save()">
+                </hc-contract-filter-price>
+            </mat-step>
+            <mat-step #paymentBillingStep label="{{'CONTRACTS.PAYMENTS_BILLING' | translate}}">
+                <hc-contract-payment-billing *ngIf="stepper.selected === paymentBillingStep" [step]="paymentBillingStep" mode="edit" (save)="save()">
+                </hc-contract-payment-billing>
+            </mat-step>
+            <mat-step #shippingStep label="{{'CONTRACTS.SHIPPING' | translate}}">
+                <hc-contract-shipping *ngIf="stepper.selected === shippingStep" [step]="shippingStep" mode="edit" (save)="save()">
+                </hc-contract-shipping>
+            </mat-step>
+            <mat-step #orderApprovalStep label="{{'CONTRACTS.ORDER_APPROVAL' | translate}}">
+                <hc-contract-order-approval *ngIf="stepper.selected === orderApprovalStep" [step]="orderApprovalStep" mode="edit" (save)="save()">
+                </hc-contract-order-approval>
+            </mat-step>
+        </mat-vertical-stepper>
+    </div>
+</div>

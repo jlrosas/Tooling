@@ -1,0 +1,41 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="paymentBillingForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<div class="hc-type-text">{{'ACCOUNTS.BILLING_ADDRESS_NOT_PREDEFINED' | translate}}</div>
+
+			<mat-checkbox #allowPersonalBillingAddressCheck formControlName="allowPersonalBillingAddress" (change)="changeAllowPersonalBillingAddress($event)">
+				{{'ACCOUNTS.PERSONAL_ADDRESS_BOOK' | translate}}
+			</mat-checkbox>
+		
+			<mat-checkbox formControlName="allowParentOrganizationBillingAddress" (change)="changeAllowParentOrganizationBillingAddress($event)">
+				{{'ACCOUNTS.PARENT_ORGANIZATION_ADDRESS_BOOK' | translate}}
+			</mat-checkbox>
+
+			<mat-checkbox formControlName="allowAccountOrganizationBillingAddress" (change)="changeAllowAccountOrganizationBillingAddress($event)">
+				{{'ACCOUNTS.BUSINESS_ORGANIZATION_ADDRESS_BOOK' | translate}}
+			</mat-checkbox>
+
+			<hc-account-payment-method-list mode="{{mode}}"></hc-account-payment-method-list>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" type="button" matStepperPrevious *ngIf="mode == 'create'">{{'ACCOUNTS.BACK'| translate}}</button>
+				<button #buttonInput class="mat-flat-button mat-primary" type="button" matStepperNext *ngIf="mode == 'create'">{{'ACCOUNTS.NEXT' | translate}}</button>
+				<button #buttonInput class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'edit'">{{'ACCOUNTS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

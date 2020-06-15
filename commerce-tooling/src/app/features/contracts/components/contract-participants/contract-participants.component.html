@@ -1,0 +1,110 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="participantsForm" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div class="bx--row hc-paper-section">
+                <div class="select-group-content bx--col-lg-6">
+                    <div>
+                        <div class="hc-type-label">
+                            {{'CONTRACTS.AVAILABLE_ORGANIZATIONS'| translate}}
+                        </div>
+                        <mat-form-field appearance="outline" class="icon-suffix">
+                            <mat-label>{{'CONTRACTS.SEARCH' | translate}}</mat-label>
+                            <input #organizationInput matInput 
+                                    id="searchText"
+                                    placeholder="{{'CONTRACTS.SEARCH' | translate}}"
+                                    formControlName="orgSearchControl"  (input)="searchOrganizations($event.target.value)">
+                            <mat-icon matSuffix>filter_list</mat-icon>
+                            <span class="filter-clear" *ngIf="orgSearchControl.value" (click)="clearOrganizationSearch()">
+                                <mat-icon>clear</mat-icon>
+                                <span class="clear-margin">{{'CONTRACTS.CLEAR' | translate}}</span>
+                            </span>
+                        </mat-form-field>
+                        <mat-list>
+                            <mat-list-item *ngFor="let org of organizationList" class="list-content">
+                                <mat-checkbox (change)="onChangeOrganizationCheckbox(org, $event)" [checked]="isSelectedOrganization(org)">
+                                    {{org.organizationName}}
+                                </mat-checkbox>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                </div>
+                <div class="select-group-content bx--col-lg-5">
+                    <div class="hc-type-label">
+                        {{'CONTRACTS.SELECTED_ORGANIZATIONS'| translate}}
+                    </div>
+                    <div class="hc-chip-list-section">
+                        <span *ngIf="!selectedOrganizations.length">{{'GENERAL.NO_SELECTION_MADE'| translate}}</span>
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let org of selectedOrganizations" [selectable]="true"
+									[removable]="true" (removed)="removeSelectedOrganization(org)">
+								{{org.organizationName}}
+								<mat-icon matChipRemove>cancel</mat-icon>
+							</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </div>    
+            </div>
+            <div class="bx--row hc-paper-section">
+                <div class="select-group-content bx--col-lg-6">
+                    <div>
+                        <div class="hc-type-label">
+                            {{'CONTRACTS.AVAILABLE_MEMBER_GROUPS'| translate}}
+                        </div>
+                        <mat-form-field appearance="outline" class="icon-suffix">
+                            <mat-label>{{'CONTRACTS.SEARCH' | translate}}</mat-label>
+                            <input matInput 
+                                    id="searchText"
+                                    placeholder="{{'CONTRACTS.SEARCH' | translate}}"
+                                    formControlName="memberGroupSearchControl" (input)="searchMemberGroups($event.target.value)">
+                            <mat-icon matSuffix>filter_list</mat-icon>
+                            <span class="filter-clear"*ngIf="memberGroupSearchControl.value" (click)="clearMemberGroupSearch()">
+                                <mat-icon>clear</mat-icon>
+                                <span class="clear-margin">{{'CONTRACTS.CLEAR' | translate}}</span>
+                            </span>
+                        </mat-form-field>
+                        <mat-list>
+							<mat-list-item *ngFor="let group of memberGroupList" class="list-content multi-line">
+								<mat-checkbox (change)="onChangeMemberGroupCheckbox(group, $event)" [checked]="isSelectedMemberGroup(group)">
+									{{group.name}} - {{group.organizationName}}
+								</mat-checkbox>
+							</mat-list-item>
+                        </mat-list>
+                    </div>
+                </div>
+                <div class="select-group-content bx--col-lg-5">
+                    <div class="hc-type-label">{{'CONTRACTS.SELECTED_MEMBER_GROUPS'| translate}}</div>
+                    <div class="hc-chip-list-section">
+                        <span *ngIf="!selectedMemberGroups.length">{{'GENERAL.NO_SELECTION_MADE'| translate}}</span>
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let group of selectedMemberGroups" [selectable]="true"
+									[removable]="true" (removed)="removeSelecteGroup(group)">
+								{{group.memberGroupName}} - {{group.organizationName}}
+								<mat-icon matChipRemove>cancel</mat-icon>
+							</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </div>    
+            </div>
+		</div>
+	</div>
+	<div class="selected-elements bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" matStepperPrevious *ngIf="mode === 'create'">{{'CONTRACTS.BACK' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" matStepperNext *ngIf="mode === 'create'">{{'CONTRACTS.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'CONTRACTS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

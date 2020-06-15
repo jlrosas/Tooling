@@ -1,0 +1,6 @@
+@mixin hc-transition($property, $duration) {
+    -moz-transition:    $property $duration cubic-bezier(.36,.67,.91,.76);
+    -o-transition:      $property $duration cubic-bezier(.36,.67,.91,.76);
+    -webkit-transition: $property $duration cubic-bezier(.36,.67,.91,.76);
+    transition:         $property $duration cubic-bezier(.36,.67,.91,.76);
+}

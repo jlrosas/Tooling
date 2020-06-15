@@ -1,0 +1,25 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'CONTRACTS.COPY_CONTRACT' | translate}}</h4>
+<form [formGroup]="copyContractForm" autocomplete="off">
+
+	<mat-form-field appearance="outline">
+		<mat-label>{{'CONTRACTS.NEW_CONTRACT_NAME'| translate}}</mat-label>
+		<input #nameInput matInput id="name" formControlName="name" required>
+	</mat-form-field>
+
+	<mat-dialog-actions>
+		<button class="mat-raised-button" type="button" (click)="cancel()">{{'CONTRACTS.CANCEL' | translate}}</button>
+		<button class="mat-raised-button mat-primary" type="button" (click)="copyContract()">{{'CONTRACTS.COPY' | translate}}</button>
+	</mat-dialog-actions>
+</form>
+

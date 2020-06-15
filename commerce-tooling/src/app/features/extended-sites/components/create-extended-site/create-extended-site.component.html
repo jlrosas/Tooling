@@ -1,0 +1,40 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'EXTENDED_SITES.STORES' | translate}}
+	</h1>
+	<div class="hc-stepper-section hc-paper">
+		<div class="hc-stepper-actions">
+			<h2 class="hc-type-h2">
+				{{'EXTENDED_SITES.NEW_STORE' | translate}}
+			</h2>
+			<div>
+				<button type="button" class="mat-flat-button" type="button" (click)="cancel()">{{'EXTENDED_SITES.CANCEL' | translate}}</button>
+				<button type="button" class="mat-flat-button mat-primary" (click)="submit()">{{'EXTENDED_SITES.FINISH' | translate}}</button>
+			</div>
+		</div>
+		<mat-vertical-stepper [linear]="true" #stepper>
+			<ng-template matStepperIcon="edit">
+				<mat-icon>check</mat-icon>
+			</ng-template>
+			<mat-step #detailsStep label="{{'EXTENDED_SITES.STORE_DETAILS' | translate}}">
+				<hc-extended-site-details [stepper]="stepper" [step]="detailsStep">
+				</hc-extended-site-details>
+			</mat-step>
+			<mat-step #setupStep label="{{'EXTENDED_SITES.SETUP' | translate}}">
+				<hc-extended-site-setup *ngIf="stepper.selected === setupStep" [step]="setupStep" (save)="submit()">
+				</hc-extended-site-setup>
+			</mat-step>
+		</mat-vertical-stepper>
+	</div>
+</div>

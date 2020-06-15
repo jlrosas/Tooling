@@ -1,0 +1,52 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'ACCOUNTS.ACCOUNTS' | translate}}
+	</h1>
+	<div class="hc-stepper-section hc-paper">
+		<div class="hc-stepper-actions">
+			<h2 class="hc-type-h2">
+				{{'ACCOUNTS.EDIT_ACCOUNT' | translate}}
+			</h2>
+			<div>
+				<button class="mat-flat-button" type="button" (click)="cancel()">{{'ACCOUNTS.CANCEL' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="save()">{{'ACCOUNTS.SAVE' | translate}}</button>
+			</div>
+		</div>
+		<mat-vertical-stepper #stepper (selectionChange)="handleSelectionChange($event)">
+			<ng-template matStepperIcon="edit">
+				<mat-icon>check</mat-icon>
+			</ng-template>
+			<mat-step #detailsStep label="{{'ACCOUNTS.ACCOUNT_DETAILS' | translate}}">
+				<hc-account-details [stepper]="stepper" [step]="detailsStep" mode="edit" (save)="save()">
+				</hc-account-details>
+			</mat-step>
+			<mat-step #purchaseOrderStep label="{{'ACCOUNTS.PURCHASE_ORDER' | translate}}">
+				<hc-account-purchase-order *ngIf="stepper.selected === purchaseOrderStep" [step]="purchaseOrderStep" mode="edit" (save)="save()">
+				</hc-account-purchase-order>
+			</mat-step>
+			<mat-step #creditLineStep label="{{'ACCOUNTS.CREDIT_LINE' | translate}}">
+				<hc-account-credit-line *ngIf="stepper.selected === creditLineStep" [stepper]="stepper" [step]="creditLineStep" mode="edit" (save)="save()">
+				</hc-account-credit-line>
+			</mat-step>
+			<mat-step #paymentBillingStep label="{{'ACCOUNTS.PAYMENT_AND_BILLING' | translate}}">
+				<hc-account-payment-billing *ngIf="stepper.selected === paymentBillingStep" [step]="paymentBillingStep" mode="edit" (save)="save()">
+				</hc-account-payment-billing>
+			</mat-step>
+			<mat-step #shippingStep label="{{'ACCOUNTS.SHIPPING' | translate}}">
+				<hc-account-shipping *ngIf="stepper.selected === shippingStep" [step]="shippingStep" mode="edit" (save)="save()">
+				</hc-account-shipping>
+			</mat-step>
+		</mat-vertical-stepper>
+	</div>
+</div>

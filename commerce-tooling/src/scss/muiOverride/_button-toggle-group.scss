@@ -1,0 +1,44 @@
+.mat-button-toggle-group {
+    margin: spacing(1.5) 0;
+    border-radius: map-get($hc-toggle, borderRadius);
+    border: 1px solid map-get($hc-color-grey, border);
+    height: map-get($hc-toggle, height);
+    box-shadow: none;
+    position: relative;
+    margin-left: -1px;
+
+    .mat-button-toggle-button {
+        height: map-get($hc-toggle, height);
+    }
+
+    .mat-button-toggle-label-content {
+        top: -3px;
+        padding: 0 10px;
+    }
+
+    .mat-button-toggle {
+        background: map-get($hc-color-grey, light20);
+        border-right: 1px solid map-get($hc-color-grey, border);
+
+        &:hover {
+            background: map-get($hc-color-blue, 10);
+        }
+
+        &:last-child {
+            border: 0;
+        }
+
+        .mat-icon {
+            color: map-get($hc-color-grey, dark10);
+            font-size: spacing(2.5);
+        }
+
+        &.mat-button-toggle-checked {
+            background: map-get($hc-color-blue, 30);
+
+            .mat-icon {
+                color: white;
+            }
+        }
+    }
+}

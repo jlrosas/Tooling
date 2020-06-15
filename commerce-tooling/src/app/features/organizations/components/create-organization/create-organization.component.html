@@ -1,0 +1,52 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'ORGANIZATIONS.ORGANIZATIONS' | translate}}
+	</h1>
+	<div class="hc-stepper-section hc-paper">
+		<div class="hc-stepper-actions">
+			<h2 class="hc-type-h2">
+				{{'ORGANIZATIONS.NEW_ORGANIZATION' | translate}}
+			</h2>
+			<div>
+				<button class="mat-flat-button" (click)="cancel()">{{'ORGANIZATIONS.CANCEL' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="submit()">{{'ORGANIZATIONS.FINISH' | translate}}</button>
+			</div>
+		</div>
+		<mat-vertical-stepper [linear]="true" #stepper>
+			<ng-template matStepperIcon="edit">
+				<mat-icon>check</mat-icon>
+			</ng-template>
+			<mat-step #detailsStep label="{{'ORGANIZATIONS.ORGANIZATION_DETAILS' | translate}}">
+				<hc-organization-details [stepper]="stepper" [step]="detailsStep" mode="create">
+				</hc-organization-details>
+			</mat-step>
+			<mat-step #contactStep label="{{'ORGANIZATIONS.CONTACT_INFORMATION' | translate}}">
+				<hc-organization-contact *ngIf="stepper.selected === contactStep" [stepper]="stepper" [step]="contactStep" mode="create" (save)="submit()">
+				</hc-organization-contact>
+			</mat-step>
+			<mat-step *hcRole="[-1,-20,-21,-27]" #rolesStep label="{{'ORGANIZATIONS.ROLES' | translate}} {{'ORGANIZATIONS.OPTIONAL' | translate}}">
+				<hc-organization-roles *ngIf="stepper.selected === rolesStep" [step]="rolesStep" mode="create">
+				</hc-organization-roles>
+	        </mat-step>
+	        <mat-step *hcRole="[-1,-20,-21,-27]" #approvalsStep label="{{'ORGANIZATIONS.APPROVALS' | translate}} {{'ORGANIZATIONS.OPTIONAL' | translate}}">
+				<hc-organization-approvals *ngIf="stepper.selected === approvalsStep" [step]="approvalsStep" mode="create" (save)="submit()">
+				</hc-organization-approvals>
+	        </mat-step>
+	        <mat-step *hcRole="[-1]" #groupsStep label="{{'ORGANIZATIONS.GROUPS' | translate}} {{'ORGANIZATIONS.OPTIONAL' | translate}}">
+				<hc-organization-groups *ngIf="stepper.selected === groupsStep" [step]="groupsStep" mode="create" (save)="submit()">
+				</hc-organization-groups>
+			</mat-step>
+		</mat-vertical-stepper>
+	</div>
+</div>

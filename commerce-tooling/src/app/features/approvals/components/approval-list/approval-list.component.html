@@ -1,0 +1,184 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'APPROVALS.APPROVALS' | translate}}
+	</h1>
+	<div class="hc-table-section hc-paper">
+		<!-- Search,Filter part(start) -->
+		<div class="hc-table-actions">
+			<form [formGroup]="listSearchForm" autocomplete="off">
+				<mat-form-field appearance="outline" class="icon-suffix">
+					<mat-label>{{'APPROVALS.SEARCH' | translate}}</mat-label>
+					<input matInput (input)="searchApprovals($event.target.value)"
+							placeholder="{{'APPROVALS.SEARCH_BY_REQUESTOR' | translate}}"
+							formControlName="searchText" >
+					<mat-icon matSuffix>search</mat-icon>
+					<span class="filter-clear" *ngIf="currentSearchString != null" (click)="clearSearch()">
+						<mat-icon>clear</mat-icon>
+						<span class="clear-margin">{{'APPROVALS.CLEAR' | translate}}</span>
+					</span>
+				</mat-form-field>
+			</form>
+			<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'APPROVALS.SHOW_FILTERS' | translate}}</mat-slide-toggle>
+			<button matTooltip="{{'APPROVALS.REFRESH' | translate}}" mat-icon-button (click)="refresh()">
+				<mat-icon color="primary">refresh</mat-icon>
+			</button>
+		</div>
+		<div *ngIf="showFilters">
+			<div class="hc-table-filters">
+				<form [formGroup]="listFilterForm" autocomplete="off">
+					<mat-form-field appearance="outline" *hcRole="[-1]" class="icon-suffix">
+						<mat-label>{{'APPROVALS.APPROVER_FILTER'| translate}}</mat-label>
+						<input matInput id="approver" placeholder="{{'APPROVALS.SELECT_APPROVER_PLACEHOLDER'| translate}}"
+								formControlName="approver" (input)="searchApprovers($event.target.value)"
+								[matAutocomplete]="approverAutocomplete">
+						<mat-autocomplete #approverAutocomplete="matAutocomplete" (optionSelected)="selectApprover($event.option.value)">
+							<mat-option *ngFor="let approver of approverList" [value]="approver">
+								{{approver.displayName}}
+							</mat-option>
+						</mat-autocomplete>
+						<mat-icon matSuffix>filter_list</mat-icon>
+						<span class="filter-clear" *ngIf="approverId != null" (click)="clearApprover()">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'APPROVALS.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+					<mat-form-field appearance="outline">
+						<mat-label>{{'APPROVALS.PROCESS_FILTER'| translate}}</mat-label>
+						<mat-select id="processSelect" placeholder="{{'APPROVALS.SELECT_PROCESS_PLACEHOLDER'| translate}}"
+								formControlName="processSelect"
+								(selectionChange)="selectProcess($event.value)">
+							<mat-option *ngFor="let index of processTextIndices" [value]="index">
+								{{processTextKeys[index] | translate}}
+							 </mat-option>
+						</mat-select>
+						<span class="filter-clear" *ngIf="processFilter != null" (click)="clearProcess($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'APPROVALS.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+					<mat-form-field appearance="outline">
+						<mat-label>{{'APPROVALS.STATUS_FILTER'| translate}}</mat-label>
+						<mat-select id="statusSelect" placeholder="{{'APPROVALS.SELECT_STATUS_PLACEHOLDER'| translate}}"
+							   formControlName="statusSelect"
+							   (selectionChange)="selectStatus($event.value)">
+							<mat-option *ngFor="let index of statusTextIndices" [value]="index">
+								{{statusTextKeys[index] | translate}}
+							</mat-option>
+						</mat-select>
+						<span class="filter-clear" *ngIf="statusFilter != null" (click)="clearStatus($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'APPROVALS.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+					<mat-form-field appearance="outline" title="{{'APPROVALS.SUBMIT_START_DATE_FILTER'| translate}}">
+						<mat-label>{{'APPROVALS.SUBMIT_START_DATE_FILTER'| translate}}</mat-label>
+						<input matInput [matDatepicker]="picker1" [matDatepickerFilter]="startDateFilter"
+								placeholder="{{'APPROVALS.SUBMIT_START_DATE_PLACEHOLDER'| translate}}"
+								formControlName="submitStartText"
+								(dateInput)="selectSubmitStart($event.value)" (dateChange)="selectSubmitStart($event.value)">
+						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+						<mat-datepicker #picker1></mat-datepicker>
+						<span class="filter-clear" *ngIf="submitStartFilter != null" (click)="clearSubmitStart()">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'APPROVALS.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+					<mat-form-field appearance="outline" title="{{'APPROVALS.SUBMIT_END_DATE_FILTER'| translate}}">
+						<mat-label>{{'APPROVALS.SUBMIT_END_DATE_FILTER'| translate}}</mat-label>
+						<input matInput [matDatepicker]="picker2" [matDatepickerFilter]="endDateFilter"
+								placeholder="{{'APPROVALS.SUBMIT_END_DATE_PLACEHOLDER'| translate}}"
+								formControlName="submitEndText"
+								(dateInput)="selectSubmitEnd($event.value)" (dateChange)="selectSubmitEnd($event.value)">
+						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+						<mat-datepicker #picker2></mat-datepicker>
+						<span class="filter-clear" *ngIf="submitEndFilter != null" (click)="clearSubmitEnd()">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'APPROVALS.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+				</form>
+			</div>
+		</div>
+		<!-- TABLE PART (START) -->	
+		<div class="hc-table-wrapper">
+			<table mat-table [dataSource]="model" matSort matSortActive="{{activeColumn}}" matSortDirection="{{sortDirection}}">
+
+				<ng-container matColumnDef="requestor" sticky>
+					<th mat-header-cell *matHeaderCellDef mat-sort-header="submitterLogonId">{{'APPROVALS.REQUESTOR' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						<a [routerLink]="['/approvals/approval-summary', row.id]">{{row.requestor}}</a>
+					</td>
+				</ng-container>
+	
+				<ng-container matColumnDef="entityId">
+					<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.ENTITY_ID' | translate}}</th>
+					<td mat-cell *matCellDef="let row">{{row.entityId}}</td>
+				</ng-container>
+	
+				<ng-container matColumnDef="approver">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header="approverLogonId">{{'APPROVALS.APPROVER' | translate}}</th>
+					<td mat-cell *matCellDef="let row">{{row.approver}}</td>
+				</ng-container>
+	
+				<ng-container matColumnDef="process">
+					<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.PROCESS' | translate}}</th>
+					<td mat-cell *matCellDef="let row">{{row.processTextKey | translate}}</td>
+				</ng-container>
+	
+				<ng-container matColumnDef="status">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header start="desc">{{'APPROVALS.STATUS' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						<mat-icon class="pending-status" *ngIf="row.status == 0">brightness_1</mat-icon>
+						<mat-icon class="approved-status" *ngIf="row.status == 1">brightness_1</mat-icon>
+						<mat-icon class="rejected-status" *ngIf="row.status == 2">brightness_1</mat-icon>
+						{{row.statusTextKey | translate}}
+					</td>
+				</ng-container>
+	
+				<ng-container matColumnDef="lastUpdate">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+						{{'APPROVALS.LAST_UPDATED' | translate}}
+					</th>
+					<td mat-cell *matCellDef="let row">{{row.lastUpdate | date:'medium'}}</td>
+				</ng-container>
+	
+				<ng-container matColumnDef="actions" stickyEnd>
+					<th mat-header-cell *matHeaderCellDef> {{'APPROVALS.ACTIONS' | translate}} </th>
+					<td mat-cell *matCellDef="let element">
+						<div *ngIf="element.status === 0">
+							<button mat-icon-button 
+									matTooltip="{{'APPROVALS.APPROVE' | translate}}" matTooltipPosition="below"
+									(click)="openDialog(element.id, element.flowTypeId, 'Approve')">
+								<mat-icon class="green-icon">check_circle</mat-icon>
+							</button>
+							<button mat-icon-button
+									matTooltip="{{'APPROVALS.REJECT' | translate}}" matTooltipPosition="below"
+									(click)="openDialog(element.id, element.flowTypeId, 'Reject')">
+								<mat-icon class="red-icon">highlight_off</mat-icon>
+							</button>
+						</div>
+					</td>
+				</ng-container>
+	
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+		</div>
+		<!-- TABLE PART (END) -->
+
+		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+			(page)="handlePage($event)">
+		</mat-paginator>
+	</div>
+</div>

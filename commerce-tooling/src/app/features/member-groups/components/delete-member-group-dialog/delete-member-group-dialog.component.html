@@ -1,0 +1,21 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'MEMBER_GROUPS.DELETE_MEMBER_GROUP' | translate}}</h4>
+
+<form [formGroup]="deleteMemberGroupForm" autocomplete="off">
+	<mat-label>{{'MEMBER_GROUPS.DELETE_MEMBER_GROUP_CONFIRMATION'| translate: {name: memberGroupName} }}</mat-label>
+</form>
+
+<mat-dialog-actions>
+	<button class="mat-flat-button" type="button" (click)="cancel()">{{'MEMBER_GROUPS.CANCEL' | translate}}</button>
+	<button class="mat-flat-button mat-primary"(click)="deleteMemberGroup()">{{'MEMBER_GROUPS.DELETE' | translate}}</button>
+</mat-dialog-actions>

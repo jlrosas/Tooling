@@ -1,0 +1,302 @@
+.mat-form-field-appearance-outline {
+    min-width: map-get($hc-input, width);
+    border: 0;
+    
+    .mat-form-field-outline {
+        border: 1px solid map-get($hc-color-grey, border);
+        border-radius: map-get($hc-input, borderRadius);
+        top: 0;
+        z-index: zIndex(input-button-outline);
+
+        > div {
+            display: none;
+        }
+    }
+
+    // Hover State
+	&:not(.mat-form-field-invalid, .mat-form-field-disabled):hover {
+        cursor: pointer;
+
+        .mat-form-field-label {
+            color: map-get($hc-color-grey, dark);
+        }
+
+        .mat-form-field-outline {
+            border-color: map-get($hc-color-grey, dark);
+            border-width: 2px;
+        }
+
+        &.mat-focused {
+            .mat-form-field-label {
+                color: map-get($hc-color-blue, 100);
+            }
+        }
+    }
+
+    // Focused State
+    &.mat-focused {
+        .mat-form-field-outline {
+            border-color: map-get($hc-color-blue, 100);
+            border-width: 2px;
+        }
+    }
+
+    // Error State
+    &.mat-form-field-invalid {
+        .mat-form-field-label {
+            color: map-get($hc-color, red);
+        }
+        .mat-form-field-outline {
+            border-color: map-get($hc-color, red);
+        }
+    }
+
+    // Disabled State
+    &.mat-form-field-disabled {
+        color: map-get($hc-color-grey, dark);
+        background: map-get($hc-color-grey, light20);
+
+        .mat-form-field-label,
+        .mat-input-element {
+            color: map-get($hc-color-grey, border);
+            background: none;
+        }
+        
+        .mat-form-field-outline {
+            border: 1px solid map-get($hc-color-grey, light);
+        }
+
+        &:hover {
+            .mat-form-field-outline {
+                border: 1px solid map-get($hc-color-grey, light);
+            }
+        }
+    }
+
+    .mat-form-field-flex {
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .mat-form-field-wrapper {
+        margin: 0;
+        padding: 0;
+
+        .mat-form-field-flex {
+            .mat-form-field-suffix {
+                top: 50%;
+                transform: translateY(-50%);
+                position: absolute;
+                right: spacing(0.75);
+                height: map-get($hc-input, height) - spacing(1.5);
+                width: map-get($hc-input, height) - spacing(1.5);
+                line-height: map-get($hc-input, height) - spacing(1.5);
+                text-align: center;
+                border-radius: 50%;
+
+                &:hover {
+                    background: map-get($hc-color-blue, 10);
+
+                    .mat-icon {
+                        color: map-get($hc-color-blue, 100);
+                    }   
+                }
+
+                .mat-icon {
+                    display: block;
+                    height: 100%;
+                    width: 100%;
+                    line-height: map-get($hc-input, height) - spacing(1.5);
+                }
+
+                .mat-datepicker-toggle {
+                    button {
+                        height: 100%;
+                        width: 100%;
+                        top: 0;
+                        left: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    // Clear button
+	.filter-clear {
+        z-index: zIndex(clear-button);
+		font-size: 12px;
+		display: inline-block;
+		position: absolute;
+		top: 0;
+		right: spacing(1);
+		color: map-get($hc-color-blue, 100);
+		line-height: map-get($hc-input, height) - spacing(3);
+		cursor: pointer;
+		vertical-align: middle;
+		white-space: nowrap;
+		padding: 0 spacing(1);
+		margin: spacing(1.5) 0;
+        border-radius: spacing(2);
+        background: rgba(255, 255, 255, 0.6);
+		@include hc-transition(background, 250ms);
+		
+		&:hover {
+            color: map-get($hc-color-blue, dark);
+            background: map-get($hc-color-blue, 10);
+			
+			.mat-icon {
+                color: map-get($hc-color-blue, dark);
+			}
+        }
+        
+		.clear-margin {
+            vertical-align: middle;
+			display: inline;
+			font-size: 14px;
+		}
+        
+		.mat-icon {
+            font-size: 14px;
+            line-height: spacing(2);
+			height: spacing(2);
+			width: spacing(2);
+		}
+    }
+    
+    input[type=time] {
+        & ~ .filter-clear {
+            right: spacing(6);
+        }
+    }
+
+    mat-datepicker,
+    mat-select {
+        & ~ .filter-clear {
+            right: spacing(6);
+        }
+    }
+
+    &.icon-suffix .filter-clear {
+        right: spacing(6);
+    }
+
+    // Text Input area styling
+    .mat-input-element {
+        margin-top: 0;
+        padding: 0 spacing(1.5);
+    }
+    
+    // Label Styling
+    .mat-form-field-label-wrapper {
+        top: 0;
+        padding-top: 0;
+        overflow: visible;
+    }
+
+    .mat-form-field-label {
+        @include hc-type-text();
+        line-height: map-get($hc-input, height);
+        top: 0;
+        margin-top: 0;
+        padding-left: spacing(1.5);
+        color: map-get($hc-color-grey, dark20);
+        @include hc-transition(transform, 150ms);
+    }
+
+    .mat-form-field-required-marker {
+        display: none;
+    }
+
+    // Label Styling when input is filled
+    &.mat-form-field-can-float.mat-form-field-should-float {
+        .mat-form-field-label {
+            @include hc-type-small-text();
+            transform: translateY(spacing(1));
+            display: inline-block;
+            width: auto;
+            padding: 0 spacing(1);
+            margin-left: spacing(0.5);
+            line-height: spacing(2);
+            color: map-get($hc-color-grey, border);
+        }
+    }
+    
+    // Clear button styling
+    .mat-form-field-infix {
+        padding: 0;
+        border: 0;
+        width: auto;
+    }
+    
+    .mat-icon-button {
+        line-height: map-get($hc-input, height) - spacing(1.5);
+
+        .mat-icon {
+            vertical-align: baseline; 
+            line-height: map-get($hc-input, height) - spacing(1.5);
+        }
+    }
+
+   // Error messages
+   .mat-form-field-subscript-wrapper {
+       line-height: spacing(2);
+       bottom: spacing(-0.75);
+       padding: 0 spacing(0.75);
+       top: unset;
+       z-index: zIndex(input-button-message);
+
+       .mat-error {
+            display: inline-block;
+            color: map-get($hc-color, red);
+            background: white;
+            padding: 0 spacing(0.75);
+       }
+   }
+}
+
+.hc-form-field-small {
+    &.mat-form-field-appearance-outline {
+        .mat-form-field-wrapper {
+            .mat-form-field-flex {
+                .mat-form-field-suffix {
+                    right: spacing(0.75);
+                    height: map-get($hc-input, heightSmall) - spacing(1.5);
+                    width: map-get($hc-input, heightSmall) - spacing(1.5);
+                    line-height: map-get($hc-input, heightSmall) - spacing(1.5);
+    
+                    .mat-icon {
+                        line-height: map-get($hc-input, heightSmall) - spacing(1.5);
+                    }
+                }
+            }
+        }
+    
+        // Clear button
+        .filter-clear {
+            line-height: map-get($hc-input, heightSmall) - spacing(3);
+        }
+        
+        .mat-form-field-label {
+            @include hc-type-text();
+            line-height: map-get($hc-input, heightSmall);
+            padding-left: spacing(1.5);
+        }
+    
+        // Label Styling when input is filled
+        &.mat-form-field-can-float.mat-form-field-should-float {
+            .mat-form-field-label {
+                font-size: 12px;
+                transform: translateY(spacing(0.75));
+            }
+        }
+        
+        .mat-icon-button {
+            line-height: map-get($hc-input, heightSmall) - spacing(1.5);
+    
+            .mat-icon {
+                vertical-align: baseline; 
+                line-height: map-get($hc-input, heightSmall) - spacing(1.5);
+            }
+        }
+    }
+}

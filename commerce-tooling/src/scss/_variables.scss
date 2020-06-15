@@ -1,0 +1,56 @@
+$hc-breakpoints: (
+    xs : 0px,
+    sm : 700px,
+    md : 960px,
+    lg : 1280px,
+    xl : 1920px,
+);
+
+$hc-zIndexes: (
+    "clear-button",
+    "input-button-message",
+    "input-button-outline",
+);
+
+$hc-color: (
+    red : #C10C0D,
+    green: #04633D,
+    orange: #f7a053
+);
+
+$hc-color-blue: (
+    100 : #0066B3,
+    40 : #4696D2,
+    30 : #69B4E1,
+    10 : #d4e9f9,
+    dark : #1c4899
+);
+
+$hc-color-grey: (
+    dark : #4B4B4B,
+    dark10 : #848484,
+    dark20 : #676767,
+    light : #C6C6C6,
+    light20 : #f8f8f8,
+    background : #F2F4F5,
+    border: #93A2AD
+);
+
+$hc-button: (
+    height: 40px,
+    width: 100px,
+    borderRadius: 6px
+);
+
+$hc-input: (
+    height: 56px,
+    heightSmall: 48px,
+    width: 100px,
+    borderRadius: 3px
+);
+
+$hc-toggle: (
+    height: 48px,
+    width: 100px,
+    borderRadius: 3px
+);

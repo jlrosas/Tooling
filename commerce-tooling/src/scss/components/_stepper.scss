@@ -1,0 +1,108 @@
+.hc-stepper-section {
+	.mat-stepper-vertical-line {
+		&:before {
+			left: spacing(-1);
+			border-color: map-get($hc-color-blue, 100);
+			top: spacing(-1);
+			bottom: spacing(-1);
+		}
+	}
+	
+	.mat-vertical-stepper-header {
+		padding: spacing(2);
+	}
+
+	.mat-step-label {
+		@include hc-type-bold();
+		line-height: spacing(3);
+	}
+
+	mat-form-field {
+		width: 400px;
+		margin-top: spacing(2);
+
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+
+	.mat-vertical-stepper-content {
+		padding-top: spacing(1);
+	}
+
+	.form-text {
+		@include hc-type-label();
+		padding-bottom: spacing(2);
+		border-bottom: 1px solid map-get($hc-color-grey, border);
+		margin-bottom: spacing(2);
+	}
+
+	.mat-chip-input {
+		flex: none;
+		margin: 0;
+		width: 400px;
+	}
+
+	.mat-form-field-appearance-outline {
+		display: block;
+	}
+
+	.hc-table-section {
+		max-width: 800px;
+
+		&.hc-paper-section {
+			margin-top: spacing(2);
+			padding-bottom: 0;
+		}
+
+		.mat-flat-button.mat-primary {
+			margin: 0 spacing(2) spacing(2) spacing(2);
+			float: right;
+		}
+
+		.hc-table-wrapper {
+			width: 100%;
+			min-height: initial;
+		}
+	}
+}
+
+// Stepper Header area
+.hc-stepper-actions {
+	display: flex;
+	border-bottom: 1px solid map-get($hc-color-grey, border);
+	padding: spacing(2);
+	justify-content: space-between;
+	align-items: center;
+
+	.mat-flat-button {
+		margin-left: spacing(2);
+	}
+}
+
+// Step container
+.mat-vertical-content-container {
+	.mat-flat-button {
+		margin-right: spacing(2);
+		margin-top: spacing(2);
+	}
+}
+
+.mat-stepper-vertical,
+.mat-stepper-horizontal {
+	.footer-buttons {
+		text-align: left;
+	
+		button.mat-flat-button {
+			margin-right: spacing(2);
+		}
+	}
+	
+	.inside-footer {
+		margin: spacing(3) 0 spacing(4) spacing(2);
+	}
+}
+
+.select-group-content {
+	width: 100%;
+}

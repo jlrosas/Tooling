@@ -1,0 +1,86 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="contactForm" autocomplete="off" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-4">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.TITLE'| translate}} {{'USER_MANAGEMENT.OPTIONAL' | translate}}</mat-label>
+				<input matInput #titleInput id="personTitle" formControlName="personTitle" (input)="validatePersonTitle()" autocomplete="off">
+			</mat-form-field>
+			<mat-form-field appearance="outline" id="firstName">
+				<mat-label>{{'USER_MANAGEMENT.FIRST_NAME'| translate}} {{'USER_MANAGEMENT.OPTIONAL' | translate}}</mat-label>
+				<input #firstNameInput matInput id="firstName" formControlName="firstName" (input)="validateFirstName()" autocomplete="off">
+			</mat-form-field>
+			<mat-form-field appearance="outline" id="lastName" >
+				<mat-label>{{'USER_MANAGEMENT.LAST_NAME'| translate}}</mat-label>
+				<input matInput id="lastName" formControlName="lastName" (input)="validateLastName()" required autocomplete="off">
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.STREET_ADDRESS'| translate}}</mat-label>
+				<input matInput id="address1" formControlName="address1" (input)="validateAddress1()" required autocomplete="off">
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<input matInput id="address2" formControlName="address2" (input)="validateAddress2()" autocomplete="off">
+			</mat-form-field>
+
+			<mat-form-field appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.CITY'| translate}}</mat-label>
+				<input matInput id="city" formControlName="city" (input)="validateCity()" required autocomplete="off">
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.COUNTRY'| translate}}</mat-label>
+				<input matInput id="country"
+						formControlName="country"
+						[matAutocomplete]="countryAutoComplete"
+						(input)="validateCountry()"
+						required autocomplete="off">
+				<mat-autocomplete #countryAutoComplete="matAutocomplete" (optionSelected)="selectCountry($event.option.value)">
+					<mat-option *ngFor="let country of filteredCountryList" [value]="country">
+						{{country.name}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="country.errors && country.errors.invalidCountry">
+					{{'USER_MANAGEMENT.INVALID_COUNTRY' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.STATE_PROVINCE_REGION'| translate}}<span *ngIf="stateIsOptional" class="hc-type-optional-text"> {{'USER_MANAGEMENT.OPTIONAL' | translate}}</span></mat-label>
+				<input matInput id="state"
+						formControlName="state"
+						[matAutocomplete]="stateAutoComplete"
+						(input)="validateState()"
+						[required]="!stateIsOptional" autocomplete="off">
+				<mat-autocomplete #stateAutoComplete="matAutocomplete" (optionSelected)="selectState($event.option.value)">
+					<mat-option *ngFor="let state of filteredStateList" [value]="state">
+						{{state.name}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="state.errors && state.errors.invalidState">
+					{{'USER_MANAGEMENT.INVALID_STATE' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.ZIP_POSTAL_CODE'| translate}}</mat-label>
+				<input matInput id="zipCode" formControlName="zipCode" (input)="validateZipCode()" autocomplete="off" required>
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" type="button" matStepperPrevious *ngIf="mode === 'create'">{{'USER_MANAGEMENT.BACK' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="next()" *ngIf="mode === 'create'">{{'USER_MANAGEMENT.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'USER_MANAGEMENT.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

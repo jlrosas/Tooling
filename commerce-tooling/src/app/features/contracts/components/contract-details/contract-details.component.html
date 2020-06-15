@@ -1,0 +1,95 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="detailsForm" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-7">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'CONTRACTS.NAME'| translate}}</mat-label>
+				<input matInput #nameInput id="name" formControlName="name"
+						(input)="validateName()" autocomplete="off" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+				<mat-label>{{'CONTRACTS.DESCRIPTION'| translate}}</mat-label>
+				<input matInput #descriptionInput id="description" formControlName="description"
+						(input)="validateDescription()" autocomplete="off" required>
+            </mat-form-field>
+            <div>
+                <div class="datepicker-section">
+                    <mat-checkbox formControlName="startsImmediately" (change)="changeStartsImmediately($event)">
+                        {{'CONTRACTS.STARTS_IMMEDIATELY'| translate}}
+                    </mat-checkbox>
+                    <mat-form-field appearance="outline" title="{{'CONTRACTS.START_DATE'| translate}}">
+                        <mat-label>{{'CONTRACTS.START_DATE'| translate}}</mat-label>
+                        <input matInput [matDatepicker]="picker1"
+                                placeholder="{{'CONTRACTS.START_DATE'| translate}}"
+								formControlName="startDate"
+								[matDatepickerFilter]="startDateFilter"
+                                (dateInput)="selectStartDate($event.value)" (dateChange)="selectStartDate($event.value)"
+                                [required]="!startsImmediately.value">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <mat-error *ngIf="startDate.errors && startDate.errors.invalidStartDate">
+							{{'CONTRACTS.INVALID_START_DATE' | translate }}
+						</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="datepicker-section">
+                    <mat-checkbox formControlName="noExpiryDate" (change)="changeNoExpiryDate($event)">
+                        {{'CONTRACTS.NO_EXPIRY_DATE'| translate}}
+                    </mat-checkbox>
+                    <mat-form-field appearance="outline" title="{{'CONTRACTS.END_DATE'| translate}}">
+                        <mat-label>{{'CONTRACTS.END_DATE'| translate}}</mat-label>
+                        <input matInput [matDatepicker]="picker2"
+                                placeholder="{{'CONTRACTS.END_DATE'| translate}}"
+								formControlName="endDate"
+								[matDatepickerFilter]="endDateFilter"
+                                (dateInput)="selectEndDate($event.value)" (dateChange)="selectEndDate($event.value)"
+                                [required]="!noExpiryDate.value">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-error *ngIf="endDate.errors && endDate.errors.invalidEndDate">
+							{{'CONTRACTS.INVALID_END_DATE' | translate }}
+						</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'CONTRACTS.BASE_CONTRACT' | translate}}  {{'CONTRACTS.OPTIONAL' | translate}}</mat-label>
+				<input matInput id="baseContract"
+						formControlName="baseContract"
+						[matAutocomplete]="baseContractAutoComplete"
+						(input)="searchBaseContracts($event.target.value)"
+						placeholder="{{'CONTRACTS.FIND_BASE_CONTRACT' | translate}}">
+				<mat-autocomplete #baseContractAutoComplete="matAutocomplete" (optionSelected)="selectBaseContract($event.option.value)">
+					<mat-option *ngFor="let contract of baseContractList" [value]="contract">
+						{{contract.name}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="baseContract.errors && baseContract.errors.invalidBaseContract">
+					{{'CONTRACTS.INVALID_BASE_CONTRACT' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline" class="textarea">
+				<mat-label>{{'CONTRACTS.COMMENTS'| translate}} {{'CONTRACTS.OPTIONAL' | translate}}</mat-label>
+				<textarea matInput id="comment" rows="4" formControlName="comment" (input)="validateComments()"></textarea>
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button mat-primary" (click)="next()" *ngIf="mode === 'create'">{{'CONTRACTS.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'CONTRACTS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

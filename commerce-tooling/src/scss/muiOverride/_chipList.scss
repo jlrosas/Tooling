@@ -1,0 +1,22 @@
+mat-chip-list {
+    display: block;
+
+    .mat-chip-list-wrapper .mat-standard-chip {
+        height: auto;
+        line-height: 18px;
+    }
+}
+
+.hc-chip-list-section {
+    border-radius: map-get($hc-input, borderRadius);
+    border: 1px solid map-get($hc-color-grey, border);
+    padding: spacing(2) spacing(1);
+    background: white;
+    max-width: 400px;
+
+    span {
+        @include hc-type-small-text();
+        display: block;
+        margin-bottom: spacing(1);
+    }
+}

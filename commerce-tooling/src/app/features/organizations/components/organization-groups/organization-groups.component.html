@@ -1,0 +1,119 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="groupsForm" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<mat-tab-group animationDuration="0ms" dynamicHeight>
+				<mat-tab label="{{'ORGANIZATIONS.INCLUDE' | translate}}">
+					<div class="bx--row">
+						<div class="select-group-content bx--col-lg-6">
+							<div class="hc-type-text">
+								<span>{{'ORGANIZATIONS.SELECT_INCLUDE_GROUP'| translate}}</span>
+							</div>
+							<div>
+								<div class="hc-type-label">
+									{{'ORGANIZATIONS.AVAILABLE_GROUPS'| translate}}
+								</div>
+								<mat-form-field appearance="outline">
+									<mat-label>{{'ORGANIZATIONS.SEARCH' | translate}}</mat-label>
+									<input #searchTextIncludeInput matInput (input)="searchIncludeMemberGroups($event.target.value)"
+											id="searchTextInclude"
+											placeholder="{{'ORGANIZATIONS.SEARCH' | translate}}"
+											formControlName="searchTextInclude" >
+									<span class="filter-clear" *ngIf="currentSearchInclude != null && currentSearchInclude !=''" (click)="clearIncludeMemberGroupSearch()">
+										<mat-icon>clear</mat-icon>
+										<span class="clear-margin">{{'ORGANIZATIONS.CLEAR' | translate}}</span>
+									</span>
+								</mat-form-field>
+								<mat-list>
+									<mat-list-item *ngFor="let group of includeMemberGroupList">
+										<mat-checkbox (change)="onChangeCheckbox(group, '0', $event)" [checked]="isAssignedGroup(group, '0')">
+											{{group.name}} - {{group.organizationName}}
+										</mat-checkbox>
+									</mat-list-item>
+								</mat-list>
+							</div>
+						</div>
+						<div class="select-group-content bx--col-lg-5">
+							<div class="hc-type-label">{{'ORGANIZATIONS.SELECTED_GROUPS'| translate}}</div>
+							<div class="hc-chip-list-section">
+								<span *ngIf="!assignedIncludeMemberGroups.length">{{'GENERAL.NO_SELECTION_MADE'| translate}}</span>
+								<mat-chip-list>
+									<mat-chip *ngFor="let assignedMemberGroup of assignedIncludeMemberGroups" [selectable]="true"
+											[removable]="true" (removed)="removeAssignedMemberGroup(assignedMemberGroup)">
+											{{assignedMemberGroup.memberGroupName}} - {{assignedMemberGroup.organizationName}}
+										<mat-icon matChipRemove>cancel</mat-icon>
+									</mat-chip>
+								</mat-chip-list>
+							</div>
+						</div>
+					</div>
+				</mat-tab>
+				<mat-tab label="{{'ORGANIZATIONS.EXCLUDE' | translate}}">
+					<div class="bx--row">
+						<div class="select-group-content bx--col-lg-6">
+							<div class="hc-type-text">
+								<span>{{'ORGANIZATIONS.SELECT_EXCLUDE_GROUP'| translate}}</span>
+							</div>
+							<div>
+								<div class="hc-type-label">
+									{{'ORGANIZATIONS.AVAILABLE_GROUPS'| translate}}
+								</div>
+								<mat-form-field appearance="outline">
+									<mat-label>{{'ORGANIZATIONS.SEARCH' | translate}}</mat-label>
+									<input matInput (input)="searchExcludeMemberGroups($event.target.value)"
+											id="searchTextExclude"
+											placeholder="{{'ORGANIZATIONS.SEARCH' | translate}}"
+											formControlName="searchTextExclude" >
+									<span class="filter-clear" *ngIf="currentSearchExclude != null && currentSearchExclude !=''" (click)="clearExcludeMemberGroupSearch()">
+										<mat-icon>clear</mat-icon>
+										<span class="clear-margin">{{'ORGANIZATIONS.CLEAR' | translate}}</span>
+									</span>
+								</mat-form-field>
+								<mat-list>
+									<mat-list-item *ngFor="let group of excludeMemberGroupList">
+										<mat-checkbox (change)="onChangeCheckbox(group, '1', $event)" [checked]="isAssignedGroup(group, '1')">
+											{{group.name}} - {{group.organizationName}}
+										</mat-checkbox>
+									</mat-list-item>
+								</mat-list>
+							</div>
+						</div>
+						<div class="select-group-content bx--col-lg-5">
+							<div class="hc-type-label">{{'ORGANIZATIONS.SELECTED_GROUPS'| translate}}</div>
+							<div class="hc-chip-list-section">
+								<span *ngIf="!assignedExcludeMemberGroups.length">{{'GENERAL.NO_SELECTION_MADE'| translate}}</span>
+								<mat-chip-list>
+									<mat-chip *ngFor="let assignedMemberGroup of assignedExcludeMemberGroups" [selectable]="true"
+											[removable]="true" (removed)="removeAssignedMemberGroup(assignedMemberGroup)">
+											{{assignedMemberGroup.memberGroupName}} - {{assignedMemberGroup.organizationName}}
+										<mat-icon matChipRemove>cancel</mat-icon>
+									</mat-chip>
+								</mat-chip-list>
+							</div>
+						</div>
+					</div>
+				</mat-tab>
+			</mat-tab-group>
+		</div>
+	</div>
+
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" type="button" matStepperPrevious *ngIf="mode === 'create'">{{'ORGANIZATIONS.BACK' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()" *ngIf="mode === 'create'">{{'ORGANIZATIONS.FINISH' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'ORGANIZATIONS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

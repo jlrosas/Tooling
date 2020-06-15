@@ -1,0 +1,151 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="detailsForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+
+			<!--
+				Application type selection
+			-->
+            <mat-form-field *ngIf="mode === 'create'" appearance="outline">
+                <mat-label>{{'SCHEDULER.APPLICATION_TYPE'| translate}}</mat-label>
+                <mat-select id="applicationTypeSelect" placeholder="{{'SCHEDULER.APPLICATION_TYPE_PLACEHOLDER'| translate}}"
+                        formControlName="applicationTypeDropdown"
+                        (selectionChange)="selectApplicationType($event.value)" required>
+                    <mat-option *ngFor="let applicationType of applicationTypeList" [value]="applicationType">
+                        {{applicationType}}
+                     </mat-option>
+                </mat-select>
+			</mat-form-field>
+			<mat-form-field *ngIf="mode === 'edit'" appearance="outline">
+                <mat-label>{{'SCHEDULER.APPLICATION_TYPE'| translate}}</mat-label>
+                <input matInput id="applicationTypeSelect" formControlName="applicationTypeDropdown" readonly="readonly">
+			</mat-form-field>
+			
+			<!-- 
+				Store selection
+			-->
+			<mat-form-field *ngIf="mode === 'create' && applicationType!='broadcast'" appearance="outline">
+				<mat-label>{{'SCHEDULER.STORE'| translate}} {{'SCHEDULER.OPTIONAL' | translate}}</mat-label>
+				<input matInput id="store" (input)="searchStores($event.target.value)" placeholder="{{'SCHEDULER.SELECT_STORE_PLACEHOLDER'| translate}}"
+							formControlName="storeDropdown" [matAutocomplete]="storeAutocomplete">
+				<mat-autocomplete #storeAutocomplete="matAutocomplete" (optionSelected)="selectStore($event.option.value)">
+					<mat-option *ngFor="let store of storeList" [value]="store">
+						{{store.identifier}}
+					</mat-option>
+				</mat-autocomplete>
+				<span class="filter-clear" *ngIf="selectedStore !== 0" (click)="clearStore($event)">
+					<mat-icon>clear</mat-icon>
+					<span class="clear-margin">{{'SCHEDULER.CLEAR' | translate}}</span>
+				</span>
+				<mat-error *ngIf="storeDropdown.errors && storeDropdown.errors.invalidStore">
+					{{'SCHEDULER.INVALID_STORE' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field *ngIf="mode === 'edit' && selectedStore!=0 && applicationType!='broadcast'" appearance="outline">
+                <mat-label>{{'SCHEDULER.STORE'| translate}}</mat-label>
+                <input matInput id="store" formControlName="storeDropdown" readonly="readonly">
+			</mat-form-field>
+
+			<!--
+				Store command selection
+			-->
+            <mat-form-field *ngIf="mode === 'create' && selectedStore!=0 && applicationType!='broadcast'" appearance="outline">
+                <mat-label>{{'SCHEDULER.STORE_COMMANDS'| translate}}</mat-label>
+				<mat-select	id="storeCommandFilter" #storeCommandSelect
+						placeholder="{{'SCHEDULER.COMMAND_PLACEHOLDER'| translate}}"
+						formControlName="storeCommandFormControl"
+						(selectionChange)="selectJobStoreCommand($event.value)"
+						required>
+					<mat-option *ngFor="let command of storeCommandList" [value]="command">
+						{{command.command}}
+					</mat-option>
+                </mat-select>
+			</mat-form-field>
+			<mat-form-field *ngIf="mode === 'edit' && selectedStore!=0 && applicationType!='broadcast'" appearance="outline">
+                <mat-label>{{'SCHEDULER.STORE_COMMANDS'| translate}}</mat-label>
+				<input id="storeCommandFilter"
+						matInput
+                        formControlName="storeCommandFormControl" readonly="readonly">
+			</mat-form-field>
+
+			<!--
+				Store command check command selection
+			-->
+			<mat-form-field *ngIf="selectedStore!=null && selectedStore!=0 && applicationType!='broadcast'" appearance="outline">
+                <mat-label>{{'SCHEDULER.CHECK_COMMANDS'| translate}}</mat-label>
+				<mat-select	id="storeCheckCommandFilter" #storeCommandSelect
+						placeholder="{{'SCHEDULER.CHECK_COMMAND_PLACEHOLDER'| translate}}"
+						formControlName="storeCheckCommandFormControl"
+						(selectionChange)="selectJobStoreCheckCommand($event.value)"
+						required>
+					<mat-option *ngFor="let checkCommand of checkCommandList" [value]="checkCommand">
+						{{ 'SCHEDULER.CHECK_COMMAND_' + checkCommand.displayName | translate }}
+					</mat-option>
+                </mat-select>
+			</mat-form-field>
+
+			<!-- 
+				Site command selection
+			-->
+			<mat-form-field *ngIf="mode === 'create' && selectedStore==0" appearance="outline">
+				<mat-label>{{'SCHEDULER.SITE_COMMANDS'| translate}}</mat-label>
+				<input type="text"
+					   placeholder="{{'SCHEDULER.COMMAND_PLACEHOLDER'| translate}}"
+					   matInput
+					   (input)="searchSiteCommand($event.target.value)"
+					   [formControl]="commandFormControl"
+					   [matAutocomplete]="auto"
+					   required>
+				<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectJobSiteCommand($event.option.value)">
+					<mat-option *ngFor="let command of filteredSiteCommandList" [value]="command.command">
+						{{command.command}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="commandFormControl.errors && commandFormControl.errors.invalidCommand">
+					{{'SCHEDULER.INVALID_COMMAND' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field *ngIf="mode === 'edit' && selectedStore==0" appearance="outline">
+                <mat-label>{{'SCHEDULER.SITE_COMMANDS'| translate}}</mat-label>
+				<input id="commandFilter"
+						matInput
+                        formControlName="commandFormControl" readonly="readonly">
+			</mat-form-field>
+
+			<!--
+				Description
+			-->
+			<mat-form-field *ngIf="command==='CustomJob' && applicationType!='broadcast'" appearance="outline">
+				<mat-label>{{'SCHEDULER.DESCRIPTION'| translate}} {{'SCHEDULER.OPTIONAL' | translate}}</mat-label>
+				<input matInput id="description" formControlName="descriptionFormControl" (input)="validateDescription()">
+			</mat-form-field>
+			
+			<!-- 
+				Command parameters
+			-->
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SCHEDULER.PARAMETERS'| translate}} {{'SCHEDULER.OPTIONAL' | translate}}</mat-label>
+				<input matInput id="parameters" formControlName="parametersFormControl" (input)="validateParameters()">
+			</mat-form-field>
+
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button type="button" class="mat-flat-button mat-primary" (click)="next()" *ngIf="mode === 'create'">{{'SCHEDULER.NEXT' | translate}}</button>
+				<button type="button" class="mat-flat-button mat-primary" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'SCHEDULER.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

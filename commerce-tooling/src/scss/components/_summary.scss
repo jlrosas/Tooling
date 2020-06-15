@@ -1,0 +1,29 @@
+
+.hc-section-container {
+	padding: spacing(2) spacing(3) 0;
+	@include hc-type-text();
+}
+
+.hc-section-header {
+	@include hc-type-subheading();
+	border-bottom: 1px solid map-get($hc-color-grey, border);
+	margin-bottom: spacing(1);
+	padding-bottom: spacing(1);
+}
+
+.hc-column {
+	margin-bottom: spacing(3);
+	
+	.hc-column-header {
+		@include hc-type-bold();
+		margin: spacing(1) 0 spacing(0.5);
+	}
+}
+
+.inside-footer {
+	padding-bottom: spacing(3);
+
+	.footer-buttons {
+		text-align: right;
+	}
+}

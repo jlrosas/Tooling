@@ -1,0 +1,45 @@
+<div class="store-preview">
+	<div class="store-preview-header hc-paper">
+		<div class="store-preview-input">
+			<div class="hc-type-small-text">
+				<span>{{'STORE_PREVIEW.PREVIEW_TIME' | translate}}</span>
+			</div>
+			<div class="hc-type-text">
+				<span>{{ storePreviewDate | date : storePreviewDisplayDateFormat }} {{ timeZone }}</span>
+			</div>
+		</div>
+
+		<mat-form-field appearance="outline" class="store-preview-input store-preview-viewport-select hc-form-field-small">
+			<mat-label>{{'STORE_PREVIEW.SELECT_VIEWPORT'| translate}}</mat-label>
+			<mat-select placeholder="{{'MEMBER_GROUPS.TYPE_PLACEHOLDER'| translate}}"
+					(selectionChange)="setViewport($event.value)" [value]="currentViewport">
+				<mat-option *ngFor="let viewport of viewportList" [value]="viewport">
+					{{viewport.textKey | translate}} {{viewport.resolution}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<div class="store-preview-input">
+			<mat-button-toggle-group appearance="outline" name="fontStyle" aria-label="Font Style" class="store-preview-screen-rotation" value="landscape">
+				<mat-button-toggle [ngClass]="{'mat-btn-checked':currentOrientation=='H'}" (click)="rotateScreen(currentViewport, 'H')" value="landscape">
+					<mat-icon aria-hidden="false" class="btnToggle">stay_primary_landscape</mat-icon>
+				</mat-button-toggle>
+				<mat-button-toggle [ngClass]="{'mat-btn-checked':currentOrientation=='V'}" (click)="rotateScreen(currentViewport, 'V')" value="portrait">
+					<mat-icon aria-hidden="false" class="btnToggle">stay_primary_portrait</mat-icon>
+				</mat-button-toggle>
+			</mat-button-toggle-group>
+		</div>
+
+		<button class="store-preview-input store-preview-share-url" (click)="shareUrl()">
+			<mat-icon aria-hidden="false" aria-label="Example home icon" class="share-url" >share</mat-icon>
+			<span class="share-url-text" >{{'STORE_PREVIEW.SHARE_URL' | translate}}</span>
+		</button>
+
+		<button class="mat-flat-button mat-primary store-preview-settings-button" (click)="openDialog()">{{'STORE_PREVIEW.PREVIEW_SETTINGS' | translate}}</button>
+	</div>
+	<div class="store-preview-wrapper">
+		<div *ngIf="dataURL" class="store-preview-content">
+			<object [width]="previewWidth" [height]="previewHeight" type="text/html" [data]="dataURL"></object>
+		</div>
+	</div>
+</div>

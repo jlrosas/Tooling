@@ -1,0 +1,33 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div class="hc-section-container" id="organizationDetails">
+	<p class="hc-section-header">{{'APPROVALS.ORGANIZATION_DETAILS' | translate}}</p>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.NAME' | translate}}</div>
+			<div class="hc-hc-column-data">{{organizationName}}</div>
+		</div>
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.ADDRESS' | translate}}</div>
+			<div class="hc-hc-column-data">{{organizationAddress1}}</div>
+			<div *ngIf="organizationAddress2" class="hc-hc-column-data">{{organizationAddress2}}</div>
+			<div *ngIf="organizationCity" class="hc-hc-column-data">{{organizationCity}}</div>
+			<div *ngIf="organizationState" class="hc-hc-column-data">{{organizationState}}</div>
+			<div *ngIf="organizationCountry" class="hc-hc-column-data">{{organizationCountry}}</div>
+		</div>
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.PARENT' | translate}}</div>
+			<div class="hc-hc-column-data">{{organizationParent}}</div>
+		</div>
+	</div>
+</div>
+<hc-user-approval-summary *ngIf="userId" userId="{{userId}}"></hc-user-approval-summary>

@@ -1,0 +1,23 @@
+.mat-tab-group {
+    border: 1px solid map-get($hc-color-grey, border);
+    
+    .mat-tab-label {
+        color: map-get($hc-color-grey, dark);
+
+        &.mat-tab-label-active {
+            opacity: 1;
+            
+            .mat-tab-label-content {
+                @include hc-type-bold();
+            }
+        }
+
+        .mat-tab-label-content {
+            @include hc-type-text();
+        }
+    }
+
+    .mat-tab-body-content {
+        padding: spacing(2);
+    }
+}

@@ -1,0 +1,44 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'MEMBER_GROUPS.GROUPS' | translate}}
+	</h1>
+	<div class="hc-stepper-section hc-paper">
+		<div class="hc-stepper-actions">
+			<h2 class="hc-type-h2">
+				{{'MEMBER_GROUPS.EDIT_GROUP' | translate}}
+			</h2>
+			<div>
+				<button class="mat-flat-button" type="button" (click)="cancel()">{{'MEMBER_GROUPS.CANCEL' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="save()">{{'MEMBER_GROUPS.SAVE' | translate}}</button>
+			</div>
+		</div>
+		<mat-vertical-stepper #stepper (selectionChange)="handleSelectionChange($event)">
+			<ng-template matStepperIcon="edit">
+				<mat-icon>check</mat-icon>
+			</ng-template>
+			<mat-step #detailsStep label="{{'MEMBER_GROUPS.GROUP_DETAILS' | translate}}">
+				<hc-member-group-details [step]="detailsStep" mode="edit" (save)="save()">
+				</hc-member-group-details>
+			</mat-step>
+			<mat-step #definitionStep label="{{'MEMBER_GROUPS.DEFINE_GROUP' | translate}}" *ngIf="usage === 'AccessControl'">
+				<hc-member-group-definition *ngIf="stepper.selected === definitionStep" [step]="definitionStep" mode="edit" (save)="save()">
+				</hc-member-group-definition>
+			</mat-step>
+			<mat-step #membersStep label="{{'MEMBER_GROUPS.MEMBERS' | translate}}">
+				<hc-member-group-members *ngIf="stepper.selected === membersStep" [step]="membersStep" mode="edit" (save)="save()">
+				</hc-member-group-members>
+			</mat-step>
+		</mat-vertical-stepper>
+	</div>	
+</div>

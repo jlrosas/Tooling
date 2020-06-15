@@ -1,0 +1,48 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'USER_MANAGEMENT.USERS' | translate}}
+	</h1>
+	<div class="hc-stepper-section hc-paper">
+		<div class="hc-stepper-actions">
+			<h2 class="hc-type-h2">
+				{{'USER_MANAGEMENT.EDIT_USER' | translate}}
+			</h2>
+			<div>
+				<button class="mat-flat-button" (click)="cancel()">{{'USER_MANAGEMENT.CANCEL' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="save()">{{'USER_MANAGEMENT.SAVE' | translate}}</button>
+			</div>
+		</div>
+		<mat-vertical-stepper #stepper (selectionChange)="handleSelectionChange($event)">
+			<ng-template matStepperIcon="edit">
+				<mat-icon>check</mat-icon>
+			</ng-template>
+			<mat-step #accountStep label="{{'USER_MANAGEMENT.ACCOUNT_INFORMATION' | translate}}">
+				<hc-user-account [stepper]="stepper" [step]="accountStep" mode="edit" (save)="save()">
+				</hc-user-account>
+			</mat-step>
+			<mat-step #contactStep label="{{'USER_MANAGEMENT.CONTACT_INFORMATION' | translate}}">
+				<hc-user-contact *ngIf="stepper.selected === contactStep" [stepper]="stepper" [step]="contactStep" mode="edit" (save)="save()">
+				</hc-user-contact>
+			</mat-step>
+			<mat-step #rolesStep label="{{'USER_MANAGEMENT.ROLES' | translate}}">
+				<hc-user-roles *ngIf="stepper.selected === rolesStep" [step]="rolesStep" mode="edit" (save)="save()">
+				</hc-user-roles>
+			</mat-step>
+			<mat-step *hcRole="[-1,-20,-21,-27]" #groupsStep label="{{'USER_MANAGEMENT.GROUPS' | translate}}">
+				<hc-user-groups *ngIf="stepper.selected === groupsStep" [step]="groupsStep" mode="edit" (save)="save()">
+				</hc-user-groups>
+			</mat-step>
+		</mat-vertical-stepper>
+	</div>
+</div>

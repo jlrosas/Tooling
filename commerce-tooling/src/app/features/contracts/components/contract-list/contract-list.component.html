@@ -1,0 +1,141 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		<span><a [routerLink]="['/accounts', {storeId: storeId}]">{{'ACCOUNTS.ACCOUNTS' | translate}}</a><span *ngIf="accountName"><span class="icon-top"><mat-icon [inline]="true">chevron_right</mat-icon></span>{{'CONTRACTS.CONTRACTS_FOR_ACCOUNT' | translate: {accountName: accountName} }}</span></span>
+	</h1>
+	
+	<div class="hc-table-section hc-paper">
+		<!-- Search,Filter part(start) -->
+		<div class="hc-table-actions">
+			<form [formGroup]="listSearchForm" autocomplete="off">
+				<mat-form-field appearance="outline" class="icon-suffix">
+					<mat-label>{{'CONTRACTS.SEARCH' | translate}}</mat-label>
+					<input matInput (input)="searchContracts($event.target.value)"
+							placeholder="{{'CONTRACTS.SEARCH_BY_NAME' | translate}}"
+							formControlName="searchText" >
+					<mat-icon matSuffix>search</mat-icon>
+					<span class="filter-clear" *ngIf="currentSearchString != null" (click)="clearSearch()">
+						<mat-icon>clear</mat-icon>
+						<span class="clear-margin">{{'CONTRACTS.CLEAR' | translate}}</span>
+					</span>
+				</mat-form-field>
+			</form>
+			<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'CONTRACTS.SHOW_FILTERS' | translate}}</mat-slide-toggle>
+			<button class="mat-flat-button mat-primary" (click)="createContract()">{{'CONTRACTS.NEW_BUTTON' | translate}}</button>
+			<button class="mat-flat-button" (click)="importFileInput.click()">{{'CONTRACTS.IMPORT' | translate}}</button>
+			<input hidden="true" #importFileInput type="file" accept=".xml" (change)="importContract()" />
+			<button matTooltip="{{'CONTRACTS.REFRESH' | translate}}" mat-icon-button (click)="refresh()">
+				<mat-icon color="primary">refresh</mat-icon>
+			</button>
+		</div>
+	
+		<div *ngIf="showFilters">
+			<div class="hc-table-filters">
+				<form [formGroup]="listFilterForm" autocomplete="off">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'CONTRACTS.STATUS_FILTER'| translate}}</mat-label>
+						<mat-select id="statusSelect" placeholder="{{'CONTRACTS.SELECT_STATUS_PLACEHOLDER'| translate}}"
+								formControlName="statusSelect"
+								(selectionChange)="selectStatus($event.value)">
+							<mat-option *ngFor="let index of statusTextIndices" [value]="index">
+								{{statusTextKeys[index] | translate}}
+							</mat-option>
+						</mat-select>
+						<span class="filter-clear" *ngIf="statusFilter != null" (click)="clearStatus($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'CONTRACTS.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+				</form>
+			</div>
+		</div>
+		<!-- TABLE PART (START) -->
+		<div class="hc-table-wrapper">
+			<table mat-table [dataSource]="model" class="" matSort matSortActive="{{activeColumn}}" matSortDirection="{{sortDirection}}">
+				<ng-container matColumnDef="name" sticky>
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{'CONTRACTS.NAME' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						<a [routerLink]="['/contracts/contract-summary', row.id, {accountId: accountId, storeId: storeId}]">{{row.name}}</a>
+					</td>
+				</ng-container>
+	
+				<ng-container matColumnDef="description">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{'CONTRACTS.DESCRIPTION' | translate}}</th>
+					<td mat-cell *matCellDef="let row">{{row.description}}</td>
+				</ng-container>
+	
+				<ng-container matColumnDef="status">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{'CONTRACTS.STATUS' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						{{row.statusTextKey | translate}}
+					</td>
+				</ng-container>
+	
+				<ng-container matColumnDef="createDate">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+						{{'CONTRACTS.CREATE_DATE' | translate}}
+					</th>
+					<td mat-cell *matCellDef="let row">{{row.createDate}}</td>
+				</ng-container>
+	
+				<ng-container matColumnDef="actions" stickyEnd>
+					<th mat-header-cell *matHeaderCellDef> {{'CONTRACTS.ACTIONS' | translate}} </th>
+					<td mat-cell *matCellDef="let element">
+						<div style="float: right;">
+							<button class="button-icon" *ngIf="element.status === 'draft' || element.status === 'rejected'"
+									matTooltip="{{'CONTRACTS.EDIT' | translate}}" matTooltipPosition="below" (click)="editContract(element.id)">
+								<mat-icon class="green-icon">edit</mat-icon>
+							</button>
+							<button class="button-icon" *ngIf="element.status === 'active' || element.status === 'rejected' || element.status === 'submitted' || element.status === 'approved' || element.status === 'deployFailed' || element.status === 'suspended'" matTooltip="{{'CONTRACTS.CANCEL' | translate}}" matTooltipPosition="below" (click)="cancelContract(element.id)">
+								<mat-icon class="red-icon">cancel</mat-icon>
+							</button>
+							<button class="button-icon" *ngIf="element.status === 'draft' || element.status === 'canceled' || element.status === 'closed'" matTooltip="{{'CONTRACTS.DELETE' | translate}}" matTooltipPosition="below" (click)="deleteContract(element)">
+								<mat-icon class="red-icon">delete</mat-icon>
+							</button>
+							<button class="button-icon" mat-icon-button [matMenuTriggerFor]="appMenu">
+								<mat-icon class="vert-icon">more_vert</mat-icon>
+							</button>
+							<mat-menu #appMenu="matMenu">
+								<ng-template matMenuContent>
+									<!-- <button mat-menu-item>{{'CONTRACTS.SUMMARY' | translate}}</button> -->
+									<button mat-menu-item *ngIf="element.status === 'draft'" matTooltip="{{'CONTRACTS.SUBMIT' | translate}}" matTooltipPosition="below" (click)="submitContract(element.id)">
+										{{'CONTRACTS.SUBMIT' | translate}}
+									</button>
+									<button mat-menu-item *ngIf="(element.status === 'deployFailed' || element.status === 'approved') && deployEnabled" matTooltip="{{'CONTRACTS.DEPLOY' | translate}}" matTooltipPosition="below" (click)="deployContract(element.id)">
+										{{'CONTRACTS.DEPLOY' | translate}}
+									</button>          
+									<button mat-menu-item *ngIf="element.status === 'active'" matTooltip="{{'CONTRACTS.SUSPEND' | translate}}" matTooltipPosition="below" (click)="suspendContract(element.id)">
+										{{'CONTRACTS.SUSPEND' | translate}}
+									</button>   
+									<button mat-menu-item *ngIf="element.status === 'suspended'" matTooltip="{{'CONTRACTS.RESUME' | translate}}" matTooltipPosition="below" (click)="resumeContract(element.id)">
+										{{'CONTRACTS.RESUME' | translate}}
+									</button>   
+									<button mat-menu-item *ngIf="element.status === 'active' || element.status === 'suspended' || element.status === 'approved'"  matTooltip="{{'CONTRACTS.NEW_VERSION' | translate}}" matTooltipPosition="below" (click)="createNewContractVersion(element.id)">
+										{{'CONTRACTS.NEW_VERSION' | translate}}
+									</button>
+									<button mat-menu-item *ngIf="element.status != 'deployFailed'" (click)="exportContract(element.id)">{{'CONTRACTS.EXPORT' | translate}}</button>
+									<button mat-menu-item (click)="copyContract(element.id)">{{'CONTRACTS.COPY' | translate}}</button>
+								</ng-template>
+							</mat-menu>
+						</div>   
+					</td>
+				</ng-container>
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+		</div>
+		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+				(page)="handlePage($event)">
+		</mat-paginator>
+	</div>
+</div>

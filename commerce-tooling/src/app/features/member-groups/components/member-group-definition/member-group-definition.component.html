@@ -1,0 +1,232 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="definitionForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<div class="bx--row hc-paper-section" *ngIf="!targetOrganizationRolesOption || !targetOrganizationRolesOption.value || targetOrganizationRolesOption.value.ignoreTargetOrganizationRoles">
+				<div class="select-group-content bx--col-lg-6">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'MEMBER_GROUPS.TARGET_ORGANIZATION_ROLES'| translate}}</mat-label>
+						<mat-select id="targetOrganizationRolesOption" #targetOrganizationRolesOptionSelect
+								formControlName="targetOrganizationRolesOption"
+								(selectionChange)="selectTargetOrganizationRolesOption($event.value)">
+							<mat-option *ngFor="let option of targetOrganizationRolesOptions" [value]="option">
+								{{option.content}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div class="select-group-content bx--col-lg-6">
+				</div>
+			</div>
+			<div class="bx--row hc-paper-section" *ngIf="targetOrganizationRolesOption && targetOrganizationRolesOption.value && !targetOrganizationRolesOption.value.ignoreTargetOrganizationRoles">
+				<div class="select-group-content bx--col-lg-6">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'MEMBER_GROUPS.TARGET_ORGANIZATION_ROLES'| translate}}</mat-label>
+						<mat-select id="targetOrganizationRolesOption" #targetOrganizationRolesOptionSelect
+								formControlName="targetOrganizationRolesOption"
+								(selectionChange)="selectTargetOrganizationRolesOption($event.value)">
+							<mat-option *ngFor="let option of targetOrganizationRolesOptions" [value]="option">
+								{{option.content}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<mat-form-field appearance="outline">
+						<mat-label>{{'MEMBER_GROUPS.AVAILABLE_ROLES'| translate}}</mat-label>
+						<input matInput id="availableTargetOrganizationRoles"
+								#availableTargetOrganizationRolesInput
+								formControlName="availableTargetOrganizationRoles"
+								[matChipInputFor]="assignedTargetOrganizationRolesList"
+								placeholder="{{'MEMBER_GROUPS.SELECT_ROLE_PLACEHOLDER' | translate}}"
+								[matAutocomplete]="availableTargetOrganizationRolesAutocomplete">
+						<mat-icon matSuffix>filter_list</mat-icon>
+						<mat-autocomplete #availableTargetOrganizationRolesAutocomplete="matAutocomplete" (optionSelected)="selectTargetOrganizationRole($event.option.value)">
+							<mat-option *ngFor="let role of filteredAvailableTargetOrganizationRoleList" [value]="role">
+								{{role.content}}
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+				</div>
+				<div class="select-group-content bx--col-lg-6">
+					<div>
+						<div class="hc-type-label">{{'MEMBER_GROUPS.SELECTED_ROLES'| translate}}</div>
+						<div class="hc-chip-list-section">
+							<span *ngIf="!assignedTargetOrganizationRoles.length">{{'GENERAL.NO_SELECTION_MADE'| translate}}</span>
+							<mat-chip-list #assignedTargetOrganizationRolesList>
+								<mat-chip *ngFor="let role of assignedTargetOrganizationRoles" [selectable]="false"
+										[removable]="true" (removed)="removeTargetOrganizationRole(role)">
+									{{role.roleName}} - {{'MEMBER_GROUPS.TARGET_ORGANIZATION'| translate}}
+									<mat-icon matChipRemove>cancel</mat-icon>
+								</mat-chip>
+							</mat-chip-list>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="bx--row hc-paper-section" *ngIf="!anyOrganizationRolesOption || !anyOrganizationRolesOption.value || anyOrganizationRolesOption.value.ignoreAnyOrganizationRoles">
+				<div class="select-group-content bx--col-lg-6">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'MEMBER_GROUPS.ANY_ORGANIZATION_ROLES'| translate}}</mat-label>
+						<mat-select id="anyOrganizationRolesOption" #anyOrganizationRolesOptionSelect
+								formControlName="anyOrganizationRolesOption"
+								(selectionChange)="selectAnyOrganizationRolesOption($event.value)">
+							<mat-option *ngFor="let option of anyOrganizationRolesOptions" [value]="option">
+								{{option.content}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div class="select-group-content bx--col-lg-6">
+				</div>
+			</div>
+			<div class="bx--row hc-paper-section" *ngIf="anyOrganizationRolesOption && anyOrganizationRolesOption.value && !anyOrganizationRolesOption.value.ignoreAnyOrganizationRoles">
+				<div class="select-group-content bx--col-lg-6">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'MEMBER_GROUPS.ANY_ORGANIZATION_ROLES'| translate}}</mat-label>
+						<mat-select id="anyOrganizationRolesOption" #anyOrganizationRolesOptionSelect
+								formControlName="anyOrganizationRolesOption"
+								(selectionChange)="selectAnyOrganizationRolesOption($event.value)">
+							<mat-option *ngFor="let option of anyOrganizationRolesOptions" [value]="option">
+								{{option.content}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<mat-form-field appearance="outline">
+						<mat-label>{{'MEMBER_GROUPS.AVAILABLE_ROLES'| translate}}</mat-label>
+						<input matInput id="availableAnyOrganizationRoles"
+								#availableAnyOrganizationRolesInput
+								formControlName="availableAnyOrganizationRoles"
+								[matChipInputFor]="assignedAnyOrganizationRolesList"
+								placeholder="{{'MEMBER_GROUPS.SELECT_ROLE_PLACEHOLDER' | translate}}"
+								[matAutocomplete]="availableAnyOrganizationRolesAutocomplete">
+						<mat-icon matSuffix>filter_list</mat-icon>
+						<mat-autocomplete #availableAnyOrganizationRolesAutocomplete="matAutocomplete" (optionSelected)="selectAnyOrganizationRole($event.option.value)">
+							<mat-option *ngFor="let role of filteredAvailableAnyOrganizationRoleList" [value]="role">
+								{{role.content}}
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+				</div>
+				<div class="select-group-content bx--col-lg-6">
+					<div>
+						<div class="hc-type-label">{{'MEMBER_GROUPS.SELECTED_ROLES'| translate}}</div>
+						<div class="hc-chip-list-section">
+							<span *ngIf="!assignedAnyOrganizationRoles.length">{{'GENERAL.NO_SELECTION_MADE'| translate}}</span>
+							<mat-chip-list #assignedAnyOrganizationRolesList>
+								<mat-chip *ngFor="let role of assignedAnyOrganizationRoles" [selectable]="false"
+										[removable]="true" (removed)="removeAnyOrganizationRole(role)">
+									{{role.roleName}} - {{'MEMBER_GROUPS.ANY_ORGANIZATION'| translate}}
+									<mat-icon matChipRemove>cancel</mat-icon>
+								</mat-chip>
+							</mat-chip-list>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="bx--row hc-paper-section" *ngIf="!rolesInOrganizationsOption || !rolesInOrganizationsOption.value || rolesInOrganizationsOption.value.ignoreRolesInOrganizations">
+				<div class="select-group-content bx--col-lg-6">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'MEMBER_GROUPS.ROLES_IN_ORGANIZATIONS'| translate}}</mat-label>
+						<mat-select id="rolesInOrganizationsOption"
+								formControlName="rolesInOrganizationsOption"
+								(selectionChange)="selectRolesInOrganizationsOption($event.value)">
+							<mat-option *ngFor="let rolesInOrganizationsOption of rolesInOrganizationsOptions" [value]="rolesInOrganizationsOption">
+								{{rolesInOrganizationsOption.content}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div class="select-group-content bx--col-lg-6">
+				</div>
+			</div>
+			<div class="bx--row hc-paper-section" *ngIf="rolesInOrganizationsOption && rolesInOrganizationsOption.value && !rolesInOrganizationsOption.value.ignoreRolesInOrganizations">
+				<div class="select-group-content bx--col-lg-6">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'MEMBER_GROUPS.ROLES_IN_ORGANIZATIONS'| translate}}</mat-label>
+						<mat-select id="rolesInOrganizationsOption"
+								formControlName="rolesInOrganizationsOption"
+								(selectionChange)="selectRolesInOrganizationsOption($event.value)">
+							<mat-option *ngFor="let rolesInOrganizationsOption of rolesInOrganizationsOptions" [value]="rolesInOrganizationsOption">
+								{{rolesInOrganizationsOption.content}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<mat-form-field appearance="outline">
+						<mat-label>{{'MEMBER_GROUPS.SELECT_AN_ORGANIZATION'| translate}}</mat-label>
+						<input matInput id="organization"
+								formControlName="organization"
+								[matAutocomplete]="organizationAutocomplete"
+								(input)="searchOrganization($event.target.value)">
+						<mat-autocomplete #organizationAutocomplete="matAutocomplete" (optionSelected)="selectOrganization($event.option.value)">
+							<mat-option *ngFor="let org of organizationList" [value]="org">
+								{{org.organizationName}}
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+					<mat-form-field appearance="outline">
+						<mat-label>{{ ((this.selectedOrganization == null ) ?  'MEMBER_GROUPS.NO_ORGANIZATION_SELECTED' : 'MEMBER_GROUPS.AVAILABLE_ROLES') | translate }}</mat-label>
+						<input matInput id="availableOrganizationRoles"
+								#availableOrganizationRolesInput
+								formControlName="availableOrganizationRoles"
+								[matChipInputFor]="assignedOrganizationRolesList"
+								placeholder="{{'MEMBER_GROUPS.SELECT_ROLE_PLACEHOLDER' | translate}}"
+								[matAutocomplete]="availableOrganizationRolesAutocomplete">
+						<mat-icon matSuffix>filter_list</mat-icon>
+						<mat-autocomplete #availableOrganizationRolesAutocomplete="matAutocomplete" (optionSelected)="selectOrganizationRole($event.option.value)">
+							<mat-option *ngFor="let organizationRole of filteredAvailableOrganizationRoleList" [value]="organizationRole">
+								{{organizationRole.content}}
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+				</div>
+				<div class="select-group-content bx--col-lg-6">
+					<div>
+						<div class="hc-type-label">{{'MEMBER_GROUPS.SELECTED_ROLES'| translate}}</div>
+						<div class="hc-chip-list-section">
+							<span *ngIf="!assignedOrganizationRoles.length">{{'GENERAL.NO_SELECTION_MADE'| translate}}</span>
+							<mat-chip-list #assignedOrganizationRolesList>
+								<mat-chip *ngFor="let organizationRole of assignedOrganizationRoles" [selectable]="true"
+										[removable]="true" (removed)="removeOrganizationRole(organizationRole)">
+									{{organizationRole.roleName}} - {{organizationRole.organizationName}}
+									<mat-icon matChipRemove>cancel</mat-icon>
+								</mat-chip>
+							</mat-chip-list>		
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="bx--row hc-paper-section" *ngIf="!registrationDisabled">
+				<div class="select-group-content bx--col-lg-6">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'MEMBER_GROUPS.REGISTRATION_STATUS'| translate}}</mat-label>
+						<mat-select id="registrationStatusOption"
+								formControlName="registrationStatusOption"
+								(selectionChange)="selectRegistrationStatusOption($event.value)">
+							<mat-option *ngFor="let registrationStatusOption of registrationStatusOptions" [value]="registrationStatusOption">
+								{{registrationStatusOption.content}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" matStepperPrevious type="button" *ngIf="mode == 'create'">{{'MEMBER_GROUPS.BACK'| translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" matStepperNext *ngIf="mode == 'create'">{{'MEMBER_GROUPS.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)=triggerSave() *ngIf="mode == 'edit'">{{'MEMBER_GROUPS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,68 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="detailsForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'EXTENDED_SITES.INTERNAL_STORE_NAME' | translate}}</mat-label>
+				<input matInput id="storeIdentifier" #storeIdentifierInput
+						formControlName="storeIdentifier" (input)="validateStoreIdentifier()" required>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'EXTENDED_SITES.STORE_DISPLAY_NAME' | translate}}</mat-label>
+				<input matInput id="storeName" formControlName="storeName" (input)="validateStoreName()" required>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'EXTENDED_SITES.STORE_DESCRIPTION' | translate}}</mat-label>
+				<input matInput id="description" formControlName="description" (input)="validateDescription()" required>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'EXTENDED_SITES.STORE_OWNER_EMAIL' | translate}}</mat-label>
+				<input matInput id="email" formControlName="email" (input)="validateEmail()" required>
+				<mat-error *ngIf="email.errors && email.errors.email">
+					{{'EXTENDED_SITES.INVALID_EMAIL' | translate}}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'EXTENDED_SITES.DEFAULT_CURRENCY'| translate}}</mat-label>
+				<mat-select	id="defaultCurrency"
+						placeholder="{{'EXTENDED_SITES.SELECT_DEFAULT_CURRENCY' | translate}}"
+						formControlName="defaultCurrency"
+						(selectionChange)="selectDefaultCurrency($event.value)"
+						required>
+					<mat-option *ngFor="let currency of currencyList" [value]="currency">
+						{{currency.displayName}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'EXTENDED_SITES.DEFAULT_LANGUAGE'| translate}}</mat-label>
+				<mat-select	id="defaultLanguage"
+						placeholder="{{'EXTENDED_SITES.SELECT_DEFAULT_LANGUAGE' | translate}}"
+						formControlName="defaultLanguage"
+						(selectionChange)="selectDefaultLanguage($event.value)"
+						required>
+					<mat-option *ngFor="let language of languageList" [value]="language">
+						{{language.displayName}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button type="button" class="mat-flat-button mat-primary" (click)="next()">{{'EXTENDED_SITES.NEXT' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

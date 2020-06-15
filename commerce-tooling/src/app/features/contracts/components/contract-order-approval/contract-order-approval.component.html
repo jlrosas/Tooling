@@ -1,0 +1,52 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="orderApprovalForm" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div class="hc-type-text">
+				<mat-checkbox #orderApprovalRequiredCheck formControlName="orderApprovalRequired" (change)="changeOrderApprovalRequired($event)">
+					{{'CONTRACTS.APPROVAL_REQUIRED'| translate}}
+				</mat-checkbox>
+			</div>
+			<div class="bx--row">
+				<div class="bx--col-sm-4 bx--col-md-8 bx--col-lg-8">
+					<mat-form-field appearance="outline" class="contract-order-approvalMinimumValue">
+						<mat-label>{{'CONTRACTS.MINIMUM_AMOUNT' | translate}}</mat-label>
+						<input matInput id="orderApprovalMinimumValue" formControlName="orderApprovalMinimumValue" type="number" min="0"
+								(input)="validateOrderApprovalMinimumValue()" required>
+						<mat-error *ngIf="orderApprovalMinimumValue.errors && orderApprovalMinimumValue.errors.invalidMinimumValue">
+							{{'CONTRACTS.INVALID_MINIMUM_AMOUNT' | translate }}
+						</mat-error>
+					</mat-form-field>
+					<mat-form-field appearance="outline" class="contract-order-approvalCurrency">
+						<mat-label>{{'CONTRACTS.CURRENCY'| translate}}</mat-label>
+						<mat-select	id="orderApprovalCurrency" formControlName="orderApprovalCurrency"
+								(selectionChange)="selectOrderApprovalCurrency($event.value)" required>
+							<mat-option *ngFor="let currency of currencies" [value]="currency">
+								{{currency}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" matStepperPrevious *ngIf="mode === 'create'">{{'CONTRACTS.BACK' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()" *ngIf="mode === 'create'">{{'CONTRACTS.FINISH' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'CONTRACTS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

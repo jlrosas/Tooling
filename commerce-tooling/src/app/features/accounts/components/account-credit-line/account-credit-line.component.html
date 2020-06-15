@@ -1,0 +1,54 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="creditLineForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			
+			<mat-form-field appearance="outline">
+				<mat-label>{{'ACCOUNTS.ACCOUNT_CREDIT_NUMBER' | translate}}</mat-label>
+				<input matInput id="accountNumber" #accountNumberInput formControlName="accountNumber" (input)="validateAccountNumber()" [required]="accountNumber.value !== '' || description.value !== ''"
+				[maxlength]="256">
+			</mat-form-field>
+			
+			<mat-form-field appearance="outline">
+				<mat-label>{{'ACCOUNTS.ACCOUNT_CREDIT_DESCRIPTION' | translate}}</mat-label>
+				<input matInput id="description" formControlName="description" (input)="validateDescription()" [required]="accountNumber.value !== '' || description.value !== ''"
+				[maxlength]="254">
+			</mat-form-field>
+
+			<mat-form-field appearance="outline">
+				<mat-label>{{'ACCOUNTS.ACCOUNT_CREDIT_ADDRESS' | translate}} {{'ACCOUNTS.OPTIONAL'| translate}}</mat-label>
+				<mat-select	id="address"
+				formControlName="address"
+				(selectionChange)="selectAddress($event.value)">
+					<mat-option *ngFor="let address of addressList" [value]="address">
+						{{address.content}}
+					</mat-option>
+				</mat-select>
+				<span class="filter-clear" *ngIf="address.value" (click)="clearAddress($event)">
+					<mat-icon>clear</mat-icon>
+					<span class="clear-margin">{{'ACCOUNTS.CLEAR' | translate}}</span>
+				</span>
+			</mat-form-field>
+
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" type="button" matStepperPrevious *ngIf="mode == 'create'">{{'ACCOUNTS.BACK'| translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="next()" *ngIf="mode == 'create'">{{'ACCOUNTS.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'edit'">{{'ACCOUNTS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

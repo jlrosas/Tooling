@@ -1,0 +1,34 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="detailsForm" autocomplete="off" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'MESSAGES.MESSAGE_ID' | translate}}</mat-label>
+				<input matInput formControlName="messageId">
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'MESSAGES.TRANSPORT' | translate}}</mat-label>
+				<input matInput formControlName="transport">
+			</mat-form-field>
+			<mat-divider></mat-divider>
+			<div class="message-area" [innerHtml]="content"></div>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button #nextButton class="mat-flat-button mat-primary" matStepperNext>{{'MESSAGES.NEXT' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

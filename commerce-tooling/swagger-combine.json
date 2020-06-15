@@ -1,0 +1,369 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Commerce API",
+    "version": "1.0.0"
+  },
+  "apis": [
+    {
+      "url": "./api_definition/user_and_organization_management.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/role.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/role_assignment.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/approval_status.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/approval_type.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/user-account-policy-descriptions.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/states.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/countries.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/member-groups.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/member-group-memberships.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/role-descriptions.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/online-stores.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/currency-descriptions.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/language-descriptions.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/transports.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/messaging.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/account_contract.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/extended_site.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/shipping-charges.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/payment-methods.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/shipping-methods.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/job.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/job_type.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/job_status.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/job_store_commands.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/job_site_commands.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/authentication_and_session_management.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/wcs/resources$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/marketing.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/wcs/resources$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/price-rules.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/catalog-filters.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    }
+  ]
+}

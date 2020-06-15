@@ -1,0 +1,20 @@
+/*
+ *-------------------------------------------------------------------
+ * Licensed Materials - Property of HCL Technologies
+ *
+ * HCL Commerce
+ *
+ * (C) Copyright HCL Technologies Limited 1996, 2020
+
+ *-------------------------------------------------------------------
+ */
+.vert-icon {
+	color:  #4178be;
+	vertical-align: middle;
+}
+.mat-column-customer,
+.mat-column-contracts,
+.mat-column-actions {
+	flex: 0 0 33% !important;
+	width: 33% !important;
+}

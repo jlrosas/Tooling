@@ -1,0 +1,60 @@
+/*
+ *-------------------------------------------------------------------
+ * Licensed Materials - Property of HCL Technologies
+ *
+ * HCL Commerce
+ *
+ * (C) Copyright HCL Technologies Limited 1996, 2020
+
+ *-------------------------------------------------------------------
+ */
+
+.row-layout {
+	display: flex;
+	justify-content: space-between;
+	&> .mat-form-field {
+		width: 47%;
+	}
+	&> .mat-form-field:first-child {
+		width: 47%;
+	}
+}
+
+.hc-type-label {
+	margin-top: 16px;
+}
+
+.customer-segment-selected {
+	overflow-y: auto;
+	max-height: 230px;
+    font-size: 14px;
+    line-height: 1.75;
+    margin-bottom: 16px;
+}
+
+.customer-segment {
+	border: 1px solid #93A2AD;
+	padding-left: 16px;
+	margin-bottom: 16px;
+
+	.customer-segment-item {
+		&:first-child {
+			margin-top: 12px;
+		}
+	}
+}
+
+.customer-segment-viewport {
+	padding: 0 12px;
+	height: 210px;
+	overflow-y: scroll;
+
+	.mat-list {
+		margin-top: 8px;
+	}
+}
+
+.mat-dialog-actions {
+	border-top: 1px solid #93A2AD;
+	padding-top: 16px;
+}

@@ -1,0 +1,155 @@
+.hc-table-section {
+	position: relative;
+	margin-bottom: spacing(5);
+	
+	.hc-table-wrapper {
+		overflow-y: hidden;
+		overflow-x: auto;
+		min-height: 200px;
+	}
+	
+	.mat-table {
+		border-top: 3px solid map-get($hc-color-grey, dark20);
+		width: 100%;
+
+		td.mat-cell, 
+		td.mat-footer-cell, 
+		th.mat-header-cell {
+			padding: spacing(1);
+			vertical-align: middle;
+			text-align: left;
+			word-wrap: break-word;
+			white-space: unset;
+			overflow-wrap: break-word;
+			word-wrap: break-word;
+			-ms-hyphens: auto;
+			-moz-hyphens: auto;
+			-webkit-hyphens: auto;
+			hyphens: auto;
+		
+			&:first-of-type {
+				padding-left: spacing(2);
+				
+				@include breakpoint-down(md) {
+					left: 0px;
+				}
+			}
+			
+			&.mat-column-actions {
+				padding-right: spacing(2);
+				min-width: 80px;
+				text-align: right;
+				white-space: nowrap;
+				
+				@include breakpoint-down(md) {
+					right: 0px;
+				}
+			}
+
+			&:first-of-type,
+			&:last-of-type {
+				@include breakpoint-down(md) {
+					border-bottom: 0;
+					position: sticky;
+					z-index: 1;
+					background: map-get($hc-color-grey, light20);
+				}
+			}
+			
+			&:not(.mat-column-actions) {
+				min-width: 150px;
+				max-width: 400px;
+			}
+
+			&.mat-column-description {
+				min-width: 320px;
+			}
+		}
+
+		thead {
+			th.mat-header-cell,
+			.mat-sort-header-button {
+				@include hc-type-label();
+			}
+		}
+
+		tbody {
+			@include hc-type-text();
+			line-height: 18px;
+		}
+
+		.mat-column-actions {
+			svg {
+				fill: map-get($hc-color-blue, 100);
+			}
+		}
+	}
+
+	.hc-table-actions {
+		padding: 0 spacing(2);
+		text-align: right;
+		line-height: 90px;
+
+		.mat-form-field {
+			width: 400px;
+
+			@include breakpoint-down(md) {
+				width: 350px;
+			}
+
+			@include breakpoint-down(sm) {
+				width: 250px;
+			}
+		}
+
+		form {
+			float: left;
+		}
+
+		mat-slide-toggle,
+		button {
+			margin-right: spacing(2);
+
+			&.mat-icon-button {
+				margin-right: spacing(1);
+			}
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+
+	.hc-table-filters {
+		padding: 0 spacing(2) spacing(2) spacing(2);
+		border-top: 1px solid map-get($hc-color-grey, light);
+
+		mat-form-field,
+		mat-slide-toggle {
+			margin-top: spacing(2);
+			margin-right: spacing(2);
+		}
+
+		mat-form-field {
+			width: 400px;
+		}
+
+		mat-slide-toggle {
+			height: map-get($hc-input, height);
+			vertical-align: middle;
+		}
+	}
+
+	.hc-table-item-action {
+		cursor: pointer;
+	}
+	
+	.mat-icon-button {
+		opacity: 0.85;
+		@include hc-transition(opacity, 250ms);
+		
+		&:hover {
+			opacity: 1;
+		}
+	}	
+}

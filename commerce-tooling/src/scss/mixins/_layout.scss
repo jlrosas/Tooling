@@ -1,0 +1,51 @@
+@function spacing($unit) {
+    @if $unit {
+        @return $unit * 8px;
+    } @else {
+        @return 8px;
+    }
+}
+
+@mixin push--auto {
+    margin: { 
+        left: auto;
+        right: auto;
+    }
+}
+
+@function breakpoint-maxWidth($size, $shiftIndex:0) {
+	@return nth(map-values($hc-breakpoints), index(map-keys($hc-breakpoints), $size) + $shiftIndex) - 1;
+}
+
+@mixin breakpoint-up($size) {
+    @media (min-width: (#{map-get($hc-breakpoints, $size)})) { 
+        @content; 
+    }
+}
+
+@mixin breakpoint-down($size) {
+    @media (max-width: (#{breakpoint-maxWidth($size)})) { 
+        @content; 
+    }
+}
+
+@mixin breakpoint-only($size) {
+	@media (min-width: #{map-get($hc-breakpoints, $size)})
+		and (max-width: (#{breakpoint-maxWidth($size, 1)})) { 
+        @content; 
+    }
+}
+
+@mixin breakpoint-between($start, $end) {
+	@media (min-width: #{map-get($hc-breakpoints, $start)})
+		and (max-width: (#{breakpoint-maxWidth($size, 1)})) { 
+        @content; 
+    }
+}
+
+@mixin truncate($truncation-boundary) {
+    max-width: $truncation-boundary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

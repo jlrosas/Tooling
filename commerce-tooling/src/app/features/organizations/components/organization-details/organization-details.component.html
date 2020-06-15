@@ -1,0 +1,86 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="detailsForm" autocomplete="off" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<mat-form-field appearance="outline" *ngIf="mode === 'create'">
+				<mat-label>{{'ORGANIZATIONS.ORGANIZATION_NAME'| translate}}</mat-label>
+				<input matInput #organizationNameInput id="organizationName"
+						formControlName="organizationName" (input)="validateOrganizationName()"
+						[maxlength]="128" required>
+			</mat-form-field>
+			<mat-form-field appearance="outline" *ngIf="mode === 'edit'">
+				<mat-label>{{'ORGANIZATIONS.ORGANIZATION_NAME'| translate}}</mat-label>
+				<input matInput id="organizationName" formControlName="organizationName">
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'ORGANIZATIONS.DESCRIPTION'| translate}} {{'ORGANIZATIONS.OPTIONAL' | translate}}</mat-label>
+				<input matInput id="description" #descriptionInput
+						formControlName="description" (input)="validateDescription()"
+						[maxlength]="512">
+			</mat-form-field>
+			<mat-form-field appearance="outline" *ngIf="mode === 'create'">
+				<mat-label>{{'ORGANIZATIONS.TYPE'| translate}}</mat-label>
+				<mat-select	id="organizationType" #memberGroupTypeSelect
+						placeholder="{{'ORGANIZATIONS.ORGANIZATION_TYPE_PLACEHOLDER'| translate}}"
+						formControlName="organizationType"
+						(selectionChange)="selectOrganizationType($event.value)"
+						required>
+					<mat-option [value]="'O'">
+						{{'ORGANIZATIONS.ORGANIZATION' | translate}}
+					</mat-option>
+					<mat-option [value]="'OU'">
+						{{'ORGANIZATIONS.ORGANIZATIONAL_UNIT' | translate}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field appearance="outline" *ngIf="mode === 'edit'">
+				<mat-label>{{'ORGANIZATIONS.TYPE'| translate}}</mat-label>
+				<input id="organizationType"
+						matInput
+						formControlName="organizationType">
+			</mat-form-field>
+			<mat-form-field appearance="outline" *ngIf="mode === 'create'">
+				<mat-label>{{'ORGANIZATIONS.PARENT_ORGANIZATION'| translate}}</mat-label>
+				<input matInput id="parentOrganization"
+						formControlName="parentOrganization"
+						[matAutocomplete]="organizationAutoComplete"
+						(input)="searchParentOrganization($event.target.value)"
+						required>
+				<mat-autocomplete #organizationAutoComplete="matAutocomplete" (optionSelected)="selectParentOrganization($event.option.value)">
+					<mat-option *ngFor="let org of organizationList" [value]="org">
+						{{org.organizationName}}
+					</mat-option>
+					<mat-option *ngIf="!organizationsLoading && organizationList && organizationList.length == 0" [value]="null">
+						{{'ORGANIZATIONS.NO_MATCHING_RECORDS_FOUND' | translate }}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="parentOrganization.errors && parentOrganization.errors.invalidParentOrganization">
+					{{'ORGANIZATIONS.PARENT_ORGANIZATION_ERROR' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline" *ngIf="mode === 'edit'">
+				<mat-label>{{'MEMBER_GROUPS.PARENT_ORGANIZATION'| translate}}</mat-label>
+				<input matInput id="parentOrganization"
+						formControlName="parentOrganization">
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button mat-primary" (click)="next()" *ngIf="mode === 'create'">{{'ORGANIZATIONS.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'ORGANIZATIONS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

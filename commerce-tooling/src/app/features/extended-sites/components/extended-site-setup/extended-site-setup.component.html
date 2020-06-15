@@ -1,0 +1,97 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="setupForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'EXTENDED_SITES.ORGANIZATION'| translate}}</mat-label>
+				<input matInput id="organization" #organizationInput
+						formControlName="organization"
+						[matAutocomplete]="organizationAutocomplete"
+						(input)="searchOrganizations($event.target.value)"
+						required>
+				<mat-autocomplete #organizationAutocomplete="matAutocomplete" (optionSelected)="selectOrganization($event.option.value)">
+					<mat-option *ngFor="let org of organizationList" [value]="org">
+						{{org.organizationName}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="organization.errors && organization.errors.invalidOrganization">
+					{{'EXTENDED_SITES.INVALID_ORGANIZATION' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'EXTENDED_SITES.STOREFRONT_ASSET_STORE'| translate}}</mat-label>
+				<input matInput id="storefrontAssetStore"
+						formControlName="storefrontAssetStore"
+						[matAutocomplete]="storefrontAssetStoreAutocomplete"
+						(input)="searchStorefrontAssetStores($event.target.value)"
+						required>
+				<mat-autocomplete #storefrontAssetStoreAutocomplete="matAutocomplete" (optionSelected)="selectStorefrontAssetStore($event.option.value)">
+					<mat-option *ngFor="let store of storefrontAssetStoreList" [value]="store">
+						{{store.identifier}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="storefrontAssetStore.errors && storefrontAssetStore.errors.invalidStore">
+					{{'EXTENDED_SITES.INVALID_STOREFRONT_ASSET_STORE' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'EXTENDED_SITES.CATALOG_ASSET_STORE'| translate}} {{'EXTENDED_SITES.OPTIONAL'| translate}}</mat-label>
+				<input matInput id="catalogAssetStore"
+						formControlName="catalogAssetStore"
+						[matAutocomplete]="catalogAssetStoreAutocomplete"
+						(input)="searchCatalogAssetStores($event.target.value)">
+				<mat-autocomplete #catalogAssetStoreAutocomplete="matAutocomplete" (optionSelected)="selectCatalogAssetStore($event.option.value)">
+					<mat-option *ngFor="let store of catalogAssetStoreList" [value]="store">
+						{{store.identifier}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="catalogAssetStore.errors && catalogAssetStore.errors.invalidStore">
+					{{'EXTENDED_SITES.INVALID_CATALOG_ASSET_STORE' | translate }}
+				</mat-error>
+			</mat-form-field>
+
+			<!--
+                Shared Owning Organization
+            -->         
+			<mat-checkbox (change)="sharedOwnerChecked($event)" [checked]="sharedOwner">
+				{{'EXTENDED_SITES.SHARED_OWNER_CHECKBOX'| translate}}
+			</mat-checkbox>
+
+			<mat-form-field appearance="outline" *ngIf="sharedOwner">
+				<mat-label>{{'EXTENDED_SITES.SHARED_OWNER_ORGANIZATION'| translate}}</mat-label>
+				<input matInput id="sharedOwnerOrganization"
+						formControlName="sharedOwnerOrganization"
+						[matAutocomplete]="sharedOwnerOrganizationAutocomplete"
+						(input)="searchSharedOwnerOrganizations($event.target.value)"
+						required>
+				<mat-autocomplete #sharedOwnerOrganizationAutocomplete="matAutocomplete" (optionSelected)="selectSharedOwnerOrganization($event.option.value)">
+					<mat-option *ngFor="let org of sharedOwnerOrganizationList" [value]="org">
+						{{org.organizationName}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="sharedOwnerOrganization.errors && sharedOwnerOrganization.errors.invalidSharedOwnerOrganization">
+					{{'EXTENDED_SITES.INVALID_ORGANIZATION' | translate }}
+				</mat-error>
+			</mat-form-field>
+			
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button type="button" class="mat-flat-button" matStepperPrevious>{{'EXTENDED_SITES.BACK'| translate}}</button>
+				<button type="button" class="mat-flat-button mat-primary" (click)="triggerSave()">{{'EXTENDED_SITES.FINISH'| translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

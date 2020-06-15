@@ -1,0 +1,40 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="paymentBillingForm" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<hc-contract-payment-method-list mode="{{mode}}"></hc-contract-payment-method-list>
+			
+			<div class="hc-type-text">
+				{{'CONTRACTS.BILLING_ADDRESS_NOT_PREDEFINED' | translate}}
+			</div>
+			<mat-checkbox #allowPersonalBillingAddressCheck formControlName="allowPersonalBillingAddress" (change)="changeAllowPersonalBillingAddress($event)">
+				{{'CONTRACTS.PERSONAL_ADDRESS_BOOK' | translate}}
+			</mat-checkbox>
+			<mat-checkbox formControlName="allowParentOrganizationBillingAddress" (change)="changeAllowParentOrganizationBillingAddress($event)">
+				{{'CONTRACTS.PARENT_ORGANIZATION_ADDRESS_BOOK' | translate}}
+			</mat-checkbox>
+			<mat-checkbox formControlName="allowAccountOrganizationBillingAddress" (change)="changeAllowAccountOrganizationBillingAddress($event)">
+				{{'CONTRACTS.BUSINESS_ORGANIZATION_ADDRESS_BOOK' | translate}}
+			</mat-checkbox>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" type="button" matStepperPrevious *ngIf="mode === 'create'">{{'CONTRACTS.BACK' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" matStepperNext *ngIf="mode === 'create'">{{'CONTRACTS.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'CONTRACTS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

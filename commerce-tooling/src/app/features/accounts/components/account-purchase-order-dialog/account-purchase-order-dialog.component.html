@@ -1,0 +1,50 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'ACCOUNTS.NEW_PURCHASE_ORDER' | translate}}</h4>
+<form [formGroup]="purchaseOrderForm" autocomplete="off">
+
+	<mat-form-field appearance="outline">
+		<mat-label>{{'ACCOUNTS.PURCHASE_ORDER_NUMBER'| translate}}</mat-label>
+		<input #purchaseOrderNumberInput matInput id="purchaseOrderNumber" formControlName="purchaseOrderNumber" required [maxlength]="254">
+		<mat-error *ngIf="purchaseOrderNumber.errors && purchaseOrderNumber.errors.duplicate">
+			{{'ACCOUNTS.PURCHASE_ORDER_NUMBER_NOT_UNIQUE' | translate }}
+		</mat-error>
+	</mat-form-field>
+
+	<div class="row-layout">
+		<mat-form-field appearance="outline">
+			<mat-label>{{'ACCOUNTS.SPENDING_LIMIT'| translate}} {{'ACCOUNTS.OPTIONAL'| translate}}</mat-label>
+			<input matInput id="spendingLimitValue" formControlName="spendingLimitValue" type="number" min="0">
+			<mat-error *ngIf="spendingLimitValue.errors && spendingLimitValue.errors.invalidSpendingLimitValue">
+				{{'ACCOUNTS.INVALID_SPENDING_LIMIT' | translate }}
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>{{'ACCOUNTS.CURRENCY'| translate}}</mat-label>
+			<mat-select	id="spendingLimitCurrency"
+					formControlName="spendingLimitCurrency"
+					required>
+				<mat-option *ngFor="let currency of currencies" [value]="currency">
+					{{currency}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
+
+	<mat-dialog-actions>
+		<button class="mat-flat-button" type="button" (click)="cancel()">{{'ACCOUNTS.CANCEL' | translate}}</button>
+		<button class="mat-flat-button mat-primary" type="button" (click)="save()">{{'ACCOUNTS.SAVE' | translate}}</button>
+	</mat-dialog-actions>
+</form>
+
+

@@ -1,0 +1,75 @@
+&.mat-form-field-type-mat-select {
+    .mat-select-value {
+        @include hc-type-text();
+        line-height: map-get($hc-input, height);
+        padding: 0 spacing(1.5);
+    }
+
+    // Active State
+    &.mat-form-field-can-float.mat-form-field-should-float {
+        .mat-select-value {
+            padding-top: spacing(2);
+            padding-right: 0;
+            line-height: map-get($hc-input, height) - spacing(2);
+        }
+
+        .filter-clear ~ mat-select {
+            .mat-select-value {
+                padding-right: spacing(9);
+                background: beige;
+            }
+        }
+    }
+
+    // Select Dropdown arrow
+    .mat-form-field-infix,
+    .mat-select {
+        height: map-get($hc-input, height);
+    }
+    .mat-select-arrow-wrapper {
+        width: spacing(5);
+        transform: none;
+
+        .mat-select-arrow {
+            margin: 0 spacing(2.5);
+            border-left: spacing(.75) solid transparent;
+            border-right: spacing(.75) solid transparent;
+            border-top: spacing(.75) solid;
+        }
+    }
+}
+
+&.hc-form-field-small {
+
+    &.mat-form-field-type-mat-select {
+        .mat-select-value {
+            font-size: 14px;
+            line-height: map-get($hc-input, heightSmall);
+            padding: 0 spacing(1.5);
+        }
+    
+        // Active State
+        &.mat-form-field-can-float.mat-form-field-should-float {
+            .mat-select-value {
+                padding-top: 18px;
+                padding-right: 0;
+                line-height: map-get($hc-input, heightSmall) - 18px;
+            }
+        }
+    
+        // Select Dropdown arrow
+        .mat-form-field-infix,
+        .mat-select {
+            height: map-get($hc-input, heightSmall);
+        }
+    
+        .mat-select-arrow-wrapper {
+            width: auto;
+            transform: none;
+    
+            .mat-select-arrow {
+                margin: 0 spacing(2);
+            }
+        }
+    }
+}

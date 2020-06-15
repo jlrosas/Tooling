@@ -1,0 +1,87 @@
+/*
+ *-------------------------------------------------------------------
+ * Licensed Materials - Property of HCL Technologies
+ *
+ * HCL Commerce
+ *
+ * (C) Copyright HCL Technologies Limited 1996, 2020
+
+ *-------------------------------------------------------------------
+ */
+
+@import '~@angular/material/theming';
+@include mat-core();
+
+$hc_blue: (
+    50 : #e8eff7,
+    100 : #c6d7ec,
+    200 : #a0bcdf,
+    300 : #7aa1d2,
+    400 : #5e8cc8,
+    500 : #4178be,
+    600 : #3b70b8,
+    700 : #3265af,
+    800 : #2a5ba7,
+    900 : #1c4899,
+    A100 : #d2e0ff,
+    A200 : #9fbeff,
+    A400 : #6c9bff,
+    A700 : #528aff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+$hc-orange: (
+    50 : #fef0e4,
+    100 : #fcdabc,
+    200 : #fac18f,
+    300 : #f8a862,
+    400 : #f79540,
+    500 : #f5821e,
+    600 : #f47a1a,
+    700 : #f26f16,
+    800 : #f06512,
+    900 : #ee520a,
+    A100 : #ffffff,
+    A200 : #ffebe4,
+    A400 : #ffc6b1,
+    A700 : #ffb397,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+/* ======== Angular material custom themes ======== */ 
+$my-custom-primary: mat-palette($hc-blue);
+$my-custom-accent: mat-palette($hc-orange, 500, 200, 900);
+$my-custom-warn: mat-palette($mat-red);
+
+$my-custom-theme: mat-light-theme($my-custom-primary, $my-custom-accent, $my-custom-warn);
+
+@include angular-material-theme($my-custom-theme);

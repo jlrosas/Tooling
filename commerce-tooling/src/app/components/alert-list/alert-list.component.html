@@ -1,0 +1,16 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<ul class={className}>
+	<li *ngFor="let message of messages">
+		<ibm-notification *ngIf="message" [notificationObj]="message" (close)="onClose(message)"></ibm-notification>
+	</li>
+</ul>

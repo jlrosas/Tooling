@@ -1,0 +1,79 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="rolesForm" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<div class="bx--row">
+				<div class="bx--col-lg-6">
+					<div class="hc-type-text">
+						<p>{{'USER_MANAGEMENT.SELECT_AN_ORGANIZATION'| translate}}</p>
+					</div>
+					<mat-form-field appearance="outline">
+						<mat-label>{{'USER_MANAGEMENT.ORGANIZATION'| translate}}</mat-label>
+						<input matInput #orgInput id="organization"
+								formControlName="organization"
+								[matAutocomplete]="organizationAutoComplete"
+								(input)="searchOrganizations($event.target.value)">
+						<mat-autocomplete #organizationAutoComplete="matAutocomplete" (optionSelected)="selectOrganization($event.option.value)">
+							<mat-option *ngFor="let org of organizationList" [value]="org">
+								{{org.organizationName}}
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+					<mat-form-field appearance="outline">
+						<mat-label>{{ ((this.selectedOrganization == null ) ?  'USER_MANAGEMENT.NO_ORGANIZATION_SELECTED' : 'USER_MANAGEMENT.AVAILABLE_ROLES') | translate }}</mat-label>
+						<input matInput id="availableRoles"
+								#availableRolesInput
+								formControlName="availableRoles"
+								[matChipInputFor]="assignedRolesList"
+								placeholder="{{'USER_MANAGEMENT.SELECT_ROLE_PLACEHOLDER' | translate}}"
+								[matAutocomplete]="availableRolesAutocomplete">
+						<mat-icon matSuffix>search</mat-icon>
+						<mat-autocomplete #availableRolesAutocomplete="matAutocomplete" (optionSelected)="selectRole($event.option.value)">
+							<mat-option *ngFor="let role of filteredAvailableRoleList" [value]="role">
+								{{role.content}}
+							</mat-option>
+							<mat-option *ngIf="!rolesLoading && filteredAvailableRoleList.length == 0" [value]="null">
+								{{'USER_MANAGEMENT.NO_MATCHING_RECORDS_FOUND' | translate }}
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+				</div>
+				<div class="select-group-content bx--col-lg-5">
+					<div class="hc-type-label">{{'USER_MANAGEMENT.SELECTED_ROLES'| translate}}</div>
+					<div class="hc-chip-list-section">
+						<span *ngIf="!assignedRoles.length">{{'GENERAL.NO_SELECTION_MADE'| translate}}</span>
+						<mat-chip-list #assignedRolesList>
+							<mat-chip *ngFor="let assignedRole of assignedRoles" [selectable]="false"
+									[removable]="true" (removed)="removeRole(assignedRole)">
+									{{assignedRole.roleName}} - {{assignedRole.organizationName}}
+								<mat-icon matChipRemove>cancel</mat-icon>
+							</mat-chip>
+						</mat-chip-list>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div *ngIf="mode === 'create'">
+				<button class="mat-flat-button" type="button" matStepperPrevious>{{'USER_MANAGEMENT.BACK' | translate}}</button>
+				<button *hcRole="[-1,-20,-21,-27]" class="mat-flat-button mat-primary" type="button" matStepperNext>{{'USER_MANAGEMENT.NEXT' | translate}}</button>
+				<button *hcNotRole="[-1,-20,-21,-27]" class="mat-flat-button mat-primary" type="button" (click)="triggerSave()">{{'USER_MANAGEMENT.FINISH' | translate}}</button>
+			</div>
+			<div *ngIf="mode === 'edit'">
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()">{{'USER_MANAGEMENT.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,3176 @@
+{
+  "host": "hostname.com",
+  "basePath": "/rest/admin/v2",
+  "schemes": [
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "title": "User and Organization Management",
+    "version": "2.0"
+  },
+  "tags": [
+    {
+      "name": "Addresses",
+      "description": "This class provides RESTful services to manage address information."
+    },
+    {
+      "name": "Organizations",
+      "description": "This class provides RESTful services to register an organization, to get or update organization information."
+    },
+    {
+      "name": "Users",
+      "description": "This class provides RESTful services to register a user, to get or update user information."
+    }
+  ],
+  "paths": {
+    "/organizations": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested resource has been created.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "in": "body",
+            "description": "Request body.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Organization"
+            }
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Create an organization.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Create an organization.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Organizations-createOrganization"
+      }
+    },
+    "/organizations/{id}": {
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": false,
+            "in": "body",
+            "description": "Request body.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Organization"
+            }
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Update an organization.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Update an organization.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Organizations-updateOrganization"
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Organization"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path",
+            "name": "id"
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Get an organization by ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get an organization by ID.",
+        "operationId": "Organizations-findByOrganizationId"
+      }
+    },
+    "/organizations/{id}/lock": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          },
+          "401": {
+            "description": "Not authenticated. The user session is not valid.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          },
+          "403": {
+            "description": "The user is not authorized to perform the specified request.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          },
+          "500": {
+            "description": "Internal server error. For details, see the server log files.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "name": "id",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Lock an organization. When locked the organization's status is -1.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Lock an organization.",
+        "operationId": "Organization-lock"
+      }
+    },
+    "/organizations/{id}/unlock": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          },
+          "401": {
+            "description": "Not authenticated. The user session is not valid.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          },
+          "403": {
+            "description": "The user is not authorized to perform the specified request.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          },
+          "500": {
+            "description": "Internal server error. For details, see the server log files.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "name": "id",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Unlock an organization. When unlocked the organization's status is 0.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Unlock an organization.",
+        "operationId": "Organization-unlock"
+      }
+    },
+    "/organizations/manageable": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/OrganizationCollection"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. Some of the inputs provided to the request are not valid."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The organization name.",
+            "in": "query",
+            "name": "organizationName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "The parent organization name.",
+            "in": "query",
+            "name": "parentOrganizationName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "Manage",
+            "description": "Limits the results to organizations that match the specified task. The following values are accepted:\n * AssignRoleToUser - Returns organizations for which the current user is allowed to assign roles to other users.\n * CreateAccount - Returns organizations for which the current user is allowed to create accounts.\n * Manage - Returns organizations that the current user is allowed to manage. The organizations may be of type \"O\", \"OU\" or \"AD\".\n * ManageExcludingAD - Returns organizations that the current user is allowed to manage. The organiztaion may be of type \"O\" or \"OU\".\n * ManageO - Returns organizations of type \"O\" that the current user is allowed to manage.\n * ManageOU - Returns organizations of type \"OU\" that the current user is allowed to manage.\n",
+            "in": "query",
+            "name": "taskName",
+            "required": false,
+            "type": "string",
+            "items": {
+              "type": "string",
+              "enum": [
+                "AssignRoleToUser",
+                "CreateAccount",
+                "Manage",
+                "ManageExcludingAD",
+                "ManageO",
+                "ManageOU"
+              ]
+            }
+          },
+          {
+            "required": false,
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique numeric ID of the store for which the organizations are being managed. This parameter should be passed if the taskName is CreateAccount.",
+            "in": "query",
+            "name": "storeId"
+          },
+          {
+            "description": "The comma-separated set of properties that control the order of the listed items. Properties can be prefixed by either (-) to sort in descending order, or (+) to sort in ascending order. By default, properties are sorted in ascending order. For example, sort=name,-id will order the items first based on the name value in ascending order, and then by their ID value in descending order.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Limits search results to only include organizations with a parent organization ID that matches the value of this parameter.",
+            "in": "query",
+            "name": "parentOrganizationId",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Limits search results to only include organizations with an ancestor organization ID that matches the value of this parameter.",
+            "in": "query",
+            "name": "ancestorOrganizationId",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Get a collection of organizations the currently logged in administrator user can manage.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get a collection of organizations the currently logged in administrator user can manage.",
+        "operationId": "Organization-getManageableOrganizations"
+      }
+    },
+    "/organizations/{id}/site-attributes": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/SiteMemberAttributeCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "default": 100000,
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Get an organization's site-level, store-independent attributes.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get an organization's site-level, store-independent attributes.",
+        "operationId": "Organizations-findSiteAttributesByOrganizationId"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested resource has been created.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "Request body.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SiteMemberAttribute"
+            }
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Create an organization site-level attribute.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Create an organization site-level attribute.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Organizations-createOrganizationSiteAttribute"
+      }
+    },
+    "/organizations/{id}/site-attributes/{name}": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/SiteMemberAttribute"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "name": "name",
+            "type": "string",
+            "description": "The name of the attribute to use as the search term.",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Get an organization's site-level, store-independent attribute by organization ID and attribute name.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get an organization's site-level, store-independent attribute by organization ID and attribute name.",
+        "operationId": "Organizations-findSiteAttributeByOrganizationId"
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "name": "name",
+            "type": "string",
+            "description": "The name of the attribute to be updated.",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "Request body.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SiteMemberAttribute"
+            }
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Update an organization's site-level attributes. Attribute values are merged at the attribute level, rather than at the attribute value level. For example, if an attribute has the following values '[a, b]', after performing an update using values '[c, d, e]', the attribute values would be '[c, d, e]'.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Update an organization's site-level attributes.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Organizations-updateOrganizationSiteAttribute"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "name": "name",
+            "type": "string",
+            "description": "The name of the attribute to be deleted.",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Delete a site-level attribute of an organization.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Delete a site-level attribute of an organization.",
+        "operationId": "Organizations-deleteOrganizationSiteAttribute"
+      }
+    },
+    "/organizations/{id}/store-attributes": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/StoreMemberAttributeCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique numeric ID of the store where the attribute applies.",
+            "in": "query",
+            "name": "storeId"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "default": 100000,
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Get an organization's store-specific attributes.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get an organization's store-specific attributes.",
+        "operationId": "Organizations-findStoreMemberAttributesByOrganizationId"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested resource has been created.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "Request body.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/StoreMemberAttribute"
+            }
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Create a store-specific organization attribute.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Create a store-specific organization attribute.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Organizations-createOrganizationStoreMemberAttribute"
+      }
+    },
+    "/organizations/{id}/store-attributes/storeId:{storeId},name:{name}": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/StoreMemberAttribute"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique numeric ID of the store where the attribute applies.",
+            "in": "path",
+            "name": "storeId"
+          },
+          {
+            "required": true,
+            "name": "name",
+            "type": "string",
+            "description": "The name of the attribute to use as the search term.",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Get an organization's store-specific attribute by organization ID, store ID and attribute name.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get an organization's store-specific attribute by organization ID, store ID and attribute name.",
+        "operationId": "Organizations-findStoreMemberAttributeByOrganizationId"
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique numeric ID of the store where the attribute applies.",
+            "in": "path",
+            "name": "storeId"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The name of this attribute.",
+            "in": "path",
+            "name": "name"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "Request body.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/StoreMemberAttribute"
+            }
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Update an organization's store-specific attributes. Attribute values are merged at the attribute level, rather than the attribute value level. For example, if an attribute has the following values '[a, b]', after performing an update using values '[c, d, e]', the attribute values would be '[c, d, e]'.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Update an organization's store-specific attributes.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Organizations-updateOrganizationStoreMemberAttribute"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the organization.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "name": "storeId",
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique numeric ID of the store where the attribute applies.",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "name": "name",
+            "type": "string",
+            "description": "The name of the attribute to be deleted.",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Delete a store-specific attribute of an organization.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Delete a store-specific attribute of an organization.",
+        "operationId": "Organizations-deleteOrganizationStoreMemberAttribute"
+      }
+    },
+    "/users/manageable": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/UserCollection"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. Some of the inputs provided to the request are not valid."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "Limits search results to only include users whose last name matches the value of this parameter.",
+            "in": "query",
+            "name": "lastName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Limits search results to only include users whose first name matches the value of this parameter.",
+            "in": "query",
+            "name": "firstName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Limits search results to only include users whose logon ID matches the value of this parameter.",
+            "in": "query",
+            "name": "logonId",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "The comma-separated set of properties that control the order of the listed items. Properties can be prefixed by either (-) to sort in descending order, or (+) to sort in ascending order. By default, properties are sorted in ascending order. For example, sort=name,-id will order the items first based on the name value in ascending order, and then by their ID value in descending order.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Limits search results to only include users whose first name, last name or logon ID matches the value of this parameter.",
+            "in": "query",
+            "name": "searchString",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Limits search results to only include users whose role ID matches the value of this parameter.",
+            "in": "query",
+            "name": "roleId",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Limits search results to only include users whose parent organization ID matches the value of this parameter.",
+            "in": "query",
+            "name": "parentOrganizationId",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Get a collection of users the currently logged in administrator user can manage.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get a collection of users the currently logged in administrator user can manage.",
+        "operationId": "Users-getManageableUsers"
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/User"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Get a user by ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get a user by ID.",
+        "operationId": "Users-findByUserId"
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": false,
+            "in": "body",
+            "description": "Request body.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Update a user.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Update a user.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Users-updateUser"
+      }
+    },
+    "/users/{id}/roles": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/RoleCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Get user roles by ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get user roles by ID.",
+        "operationId": "Users-getUserRoles"
+      }
+    },
+    "/users": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested resource has been created.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "in": "body",
+            "description": "Request body.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Create a user.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Create a user.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Users-createUser"
+      }
+    },
+    "/users/{id}/site-attributes": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/SiteMemberAttributeCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "default": 100000,
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Get a user's site-level, store-independent attributes.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get a user's site-level, store-independent attributes.",
+        "operationId": "Users-findSiteAttributesByUserId"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested resource has been created.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "Request body.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SiteMemberAttribute"
+            }
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Create a user site-level attribute.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Create a user site-level attribute.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Users-createUserSiteAttribute"
+      }
+    },
+    "/users/{id}/site-attributes/{name}": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/SiteMemberAttribute"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "name": "name",
+            "type": "string",
+            "description": "The name of the attribute to use as the search term.",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Get a user's site-level, store-independent attribute by user ID and attribute name.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get a user's site-level, store-independent attribute by user ID and attribute name.",
+        "operationId": "Users-findSiteAttributeByUserId"
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "name": "name",
+            "type": "string",
+            "description": "The name of the attribute to be updated.",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "Request body.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SiteMemberAttribute"
+            }
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Update a user's site-level attributes. Attribute values are merged at the attribute level, rather than the attribute value level. For example, if an attribute has the following values '[a, b]', after performing an update using values '[c, d, e]', the attribute values would be '[c, d, e]'.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Update a user's site-level attributes.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Users-updateUserSiteAttribute"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "name": "name",
+            "type": "string",
+            "description": "The name of the attribute to be deleted.",
+            "in": "path"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "default": 100000,
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Delete a site-level attribute of a user.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Delete a site-level attribute of a user.",
+        "operationId": "Users-deleteUserSiteAttribute"
+      }
+    },
+    "/users/{id}/store-attributes": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/StoreMemberAttributeCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique numeric ID of the store where the attribute applies.",
+            "in": "query",
+            "name": "storeId"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "default": 100000,
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Get a user's store-specific attributes.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get a user's store-specific attributes.",
+        "operationId": "Users-findStoreMemberAttributesByUserId"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested resource has been created.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "Request body.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/StoreMemberAttribute"
+            }
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Create a store-specific user attribute.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Create a store-specific user attribute.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Users-createUserStoreMemberAttribute"
+      }
+    },
+    "/users/{id}/store-attributes/storeId:{storeId},name:{name}": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/StoreMemberAttribute"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique numeric ID of the store where the attribute applies.",
+            "in": "path",
+            "name": "storeId"
+          },
+          {
+            "required": true,
+            "name": "name",
+            "type": "string",
+            "description": "The name of the attribute to use as the search term.",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Get a user's store-specific attribute by user ID, store ID and attribute name.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get a user's store-specific attribute by user ID, store ID and attribute name.",
+        "operationId": "Users-findStoreMemberAttributeByUserId"
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique numeric ID of the store where the attribute applies.",
+            "in": "path",
+            "name": "storeId"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The name of this attribute.",
+            "in": "path",
+            "name": "name"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "Request body.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/StoreMemberAttribute"
+            }
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Update a user's store-specific attributes. Attribute values are merged at the attribute level, rather than the attribute value level. For example, if an attribute has the following values '[a, b]', after performing an update using values '[c, d, e]', the attribute values would be '[c, d, e]'.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Update a user's store-specific attributes.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Users-updateUserStoreMemberAttribute"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "name": "storeId",
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique numeric ID of the store where the attribute applies.",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "name": "name",
+            "type": "string",
+            "description": "The name of the attribute to be deleted.",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Delete a store-specific attribute of a user.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Delete a store-specific attribute of a user.",
+        "operationId": "Users-deleteUserStoreMemberAttribute"
+      }
+    },
+    "/addresses": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/AddressCollection"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. Some of the inputs provided to the request are not valid."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "name": "fields",
+            "required": false,
+            "in": "query",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The comma-separated set of properties to be returned. If no properties are specified, all properties are returned."
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "Limits search results to only include users whose last name matches the value of this parameter.",
+            "in": "query",
+            "name": "lastName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Limits search results to only include users whose first name matches the value of this parameter.",
+            "in": "query",
+            "name": "firstName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Limits search results to only include users whose member ID matches the value of this parameter.",
+            "in": "query",
+            "name": "memberId",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "The comma-separated set of properties that control the order of the listed items. Properties can be prefixed by either (-) to sort in descending order, or (+) to sort in ascending order. By default, properties are sorted in ascending order. For example, sort=name,-id will order the items first based on the name value in ascending order, and then by their ID value in descending order.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Addresses"
+        ],
+        "description": "Get a collection of addresses.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get a collection of addresses.",
+        "operationId": "Addresses-getAddresses"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested resource has been created.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "in": "body",
+            "description": "Request body. The \"id\" field will be generated and it should not be part of the request body. The \"selfAddress\" and \"status\" fields are managed and it cannot be specified.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Address"
+            }
+          }
+        ],
+        "tags": [
+          "Addresses"
+        ],
+        "description": "Create an address.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Create an address.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Addresses-createAddress"
+      }
+    },
+    "/addresses/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Address"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "name": "fields",
+            "required": false,
+            "in": "query",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The comma-separated set of properties to be returned. If no properties are specified, all properties are returned."
+          },
+          {
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique numeric ID for identifying the address.",
+            "in": "path",
+            "name": "id"
+          }
+        ],
+        "tags": [
+          "Addresses"
+        ],
+        "description": "Get an address by ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get an address by ID.",
+        "operationId": "Addresses-findByAddressId"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique numeric ID for identifying the address.",
+            "in": "path",
+            "name": "id"
+          }
+        ],
+        "tags": [
+          "Addresses"
+        ],
+        "description": "Delete an address  by ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Delete an address by ID.",
+        "operationId": "Addresses-deleteByAddressId"
+      }
+    },
+    "/addresses/{id}/new-version": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested resource has been created.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          },
+          "401": {
+            "description": "Not authenticated. The user session is not valid.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          },
+          "403": {
+            "description": "The user is not authorized to perform the specified request.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          },
+          "500": {
+            "description": "Internal server error. For details, see the server log files.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "name": "id",
+            "description": "The unique numeric ID for identifying the address.",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "Request body. The \"selfAddress\" and \"status\" fields are managed and it cannot be specified.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Address"
+            }
+          }
+        ],
+        "tags": [
+          "Addresses"
+        ],
+        "description": "Updates an address by creating a new updated version. After the update, the new address will have status \"P\" (permanent) and the old address will have status \"T\" (historical).",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new version of an address.",
+        "operationId": "Addresses-updateByAddressId"
+      }
+    }
+  },
+  "definitions": {
+    "ErrorResponseContainer": {
+      "description": "The error message model.",
+      "properties": {
+        "errors": {
+          "items": {
+            "$ref": "#/definitions/Error"
+          },
+          "type": "array"
+        },
+        "requestId": {
+          "description": "The request identifier.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Error": {
+      "description": "The error message item model.",
+      "properties": {
+        "code": {
+          "description": "The error message code.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "The unique identifier for the request.",
+          "type": "string"
+        },
+        "locale": {
+          "description": "The locale of the error message.",
+          "type": "string"
+        },
+        "message": {
+          "description": "The error message.",
+          "type": "string"
+        },
+        "messageArguments": {
+          "description": "The arguments used to construct the error message.",
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "messageKey": {
+          "description": "The error message key.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Address": {
+      "description": "The addresses of users and organizations. An address can be the a user's own address or alternative address that is used for billing or shipping purposes.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The unique numeric ID for identifying the address."
+        },
+        "address1": {
+          "type": "string",
+          "description": "The first address line of the street address."
+        },
+        "address2": {
+          "type": "string",
+          "description": "The second address line of the street address."
+        },
+        "address3": {
+          "type": "string",
+          "description": "The third address line of the street address."
+        },
+        "addressType": {
+          "type": "string",
+          "description": "The usage of the address. Available values:<br> * SB - The address is used both as a shipping and a billing address.<br> * S - The address is used as a shipping address.<br> * B - The address is used as a billing address."
+        },
+        "bestCallingTime": {
+          "type": "string",
+          "description": "Indicates the preferred time of day when the user is to be contacted. Available values:<br> * D - Daytime.<br> * E - Evening."
+        },
+        "billingCode": {
+          "type": "string",
+          "description": "A code to identify the shipping or billing information."
+        },
+        "billingCodeType": {
+          "type": "string",
+          "description": "The code for identifying the system or method of code structure that is used for billing."
+        },
+        "businessTitle": {
+          "type": "string",
+          "description": "The business title for the user, such as a Manager or Chief Executive Officer."
+        },
+        "city": {
+          "type": "string",
+          "description": "The name of the city where the user or organization resides."
+        },
+        "country": {
+          "type": "string",
+          "description": "The name of the country or region where the user or organization resides."
+        },
+        "createdDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time that the address was created."
+        },
+        "email1": {
+          "type": "string",
+          "description": "The primary e-mail."
+        },
+        "email2": {
+          "type": "string",
+          "description": "The secondary e-mail."
+        },
+        "fax1": {
+          "type": "string",
+          "description": "The primary facsimile number."
+        },
+        "fax2": {
+          "type": "string",
+          "description": "The secondary facsimile number."
+        },
+        "field1": {
+          "type": "string",
+          "description": "A customizable field."
+        },
+        "field2": {
+          "type": "string",
+          "description": "A customizable field."
+        },
+        "field3": {
+          "type": "string",
+          "description": "A customizable field."
+        },
+        "firstName": {
+          "type": "string",
+          "description": "The first name of the user."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "The last name of the user."
+        },
+        "memberId": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the member that this address belongs to. A member can be an organization or a user. If memberId is not specified, then the default is the current user (the user who is logging on). The value cannot be set or updated by users or organizations REST APIs."
+        },
+        "middleName": {
+          "type": "string",
+          "description": "The middle name or initial of the user."
+        },
+        "mobilePhone1": {
+          "type": "string",
+          "description": "The primary mobile device number of the user, used for text messaging. The number should be specified without the country code. The country code is specified as the mobilePhone1Country value."
+        },
+        "mobilePhone1Country": {
+          "type": "string",
+          "description": "The country code of the mobile device phone number. This country is used for country code resolution when sending text messages. This data is required when the mobilePhone1 column is used."
+        },
+        "nickName": {
+          "type": "string",
+          "description": "The unique name or identifier for the address. A nickname must be unique among the addresses for a specific user or organization. The nickname for a user's address must also be different than the logon ID for a user so that the address does not conflict with the user's self-address. The self-address is created when the account for the user is first created. Multiple users or organizations can each have an address with the same nickname. The value cannot be set or updated by users or organizations REST APIs."
+        },
+        "officeAddress": {
+          "type": "string",
+          "description": "The internal office address line, such as the internal designation for an employee's desk location."
+        },
+        "organizationName": {
+          "type": "string",
+          "description": "The name of the organization to which the address information applies, if this is a business address."
+        },
+        "organizationUnitName": {
+          "type": "string",
+          "description": "The name of the organizational unit to which the address information applies, if this is a business address."
+        },
+        "packageSuppression": {
+          "type": "integer",
+          "description": "Specifies whether or not to include package inserts. Available values:<br> * 1 - Include.<br> * 0 - Do not include.",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "personTitle": {
+          "type": "string",
+          "description": "The personal title of the user that is associated with the address. For example, Dr., Rev., Mr. or Ms."
+        },
+        "phone1": {
+          "type": "string",
+          "description": "The primary phone number."
+        },
+        "phone1Type": {
+          "type": "string",
+          "description": "The type of phone that is used for the primary phone number. For example, TTY for hearing impaired, PCM for pulse-coded modulation, or CEL for mobile."
+        },
+        "phone2": {
+          "type": "string",
+          "description": "The secondary phone number."
+        },
+        "phone2Type": {
+          "type": "string",
+          "description": "The type of phone that is used for the secondary phone number. For example, TTY for hearing impaired, PCM for pulse-coded modulation, or CEL for mobile."
+        },
+        "primary": {
+          "type": "integer",
+          "description": "Indicates that the address is the primary address for the user or organization when the user or organization has multiple addresses associated, such as when a user or organization has multiple shipping addresses. The value cannot be set or updated by users or organizations REST APIs. Available values:<br> * 1 - The address is the primary address.<br> * 0 - (Default value) The address is an alternate address.",
+          "default": 0,
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "publishPhone1": {
+          "type": "integer",
+          "description": "Whether to list the primary phone number. Available values: <br> * 1 - Yes.<br> * 0 - No.",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "publishPhone2": {
+          "type": "integer",
+          "description": "Whether to list the secondary phone number. Available values: <br> * 1 - Yes.<br> * 0 - No.",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "selfAddress": {
+          "type": "integer",
+          "description": "Indicates whether the address is associated with the registration of the user or organization. This value cannot be edited after address creation. Available values: <br> * 1 - Yes.<br> * 0 - No.",
+          "enum": [
+            0,
+            1
+          ],
+          "readOnly": true
+        },
+        "shippingGeoCode": {
+          "type": "string",
+          "description": "The geographical code that identifies a region for the shipping purposes."
+        },
+        "state": {
+          "type": "string",
+          "description": "The name of the state, province, or equivalent where the user or organization resides."
+        },
+        "status": {
+          "type": "string",
+          "description": "Indicates the status of the address. When an address is created, its status is marked with a \"P\", meaning \"permanent\", and indicates that the address is the current address. When an address is updated, a new record of the address is created with the updates. The new record is marked with a \"P\" and the earlier record is marked with a \"T\", meaning \"temporary\", which indicates that the address is the historical address. This value cannot be edited.",
+          "readOnly": true
+        },
+        "taxGeoCode": {
+          "type": "string",
+          "description": "The geographical tax code that identifies a region for the tax purposes."
+        },
+        "zipCode": {
+          "type": "string",
+          "description": "The ZIP or postal code of the user's address."
+        }
+      }
+    },
+    "AddressCollection": {
+      "description": "The model for list of addresses.",
+      "properties": {
+        "count": {
+          "description": "The total number of item records that match the query parameters.",
+          "type": "integer",
+          "format": "int64",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Address"
+          },
+          "description": "The items."
+        },
+        "limit": {
+          "description": "The maximum number of records to return.",
+          "format": "int32",
+          "maximum": 500,
+          "type": "integer"
+        },
+        "offset": {
+          "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0
+        }
+      }
+    },
+    "OrganizationCollection": {
+      "description": "The model for list of organizations.",
+      "properties": {
+        "count": {
+          "description": "The total number of item records that match the query parameters.",
+          "type": "integer",
+          "format": "int64",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Organization"
+          },
+          "description": "The items."
+        },
+        "limit": {
+          "description": "The maximum number of records to return.",
+          "format": "int32",
+          "maximum": 500,
+          "type": "integer"
+        },
+        "offset": {
+          "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0
+        }
+      }
+    },
+    "Organization": {
+      "properties": {
+        "id": {
+          "description": "The unique numeric ID for identifying the organization.",
+          "type": "string",
+          "readOnly": true
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "administratorFirstName": {
+          "description": "The first name of the administrator.",
+          "type": "string"
+        },
+        "administratorLastName": {
+          "description": "The last name of the administrator.",
+          "type": "string"
+        },
+        "administratorMiddleName": {
+          "description": "The middle name of the administrator.",
+          "type": "string"
+        },
+        "approvalState": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The organizational entity's approval status. Available values: <br>* 0 - pending approval.<br>* 1 - approved.<br>* 2 - rejected.<br>* null - approval not applicable, so considered approved.",
+          "readOnly": true
+        },
+        "businessCategory": {
+          "description": "Describes the kind of business performed by an organization or organizational unit.",
+          "type": "string"
+        },
+        "description": {
+          "description": "A description of the registrant.",
+          "type": "string"
+        },
+        "distinguishedName": {
+          "description": "Distinguished Name (DN) of the organization or organizational unit, for LDAP use.",
+          "type": "string",
+          "readOnly": true
+        },
+        "isBusinessEntity": {
+          "description": "Whether this organization is a business entity, that is, an organization that can have business accounts. If the organization is a business entity, the value will be true, or false otherwise.",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "legalId": {
+          "description": "The organization's legal identifier, such as the identifier assigned by a government. The value may be null for an organization whose type is an organizational unit (OU).",
+          "type": "string"
+        },
+        "organizationName": {
+          "description": "The name of the organization that the registrant represents.",
+          "type": "string"
+        },
+        "organizationType": {
+          "description": "The type of the organizational entity being added. The value can be set when creating an organization, but is otherwise read-only. Available values: <br>* O - Organization.<br>* OU - Organization Unit.",
+          "type": "string",
+          "readOnly": true
+        },
+        "parentOrganizationId": {
+          "description": "If the organization type is an organizational unit (OU), parentOrganizationId is the unique ID of the parent organization of this organization. If the organization type is an organization (O), parentOrganizationId is not required and the default value is the root organization (-2001). The value can be set when creating an organization, but is otherwise read-only.",
+          "type": "string"
+        },
+        "parentOrganizationName": {
+          "description": "The name of this organization's parent.",
+          "type": "string",
+          "readOnly": true
+        },
+        "preferredDelivery": {
+          "description": "The registrant's preferred mode of delivery.",
+          "type": "string"
+        },
+        "status": {
+          "description": "Whether or not the organization is locked. Available values: <br> * 0 - The organization is unlocked.<br> * -1 - The organization is locked.",
+          "enum": [
+            0,
+            -1
+          ],
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "taxPayerId": {
+          "description": "A string used to identify the user for taxation, especially useful with tax software.",
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the user.",
+          "readOnly": true
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "age": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The registrant's age."
+        },
+        "approvalState": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The organizational entity's approval status. Available values: <br>* 0 - pending approval.<br>* 1 - approved.<br>* 2 - rejected.<br>* null - approval not applicable, so considered approved.",
+          "readOnly": true
+        },
+        "createdDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time that the registrant was registered.",
+          "readOnly": true
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "format": "date",
+          "description": "The registrant's date of birth."
+        },
+        "departmentNumber": {
+          "type": "string",
+          "description": "The department identifier for the registrant."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the registrant."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Name that is used when the name of the registrant displays in a summary list."
+        },
+        "distinguishedName": {
+          "type": "string",
+          "description": "Distinguished name (DN) of the registrant, for LDAP use.",
+          "readOnly": true
+        },
+        "employeeId": {
+          "type": "string",
+          "description": "The registrant's ID with their employer."
+        },
+        "employeeType": {
+          "type": "string",
+          "description": "The registrant's status as an employee (for example, regular, permanent, contractor, or part time)."
+        },
+        "gender": {
+          "type": "string",
+          "description": "The registrant's gender."
+        },
+        "updatedDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time representing the most recent update to the registrant's information.",
+          "readOnly": true
+        },
+        "lastSession": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time representing the most recent login time of the user.",
+          "readOnly": true
+        },
+        "logonId": {
+          "type": "string",
+          "description": "The registrant's logon ID. Leading and trailing spaces are trimmed. When the system is configured with LDAP, the following restrictions apply, since the logonId is part of the distinguished name: <br>* Must not begin with a '#'.<br>* Must not contain equals sign, comma, plus sign, quotation mark, backslash, angle brackets or semicolon."
+        },
+        "manager": {
+          "type": "string",
+          "description": "The name of the registrant's manager."
+        },
+        "parentOrganizationId": {
+          "type": "string",
+          "description": "The identifier of the registrant's company. Can be set when the user is created, but is otherwise read-only."
+        },
+        "parentOrganizationName": {
+          "type": "string",
+          "description": "The name of the organization that the registrant represents.",
+          "readOnly": true
+        },
+        "password": {
+          "type": "string",
+          "description": "The registrant's password. In database mode, the password is encrypted before it is saved in the database. In LDAP mode, the password is only stored on the LDAP server. This parameter is only specified during user creation/update and will never be returned in the response."
+        },
+        "passwordVerify": {
+          "type": "string",
+          "description": "The registrant's password, entered a second time. This parameter is only specified during user creation/update and will never be returned in the response."
+        },
+        "personTitle": {
+          "type": "string",
+          "description": "The title of the user whose address is being entered (for example, Dr., Rev., Mr., or Ms.)."
+        },
+        "preferredCurrency": {
+          "type": "string",
+          "description": "The registrant's preferred currency for transactions."
+        },
+        "preferredLanguageId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The unique numeric ID for identifying registrant's preferred language."
+        },
+        "profileType": {
+          "default": "B",
+          "description": "The registrant's user profile type. This parameter can only be set during user registration. Available values: <br> * B - A business user profile.<br> * C - A customer user profile.",
+          "enum": [
+            "B",
+            "C"
+          ],
+          "type": "string"
+        },
+        "receiveSmsNotification": {
+          "type": "boolean",
+          "description": "Indicates whether the user wants to receive order notification SMS text messages."
+        },
+        "registrationType": {
+          "type": "string",
+          "description": "The registrant's registration type. Available values: <br>* A - Sell-side Administrator.<br> * G - Guest Customer.<br> * R - Registered Customer.<br> * S - Site Administrator.<br>",
+          "readOnly": true
+        },
+        "secretary": {
+          "type": "string",
+          "description": "The name of the registrant's secretary."
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Whether or not the user's account is enabled. Available values: <br> * 0 - Disabled.<br> * 1 - Enabled."
+        },
+        "userAccountPolicyId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The unique numeric ID for identifying a user account policy."
+        }
+      }
+    },
+    "UserCollection": {
+      "description": "The model for list of users.",
+      "properties": {
+        "count": {
+          "description": "The total number of item records that match the query parameters.",
+          "type": "integer",
+          "format": "int64",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          },
+          "description": "The items."
+        },
+        "limit": {
+          "description": "The maximum number of records to return.",
+          "format": "int32",
+          "maximum": 500,
+          "type": "integer"
+        },
+        "offset": {
+          "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0
+        }
+      }
+    },
+    "Role": {
+      "properties": {
+        "roleId": {
+          "description": "The unique numeric ID for identifying the role.",
+          "type": "integer",
+          "format": "int32",
+          "readOnly": true
+        }
+      }
+    },
+    "RoleCollection": {
+      "description": "The model for list user roles.",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Role"
+          },
+          "description": "The items."
+        }
+      }
+    },
+    "SiteMemberAttribute": {
+      "description": "A custom attribute that is associated with a user or organization and that is store-independent.",
+      "properties": {
+        "name": {
+          "description": "The name of the custom attribute.",
+          "type": "string"
+        },
+        "values": {
+          "description": "The value or values of the custom attribute. The data type of an attribute value can vary depending on the attribute. Ensure that any value specified is a valid string representation of the attribute's data type. The supported data types are INTEGER, STRING, FLOAT and DATETIME.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": "2019-01-11 10:44:30.360000"
+          }
+        }
+      }
+    },
+    "StoreMemberAttribute": {
+      "description": "A custom attribute that is associated with a user or organization and that applies to a specific store.",
+      "properties": {
+        "name": {
+          "description": "The name of the custom attribute.",
+          "type": "string"
+        },
+        "storeId": {
+          "description": "The unique numeric ID of the store where the attribute applies. This parameter can only be set at attribute creation time.",
+          "type": "integer",
+          "format": "int32"
+        },
+        "values": {
+          "description": "The value or values of the custom attribute. The data type of an attribute value can vary depending on the attribute. Ensure that any value specified is a valid string representation of the attribute's data type. The supported data types are INTEGER, STRING, FLOAT and DATETIME.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": "2019-01-11 10:44:30.360000"
+          }
+        }
+      }
+    },
+    "SiteMemberAttributeCollection": {
+      "description": "A list of custom attributes.",
+      "properties": {
+        "count": {
+          "description": "The total number of item records that match the query parameters.",
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SiteMemberAttribute"
+          },
+          "description": "The items."
+        },
+        "limit": {
+          "description": "The maximum number of records to return.",
+          "format": "int32",
+          "maximum": 500,
+          "type": "integer"
+        },
+        "offset": {
+          "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0
+        }
+      }
+    },
+    "StoreMemberAttributeCollection": {
+      "description": "A list of custom attributes.",
+      "properties": {
+        "count": {
+          "description": "The total number of item records that match the query parameters.",
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StoreMemberAttribute"
+          },
+          "description": "The items."
+        },
+        "limit": {
+          "description": "The maximum number of records to return.",
+          "format": "int32",
+          "maximum": 500,
+          "type": "integer"
+        },
+        "offset": {
+          "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

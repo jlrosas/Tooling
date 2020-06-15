@@ -1,0 +1,43 @@
+<!--
+ *-------------------------------------------------------------------
+ * Licensed Materials - Property of HCL Technologies
+ *
+ * HCL Commerce
+ *
+ * (C) Copyright HCL Technologies Limited 1996, 2020
+
+ *-------------------------------------------------------------------
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Commerce Tooling</title>
+	<script type='text/javascript'>
+		const toolingContextRoot = '/tooling/';
+		const resourceUrl = (document.location.pathname.indexOf(toolingContextRoot) == 0) ? toolingContextRoot : '/';
+		const baseElement = '<base href="' + resourceUrl + '">';
+		console.log("baseElement=" + baseElement);
+		console.log('index.html: resource url is "' + resourceUrl + '"');
+		document.write(baseElement);
+	</script>
+	<meta name="theme-color" content="#ffff00">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+	<app-root></app-root>
+	<script>
+	// Uncomment the following lines to activate the service worker
+	// if (navigator.serviceWorker) {
+	// 	navigator.serviceWorker.register('sw.js').then(() => {
+	// 		console.log('Service worker installed')
+	// 	}, err => {
+	// 		console.error('Service worker error:', err);
+	// 	});
+	// }
+	</script>
+</body>
+</html>

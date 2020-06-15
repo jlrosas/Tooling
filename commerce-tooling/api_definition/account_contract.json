@@ -1,0 +1,4929 @@
+{
+  "host": "hostname.com",
+  "basePath": "/rest/admin/v2",
+  "schemes": [
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "title": "Account and Contract",
+    "version": "2.0"
+  },
+  "tags": [
+    {
+      "name": "Accounts",
+      "description": "This API provides RESTful service to manage account resources."
+    },
+    {
+      "name": "Contracts",
+      "description": "This API provides RESTful service to manage contract resources."
+    }
+  ],
+  "paths": {
+    "/accounts": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/AccountCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "description": "The unique numeric ID for identifying the store.",
+            "name": "storeId",
+            "in": "query",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "required": false,
+            "type": "string",
+            "description": "Limits search results to only include accounts with a name that matches the value of this parameter.",
+            "name": "searchString",
+            "in": "query"
+          },
+          {
+            "description": "The comma-separated set of properties that control the order of the listed items. Properties can be prefixed by either (-) to sort in descending order, or (+) to sort in ascending order. By default, properties are sorted in ascending order. For example, sort=name will order the items based on the name value in ascending order.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "description": "Gets a collection of business accounts in a store.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a collection of business accounts in a store.",
+        "operationId": "getAccounts"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for account creation.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new business account.",
+        "operationId": "createAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a new business account."
+      }
+    },
+    "/accounts/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "description": "Finds a business account by its ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a business account by its ID",
+        "operationId": "getAccountById"
+      },
+      "patch": {
+        "responses": {
+          "204": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for creating an account.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Updates an existing business account.",
+        "operationId": "updateAccount",
+        "description": "Updates an existing business account."
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deletes an existing business account.",
+        "operationId": "deleteAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Deletes an existing business account."
+      }
+    },
+    "/accounts/{accountId}/shipping-addresses": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/AccountShippingAddressCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "description": "Gets a collection of account shipping addresses.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a collection of account shipping addresses.",
+        "operationId": "getAccountShippingAddresses"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for account shipping address creation.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AccountShippingAddress"
+            }
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new account shipping address.",
+        "operationId": "createAccountShippingAddress",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a new account shipping address."
+      }
+    },
+    "/accounts/{accountId}/shipping-addresses/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/AccountShippingAddress"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account shipping address.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "description": "Gets an account shipping address by its ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets an account shipping address by its ID",
+        "operationId": "getAccountShippingAddressById"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account shipping address.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deletes an existing account shipping address.",
+        "operationId": "deleteAccountShippingAddress",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Deletes an existing account shipping address."
+      }
+    },
+    "/accounts/{accountId}/shipping-charges": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/AccountShippingChargeCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "description": "Gets a collection of account shipping charges.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a collection of account shipping charges.",
+        "operationId": "getAccountShippingCharges"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for account shipping charge creation.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AccountShippingCharge"
+            }
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new account shipping charge.",
+        "operationId": "createAccountShippingCharge",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a new account shipping charge."
+      }
+    },
+    "/accounts/{accountId}/shipping-charges/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/AccountShippingCharge"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account shipping charge.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "description": "Gets an account shipping charge by its ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets an account shipping charge by its ID",
+        "operationId": "getAccountShippingChargeById"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account shipping charge.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deletes an existing account shipping charge.",
+        "operationId": "deleteAccountShippingCharge",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Deletes an existing account shipping charge."
+      }
+    },
+    "/accounts/{accountId}/shipping-methods": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/AccountShippingMethodCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "description": "Gets a collection of account shipping methods.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a collection of account shipping methods.",
+        "operationId": "getAccountShippingMethods"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for account shipping method creation.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AccountShippingMethod"
+            }
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new account shipping method.",
+        "operationId": "createAccountShippingMethod",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a new account shipping method."
+      }
+    },
+    "/accounts/{accountId}/shipping-methods/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/AccountShippingMethod"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account shipping method.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "description": "Gets an account shipping method by its ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets an account shipping method by its ID",
+        "operationId": "getAccountShippingMethodById"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account shipping method.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deletes an existing account shipping method.",
+        "operationId": "deleteAccountShippingMethod",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Deletes an existing account shipping method."
+      }
+    },
+    "/accounts/{accountId}/payment-methods": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/AccountPaymentMethodCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "description": "Gets a collection of account payment methods.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a collection of account payment methods.",
+        "operationId": "getAccountPaymentMethods"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for account payment method creation.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AccountPaymentMethod"
+            }
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new account payment method.",
+        "operationId": "createAccountPaymentMethod",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a new account payment method."
+      }
+    },
+    "/accounts/{accountId}/payment-methods/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/AccountPaymentMethod"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account payment method.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "description": "Gets an account payment method by its ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets an account payment method by its ID",
+        "operationId": "getAccountPaymentMethodById"
+      },
+      "patch": {
+        "responses": {
+          "204": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account payment method.",
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for creating an account payment method.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AccountPaymentMethod"
+            }
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Updates an existing account payment method.",
+        "operationId": "updateAccountPaymentMethod",
+        "description": "Updates an existing account payment method."
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account payment method.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deletes an existing account payment method.",
+        "operationId": "deleteAccountPaymentMethod",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Deletes an existing account payment method."
+      }
+    },
+    "/accounts/{accountId}/purchase-orders": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/AccountPurchaseOrderCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "description": "Gets a collection of account purchase orders.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a collection of account purchase orders.",
+        "operationId": "getAccountPurchaseOrders"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for account purchase order creation.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AccountPurchaseOrder"
+            }
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new account purchase order.",
+        "operationId": "createAccountPurchaseOrder",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a new account purchase order."
+      }
+    },
+    "/accounts/{accountId}/purchase-orders/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/AccountPurchaseOrder"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account purchase orders.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "description": "Gets an account purchase order by its ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets an account purchase order by its ID",
+        "operationId": "getAccountPurchaseOrderById"
+      },
+      "patch": {
+        "responses": {
+          "204": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account purchase order.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account purchase order.",
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for creating an account purchase order.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AccountPurchaseOrder"
+            }
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Updates an existing account purchase order.",
+        "operationId": "updateAccountPurchaseOrder",
+        "description": "Updates an existing account purchase order."
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account.",
+            "name": "accountId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the account purchase order.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deletes an existing account purchase order.",
+        "operationId": "deleteAccountPurchaseOrder",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Deletes an existing account purchase order."
+      }
+    },
+    "/contracts": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ContractCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the business account which contains the contract.",
+            "name": "accountId",
+            "in": "query"
+          },
+          {
+            "description": "Limits search results to only include contracts with a name or description that matches the value of this parameter.",
+            "in": "query",
+            "name": "searchString",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "required": false,
+            "type": "string",
+            "description": "Limits search results to only include contracts with the specified status. Possible values are \n * draft\n * submitted\n * approved\n * active\n * rejected\n * canceled\n * suspended\n * deploying\n * deployFailed",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "type": "boolean",
+            "description": "Returns the list of contracts that can be used as base contracts for contracts in the specified account.",
+            "name": "baseContracts",
+            "in": "query"
+          },
+          {
+            "description": "The comma-separated set of properties that control the order of the listed items. Properties can be prefixed by either (-) to sort in descending order, or (+) to sort in ascending order. By default, properties are sorted in ascending order. For example, sort=name will order the items based on the name value in ascending order.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get a collection of contracts.",
+        "operationId": "getContracts",
+        "description": "Get a collection of contracts."
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. Some of the inputs provided to the request aren't valid."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. Additional details will be contained on the server logs."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for creating contract.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Contract"
+            }
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new contract",
+        "operationId": "createContract",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Creates a new contract."
+      }
+    },
+    "/contracts/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Contract"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Gets a contract by its ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a contract by ID",
+        "operationId": "getContractById"
+      },
+      "patch": {
+        "responses": {
+          "204": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for updating a contract.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Contract"
+            }
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Updates an existing contract.",
+        "summary": "Updates an existing contract",
+        "operationId": "updateContract"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deletes the specified contracts by setting the contracts to mark for delete",
+        "operationId": "deleteContract",
+        "description": "Deletes the specified contracts by setting the contracts to mark for delete.<br>It does not remove the contract from the database immediately. A contract has to be in one of the following state to run this command - draft or canceled."
+      }
+    },
+    "/contracts/{id}/export": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "file"
+            },
+            "description": "The contract was exported successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "in": "path",
+            "name": "id"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Export a contract.",
+        "produces": [
+          "application/xml"
+        ],
+        "summary": "Exports a contract.",
+        "operationId": "exportContract"
+      }
+    },
+    "/contracts/import": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested resource has been created.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "name": "storeId",
+            "in": "query",
+            "description": "The unique numeric ID of the store that owns the contract.",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "Contract XML.",
+            "name": "body",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Import a contract.",
+        "summary": "Import a contract.",
+        "consumes": [
+          "application/xml"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "importContract"
+      }
+    },
+    "/contracts/{id}/copy": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract to be copied.",
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for copying a contract.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ContractCopy"
+            }
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "summary": "Copies a contract",
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "copyContract",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Copies a contract. <br> If the command completes successfully, a new contract will be created. The contract will be in draft state with majorVersion set to 1 and minorVersion set to 0."
+      }
+    },
+    "/contracts/{id}/submit": {
+      "post": {
+        "responses": {
+          "204": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Submits a contract for approval",
+        "operationId": "submitContract",
+        "description": "Submits a contract for approval. <br> If the designated approver for the contract decides a contract is complete and acceptable, he can move the contract into the approved state. The system will automatically attempt to deploy an approved contract.<br>If the designated approver decides a contract is not complete or is unacceptable, he can move the contract into the rejected state. A contract in the rejected state can be changed and re-submitted for approval, canceled, or marked for deletion."
+      }
+    },
+    "/contracts/{id}/deploy": {
+      "post": {
+        "responses": {
+          "204": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deploys a contract",
+        "operationId": "deployContract",
+        "description": "Deploys a contract."
+      }
+    },
+    "/contracts/{id}/new-version": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract to be copied.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new version of a specified contract",
+        "operationId": "createNewContractVersion",
+        "description": "Creates a new version of a specified contract. <br>The state of the specified contract has to be in one of the following states: Approved, Active, Suspended, DeploymentInProgress, and DeploymentFailed. <br>The new contract will have the same name as the specified one. <br>If both majorVersion and minorVersion are provided, the command respects the versions. Otherwise, the new contract will have the same major version number with the old contract. The minor version will be one plus the largest minor version with the same contract name,  origin, owner, majorVerion. <br>This new contract will be in draft version."
+      }
+    },
+    "/contracts/{id}/suspend": {
+      "post": {
+        "responses": {
+          "204": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract to be suspended.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "summary": "Suspends an active contract",
+        "operationId": "suspendContract",
+        "description": "Suspends an active contract."
+      }
+    },
+    "/contracts/{id}/resume": {
+      "post": {
+        "responses": {
+          "204": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract to be resumed.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Resumes a suspended contract",
+        "operationId": "resumeContract",
+        "description": "Resumes the specified contract to Active state. <br>The specified contract has to be in Suspended state."
+      }
+    },
+    "/contracts/{id}/cancel": {
+      "post": {
+        "responses": {
+          "204": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract to be canceled.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Cancels the specified contract by changing its contract state to Canceled",
+        "operationId": "cancelContract",
+        "description": "Cancels the specified contract by changing its contract state to Canceled.<br>It does not remove the contract from the database. A contract can be canceled any time except if the contract has a status of draft or deploying."
+      }
+    },
+    "/contracts/{contractId}/buyers": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ContractBuyerCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Gets a collection of contract buyers.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a collection of contract buyers.",
+        "operationId": "getContractBuyers"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for contract buyer creation.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ContractBuyer"
+            }
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new contract buyer.",
+        "operationId": "createContractBuyer",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a new contract buyer."
+      }
+    },
+    "/contracts/{contractId}/buyers/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/ContractBuyer"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract buyer.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Gets a contract buyer by its ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a contract buyer by its ID",
+        "operationId": "getContractBuyerById"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract buyer.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deletes an existing contract buyer.",
+        "operationId": "deleteContractBuyer",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Deletes an existing contract buyer."
+      }
+    },
+    "/contracts/{contractId}/shipping-addresses": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ContractShippingAddressCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Gets a collection of contract shipping addresses.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a collection of contract shipping addresses.",
+        "operationId": "getContractShippingAddresses"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for contract shipping address creation.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ContractShippingAddress"
+            }
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new contract shipping address.",
+        "operationId": "createContractShippingAddress",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a new contract shipping address."
+      }
+    },
+    "/contracts/{contractId}/shipping-addresses/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/ContractShippingAddress"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract shipping address.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Gets a contract shipping address by its ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a contract shipping address by its ID",
+        "operationId": "getContractShippingAddressById"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract shipping address.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deletes an existing contract shipping address.",
+        "operationId": "deleteContractShippingAddress",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Deletes an existing contract shipping address."
+      }
+    },
+    "/contracts/{contractId}/shipping-charges": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ContractShippingChargeCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Gets a collection of contract shipping charges.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a collection of contract shipping charges.",
+        "operationId": "getContractShippingCharges"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for contract shipping charge creation.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ContractShippingCharge"
+            }
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new contract shipping charge.",
+        "operationId": "createContractShippingCharge",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a new contract shipping charge."
+      }
+    },
+    "/contracts/{contractId}/shipping-charges/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/ContractShippingCharge"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract shipping charge.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Gets a contract shipping charge by its ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a contract shipping charge by its ID",
+        "operationId": "getContractShippingChargeById"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract shipping charge.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deletes an existing contract shipping charge.",
+        "operationId": "deleteContractShippingCharge",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Deletes an existing contract shipping charge."
+      }
+    },
+    "/contracts/{contractId}/shipping-methods": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ContractShippingMethodCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Gets a collection of contract shipping methods.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a collection of contract shipping methods.",
+        "operationId": "getContractShippingMethods"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for contract shipping method creation.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ContractShippingMethod"
+            }
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new contract shipping method.",
+        "operationId": "createContractShippingMethod",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a new contract shipping method."
+      }
+    },
+    "/contracts/{contractId}/shipping-methods/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/ContractShippingMethod"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract shipping method.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Gets a contract shipping method by its ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a contract shipping method by its ID",
+        "operationId": "getContractShippingMethodById"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract shipping method.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deletes an existing contract shipping method.",
+        "operationId": "deleteContractShippingMethod",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Deletes an existing contract shipping method."
+      }
+    },
+    "/contracts/{contractId}/payment-methods": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ContractPaymentMethodCollection"
+            },
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "default": 0,
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "The maximum number of records to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Gets a collection of contract payment methods.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a collection of contract payment methods.",
+        "operationId": "getContractPaymentMethods"
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The requested completed successfully.",
+            "headers": {
+              "Location": {
+                "description": "Link to the newly created resource.",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for contract payment method creation.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ContractPaymentMethod"
+            }
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new contract payment method.",
+        "operationId": "createContractPaymentMethod",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a new contract payment method."
+      }
+    },
+    "/contracts/{contractId}/payment-methods/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/ContractPaymentMethod"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract payment method.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Gets a contract payment method by its ID.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets a contract payment method by its ID",
+        "operationId": "getContractPaymentMethodById"
+      },
+      "patch": {
+        "responses": {
+          "204": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract payment method.",
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "in": "body",
+            "description": "The request body for creating a contract payment method.",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ContractPaymentMethod"
+            }
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "summary": "Updates an existing contract payment method.",
+        "operationId": "updateContractPaymentMethod",
+        "description": "Updates an existing contract payment method."
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "The requested resource has been deleted."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The specified resource could not be found."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract.",
+            "name": "contractId",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the contract payment method.",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "tags": [
+          "Contracts"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deletes an existing contract payment method.",
+        "operationId": "deleteContractPaymentMethod",
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Deletes an existing contract payment method."
+      }
+    }
+  },
+  "definitions": {
+    "AccountCollection": {
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of account records in total based on the query parameters specified."
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/Account"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of account records returned."
+        },
+        "offset": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The starting position of the first account record."
+        }
+      }
+    },
+    "Account": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique numeric ID of the account."
+        },
+        "storeId": {
+          "description": "The unique numeric ID of the store that contains the account.",
+          "type": "integer",
+          "format": "int32"
+        },
+        "comment": {
+          "type": "string",
+          "description": "A comment for the business account."
+        },
+        "customerOrganizationId": {
+          "type": "string",
+          "description": "The unique numeric ID of the customer organization."
+        },
+        "customerOrganizationName": {
+          "type": "string",
+          "description": "The name of the customer organization."
+        },
+        "customerUserId": {
+          "type": "string",
+          "description": "The unique numeric ID of the user that is the customer contact."
+        },
+        "customerUserName": {
+          "type": "string",
+          "description": "The name of the user that is the customer contact."
+        },
+        "customerContactInformation": {
+          "type": "string",
+          "description": "The customer's contact information."
+        },
+        "numberOfContracts": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The number of contracts in this business account."
+        },
+        "allowDefaultContract": {
+          "type": "boolean",
+          "description": "Indicates that purchases using the store's default contract are allowed."
+        },
+        "baseContractAccount": {
+          "type": "boolean",
+          "description": "Indicates that the account is for base contracts."
+        },
+        "mustSpecifyPurchaseOrderNumber": {
+          "type": "boolean",
+          "description": "Indicates that the purchase order number must be specified when an order is placed."
+        },
+        "checkPurchaseOrderNumberUniqueness": {
+          "type": "boolean",
+          "description": "Indicates that the system must check that the purchase order numbers are unique."
+        },
+        "allowPersonalBillingAddress": {
+          "type": "boolean",
+          "description": "Allow customers to select billing addresses from their personal address book."
+        },
+        "allowParentOrganizationBillingAddress": {
+          "type": "boolean",
+          "description": "Allow customers to select billing addresses from their parent organization's address book."
+        },
+        "allowAccountOrganizationBillingAddress": {
+          "type": "boolean",
+          "description": "Allow customers to select billing addresses from the account organization's address book."
+        },
+        "allowPersonalShippingAddress": {
+          "type": "boolean",
+          "description": "Allow customers to select shipping addresses from their personal address book."
+        },
+        "allowParentOrganizationShippingAddress": {
+          "type": "boolean",
+          "description": "Allow customers to select shipping addresses from their parent organization's address book."
+        },
+        "allowAccountOrganizationShippingAddress": {
+          "type": "boolean",
+          "description": "Allow customers to select shipping addresses from the account organization's address book."
+        }
+      }
+    },
+    "AccountPurchaseOrderCollection": {
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of account purchase orders in total."
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/AccountPurchaseOrder"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of purchase orders returned."
+        },
+        "offset": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The starting position of the first purchase order."
+        }
+      }
+    },
+    "AccountPurchaseOrder": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the account purchase order."
+        },
+        "accountId": {
+          "type": "string",
+          "description": "The unique numeric ID of the account that contains this purchase order."
+        },
+        "purchaseOrderNumber": {
+          "type": "string",
+          "description": "The purchase order number."
+        },
+        "spendingLimitValue": {
+          "type": "number",
+          "description": "The spending limit value for the purchase order."
+        },
+        "spendingLimitCurrency": {
+          "type": "string",
+          "description": "The spending limit currency for the purchase order."
+        }
+      }
+    },
+    "AccountPaymentMethodCollection": {
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of account payment methods in total."
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/AccountPaymentMethod"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of account payment methods returned."
+        },
+        "offset": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The starting position of the first account payment method."
+        }
+      }
+    },
+    "AccountPaymentMethod": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the account payment method."
+        },
+        "accountId": {
+          "type": "string",
+          "description": "The unique numeric ID of the account that contains this payment method."
+        },
+        "paymentMethodId": {
+          "type": "string",
+          "description": "The unique numeric ID of the payment method."
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the account payment method."
+        },
+        "billingAddressNickName": {
+          "type": "string",
+          "description": "The nick name of the billing address."
+        },
+        "billingAddressOrganizationId": {
+          "type": "string",
+          "description": "The unique numeric ID of the organization that owns the billing address."
+        },
+        "creditCardBrand": {
+          "type": "string",
+          "description": "The credit card brand."
+        },
+        "accountNumber": {
+          "type": "string",
+          "description": "The account number of the payment method."
+        },
+        "expiryMonth": {
+          "type": "string",
+          "description": "The two digit number of the expiry month of the credit card."
+        },
+        "expiryYear": {
+          "type": "string",
+          "description": "The four digit number of the expiry year of the credit card."
+        },
+        "checkRoutingNumber": {
+          "type": "string",
+          "description": "The check routing number."
+        }
+      }
+    },
+    "AccountShippingMethodCollection": {
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of account shipping methods in total."
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/AccountShippingMethod"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of account shipping methods returned."
+        },
+        "offset": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The starting position of the first account shipping method."
+        }
+      }
+    },
+    "AccountShippingMethod": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the account shipping method."
+        },
+        "accountId": {
+          "type": "string",
+          "description": "The unique numeric ID of the account that contains this shipping method."
+        },
+        "shippingMethodId": {
+          "type": "string",
+          "description": "The unique numeric ID of the shipping method."
+        }
+      }
+    },
+    "AccountShippingChargeCollection": {
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of account shipping charges in total."
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/AccountShippingCharge"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of account shipping charges returned."
+        },
+        "offset": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The starting position of the first account shipping charge."
+        }
+      }
+    },
+    "AccountShippingCharge": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the account shipping charge."
+        },
+        "accountId": {
+          "type": "string",
+          "description": "The unique numeric ID of the account that contains this shipping charge."
+        },
+        "shippingChargeId": {
+          "type": "string",
+          "description": "The unique numeric ID of the shipping charge."
+        }
+      }
+    },
+    "AccountShippingAddressCollection": {
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of account shipping addresses in total."
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/AccountShippingAddress"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of account shipping addresses returned."
+        },
+        "offset": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The starting position of the first account shipping address."
+        }
+      }
+    },
+    "AccountShippingAddress": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the account shipping address."
+        },
+        "accountId": {
+          "type": "string",
+          "description": "The unique numeric ID of the account that contains this shipping address."
+        },
+        "shippingAddressNickName": {
+          "type": "string",
+          "description": "The unique numeric ID of the shipping charge."
+        },
+        "shippingAddressOrganizationId": {
+          "type": "string",
+          "description": "The unique numeric ID of the organization that owns the shipping address."
+        }
+      }
+    },
+    "ContractCollection": {
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of contract records in total based on the query parameters specified."
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/Contract"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of contract records returned."
+        },
+        "offset": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The starting position of the first contract record."
+        }
+      }
+    },
+    "Contract": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the contract."
+        },
+        "accountId": {
+          "type": "string",
+          "description": "The unique numeric ID of the type of the account that contains this contract."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the contract."
+        },
+        "description": {
+          "type": "string",
+          "description": "The contract description."
+        },
+        "longDescription": {
+          "type": "string",
+          "description": "The contract long description."
+        },
+        "comment": {
+          "type": "string",
+          "description": "A comment for the contract."
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the contract. Possible values are \n * draft\n * submitted\n * approved\n * active\n * rejected\n * canceled\n * suspended\n * deploying\n * deployFailed"
+        },
+        "baseContractId": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying this contract's base contract."
+        },
+        "baseContractName": {
+          "type": "string",
+          "description": "The name of this contract's base contract."
+        },
+        "createDate": {
+          "type": "string",
+          "description": "The create date of the contract."
+        },
+        "updateDate": {
+          "type": "string",
+          "description": "The last update date of the contract."
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date of the contract."
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date of the contract."
+        },
+        "majorVersion": {
+          "type": "string",
+          "description": "The major version of the new contract."
+        },
+        "minorVersion": {
+          "type": "string",
+          "description": "The minor version of the new contract."
+        },
+        "allowAccountCreditLine": {
+          "type": "boolean",
+          "description": "Allow customers to make purchase using the account's line of credit."
+        },
+        "allowPersonalBillingAddress": {
+          "type": "boolean",
+          "description": "Allow customers to select billing addresses from their personal address book."
+        },
+        "allowParentOrganizationBillingAddress": {
+          "type": "boolean",
+          "description": "Allow customers to select billing addresses from their parent organization's address book."
+        },
+        "allowAccountOrganizationBillingAddress": {
+          "type": "boolean",
+          "description": "Allow customers to select billing addresses from the account organization's address book."
+        },
+        "allowPersonalShippingAddress": {
+          "type": "boolean",
+          "description": "Allow customers to select shipping addresses from their personal address book."
+        },
+        "allowParentOrganizationShippingAddress": {
+          "type": "boolean",
+          "description": "Allow customers to select shipping addresses from their parent organization's address book."
+        },
+        "allowAccountOrganizationShippingAddress": {
+          "type": "boolean",
+          "description": "Allow customers to select shipping addresses from the account organization's address book."
+        },
+        "priceRuleId": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the price rule associated with this contract."
+        },
+        "catalogFilterId": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the catalog filter associated with this contract."
+        },
+        "orderApprovalMinimumValue": {
+          "type": "string",
+          "description": "The minimum monetary value for orders that must be approved."
+        },
+        "orderApprovalCurrency": {
+          "type": "string",
+          "description": "The currency for orderApprovalMinimumValue."
+        }
+      }
+    },
+    "ContractCopy": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the new contract."
+        }
+      }
+    },
+    "ContractBuyerCollection": {
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of contract buyers in total."
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/ContractBuyer"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of contract buyers returned."
+        },
+        "offset": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The starting position of the first contract buyer."
+        }
+      }
+    },
+    "ContractBuyer": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the contract buyer."
+        },
+        "contractId": {
+          "type": "string",
+          "description": "The unique numeric ID of the contract that contains this buyer."
+        },
+        "memberId": {
+          "type": "string",
+          "description": "The unique numeric ID of the buyer member."
+        },
+        "memberType": {
+          "type": "string",
+          "description": "The type of member. Possible values are organization, memberGroup and user."
+        }
+      }
+    },
+    "ContractPaymentMethodCollection": {
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of contract payment methods in total."
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/ContractPaymentMethod"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of contract payment methods returned."
+        },
+        "offset": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The starting position of the first contract payment method."
+        }
+      }
+    },
+    "ContractPaymentMethod": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the contract payment method."
+        },
+        "contractId": {
+          "type": "string",
+          "description": "The unique numeric ID of the contract that contains this payment method."
+        },
+        "paymentMethodId": {
+          "type": "string",
+          "description": "The unique numeric ID of the payment method."
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the contract payment method."
+        },
+        "billingAddressNickName": {
+          "type": "string",
+          "description": "The nick name of the billing address."
+        },
+        "billingAddressOrganizationId": {
+          "type": "string",
+          "description": "The unique numeric ID of the organization that owns the billing address."
+        },
+        "creditCardBrand": {
+          "type": "string",
+          "description": "The credit card brand."
+        },
+        "accountNumber": {
+          "type": "string",
+          "description": "The account number of the payment method."
+        },
+        "expiryMonth": {
+          "type": "string",
+          "description": "The two digit number of the expiry month of the credit card."
+        },
+        "expiryYear": {
+          "type": "string",
+          "description": "The four digit number of the expiry year of the credit card."
+        },
+        "checkRoutingNumber": {
+          "type": "string",
+          "description": "The check routing number."
+        }
+      }
+    },
+    "ContractShippingMethodCollection": {
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of contract shipping methods in total."
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/ContractShippingMethod"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of contract shipping methods returned."
+        },
+        "offset": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The starting position of the first contract shipping method."
+        }
+      }
+    },
+    "ContractShippingMethod": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the contract shipping method."
+        },
+        "contractId": {
+          "type": "string",
+          "description": "The unique numeric ID of the contract that contains this shipping method."
+        },
+        "shippingMethodId": {
+          "type": "string",
+          "description": "The unique numeric ID of the shipping method."
+        }
+      }
+    },
+    "ContractShippingChargeCollection": {
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of contract shipping charges in total."
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/ContractShippingCharge"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of contract shipping charges returned."
+        },
+        "offset": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The starting position of the first contract shipping charge."
+        }
+      }
+    },
+    "ContractShippingCharge": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the contract shipping charge."
+        },
+        "contractId": {
+          "type": "string",
+          "description": "The unique numeric ID of the contract that contains this shipping charge."
+        },
+        "shippingChargeId": {
+          "type": "string",
+          "description": "The unique numeric ID of the shipping charge."
+        }
+      }
+    },
+    "ContractShippingAddressCollection": {
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of contract shipping addresses in total."
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/ContractShippingAddress"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The number of contract shipping addresses returned."
+        },
+        "offset": {
+          "format": "int32",
+          "type": "integer",
+          "description": "The starting position of the first contract shipping address."
+        }
+      }
+    },
+    "ContractShippingAddress": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique numeric ID for identifying the contract shipping address."
+        },
+        "contractId": {
+          "type": "string",
+          "description": "The unique numeric ID of the contract that contains this shipping address."
+        },
+        "shippingAddressNickName": {
+          "type": "string",
+          "description": "The unique numeric ID of the shipping charge."
+        },
+        "shippingAddressOrganizationId": {
+          "type": "string",
+          "description": "The unique numeric ID of the organization that owns the shipping address."
+        }
+      }
+    },
+    "ErrorResponseContainer": {
+      "description": "The error message model.",
+      "properties": {
+        "errors": {
+          "items": {
+            "$ref": "#/definitions/Error"
+          },
+          "type": "array"
+        },
+        "requestId": {
+          "description": "The request identifier.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Error": {
+      "description": "The error message item model.",
+      "properties": {
+        "code": {
+          "description": "The error message code.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "The unique identifier for the request.",
+          "type": "string"
+        },
+        "locale": {
+          "description": "The locale of the error message.",
+          "type": "string"
+        },
+        "message": {
+          "description": "The error message.",
+          "type": "string"
+        },
+        "messageArguments": {
+          "description": "The arguments used to construct the error message.",
+          "items": {},
+          "type": "array"
+        },
+        "messageKey": {
+          "description": "The error message key.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

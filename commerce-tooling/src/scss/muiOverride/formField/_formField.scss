@@ -1,0 +1,15 @@
+mat-form-field {
+    @include hc-type-text();
+    position: relative;
+    width: auto;
+    vertical-align: middle;
+    max-width: 100%;
+}
+
+@import "formFieldBase";
+
+.mat-form-field-appearance-outline {
+    @import "text";
+    @import "select";
+    @import "textarea";
+}

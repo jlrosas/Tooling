@@ -1,0 +1,47 @@
+button {
+	border: none;
+	background-color: white;
+	cursor: pointer;
+
+	&:focus {
+		outline: 0;
+	}
+}
+
+.mat-flat-button {
+	border-radius: map-get($hc-button, borderRadius);
+	height: map-get($hc-button, height);
+	min-width: map-get($hc-button, width);
+	@include hc-type-bold();
+
+	&:hover:not(:disabled) {
+		cursor: pointer;
+	}
+
+	&:not(.mat-primary) {
+		border: 2px solid map-get($hc-color-grey, light);
+
+		&:hover:not(:disabled) {
+			border-color: map-get($hc-color-blue, 40);
+			color: map-get($hc-color-blue, 100);
+		}
+		
+		&:focus:not(:disabled) {
+			border-color: map-get($hc-color-blue, 40);
+			color: map-get($hc-color-blue, 100);
+		}
+	}
+
+	&.mat-primary {
+		background: map-get($hc-color-blue, 100);
+		border: 0;
+
+		&:hover:not(:disabled) {
+			background: map-get($hc-color-blue, dark);
+		}
+
+		&:focus:not(:disabled) {
+			background: map-get($hc-color-blue, dark);
+		}
+	}
+}

@@ -1,0 +1,40 @@
+a {
+    color: map-get($hc-color-blue, 100);
+    text-decoration: none;
+}
+
+.hc-type-h1 {
+    margin: spacing(4) 0;
+    @include hc-type-heading();
+
+    .mat-icon {
+        vertical-align: middle;
+        line-height: 22px;
+        font-size: 20px;
+        margin-left: 4px;
+    }
+}
+
+.hc-type-h2 {
+    @include hc-type-subheading();
+    margin: 0;
+}
+
+.hc-type-label {
+    @include hc-type-label();
+    margin-bottom: spacing(2);
+}
+
+.hc-type-text {
+    @include hc-type-text();
+    margin-bottom: spacing(2);
+}
+
+.hc-type-optional-text {
+    @include font-weight(light);
+	color: #808080;
+}
+
+.hc-type-small-text {
+    @include hc-type-small-text();
+}

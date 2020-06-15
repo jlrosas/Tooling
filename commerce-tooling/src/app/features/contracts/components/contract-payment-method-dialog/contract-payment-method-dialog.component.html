@@ -1,0 +1,97 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'CONTRACTS.ADD_PAYMENT_METHOD' | translate}}</h4>
+<form [formGroup]="paymentMethodForm" autocomplete="off">
+
+	<mat-form-field appearance="outline">
+		<mat-label>{{'CONTRACTS.PAYMENT_METHOD'| translate}}</mat-label>
+		<mat-select	id="paymentMethod"
+				formControlName="paymentMethod"
+				#paymentMethodSelect
+				placeholder="{{'CONTRACTS.SELECT_PAYMENT_METHOD' | translate}}"
+				(selectionChange)="selectPaymentMethod($event.value)"
+				required>
+			<mat-option *ngFor="let paymentMethod of availablePaymentMethods" [value]="paymentMethod">
+				{{paymentMethod.description}}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>{{'CONTRACTS.DESCRIPTION'| translate}}</mat-label>
+		<input matInput id="description" formControlName="description" required>
+		<mat-error *ngIf="description.errors && description.errors.duplicate">
+			{{'CONTRACTS.DESCRIPTION_NOT_UNIQUE' | translate }}
+		</mat-error>
+	</mat-form-field>
+
+    <div *ngIf="showCreditCardFields">
+		<mat-form-field appearance="outline">
+			<mat-label>{{'CONTRACTS.CREDIT_CARD_NUMBER'| translate}}</mat-label>
+			<input matInput id="creditCardNumber" formControlName="creditCardNumber" [required]="showCreditCardFields">
+		</mat-form-field>
+		<div class="row-layout">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'CONTRACTS.EXPIRATION_MONTH'| translate}}</mat-label>
+				<mat-select id="expiryMonth" formControlName="expiryMonth" [required]="showCreditCardFields">
+					<mat-option *ngFor="let item of monthList" [value]="item">
+						{{item}}
+					</mat-option>
+				</mat-select> 
+			</mat-form-field>
+
+			<mat-form-field appearance="outline">
+				<mat-label>{{'CONTRACTS.EXPIRATION_YEAR'| translate}}</mat-label>
+				<mat-select	id="expiryYear" formControlName="expiryYear" [required]="showCreditCardFields">
+					<mat-option *ngFor="let item of yearList" [value]="item">
+						{{item}}
+					</mat-option>
+				</mat-select> 
+			</mat-form-field>
+		</div>
+	</div>
+
+	<div *ngIf="showCheckFields">
+		<mat-form-field appearance="outline">
+			<mat-label>{{'CONTRACTS.CHECKING_ACCOUNT_NUMBER'| translate}}</mat-label>
+			<input matInput id="checkingAccountNumber" formControlName="checkingAccountNumber" [required]="showCheckFields"
+			[maxlength]="17">
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>{{'CONTRACTS.CHECK_ROUTING_NUMBER'| translate}}</mat-label>
+			<input matInput id="checkRoutingNumber" formControlName="checkRoutingNumber" [required]="showCheckFields"
+			[maxlength]="9">
+		</mat-form-field>
+	</div>
+
+	<mat-form-field appearance="outline">
+		<mat-label>{{'CONTRACTS.BILLING_ADDRESS'| translate}} {{'CONTRACTS.OPTIONAL' | translate}}</mat-label>
+		<mat-select id="address"
+				formControlName="address"
+				placeholder="{{'CONTRACTS.SELECT_BILLING_ADDRESS' | translate}}">
+			<mat-option *ngFor="let item of availableAddresses" [value]="item">
+				{{item.content}}
+			</mat-option>
+		</mat-select>
+		<span class="filter-clear" *ngIf="address.value" (click)="clearAddress($event)">
+			<mat-icon>clear</mat-icon>
+			<span class="clear-margin">{{'ACCOUNTS.CLEAR' | translate}}</span>
+		</span>
+	</mat-form-field>
+
+</form>
+
+<mat-dialog-actions>
+	<button class="mat-flat-button" type="button" (click)="cancel()">{{'CONTRACTS.CANCEL' | translate}}</button>
+	<button class="mat-flat-button mat-primary" type="button" (click)="save()">{{'CONTRACTS.SAVE' | translate}}</button>
+</mat-dialog-actions>

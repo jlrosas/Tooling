@@ -1,0 +1,30 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form *ngIf="fields" [formGroup]="configurationForm" autocomplete="off" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<mat-form-field *ngFor="let field of fields; let i = index" appearance="outline">
+				<mat-label>{{field.label | translate}}</mat-label>
+				<input *ngIf="!field.encrypted" #fieldInput matInput formControlName="{{field.name}}" (input)="validateField(field, $event.target.value)">
+				<input *ngIf="field.encrypted" #fieldInput matInput type="password" formControlName="{{field.name}}" (input)="validateField(field, $event.target.value)">
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" type="button" matStepperPrevious>{{'MESSAGES.BACK' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()">{{'MESSAGES.FINISH' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

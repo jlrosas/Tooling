@@ -1,0 +1,78 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+<h1 class="hc-type-h1">
+	<span>{{'APPROVALS.APPROVALS' | translate}}</span>
+	<mat-icon>chevron_right</mat-icon>
+	<span>{{'APPROVALS.APPROVAL_REQUEST_SUMMARY' | translate}}</span>
+</h1>
+<div class="bx--row content-border">
+	<form class="bx--col-sm-4 bx--col-md-8 bx--col-lg-12" autocomplete="off">
+		<div class="hc-paper">
+			<hc-contract-approval-summary *ngIf="flowTypeId === '10003'" contractId="{{entityId}}"></hc-contract-approval-summary>
+			<hc-user-approval-summary *ngIf="flowTypeId === '10004'" userId="{{entityId}}"></hc-user-approval-summary>
+			<hc-organization-approval-summary *ngIf="flowTypeId === '10005'" organizationId="{{entityId}}"></hc-organization-approval-summary>
+			<hc-user-approval-summary *ngIf="flowTypeId === '10006'" userId="{{entityId}}"></hc-user-approval-summary>
+			<div class="hc-section-container">
+				<div class="hc-section-header">{{'APPROVALS.REQUEST_DETAILS' | translate}}</div>
+				<div class="bx--row">
+					<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+						<div class="hc-column-header">{{'APPROVALS.REQUESTOR' | translate}}</div>
+						<div class="hc-hc-column-data">{{requestor}}</div>
+					</div>
+					<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+						<div class="hc-column-header">{{'APPROVALS.APPROVER' | translate}}</div>
+						<div class="hc-hc-column-data">{{approver}}</div>
+					</div>
+					<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+						<div class="hc-column-header">{{'APPROVALS.PROCESS' | translate}}</div>
+						<div class="hc-hc-column-data">{{processTextKey | translate}}</div>
+					</div>
+					<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+						<div class="hc-column-header">{{'APPROVALS.STATUS' | translate}}</div>
+						<div class="hc-hc-column-data">{{statusTextKey | translate}}</div>
+					</div>
+					<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+						<div class="hc-column-header">{{'APPROVALS.DATE_SUBMITTED' | translate}}</div>
+						<div class="hc-hc-column-data">{{submitDate | date:'medium'}}</div>
+					</div>
+					<div *ngIf="status !== 0" class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+						<div class="hc-column-header" *ngIf="status === 1">{{'APPROVALS.DATE_APPROVED' | translate}}</div>
+						<div class="hc-column-header" *ngIf="status === 2">{{'APPROVALS.DATE_REJECTED' | translate}}</div>
+						<div class="hc-hc-column-data">{{approveDate | date:'medium'}}</div>
+					</div>
+				</div>
+			</div>
+			<div class="hc-section-container">
+				<mat-form-field appearance="outline" class="textarea">
+					<mat-label>{{'APPROVALS.COMMENTS' | translate}}</mat-label>
+					<textarea matInput [disabled]="status !== 0" [(ngModel)]="comment" rows="4" cols="150" [ngModelOptions]="{standalone: true}"></textarea>
+				</mat-form-field>
+			</div>
+		
+
+
+			<div class="hc-section-container">
+				<div class="inside-footer">
+					<div class="footer-buttons">
+						<div *ngIf="status === 0">
+							<button class="mat-flat-button" type="button" id="cancel" (click)="cancel()">{{'APPROVALS.CANCEL' | translate}}</button>
+							<button class="mat-flat-button mat-primary action-button" type="button" id="reject" (click)="reject()">{{'APPROVALS.REJECT' | translate}}</button>
+							<button class="mat-flat-button mat-primary action-button" type="button" id="approve" (click)="approve()">{{'APPROVALS.APPROVE' | translate}}</button>
+						</div>
+						<div *ngIf="status !== 0">
+							<button class="mat-flat-button mat-primary" type="button" (click)="cancel()">{{'APPROVALS.CLOSE' | translate}}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

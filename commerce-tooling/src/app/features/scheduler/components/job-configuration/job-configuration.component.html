@@ -1,0 +1,59 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="configurationForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SCHEDULER.ASSOCIATED_USER'| translate}} {{'SCHEDULER.OPTIONAL' | translate}}</mat-label>
+				<input #associatedUserInput matInput id="associatedUser" formControlName="associatedUserFormControl" (input)="validateAssociatedUser()">
+			</mat-form-field>
+			<mat-form-field *ngIf="applicationType!='broadcast'" appearance="outline">
+				<mat-label>{{'SCHEDULER.ALLOWED_HOST'| translate}} {{'SCHEDULER.OPTIONAL' | translate}}</mat-label>
+				<input matInput id="allowedHost" formControlName="allowedHostFormControl" (input)="validateAllowedHost()">
+			</mat-form-field>
+			<mat-form-field *ngIf="applicationType!='broadcast'" appearance="outline">
+				<mat-label>{{'SCHEDULER.INTERVAL'| translate}} {{'SCHEDULER.OPTIONAL' | translate}}</mat-label>
+				<input matInput id="interval" formControlName="intervalFormControl" (input)="validateInterval()">
+			</mat-form-field>
+			<mat-form-field *ngIf="applicationType!='broadcast'" appearance="outline">
+				<mat-label>{{'SCHEDULER.ATTEMPTS'| translate}} {{'SCHEDULER.OPTIONAL' | translate}}</mat-label>
+				<input matInput id="attempts" formControlName="attemptsFormControl" (input)="validateAttempts()">
+			</mat-form-field>
+			<mat-form-field *ngIf="applicationType!='broadcast' && attempts!=null && attempts!='' && attempts!='0'" appearance="outline">
+				<mat-label>{{'SCHEDULER.RETRY_SECONDS'| translate}}</mat-label>
+				<input matInput id="retrySeconds" 
+					formControlName="retrySecondsFormControl" 
+					(input)="validateRetrySeconds()"
+					required>
+			</mat-form-field>
+			<mat-form-field *ngIf="applicationType!='broadcast'" appearance="outline">
+				<mat-label>{{'SCHEDULER.PRIORITY'| translate}}</mat-label>
+				<mat-select id="prioritySelect" placeholder="{{'SCHEDULER.PRIORITY_PLACEHOLDER'| translate}}"
+						formControlName="priorityFormControl"
+						(selectionChange)="selectPriority($event.value)" required>
+					<mat-option *ngFor="let priority of priorityList" [value]="priority.value">
+						{{priority.value}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button type="button" class="mat-flat-button" *ngIf="mode == 'create'" matStepperPrevious>{{'SCHEDULER.BACK'| translate}}</button>
+				<button type="button" class="mat-flat-button mat-primary" *ngIf="mode == 'create'" (click)="triggerSave()">{{'SCHEDULER.FINISH' | translate}}</button>
+				<button type="button" class="mat-flat-button mat-primary" *ngIf="mode == 'edit'" (click)="triggerSave()">{{'SCHEDULER.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

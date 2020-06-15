@@ -1,0 +1,23 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{titleTextKey | translate}}</h4>
+<mat-dialog-content [formGroup]="form">
+	<mat-form-field appearance="outline" class="textarea">
+		<mat-label>{{'APPROVALS.COMMENTS' | translate}}</mat-label>
+		<textarea matInput formControlName="comments"></textarea>
+	</mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+	<button class="mat-flat-button"(click)="close()">{{'APPROVALS.CANCEL' | translate}}</button>
+	<button class="mat-flat-button mat-primary"(click)="action()">{{((actionString === "Approve") ? 'APPROVALS.APPROVE' : 'APPROVALS.REJECT') | translate}} </button>
+</mat-dialog-actions>

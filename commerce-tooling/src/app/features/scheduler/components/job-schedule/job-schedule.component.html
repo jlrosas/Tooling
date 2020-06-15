@@ -1,0 +1,76 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="detailsForm" autocomplete="off">
+
+    <div class="bx--row">
+        <div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+
+            <!--
+                Start date
+            -->
+            <mat-form-field appearance="outline" title="{{'SCHEDULER.START_DATE'| translate}}">
+                <mat-label>{{'SCHEDULER.START_DATE'| translate}}</mat-label>
+                <input matInput [matDatepicker]="picker1"
+                    placeholder="{{'SCHEDULER.START_DATE_PLACEHOLDER'| translate}}" formControlName="startDatePicker"
+                    (dateInput)="selectStartDate($event.value)" (dateChange)="selectStartDate($event.value)" required>
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+
+            <!--
+                Start time
+            -->
+            <mat-form-field appearance="outline">
+                <mat-label>{{'SCHEDULER.START_TIME'| translate}}</mat-label>
+                <input matInput id="startTime" 
+                    type="time"
+                    formControlName="startTimeFormControl" 
+                    (input)="validateStartTime()"
+                    required>
+			</mat-form-field>
+            
+            <!--
+                Fixed time
+            -->
+            <div *ngIf="applicationType!='broadcast'">
+                <mat-checkbox (change)="validateFixedTime($event)" [checked]="fixedTime==1">
+                    {{'SCHEDULER.FIXED_TIME'| translate}} {{'SCHEDULER.OPTIONAL' | translate}}
+                </mat-checkbox>
+            </div>
+            
+            <!--
+                Scheduler policy
+            -->
+            <mat-form-field appearance="outline">
+                <mat-label>{{'SCHEDULER.POLICY'| translate}}</mat-label>
+				<mat-select	id="policy" #policySelect
+						placeholder="{{'SCHEDULER.POLICY_PLACEHOLDER'| translate}}"
+						formControlName="policyFormControl"
+						(selectionChange)="selectPolicy($event.value)" required>
+					<mat-option *ngFor="let policy of policyList" [value]="policy">
+						{{ policy.name | translate }}
+					</mat-option>
+                </mat-select>
+			</mat-form-field>
+
+        </div>
+    </div>
+    <div class="bx--row">
+        <div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+            <div>
+				<button type="button" class="mat-flat-button" *ngIf="mode == 'create'" matStepperPrevious>{{'SCHEDULER.BACK'| translate}}</button>
+				<button type="button" class="mat-flat-button mat-primary" *ngIf="mode == 'create'" (click)="next()">{{'SCHEDULER.NEXT' | translate}}</button>
+                <button type="button" class="mat-flat-button mat-primary" *ngIf="mode == 'edit'" (click)="triggerSave()">{{'SCHEDULER.SAVE' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</form>

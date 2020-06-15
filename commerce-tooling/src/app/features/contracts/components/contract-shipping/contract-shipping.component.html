@@ -1,0 +1,169 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="shippingForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+            <div class="bx--row hc-paper-section">
+                <div class="select-group-content bx--col-lg-6">
+                    <div class="hc-type-text">
+                        <mat-label>{{'CONTRACTS.SELECT_SHIPPING_METHODS'| translate}}</mat-label>
+                    </div>
+                    <div>
+                        <div class="hc-type-label">
+                            <span>{{'CONTRACTS.AVAILABLE_SHIPPING_METHODS'| translate}}</span>
+                        </div>	
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'CONTRACTS.SEARCH' | translate}}</mat-label>
+                            <input #shippingMethodSearchInput matInput (input)="searchShippingMethods($event.target.value)"
+                                    id="shippingMethodSearch"
+                                    placeholder="{{'CONTRACTS.SEARCH' | translate}}"
+                                    formControlName="shippingMethodSearch">
+                            <span class="filter-clear" *ngIf="shippingMethodSearch.value" (click)="clearShippingMethodSearch()">
+                                <mat-icon>clear</mat-icon>
+                                <span class="clear-margin">{{'CONTRACTS.CLEAR' | translate}}</span>
+                            </span>
+                        </mat-form-field>
+                        <mat-list>
+                            <mat-list-item *ngFor="let item of filteredAvailableShippingMethods" class="list-content">
+                                <mat-checkbox (change)="onChangeShippingMethod(item, $event)" [checked]="isSelectedShippingMethod(item)">
+                                    {{item.description}}
+                                </mat-checkbox>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                </div>	
+                <div class="select-group-content bx--col-lg-5">
+                    <div class="hc-type-label">{{'CONTRACTS.SELECTED_SHIPPING_METHODS'| translate}}</div>
+                    <div class="hc-chip-list-section">
+                        <span *ngIf="!shippingMethods.length">{{'GENERAL.NO_SELECTION_MADE'| translate}}</span>
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let item of shippingMethods" [selectable]="true"
+                                    [removable]="true" (removed)="removeShippingMethod(item)">
+                                {{item.description}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="bx--row hc-paper-section">
+                <div class="select-group-content bx--col-lg-6">
+                    <div class="hc-type-text">
+                        <mat-label>{{'CONTRACTS.SELECT_SHIPPING_CHARGE_TYPES'| translate}}</mat-label>
+                    </div>
+                    <div>
+                        <div class="hc-type-label">
+                            <span>{{'CONTRACTS.AVAILABLE_SHIPPING_CHARGE_TYPES'| translate}}</span>
+                        </div>	
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'CONTRACTS.SEARCH' | translate}}</mat-label>
+                            <input matInput (input)="searchShippingCharges($event.target.value)"
+                                    id="shippingChargeSearch"
+                                    placeholder="{{'CONTRACTS.SEARCH' | translate}}"
+                                    formControlName="shippingChargeSearch" >
+                            <span class="filter-clear" *ngIf="shippingChargeSearch.value" (click)="clearShippingChargeSearch()">
+                                <mat-icon>clear</mat-icon>
+                                <span class="clear-margin">{{'CONTRACTS.CLEAR' | translate}}</span>
+                            </span>
+                        </mat-form-field>
+                        <mat-list>
+                            <mat-list-item *ngFor="let item of filteredAvailableShippingCharges" class="list-content">
+                                <mat-checkbox (change)="onChangeShippingCharge(item, $event)" [checked]="isSelectedShippingCharge(item)">
+                                    {{item.description}}
+                                </mat-checkbox>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                </div>
+                <div class="select-group-content bx--col-lg-5">
+                    <div class="hc-type-label">{{'CONTRACTS.SELECTED_SHIPPING_CHARGE_TYPES'| translate}}</div>
+                    <div class="hc-chip-list-section">
+                        <span *ngIf="!shippingCharges.length">{{'GENERAL.NO_SELECTION_MADE'| translate}}</span>
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let item of shippingCharges" [selectable]="true"
+                                    [removable]="true" (removed)="removeShippingCharge(item)">
+                                {{item.description}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="bx--row hc-paper-section">
+                <div class="select-group-content bx--col-lg-6">
+                    <div class="hc-type-text">
+                        <mat-label>{{'CONTRACTS.SELECT_SHIPPING_ADDRESSES'| translate}}</mat-label>
+                    </div>
+                    <div>
+                        <div class="hc-type-label">
+                            <span>{{'CONTRACTS.AVAILABLE_SHIPPING_ADDRESSES'| translate}}</span>
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'CONTRACTS.SEARCH' | translate}}</mat-label>
+                            <input matInput (input)="searchShippingAddresses($event.target.value)"
+                                    id="shippingAddressSearch"
+                                    placeholder="{{'CONTRACTS.SEARCH' | translate}}"
+                                    formControlName="shippingAddressSearch" >
+                            <span class="filter-clear" *ngIf="shippingAddressSearch.value" (click)="clearShippingAddressSearch()">
+                                <mat-icon>clear</mat-icon>
+                                <span class="clear-margin">{{'CONTRACTS.CLEAR' | translate}}</span>
+                            </span>
+                        </mat-form-field>
+                        <mat-list>
+                            <mat-list-item *ngFor="let item of filteredAvailableShippingAddresses" class="list-content">
+                                <mat-checkbox (change)="onChangeShippingAddress(item, $event)" [checked]="isSelectedShippingAddress(item)">
+                                    {{item.content}}
+                                </mat-checkbox>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                </div>
+                <div class="select-group-content bx--col-lg-5">
+                    <div class="hc-type-label">{{'CONTRACTS.SELECTED_SHIPPING_ADDRESSES'| translate}}</div>
+                    <div class="hc-chip-list-section">
+                        <span *ngIf="!(shippingAddresses != null && shippingAddresses.length)">{{'GENERAL.NO_SELECTION_MADE'| translate}}</span>
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let item of shippingAddresses" [selectable]="true"
+                                    [removable]="true" (removed)="removeShippingAddress(item)">
+                                {{item.shippingAddressNickName}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </div>
+            </div>
+            <div class="hc-type-text contracts-shipping-addressbook-message">
+                {{'CONTRACTS.ADDRESS_BOOK_MESSAGE'| translate}}
+            </div>
+            <mat-checkbox formControlName="allowPersonalShippingAddress" (change)="changeAllowPersonalShippingAddress($event)">
+                {{'CONTRACTS.PERSONAL_ADDRESS_BOOK' | translate}}
+            </mat-checkbox>
+            <mat-checkbox formControlName="allowParentOrganizationShippingAddress" (change)="changeAllowParentOrganizationShippingAddress($event)">
+                {{'CONTRACTS.PARENT_ORGANIZATION_ADDRESS_BOOK' | translate}}
+            </mat-checkbox>
+            <mat-checkbox formControlName="allowAccountOrganizationShippingAddress" (change)="changeAllowAccountOrganizationShippingAddress($event)">
+                {{'CONTRACTS.BUSINESS_ORGANIZATION_ADDRESS_BOOK' | translate}}
+            </mat-checkbox>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" type="button" matStepperPrevious *ngIf="mode === 'create'">{{'CONTRACTS.BACK' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" matStepperNext *ngIf="mode === 'create'">{{'CONTRACTS.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'CONTRACTS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

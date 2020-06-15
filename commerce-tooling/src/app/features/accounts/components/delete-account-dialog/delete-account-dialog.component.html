@@ -1,0 +1,21 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'ACCOUNTS.DELETE_ACCOUNT' | translate}}</h4>
+
+<form [formGroup]="deleteAccountForm" autocomplete="off">
+	<mat-label>{{'ACCOUNTS.DELETE_ACCOUNT_CONFIRMATION'| translate: {accountName: accountName} }}</mat-label>
+</form>
+
+<mat-dialog-actions>
+	<button class="mat-flat-button" type="button" (click)="cancel()">{{'ACCOUNTS.CANCEL' | translate}}</button>
+	<button class="mat-flat-button mat-primary"(click)="deleteAccount()">{{'ACCOUNTS.DELETE' | translate}}</button>
+</mat-dialog-actions>

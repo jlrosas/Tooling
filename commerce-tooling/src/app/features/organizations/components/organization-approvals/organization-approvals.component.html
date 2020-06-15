@@ -1,0 +1,72 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="approvalTypesForm"autocomplete="off" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row hc-paper-section">
+		<div class="select-group-content bx--col-lg-6">
+			<div class="hc-type-text">
+				<span>{{'ORGANIZATIONS.SELECT_APPROVALS'| translate}}</span>
+			</div>
+			<div>
+				<div class="hc-type-label">
+					{{'ORGANIZATIONS.AVAILABLE_APPROVALS'| translate}}
+				</div>
+				<mat-form-field appearance="outline">
+					<mat-label>{{'ORGANIZATIONS.SEARCH' | translate}}</mat-label>
+					<input #searchTextInput matInput (input)="searchApprovalTypes($event.target.value)"
+							id="searchText"
+							placeholder="{{'ORGANIZATIONS.SEARCH' | translate}}"
+							formControlName="searchText">
+					<span class="filter-clear" *ngIf="searchText.value" (click)="clearSearchText()">
+						<mat-icon>clear</mat-icon>
+						<span class="clear-margin">{{'ORGANIZATIONS.CLEAR' | translate}}</span>
+					</span>
+				</mat-form-field>
+				<mat-list>
+					<mat-list-item *ngFor="let approval of filteredApprovalTypeList">
+						<mat-checkbox (change)="approvalSelectionChanged($event, approval)" [checked]="approval.selected">
+							{{approval.approvalName}}
+						</mat-checkbox>
+					</mat-list-item>
+				</mat-list>
+			</div>
+			<div>
+				<span *ngIf="approvalTypeList.length != 1">{{'ORGANIZATIONS.N_ITEMS' | translate:{n:filteredApprovalTypeList.length} }}</span>
+				<span *ngIf="approvalTypeList.length == 1">{{'ORGANIZATIONS.ONE_ITEM' | translate}}</span>
+			</div>
+		</div>
+		<div class="select-group-content bx--col-lg-5">
+			<div class="hc-type-label">{{'ORGANIZATIONS.SELECTED_GROUPS'| translate}}</div>
+			<div class="hc-chip-list-section">
+				<span *ngIf="!assignedApprovalTypeList.length">{{'GENERAL.NO_SELECTION_MADE'| translate}}</span>
+				<mat-chip-list>
+					<mat-chip *ngFor="let assignedApprovalType of assignedApprovalTypeList" [selectable]="true"
+						[removable]="true" (removed)="approvalSelectionChanged($event, assignedApprovalType)">
+						{{assignedApprovalType.approvalName}}
+						<mat-icon matChipRemove>cancel</mat-icon>
+					</mat-chip>
+				</mat-chip-list>
+			</div>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div *ngIf="mode === 'create'">
+				<button class="mat-flat-button" type="button" matStepperPrevious>{{'ORGANIZATIONS.BACK' | translate}}</button>
+				<button *hcNotRole="[-1]" class="mat-flat-button mat-primary" id="submit" (click)="triggerSave()">{{'ORGANIZATIONS.FINISH'| translate}}</button>
+				<button *hcRole="[-1]" class="mat-flat-button mat-primary" type="button" matStepperNext>{{'ORGANIZATIONS.NEXT' | translate}}</button>
+			</div>
+			<div *ngIf="mode === 'edit'">
+				<button class="mat-flat-button mat-primary" (click)="triggerSave()">{{'ORGANIZATIONS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

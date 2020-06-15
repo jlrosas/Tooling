@@ -1,0 +1,21 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'CONTRACTS.DELETE_CONTRACT' | translate}}</h4>
+
+<form [formGroup]="deleteContractForm" autocomplete="off">
+	<mat-label>{{'CONTRACTS.DELETE_CONTRACT_CONFIRMATION'| translate: {contractName: contractName} }}</mat-label>
+</form>
+
+<mat-dialog-actions>
+	<button class="mat-raised-button" type="button" (click)="cancel()">{{'CONTRACTS.CANCEL' | translate}}</button>
+	<button class="mat-raised-button mat-primary"(click)="deleteContract()">{{'CONTRACTS.DELETE' | translate}}</button>
+</mat-dialog-actions>

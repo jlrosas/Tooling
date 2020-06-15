@@ -1,0 +1,17 @@
+&.mat-form-field-type-mat-input {
+    height: map-get($hc-input, height);
+    line-height: map-get($hc-input, height);
+
+    .mat-input-element {
+        @include hc-type-text();
+        line-height: map-get($hc-input, height);
+    }
+
+    // Label Styling when input is filled
+    &.mat-form-field-can-float.mat-form-field-should-float {
+        .mat-input-element {
+            padding-top: spacing(2);
+            line-height: map-get($hc-input, height) - spacing(2);
+        }
+    }
+}
