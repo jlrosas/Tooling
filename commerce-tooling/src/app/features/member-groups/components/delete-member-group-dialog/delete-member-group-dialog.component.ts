@@ -22,7 +22,6 @@ import { MemberGroupsService } from "../../../../rest/services/member-groups.ser
 })
 export class DeleteMemberGroupDialogComponent implements OnInit {
 	deleteMemberGroupForm: FormGroup;
-	titleTextKey: string;
 	memberGroupName: string;
 	memberGroupId: string;
 	processing = false;
@@ -55,7 +54,7 @@ export class DeleteMemberGroupDialogComponent implements OnInit {
 			this.memberGroupsService.deleteMemberGroupResponse({
 				id: this.memberGroupId
 			}).subscribe(response => {
-				this.translateService.get("MEMBER_GROUPS.MEMBER_GROUPS_DELETED_MESSAGE").subscribe((message: string) => {
+				this.translateService.get("MEMBER_GROUPS.MEMBER_GROUP_DELETED_MESSAGE").subscribe((message: string) => {
 					this.alertService.success({message});
 				});
 				this.processing = false;

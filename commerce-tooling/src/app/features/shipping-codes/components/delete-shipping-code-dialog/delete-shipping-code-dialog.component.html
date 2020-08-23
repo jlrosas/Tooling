@@ -1,0 +1,21 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'SHIPPING_CODES.DELETE_SHIPPING_CODE' | translate}}</h4>
+
+<form [formGroup]="deleteShippingCodeForm" autocomplete="off">
+	<mat-label>{{'SHIPPING_CODES.DELETE_SHIPPING_CODE_CONFIRMATION'| translate: {name: shippingCodeName} }}</mat-label>
+</form>
+
+<mat-dialog-actions>
+	<button class="mat-flat-button" type="button" (click)="cancel()">{{'SHIPPING_CODES.CANCEL' | translate}}</button>
+	<button class="mat-flat-button mat-primary" (click)="deleteShippingCode()">{{'SHIPPING_CODES.DELETE' | translate}}</button>
+</mat-dialog-actions>

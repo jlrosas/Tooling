@@ -28,6 +28,8 @@ class UserAccountPolicyDescriptionsService extends __BaseService {
    * Get a collection of user account policy descriptions.
    * @param params The `UserAccountPolicyDescriptionsService.GetUserAccountPolicyDescriptionsParams` containing the following parameters:
    *
+   * - `searchString`: Limits search results to only include user account policy descriptions with a description that matches the value of this parameter. Searches are case-insensitive.
+   *
    * - `userAccountPolicyId`: The unique numeric ID for identifying the user account policy.
    *
    * - `description`: The description of the user account policy.
@@ -50,6 +52,7 @@ class UserAccountPolicyDescriptionsService extends __BaseService {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    if (params.searchString != null) __params = __params.set('searchString', params.searchString.toString());
     if (params.userAccountPolicyId != null) __params = __params.set('userAccountPolicyId', params.userAccountPolicyId.toString());
     if (params.description != null) __params = __params.set('description', params.description.toString());
     if (params.languageId != null) __params = __params.set('languageId', params.languageId.toString());
@@ -79,6 +82,8 @@ class UserAccountPolicyDescriptionsService extends __BaseService {
   /**
    * Get a collection of user account policy descriptions.
    * @param params The `UserAccountPolicyDescriptionsService.GetUserAccountPolicyDescriptionsParams` containing the following parameters:
+   *
+   * - `searchString`: Limits search results to only include user account policy descriptions with a description that matches the value of this parameter. Searches are case-insensitive.
    *
    * - `userAccountPolicyId`: The unique numeric ID for identifying the user account policy.
    *
@@ -310,6 +315,11 @@ module UserAccountPolicyDescriptionsService {
    * Parameters for getUserAccountPolicyDescriptions
    */
   export interface GetUserAccountPolicyDescriptionsParams {
+
+    /**
+     * Limits search results to only include user account policy descriptions with a description that matches the value of this parameter. Searches are case-insensitive.
+     */
+    searchString?: string;
 
     /**
      * The unique numeric ID for identifying the user account policy.

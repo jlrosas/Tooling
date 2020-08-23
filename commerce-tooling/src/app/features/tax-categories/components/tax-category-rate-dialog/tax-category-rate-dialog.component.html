@@ -1,0 +1,55 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'TAX_CATEGORIES.DEFINE_RATES_PER_JURISDICTION' | translate}}</h4>
+<form [formGroup]="taxRateForm" autocomplete="off">
+	<mat-form-field appearance="outline">
+		<mat-label>{{'TAX_CATEGORIES.FULFILLMENT_CENTER'| translate}}</mat-label>
+		<input matInput id="fulfillmentCenter" #fulfillmentCenterInput 
+				(input)="searchFulfillmentCenters($event.target.value)" placeholder="{{'TAX_CATEGORIES.SELECT_FULFILLMENT_CENTER'| translate}}"
+				formControlName="fulfillmentCenter" [matAutocomplete]="fulfillmentCenterAutocomplete" required>
+		<mat-autocomplete #fulfillmentCenterAutocomplete="matAutocomplete" (optionSelected)="selectFulfillmentCenter($event.option.value)">
+			<mat-option *ngFor="let fulfillmentCenter of fulfillmentCenterSearchList" [value]="fulfillmentCenter">
+				{{fulfillmentCenter.name}}
+			</mat-option>
+		</mat-autocomplete>
+		<mat-error *ngIf="fulfillmentCenter.errors && fulfillmentCenter.errors.invalidFulfillmentCenter">
+			{{'TAX_CATEGORIES.INVALID_FULFILLMENT_CENTER' | translate }}
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field appearance="outline">
+		<mat-label>{{'TAX_CATEGORIES.JURISDICTION'| translate}}</mat-label>
+		<input matInput id="jurisdiction"
+				(input)="searchJurisdictions($event.target.value)" placeholder="{{'TAX_CATEGORIES.SELECT_JURISDICTION'| translate}}"
+				formControlName="jurisdiction" [matAutocomplete]="jurisdictionAutocomplete" required>
+		<mat-autocomplete #jurisdictionAutocomplete="matAutocomplete" (optionSelected)="selectJurisdiction($event.option.value)">
+			<mat-option *ngFor="let jurisdiction of jurisdictionSearchList" [value]="jurisdiction">
+				{{jurisdiction.code}}
+			</mat-option>
+		</mat-autocomplete>						
+		<mat-error *ngIf="jurisdiction.errors && jurisdiction.errors.invalidJurisdiction">
+			{{'TAX_CATEGORIES.INVALID_JURISDICTION' | translate }}
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field appearance="outline">
+		<mat-label>{{'TAX_CATEGORIES.TAX_RATE'| translate}}</mat-label>
+		<input matInput id="rate" #rateInput
+				formControlName="rate" (input)="validateTaxRate()" [maxlength]="15" required>
+		<mat-error *ngIf="rate.errors && (rate.errors.invalidRate || rate.errors.min)">
+			{{'TAX_CATEGORIES.INVALID_TAX_RATE' | translate }}
+		</mat-error>
+	</mat-form-field>
+
+	<mat-dialog-actions>
+		<button class="mat-flat-button" type="button" (click)="cancel()">{{'TAX_CATEGORIES.CANCEL' | translate}}</button>
+		<button class="mat-flat-button mat-primary" type="button" (click)="save()">{{'TAX_CATEGORIES.SAVE' | translate}}</button>
+	</mat-dialog-actions>
+</form>

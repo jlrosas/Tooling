@@ -36,12 +36,13 @@
                     formControlName="startTimeFormControl" 
                     (input)="validateStartTime()"
                     required>
+                <mat-icon matSuffix>access_time</mat-icon>
 			</mat-form-field>
             
             <!--
                 Fixed time
             -->
-            <div *ngIf="applicationType!='broadcast'">
+            <div *ngIf="applicationType!='broadcast'" class="hc-scheduled-time">
                 <mat-checkbox (change)="validateFixedTime($event)" [checked]="fixedTime==1">
                     {{'SCHEDULER.FIXED_TIME'| translate}} {{'SCHEDULER.OPTIONAL' | translate}}
                 </mat-checkbox>

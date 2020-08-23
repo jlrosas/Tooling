@@ -47,6 +47,9 @@ import { JobDetailsComponent } from "./components/job-details/job-details.compon
 import { JobConfigurationComponent } from "./components/job-configuration/job-configuration.component";
 import { JobScheduleComponent } from "./components/job-schedule/job-schedule.component";
 import { StoreNameService } from "../../services/store-name.service";
+import { CancelJobDialogComponent } from "./components/cancel-job-dialog/cancel-job-dialog.component";
+import { ClearJobStatusDialogComponent } from "./components/clear-job-status-dialog/clear-job-status-dialog.component";
+import { ClearAllJobStatusDialogComponent } from "./components/clear-all-job-status-dialog/clear-all-job-status-dialog.component";
 
 @NgModule({
 	imports: [
@@ -88,12 +91,18 @@ import { StoreNameService } from "../../services/store-name.service";
 		EditJobComponent,
 		JobDetailsComponent,
 		JobConfigurationComponent,
-		JobScheduleComponent
+		JobScheduleComponent,
+		CancelJobDialogComponent,
+		ClearJobStatusDialogComponent,
+		ClearAllJobStatusDialogComponent
 	],
 	providers: [
 		StoreNameService
 	],
 	entryComponents: [
+		CancelJobDialogComponent,
+		ClearJobStatusDialogComponent,
+		ClearAllJobStatusDialogComponent
 	]
 })
 export class SchedulerModule {}

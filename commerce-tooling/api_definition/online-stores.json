@@ -691,11 +691,10 @@
           },
           {
             "description": "The unique numeric ID for identifying the default catalog.",
-            "format": "int64",
             "in": "path",
             "name": "id",
             "required": true,
-            "type": "integer",
+            "type": "string",
             "x-entity-path": "dataArea/onlineStore[1]/defaultCatalog[1]/uniqueID"
           }
         ],
@@ -1270,9 +1269,8 @@
         },
         "ownerId": {
           "description": "The unique numeric ID of the organization that owns the online store.",
-          "format": "int64",
           "readOnly": true,
-          "type": "integer",
+          "type": "string",
           "x-entity-path": "onlineStoreIdentifier/externalIdentifier/ownerID"
         },
         "state": {
@@ -1487,15 +1485,13 @@
       "properties": {
         "catalogId": {
           "description": "The unique numeric ID of the catalog associated with the default catalog.",
-          "format": "int64",
-          "type": "integer",
+          "type": "string",
           "x-entity-path": "catalogIdentifier/uniqueID"
         },
         "id": {
           "description": "The unique numeric ID for identifying the online store default catalog.",
-          "format": "int64",
           "readOnly": true,
-          "type": "integer",
+          "type": "string",
           "x-entity-path": "uniqueID"
         },
         "onlineStoreId": {

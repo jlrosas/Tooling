@@ -364,6 +364,354 @@
           }
         ]
       }
+    },
+    {
+      "url": "./api_definition/order.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/registries.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/store-transports.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/password-policies.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/password-policy-descriptions.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/user-account-lockout-policies.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/user-account-lockout-policy-descriptions.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/user-account-policies.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/tax-categories.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/tax-category-descriptions.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/jurisdictions.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/jurisdiction-groups.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/jurisdiction-group-relationships.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/fulfillment-centers.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/calculation-rules.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/calculation-scales.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/calculation-rule-scales.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/calculation-ranges.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/calculation-range-details.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/calculation-codes.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/calculation-code-descriptions.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/tax-jurisdiction-calculation-rules.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/shipping-modes.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/shipping-mode-descriptions.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/shipping-mode-carriers.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/shipping-mode-codes.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/shipping-arrangements.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/store-entity-calculation-usages.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/store-defaults.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
     }
   ]
 }

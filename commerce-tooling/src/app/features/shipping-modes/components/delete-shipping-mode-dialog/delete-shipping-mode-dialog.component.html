@@ -1,0 +1,21 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'SHIPPING_MODES.DELETE_SHIPPING_MODE' | translate}}</h4>
+
+<form [formGroup]="deleteShippingModeForm" autocomplete="off">
+	<mat-label>{{'SHIPPING_MODES.DELETE_SHIPPING_MODE_CONFIRMATION'| translate: {shippingMode: shippingMode} }}</mat-label>
+</form>
+
+<mat-dialog-actions>
+	<button class="mat-raised-button" type="button" (click)="cancel()">{{'SHIPPING_MODES.CANCEL' | translate}}</button>
+	<button class="mat-raised-button mat-primary" (click)="deleteShippingMode()">{{'SHIPPING_MODES.DELETE' | translate}}</button>
+</mat-dialog-actions>

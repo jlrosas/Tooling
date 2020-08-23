@@ -21,9 +21,7 @@ import { ExtendedSitesService } from "../../../../rest/services/extended-sites.s
 	styleUrls: ["./delete-extended-site-dialog.component.scss"]
 })
 export class DeleteExtendedSiteDialogComponent implements OnInit {
-
 	deleteExtendedSiteForm: FormGroup;
-	titleTextKey: string;
 	extendedSiteName: string;
 	extendedSiteId: string;
 	processing = false;

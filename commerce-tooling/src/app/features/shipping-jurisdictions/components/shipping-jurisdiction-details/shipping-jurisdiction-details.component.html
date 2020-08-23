@@ -1,0 +1,83 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="detailsForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SHIPPING_JURISDICTIONS.NAME'| translate}}</mat-label>
+				<input matInput #nameInput id="name" #nameInput formControlName="name"
+						(input)="validateName()" autocomplete="off" [maxlength]="30" required>
+				<mat-error *ngIf="name.errors && name.errors.duplicateName">
+					{{'SHIPPING_JURISDICTIONS.DUPLICATE_NAME_ERROR' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SHIPPING_JURISDICTIONS.COUNTRY'| translate}} {{'SHIPPING_JURISDICTIONS.OPTIONAL' | translate}}</mat-label>
+				<input matInput id="country"
+						formControlName="country"
+						[matAutocomplete]="countryAutoComplete"
+						(input)="validateCountry()" autocomplete="off">
+				<mat-autocomplete #countryAutoComplete="matAutocomplete" (optionSelected)="selectCountry($event.option.value)">
+					<mat-option *ngFor="let country of filteredCountryList" [value]="country">
+						{{country.name}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="country.errors && country.errors.invalidCountry">
+					{{'SHIPPING_JURISDICTIONS.INVALID_COUNTRY' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SHIPPING_JURISDICTIONS.STATE_PROVINCE_REGION'| translate}} {{'SHIPPING_JURISDICTIONS.OPTIONAL' | translate}}</mat-label>
+				<input matInput id="state"
+						formControlName="state"
+						[matAutocomplete]="stateAutoComplete"
+						(input)="validateState()" autocomplete="off" [maxlength]="128">
+				<mat-autocomplete #stateAutoComplete="matAutocomplete" (optionSelected)="selectState($event.option.value)">
+					<mat-option *ngFor="let state of filteredStateList" [value]="state">
+						{{state.name}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="state.errors && state.errors.invalidState">
+					{{'SHIPPING_JURISDICTIONS.INVALID_STATE' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SHIPPING_JURISDICTIONS.CITY'| translate}} {{'SHIPPING_JURISDICTIONS.OPTIONAL' | translate}}</mat-label>
+				<input matInput id="city" formControlName="city" (input)="validateCity()" autocomplete="off" [maxlength]="128">
+			</mat-form-field>
+			<mat-label class="hc-label">
+				{{'SHIPPING_JURISDICTIONS.ZIP_CODE_RANGE'| translate}} {{'SHIPPING_JURISDICTIONS.OPTIONAL' | translate}}
+			</mat-label>
+			<div class="hc-split-section">
+                <div class="hc-split-section-half">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'SHIPPING_JURISDICTIONS.ZIP_CODE_START'| translate}}</mat-label>
+						<input matInput id="zipcodeStart" formControlName="zipcodeStart" (input)="validateZipcodeStart()"  [maxlength]="15" autocomplete="off">
+					</mat-form-field>
+                </div>
+                <div class="hc-split-section-half">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'SHIPPING_JURISDICTIONS.ZIP_CODE_END'| translate}}</mat-label>
+						<input matInput id="zipcodeEnd" formControlName="zipcodeEnd" (input)="validateZipcodeEnd()"  [maxlength]="15" autocomplete="off">
+					</mat-form-field>
+                </div>
+            </div>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()">{{'SHIPPING_JURISDICTIONS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

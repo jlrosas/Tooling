@@ -17,14 +17,17 @@ import { Subject, Subscription, Observable } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
+import { MatDialog } from "@angular/material/dialog";
 import { DataSource } from "@angular/cdk/table";
-import { JobsService } from "../../../../rest/services/jobs.service";
 import { JobsStatusesService } from "../../../../rest/services/jobs-statuses.service";
 import { JobTypesService } from "../../../../rest/services/job-types.service";
 import { OnlineStoresService } from "../../../../rest/services/online-stores.service";
 import { AlertService } from "../../../../services/alert.service";
 import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from "../../../../shared/constants";
 import { PreferenceService } from "../../../../services/preference.service";
+import { CancelJobDialogComponent } from "../cancel-job-dialog/cancel-job-dialog.component";
+import { ClearJobStatusDialogComponent } from "../clear-job-status-dialog/clear-job-status-dialog.component";
+import { ClearAllJobStatusDialogComponent } from "../clear-all-job-status-dialog/clear-all-job-status-dialog.component";
 
 @Component({
 	templateUrl: "./scheduled-job-list.component.html",
@@ -116,23 +119,30 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 		"upload": "SCHEDULER.APPLICATION_TYPE_UPLOAD"
 	};
 
+	private dialogConfig = {
+		maxWidth: "80%",
+		maxHeight: "100vh",
+		width: "400px",
+		disableClose: true,
+		autoFocus: true
+	};
+
 	private searchString: Subject<string> = new Subject<string>();
 	private getJobStatusesSubscription: Subscription = null;
 	private getStoresSubscription: Subscription = null;
 	private storeSearchString: Subject<string> = new Subject<string>();
 	private processingClearAll = false;
 	private processingClear = {};
-	private processingCancel = {};
 	private storeFilter = {label: "", value: ""};
 
 	constructor(private router: Router,
 			private jobsStatusesService: JobsStatusesService,
-			private jobsService: JobsService,
 			private jobTypesService: JobTypesService,
 			private onlineStoresService: OnlineStoresService,
 			private alertService: AlertService,
 			private translateService: TranslateService,
-			private preferenceService: PreferenceService) { }
+			private preferenceService: PreferenceService,
+			private dialog: MatDialog) { }
 
 	ngOnInit() {
 		this.getPreferenceData();
@@ -331,112 +341,51 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 		this.getJobStatusList();
 	}
 
-	cancelJob(jobId: string) {
-		if (!this.processingCancel[jobId]) {
-			this.processingCancel[jobId] = true;
-			this.alertService.clear();
-			this.jobsService.JobDelete(jobId).subscribe(response => {
-				this.processingCancel[jobId] = false;
-				delete this.processingCancel[jobId];
-				this.translateService.get("SCHEDULER.JOB_CANCELED_MESSAGE").subscribe((message: string) => {
-					this.alertService.success({message});
-				});
+	cancelJob(job: any) {
+		const { jobId, command } = job;
+		const dialogRef = this.dialog.open(CancelJobDialogComponent, {
+			...this.dialogConfig,
+			data: {
+				jobId,
+				command
+			}
+		});
+
+		dialogRef.afterClosed().subscribe(data => {
+			if (data && data.jobCancelled) {
 				this.getJobStatusList();
-			},
-			errorResponse => {
-				this.processingCancel[jobId] = false;
-				delete this.processingCancel[jobId];
-				if (errorResponse.error && errorResponse.error.errors) {
-					errorResponse.error.errors.forEach(error => {
-						this.alertService.error({message: error.errorMessage});
-					});
-				} else {
-					console.log(errorResponse);
-				}
-			});
-		}
+			}
+		});
 	}
 
 	clearStatus(job: any) {
-		const jobId = job.jobId;
-		if (!this.processingClear[jobId]) {
-			this.processingClear[jobId] = true;
-			this.alertService.clear();
-			const endDate = new Date(job.end);
-			// Delete job status records with this job ID and 1 second ahead, to get
-			// rid of selected job status record
-			const endDateString =
-				endDate.getFullYear() + "-" +
-				(endDate.getMonth() + 1) + "-" +
-				endDate.getDate() + "T" +
-				endDate.getHours() + ":" +
-				endDate.getMinutes() + ":" +
-				(endDate.getSeconds() + 1);
-			const args: JobsStatusesService.JobStatusesByJobIdDeleteParams = {
-				ContentType: "application/json",
-				storeId: 0,
-				id: jobId,
-				endTime: endDateString
-			};
-			this.jobsStatusesService.JobStatusesByJobIdDelete(args).subscribe(response => {
-				this.processingClear[jobId] = false;
-				delete this.processingClear[jobId];
-				this.translateService.get("SCHEDULER.JOB_STATUS_REMOVED_MESSAGE").subscribe((message: string) => {
-					this.alertService.success({message});
-				});
+		const { jobId, command, end } = job;
+		const dialogRef = this.dialog.open(ClearJobStatusDialogComponent, {
+			...this.dialogConfig,
+			data: {
+				jobId,
+				command,
+				end
+			}
+		});
+
+		dialogRef.afterClosed().subscribe(data => {
+			if (data && data.jobStatusCleared) {
 				this.getJobStatusList();
-			},
-			errorResponse => {
-				this.processingClear[jobId] = false;
-				delete this.processingClear[jobId];
-				if (errorResponse.error && errorResponse.error.errors) {
-					errorResponse.error.errors.forEach(error => {
-						this.alertService.error({message: error.errorMessage});
-					});
-				} else {
-					console.log(errorResponse);
-				}
-			});
-		}
+			}
+		});
 	}
 
 	clearAllPreviousStatus() {
-		if (!this.processingClearAll) {
-			this.processingClearAll = true;
-			this.alertService.clear();
-			const endDate = new Date();
-			// Delete job status records up to 1 year ahead, to get
-			// rid of all previously completed job run job status records
-			const endDateString =
-				(endDate.getFullYear() + 1) + "-" +
-				(endDate.getMonth() + 1) + "-" +
-				endDate.getDate() + "T" +
-				endDate.getHours() + ":" +
-				endDate.getMinutes() + ":" +
-				endDate.getSeconds();
-			const args: JobsStatusesService.JobStatusesDeleteParams = {
-				ContentType: "application/json",
-				storeId: 0,
-				endTime: endDateString
-			};
-			this.jobsStatusesService.JobStatusesDelete(args).subscribe(response => {
-				this.processingClearAll = false;
-				this.translateService.get("SCHEDULER.ALL_JOB_STATUS_REMOVED_MESSAGE").subscribe((message: string) => {
-					this.alertService.success({message});
-				});
+		const dialogRef = this.dialog.open(ClearAllJobStatusDialogComponent, {
+			...this.dialogConfig
+		});
+
+		dialogRef.afterClosed().subscribe(data => {
+			if (data && data.jobStatusAllCleared) {
 				this.getJobStatusList();
-			},
-			errorResponse => {
-				this.processingClearAll = false;
-				if (errorResponse.error && errorResponse.error.errors) {
-					errorResponse.error.errors.forEach(error => {
-						this.alertService.error({message: error.errorMessage});
-					});
-				} else {
-					console.log(errorResponse);
-				}
-			});
-		}
+			}
+		});
 	}
 
 	public handlePage(e: any) {

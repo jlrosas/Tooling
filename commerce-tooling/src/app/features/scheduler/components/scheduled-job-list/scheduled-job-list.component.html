@@ -58,6 +58,10 @@
 					</mat-form-field>
 					<mat-form-field appearance="outline">
 						<mat-label>{{'SCHEDULER.APPLICATION_TYPE'| translate}}</mat-label>
+						<span class="filter-clear" *ngIf="applicationType != null" (click)="clearApplicationTypeSelection($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'SCHEDULER.CLEAR' | translate}}</span>
+						</span>
 						<mat-select id="applicationTypeSelect"
 								placeholder="{{'SCHEDULER.APPLICATION_TYPE_PLACEHOLDER'| translate}}"
 								formControlName="applicationTypeDropdown"
@@ -67,27 +71,27 @@
 								{{applicationType.textKey | translate}}
 							</mat-option>
 						</mat-select>
-						<span class="filter-clear" *ngIf="applicationType != null" (click)="clearApplicationTypeSelection($event)">
-							<mat-icon>clear</mat-icon>
-							<span class="clear-margin">{{'SCHEDULER.CLEAR' | translate}}</span>
-						</span>
 					</mat-form-field>
 					<mat-form-field appearance="outline">
 						<mat-label>{{'SCHEDULER.STATE'| translate}}</mat-label>
+						<span class="filter-clear" *ngIf="state != null" (click)="clearStateSelection($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'SCHEDULER.CLEAR' | translate}}</span>
+						</span>
 						<mat-select id="stateTypeSelect" placeholder="{{'SCHEDULER.STATE_PLACEHOLDER'| translate}}"
 								formControlName="stateDropdown" (selectionChange)="selectState($event.value)">
 							<mat-option *ngFor="let index of stateTextIndices" [value]="index">
 								{{stateTextKeys[index] | translate}}
 							</mat-option>
 						</mat-select>
-						<span class="filter-clear" *ngIf="state != null" (click)="clearStateSelection($event)">
-							<mat-icon>clear</mat-icon>
-							<span class="clear-margin">{{'SCHEDULER.CLEAR' | translate}}</span>
-						</span>
 					</mat-form-field>
 
 					<mat-form-field appearance="outline">
 						<mat-label>{{'SCHEDULER.STATUS'| translate}}</mat-label>
+						<span class="filter-clear" *ngIf="status != null" (click)="clearStatusSelection($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'SCHEDULER.CLEAR' | translate}}</span>
+						</span>
 						<mat-select id="statusTypeSelect"
 								placeholder="{{'SCHEDULER.STATUS_PLACEHOLDER'| translate}}"
 								formControlName="statusDropdown" (selectionChange)="selectStatus($event.value)">
@@ -95,10 +99,6 @@
 								{{statusTextKeys[index] | translate}}
 							</mat-option>
 						</mat-select>
-						<span class="filter-clear" *ngIf="status != null" (click)="clearStatusSelection($event)">
-							<mat-icon>clear</mat-icon>
-							<span class="clear-margin">{{'SCHEDULER.CLEAR' | translate}}</span>
-						</span>
 					</mat-form-field>
 					<mat-form-field appearance="outline" title="{{'SCHEDULER.START_DATE'| translate}}">
 						<mat-label>{{'SCHEDULER.START_DATE'| translate}}</mat-label>
@@ -121,6 +121,7 @@
 							<mat-icon>clear</mat-icon>
 							<span class="clear-margin">{{'SCHEDULER.CLEAR' | translate}}</span>
 						</span>
+						<mat-icon matSuffix>access_time</mat-icon>
 					</mat-form-field>
 					<mat-form-field appearance="outline" title="{{'SCHEDULER.END_DATE'| translate}}">
 						<mat-label>{{'SCHEDULER.END_DATE'| translate}}</mat-label>
@@ -143,6 +144,7 @@
 							<mat-icon>clear</mat-icon>
 							<span class="clear-margin">{{'SCHEDULER.CLEAR' | translate}}</span>
 						</span>
+						<mat-icon matSuffix>access_time</mat-icon>
 					</mat-form-field>
 				</form>
 			</div>
@@ -202,7 +204,7 @@
 							<mat-icon color="primary">delete</mat-icon>
 						</button>
 						<button matTooltip="{{'SCHEDULER.CANCEL_JOB' | translate}}" mat-icon-button 
-								aria-label="stop" (click)="cancelJob(element.jobId)">
+								aria-label="stop" (click)="cancelJob(element)">
 							<mat-icon class="stop-icon" color="primary">stop</mat-icon>
 						</button>
 					</td>

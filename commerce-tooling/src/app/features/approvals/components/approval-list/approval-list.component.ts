@@ -72,7 +72,6 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 	private getApprovalStatusesSubscription: Subscription = null;
 
 	private processTextKeys = {
-		"10001": "APPROVALS.RFQ_RESPONSE",
 		"10002": "APPROVALS.ORDER_PROCESSING",
 		"10003": "APPROVALS.CONTRACT_SUBMIT",
 		"10004": "APPROVALS.USER_REGISTRATION",
@@ -398,10 +397,14 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 			args.flowTypeId = this.processFilter;
 		}
 		if (this.submitStartFilter != null) {
-			args.startSubmitDate = (new Date(this.submitStartFilter)).toISOString();
+			const startSubmitDate = new Date(this.submitStartFilter);
+			startSubmitDate.setUTCHours(0, 0, 0, 0);
+			args.startSubmitDate = startSubmitDate.toISOString();
 		}
 		if (this.submitEndFilter != null) {
-			args.endSubmitDate = (new Date(this.submitEndFilter)).toISOString();
+			const endSubmitDate = new Date(this.submitEndFilter);
+			endSubmitDate.setUTCHours(0, 0, 0, 0);
+			args.endSubmitDate = endSubmitDate.toISOString();
 		}
 		let sort = this.sort.active;
 		if (this.sort.direction === "asc") {

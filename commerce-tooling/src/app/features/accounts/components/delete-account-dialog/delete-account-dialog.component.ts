@@ -22,7 +22,6 @@ import { AccountsService } from "../../../../rest/services/accounts.service";
 })
 export class DeleteAccountDialogComponent implements OnInit {
 	deleteAccountForm: FormGroup;
-	titleTextKey: string;
 	accountName: string;
 	accountId: string;
 	processing = false;

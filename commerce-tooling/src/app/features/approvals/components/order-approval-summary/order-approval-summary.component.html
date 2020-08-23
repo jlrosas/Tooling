@@ -1,0 +1,187 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div class="hc-section-container" id="userDetails">
+	<p class="hc-section-header">{{'APPROVALS.ORDER_APPROVAL_TITLE' | translate}}</p>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.ORDER_NUMBER' | translate}}</div>
+			<div class="hc-hc-column-data">{{orderId}}</div>
+		</div>
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.LAST_UPDATED' | translate}}</div>
+			<div class="hc-hc-column-data">{{lastUpdated | date:'medium'}}</div>
+		</div>
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.ORG_NAME' | translate}}</div>
+			<div class="hc-hc-column-data">{{organizationName}}</div>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-8 bx--col-lg-12">
+			<div class="hc-column hc-table-section hc-paper-section hc-paper">
+				<div class="hc-table-wrapper">
+					<table mat-table [dataSource]="model">
+						<ng-container matColumnDef="name">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.PRODUCT_NAME' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.name}}</td>
+						</ng-container>
+						<ng-container matColumnDef="sku">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.SKU' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.sku}}</td>
+						</ng-container>
+						<ng-container matColumnDef="quantity">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.QUANTITY' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.quantity}}</td>
+						</ng-container>
+						<ng-container matColumnDef="contractName">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.CONTRACT_NAME' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.contractName}}</td>
+						</ng-container>
+						<ng-container matColumnDef="price">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.PRICE' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.price}}</td>
+						</ng-container>
+						<ng-container matColumnDef="discount">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.DISCOUNT' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.discount}}</td>
+						</ng-container>
+						<ng-container matColumnDef="total">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.TOTAL' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.total}}</td>
+						</ng-container>
+						<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+						<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+		<div class="hc-column-header">{{'APPROVALS.ORDER_LEVEL_DISCOUNT' | translate}}</div>
+		<div class="hc-hc-column-data">{{adjustment}}</div>
+	</div>
+	<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+		<div class="hc-column-header">{{'APPROVALS.MINUS_ADJUSTMENT' | translate}}</div>
+		<div class="hc-hc-column-data">{{discount}}</div>
+	</div>
+	<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+		<div class="hc-column-header">{{'APPROVALS.TOTAL_SHIPPING_CHARGE' | translate}}</div>
+		<div class="hc-hc-column-data">{{totalShippingCharge}}</div>
+	</div>
+	<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+		<div class="hc-column-header">{{'APPROVALS.TAX' | translate}}</div>
+		<div class="hc-hc-column-data">{{tax}}</div>
+	</div>
+	<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+		<div class="hc-column-header">{{'APPROVALS.ORDER_TOTAL' | translate}} [{{currency}}]</div>
+		<div class="hc-hc-column-data">{{total}}</div>
+	</div>
+	<p class="hc-section-header">{{'APPROVALS.SHIPPING_INFORMATION' | translate}}</p>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.ESTIMATED_SHIP_DATE' | translate}}</div>
+			<div class="hc-hc-column-data">{{estimatedShipDate | date:'medium'}}</div>
+		</div>
+		<div class="bx--col-sm-4 bx--col-md-8 bx--col-lg-12">
+			<div class="hc-column hc-table-section hc-paper-section hc-paper">
+				<div class="hc-table-wrapper">
+					<table mat-table [dataSource]="model">
+						<ng-container matColumnDef="name">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.PRODUCT_NAME' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.name}}</td>
+						</ng-container>
+						<ng-container matColumnDef="sku">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.SKU' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.sku}}</td>
+						</ng-container>
+						<ng-container matColumnDef="contractName">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.CONTRACT_NAME' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.contractName}}</td>
+						</ng-container>
+						<ng-container matColumnDef="shipDate">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.SHIP_DATE' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.shipDate | date:'medium'}}</td>
+						</ng-container>
+						<ng-container matColumnDef="trackingId">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.SHIPMENT_TRACKING_ID' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.trackingId}}</td>
+						</ng-container>
+						<ng-container matColumnDef="shipMethod">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.SHIPPING_METHOD' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.shipMethod}}</td>
+						</ng-container>
+						<ng-container matColumnDef="address">
+							<th mat-header-cell *matHeaderCellDef>{{'APPROVALS.SHIPPING_ADDRESS' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.address}}</td>
+						</ng-container>
+						<tr mat-header-row *matHeaderRowDef="displayedColumnsForShipping"></tr>
+						<tr mat-row *matRowDef="let row; columns: displayedColumnsForShipping;"></tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="billingAddress">
+		<p class="hc-section-header">{{'APPROVALS.BILLING_ADDRESS' | translate}}</p>
+		<div class="bx--row">
+			<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+				<div class="hc-hc-column-data">{{billingAddress}}</div>
+			</div>
+		</div>
+	</div>
+	<p class="hc-section-header">{{'APPROVALS.PAYMENT_INFORMATION' | translate}}</p>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.PAYMENT_METHOD' | translate}}</div>
+			<div class="hc-hc-column-data">{{paymentMethod}}</div>
+		</div>
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.AMOUNT' | translate}}</div>
+			<div class="hc-hc-column-data">{{paymentAmount}}</div>
+		</div>
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.ACCOUNT' | translate}}</div>
+			<div class="hc-hc-column-data">{{accountId}}</div>
+		</div>
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.BILLING_ADDRESS' | translate}}</div>
+			<div class="hc-hc-column-data">{{billingAddress2}}</div>
+		</div>
+	</div>
+	<p class="hc-section-header">{{'APPROVALS.BUYER_INFORMATION' | translate}}</p>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.FIRST_NAME' | translate}}</div>
+			<div class="hc-hc-column-data">{{buyerFirstName}}</div>
+		</div>
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.MIDDLE_NAME' | translate}}</div>
+			<div class="hc-hc-column-data">{{buyerMiddleName}}</div>
+		</div>
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.LAST_NAME' | translate}}</div>
+			<div class="hc-hc-column-data">{{buyerLastName}}</div>
+		</div>
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.PHONE_NUMBER' | translate}}</div>
+			<div class="hc-hc-column-data">{{buyerPhoneNumber}}</div>
+		</div>
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.EMAIL' | translate}}</div>
+			<div class="hc-hc-column-data">{{buyerEmail}}</div>
+		</div>
+		<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
+			<div class="hc-column-header">{{'APPROVALS.EMPLOYEE_ID' | translate}}</div>
+			<div class="hc-hc-column-data">{{buyerEmployeeId}}</div>
+		</div>
+	</div>
+</div>

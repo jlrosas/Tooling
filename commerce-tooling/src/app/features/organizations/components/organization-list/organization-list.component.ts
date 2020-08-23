@@ -233,6 +233,10 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 		this.searchParentOrganizations("");
 	}
 
+	refreshOrganizations() {
+		this.getManageableOrganizations();
+	}
+
 	private createFormControls() {
 		this.parentOrganization = new FormControl(this.parentOrganizationFilter.label);
 		this.searchText = new FormControl(this.currentSearchString);

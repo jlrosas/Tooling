@@ -1,0 +1,40 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'SHIPPING_MODES.SHIPPING_MODES' | translate}}
+	</h1>
+	<div class="hc-stepper-section hc-paper">
+		<div class="hc-stepper-actions">
+			<h2 class="hc-type-h2">
+				{{'SHIPPING_MODES.NEW_SHIPPING_MODE' | translate}}
+			</h2>
+			<div>
+				<button class="mat-flat-button" type="button" (click)="cancel()">{{'SHIPPING_MODES.CANCEL' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="submit()">{{'SHIPPING_MODES.FINISH' | translate}}</button>
+			</div>
+		</div>
+		<mat-vertical-stepper [linear]="true" #stepper>
+			<ng-template matStepperIcon="edit">
+				<mat-icon>check</mat-icon>
+			</ng-template>
+			<mat-step #detailsStep label="{{'SHIPPING_MODES.SHIPPING_MODE_DETAILS' | translate}}">
+				<hc-shipping-mode-details [stepper]="stepper" [step]="detailsStep" mode="create" (save)="submit()">
+				</hc-shipping-mode-details>
+			</mat-step>
+			<mat-step #descriptionsStep label="{{'SHIPPING_MODES.SHIPPING_MODE_DESCRIPTION' | translate}}">
+				<hc-shipping-mode-description-list *ngIf="stepper.selected === descriptionsStep" [step]="descriptionsStep" mode="create" (save)="submit()">
+				</hc-shipping-mode-description-list>
+			</mat-step>	
+		</mat-vertical-stepper>
+	</div>
+</div>

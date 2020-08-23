@@ -1,0 +1,78 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'REGISTRIES.REGISTRIES' | translate}}
+	</h1>
+	<div class="hc-table-section hc-paper">
+		<!-- Search,Filter part(start) -->
+		<div class="hc-table-actions">
+			<form [formGroup]="listSearchForm" autocomplete="off">
+				<mat-form-field appearance="outline" class="icon-suffix">
+					<mat-label>{{'REGISTRIES.SEARCH' | translate}}</mat-label>
+					<input matInput (input)="search($event.target.value)"
+							placeholder="{{'REGISTRIES.SEARCH_BY_NAME' | translate}}" formControlName="searchText">
+					<mat-icon *ngIf="!currentSearchString" matSuffix>search</mat-icon>
+					<span class="filter-clear" *ngIf="currentSearchString" (click)="clearSearch()">
+						<mat-icon>clear</mat-icon>
+						<span class="clear-margin">{{'REGISTRIES.CLEAR' | translate}}</span>
+					</span>
+				</mat-form-field>
+			</form>
+			<button matTooltip="{{'REGISTRIES.UPDATE_ALL_REGISTRIES' | translate}}" mat-icon-button (click)="updateAllRegistries()">
+				<mat-icon color="primary">update</mat-icon>
+			</button>
+			<button matTooltip="{{'REGISTRIES.REFRESH' | translate}}" mat-icon-button (click)="refresh()">
+				<mat-icon color="primary">refresh</mat-icon>
+			</button>			
+		</div>
+		<!-- TABLE PART (START) -->
+		<div class="hc-table-wrapper">
+	
+			<table mat-table [dataSource]="model" class="" matSort matSortActive="{{activeColumn}}" matSortDirection="{{sortDirection}}">
+	
+				<ng-container matColumnDef="registry" sticky>
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{'REGISTRIES.COMPONENT' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						<a (click)="updateRegistry(row)">{{row.name}}</a>	
+					</td>
+				</ng-container>
+	
+				<ng-container matColumnDef="status">
+					<th mat-header-cell *matHeaderCellDef>{{'REGISTRIES.STATUS' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						{{row.status | translate}}
+					</td>
+				</ng-container>
+	
+				<ng-container matColumnDef="actions" stickyEnd>
+					<th mat-header-cell *matHeaderCellDef> {{'REGISTRIES.ACTIONS' | translate}} </th>
+					<td mat-cell *matCellDef="let element">
+
+						<button matTooltip="{{'REGISTRIES.UPDATE_REGISTRY' | translate}}" mat-icon-button 
+								aria-label="update" (click)="updateRegistry(element)">
+							<mat-icon color="primary">update</mat-icon>
+						</button>
+
+					</td>
+				</ng-container>
+	
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+		</div>
+		<!-- TABLE PART (END) -->
+	
+		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)">
+		</mat-paginator>
+	</div>
+</div>

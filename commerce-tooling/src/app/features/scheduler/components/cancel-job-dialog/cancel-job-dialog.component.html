@@ -1,0 +1,21 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'SCHEDULER.CANCEL_JOB' | translate}}</h4>
+
+<form [formGroup]="cancelJobForm" autocomplete="off">
+	<mat-label>{{'SCHEDULER.CANCEL_JOB_CONFIRMATION'| translate: {name: jobName} }}</mat-label>
+</form>
+
+<mat-dialog-actions>
+	<button type="button" class="mat-flat-button" type="button" (click)="cancel()">{{'SCHEDULER.CANCEL' | translate}}</button>
+	<button type="button" class="mat-flat-button mat-primary"(click)="cancelJob()">{{'SCHEDULER.CANCEL_JOB' | translate}}</button>
+</mat-dialog-actions>

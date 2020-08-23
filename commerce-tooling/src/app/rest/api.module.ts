@@ -37,6 +37,36 @@ import { PreviewTokenService } from './services/preview-token.service';
 import { SegmentService } from './services/segment.service';
 import { PriceRulesService } from './services/price-rules.service';
 import { CatalogFiltersService } from './services/catalog-filters.service';
+import { OrdersService } from './services/orders.service';
+import { OrderItemsService } from './services/order-items.service';
+import { RegistriesService } from './services/registries.service';
+import { StoreTransportsService } from './services/store-transports.service';
+import { PasswordPoliciesService } from './services/password-policies.service';
+import { PasswordPolicyDescriptionsService } from './services/password-policy-descriptions.service';
+import { UserAccountLockoutPoliciesService } from './services/user-account-lockout-policies.service';
+import { UserAccountLockoutPolicyDescriptionsService } from './services/user-account-lockout-policy-descriptions.service';
+import { UserAccountPoliciesService } from './services/user-account-policies.service';
+import { TaxCategoriesService } from './services/tax-categories.service';
+import { TaxCategoryDescriptionsService } from './services/tax-category-descriptions.service';
+import { JurisdictionsService } from './services/jurisdictions.service';
+import { JurisdictionGroupsService } from './services/jurisdiction-groups.service';
+import { JurisdictionGroupRelationshipsService } from './services/jurisdiction-group-relationships.service';
+import { FulfillmentCentersService } from './services/fulfillment-centers.service';
+import { CalculationRulesService } from './services/calculation-rules.service';
+import { CalculationScalesService } from './services/calculation-scales.service';
+import { CalculationRuleScalesService } from './services/calculation-rule-scales.service';
+import { CalculationRangesService } from './services/calculation-ranges.service';
+import { CalculationRangeDetailsService } from './services/calculation-range-details.service';
+import { CalculationCodesService } from './services/calculation-codes.service';
+import { CalculationCodeDescriptionsService } from './services/calculation-code-descriptions.service';
+import { TaxJurisdictionCalculationRulesService } from './services/tax-jurisdiction-calculation-rules.service';
+import { ShippingModesService } from './services/shipping-modes.service';
+import { ShippingModeDescriptionsService } from './services/shipping-mode-descriptions.service';
+import { ShippingModeCarriersService } from './services/shipping-mode-carriers.service';
+import { ShippingModeCodesService } from './services/shipping-mode-codes.service';
+import { ShippingArrangementsService } from './services/shipping-arrangements.service';
+import { StoreEntityCalculationUsagesService } from './services/store-entity-calculation-usages.service';
+import { StoreDefaultsService } from './services/store-defaults.service';
 
 /**
  * Provider for all Api services, plus ApiConfiguration
@@ -84,7 +114,37 @@ import { CatalogFiltersService } from './services/catalog-filters.service';
     PreviewTokenService,
     SegmentService,
     PriceRulesService,
-    CatalogFiltersService
+    CatalogFiltersService,
+    OrdersService,
+    OrderItemsService,
+    RegistriesService,
+    StoreTransportsService,
+    PasswordPoliciesService,
+    PasswordPolicyDescriptionsService,
+    UserAccountLockoutPoliciesService,
+    UserAccountLockoutPolicyDescriptionsService,
+    UserAccountPoliciesService,
+    TaxCategoriesService,
+    TaxCategoryDescriptionsService,
+    JurisdictionsService,
+    JurisdictionGroupsService,
+    JurisdictionGroupRelationshipsService,
+    FulfillmentCentersService,
+    CalculationRulesService,
+    CalculationScalesService,
+    CalculationRuleScalesService,
+    CalculationRangesService,
+    CalculationRangeDetailsService,
+    CalculationCodesService,
+    CalculationCodeDescriptionsService,
+    TaxJurisdictionCalculationRulesService,
+    ShippingModesService,
+    ShippingModeDescriptionsService,
+    ShippingModeCarriersService,
+    ShippingModeCodesService,
+    ShippingArrangementsService,
+    StoreEntityCalculationUsagesService,
+    StoreDefaultsService
   ],
 })
 export class ApiModule {

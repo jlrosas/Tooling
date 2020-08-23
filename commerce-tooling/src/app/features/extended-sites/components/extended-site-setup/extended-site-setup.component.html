@@ -23,6 +23,11 @@
 					<mat-option *ngFor="let org of organizationList" [value]="org">
 						{{org.organizationName}}
 					</mat-option>
+					<div class="mat-select-controller" *ngIf="organizationCount > organizationList.length">
+						<button matTooltip="{{'EXTENDED_SITES.MORE' | translate}}" mat-icon-button (click)="loadMoreOrganizations()">
+							<mat-icon color="primary">more_horiz</mat-icon>
+						</button>
+					</div>
 				</mat-autocomplete>
 				<mat-error *ngIf="organization.errors && organization.errors.invalidOrganization">
 					{{'EXTENDED_SITES.INVALID_ORGANIZATION' | translate }}

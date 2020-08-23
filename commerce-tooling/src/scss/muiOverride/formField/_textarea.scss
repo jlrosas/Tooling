@@ -1,25 +1,30 @@
 $textarea-lineheight: 21px;
 &.textarea {
+    display: block;
     height: auto;
     line-height: $textarea-lineheight;
-
+    
     &.mat-form-field-can-float.mat-form-field-should-float {
         .mat-form-field-label {
             line-height: $textarea-lineheight;
         }
-
+        
         .mat-input-element {
             padding: spacing(3) spacing(1.5) spacing(2);
             line-height: $textarea-lineheight;
         }
-
+        
         textarea.mat-input-element {
             padding: spacing(3.5) spacing(1.5) spacing(2);
         }
     }
-
+    
     textarea.mat-input-element {
         padding: spacing(3.5) spacing(1.5) spacing(2);
         line-height: $textarea-lineheight;
     }
+}
+
+textarea.mat-input-element {
+    margin-bottom: spacing(1) !important;    
 }

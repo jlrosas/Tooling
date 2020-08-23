@@ -12,10 +12,8 @@
 .row-layout {
 	display: flex;
 	justify-content: space-between;
-	&> .mat-form-field {
-		width: 55%;
-	}
+
 	&> .mat-form-field:first-child {
-		width: 40%;
+		margin-right: 16px;
 	}
 }

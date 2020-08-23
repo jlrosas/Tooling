@@ -1,0 +1,271 @@
+{
+    "host": "hostname.com",
+    "basePath": "/rest/admin/v2",
+    "schemes": [
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "title": "Registries",
+        "version": "2.0"
+    },
+    "tags": [
+        {
+            "name": "Registries",
+            "description": "This class provides RESTful services to manage the registries."
+        }
+    ],
+    "paths": {
+        "/registries": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/RegistryCollection"
+                        },
+                        "description": "The requested completed successfully."
+                    },
+                    "400": {
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseContainer"
+                        },
+                        "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+                    },
+                    "401": {
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseContainer"
+                        },
+                        "description": "Not authenticated. The user session is not valid."
+                    },
+                    "403": {
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseContainer"
+                        },
+                        "description": "The user is not authorized to perform the specified request."
+                    },
+                    "500": {
+                        "description": "Internal server error. For details, see the server log files."
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "searchString",
+                        "description": "Limits search results to only include registries with a name that matches the value of this parameter. Searches are case-insensitive.",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "description": "The maximum number of records to return.",
+                        "format": "int32",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+                        "format": "int32",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "sort",
+                        "description": "The comma-separated set of properties that control the order of the listed items. Properties can be prefixed by either (-) to sort in descending order, or (+) to sort in ascending order. By default, properties are sorted in ascending order. For example, sort=name will order the items based on the name value in ascending order.",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Registries"
+                ],
+                "description": "Get a list of registries.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a list of registries.",
+                "operationId": "getRegistries"
+            }
+        },
+        "/registries/{registryName}/update": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "The requested resource has completed successfully."
+                    },
+                    "400": {
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseContainer"
+                        },
+                        "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+                    },
+                    "401": {
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseContainer"
+                        },
+                        "description": "Not authenticated. The user session is not valid."
+                    },
+                    "403": {
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseContainer"
+                        },
+                        "description": "The user is not authorized to perform the specified request."
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseContainer"
+                        },
+                        "description": "Internal server error. For details, see the server log files."
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "registryName",
+                        "description": "The registry name of the registry to be updated.",
+                        "required": true,
+                        "type": "string",
+                        "in": "path"
+                    }
+                ],
+                "tags": [
+                    "Registries"
+                ],
+                "description": "Update a single registry.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Update a single registry.",
+                "consumes": [
+                    "application/json"
+                ],
+                "operationId": "updateRegistry"
+            }
+        },
+        "/registries/update": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "The requested resource has completed successfully."
+                    },
+                    "400": {
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseContainer"
+                        },
+                        "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+                    },
+                    "401": {
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseContainer"
+                        },
+                        "description": "Not authenticated. The user session is not valid."
+                    },
+                    "403": {
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseContainer"
+                        },
+                        "description": "The user is not authorized to perform the specified request."
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseContainer"
+                        },
+                        "description": "Internal server error. For details, see the server log files."
+                    }
+                },
+                "tags": [
+                    "Registries"
+                ],
+                "description": "Update all registries.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Update all registries.",
+                "consumes": [
+                    "application/json"
+                ],
+                "operationId": "updateAllRegistries"
+            }
+        }
+    },
+    "definitions": {
+        "ErrorResponseContainer": {
+            "description": "The error message model.",
+            "properties": {
+                "errors": {
+                    "items": {
+                        "$ref": "#/definitions/Error"
+                    },
+                    "type": "array"
+                },
+                "requestId": {
+                    "description": "The request identifier.",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Error": {
+            "description": "The error message item model.",
+            "properties": {
+                "code": {
+                    "description": "The error message code.",
+                    "type": "string"
+                },
+                "correlationId": {
+                    "description": "The unique identifier for the request.",
+                    "type": "string"
+                },
+                "locale": {
+                    "description": "The locale of the error message.",
+                    "type": "string"
+                },
+                "message": {
+                    "description": "The error message.",
+                    "type": "string"
+                },
+                "messageArguments": {
+                    "description": "The arguments used to construct the error message.",
+                    "items": {
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "messageKey": {
+                    "description": "The error message key.",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Registry": {
+            "properties": {
+                "registry": {
+                    "description": "The name of the registry.",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "The status of the registry.",
+                    "type": "string"
+                }
+            }
+        },
+        "RegistryCollection": {
+            "properties": {
+                "count": {
+                    "format": "int64",
+                    "type": "integer",
+                    "description": "The total number of item records that match the query parameters."
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Registry"
+                    }
+                }
+            }
+        }
+    }
+}

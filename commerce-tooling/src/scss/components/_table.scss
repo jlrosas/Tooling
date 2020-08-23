@@ -70,6 +70,7 @@
 			th.mat-header-cell,
 			.mat-sort-header-button {
 				@include hc-type-label();
+				text-align: left;
 			}
 		}
 
@@ -100,6 +101,10 @@
 			@include breakpoint-down(sm) {
 				width: 250px;
 			}
+		}
+
+		.store-filter {
+			margin: 0 spacing(2);
 		}
 
 		form {
@@ -150,6 +155,14 @@
 		
 		&:hover {
 			opacity: 1;
+		}
+
+		
+		&.mat-icon-button-label {
+			width: auto;
+			span {
+					color: map-get($hc-color-blue, 100);
+			}
 		}
 	}	
 }

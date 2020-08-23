@@ -49,9 +49,9 @@ export class UserMainService {
 		this.activeServicesCount = 0;
 	}
 
-	createUser(): Observable<void> {
+	createUser(): Observable<string> {
 		this.processing = true;
-		return new Observable<undefined>((observer: Observer<void>) => {
+		return new Observable<string>((observer: Observer<string>) => {
 			this.usersService.UsersCreateUserResponse(this.buildCreateUserBody()).subscribe(
 				response => {
 					const paths: Array<string> = response.headers.get("location").split("/");
@@ -65,7 +65,7 @@ export class UserMainService {
 						this.activeServicesCount += this.assignedMemberGroups.length;
 					}
 					if (this.activeServicesCount === 0) {
-						observer.next(undefined);
+						observer.next(this.userData.logonId);
 						observer.complete();
 						this.processing = false;
 					} else {
@@ -580,7 +580,7 @@ export class UserMainService {
 		});
 	}
 
-	private createRoleAssignments(id: string, observer: Observer<void>): void {
+	private createRoleAssignments(id: string, observer: Observer<string>): void {
 		const assignedRoles = this.assignedRoles;
 		if (assignedRoles != null && assignedRoles.length > 0) {
 			assignedRoles.forEach(assignedRole => {
@@ -592,7 +592,7 @@ export class UserMainService {
 					response => {
 						this.activeServicesCount--;
 						if (this.activeServicesCount === 0) {
-							observer.next(undefined);
+							observer.next(this.userData.logonId);
 							observer.complete();
 							this.processing = false;
 						}
@@ -610,7 +610,7 @@ export class UserMainService {
 		}
 	}
 
-	private createMemberGroupMemberships(id: string, observer: Observer<void>): void {
+	private createMemberGroupMemberships(id: string, observer: Observer<string>): void {
 		const assignedMemberGroups = this.assignedMemberGroups;
 		if (assignedMemberGroups != null && assignedMemberGroups.length > 0) {
 			assignedMemberGroups.forEach(assignedMemberGroup => {
@@ -622,7 +622,7 @@ export class UserMainService {
 					response => {
 						this.activeServicesCount--;
 						if (this.activeServicesCount === 0) {
-							observer.next(undefined);
+							observer.next(this.userData.logonId);
 							observer.complete();
 							this.processing = false;
 						}

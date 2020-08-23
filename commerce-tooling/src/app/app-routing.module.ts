@@ -52,7 +52,39 @@ const routes: Routes = [
  	{
 		path: "messages",
 		loadChildren: "./features/messages/messages.module#MessagesModule"
-	}
+	},
+	{
+		path: "registries",
+		loadChildren: "./features/registries/registries.module#RegistriesModule"
+	},
+	{
+		path: "shipping-jurisdictions",
+		loadChildren: "./features/shipping-jurisdictions/shipping-jurisdictions.module#ShippingJurisdictionsModule"
+	},
+	{
+		path: "shipping-modes",
+		loadChildren: "./features/shipping-modes/shipping-modes.module#ShippingModesModule"
+	},
+	{
+		path: "shipping-codes",
+		loadChildren: "./features/shipping-codes/shipping-codes.module#ShippingCodesModule"
+	},
+	{
+		path: "security-policies",
+		loadChildren: "./features/security-policies/security-policies.module#SecurityPoliciesModule"
+ 	},
+	{
+ 		path: "tax-categories",
+		loadChildren: "./features/tax-categories/tax-categories.module#TaxCategoriesModule"
+	},
+	{
+		path: "tax-jurisdictions",
+		loadChildren: "./features/tax-jurisdictions/tax-jurisdictions.module#TaxJurisdictionsModule"
+	},
+	{
+		path: "tax-codes",
+		loadChildren: "./features/tax-codes/tax-codes.module#TaxCodesModule"
+ 	}
 ];
 
 @NgModule({

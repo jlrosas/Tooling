@@ -47,11 +47,13 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 	organizationsLoading = false;
 	accountPolicyList: Array<any>;
 	getOrganizationsSubscription: Subscription = null;
+	organizationCount = 0;
+	organizationSearchString = "";
 
 	@ViewChild("logonIdInput", {static: false}) logonIdInput: ElementRef<HTMLInputElement>;
 	@ViewChild("emailInput", {static: false}) emailInput: ElementRef<HTMLInputElement>;
 
-	private organizationSearchString: Subject<string> = new Subject<string>();
+	private organizationSearchString$: Subject<string> = new Subject<string>();
 	private onLanguageChangeSubscription: Subscription = null;
 
 	constructor(private userMainService: UserMainService,
@@ -84,9 +86,12 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 					"address": {}
 				};
 			}
-			this.getOrganizations("");
-			this.organizationSearchString.pipe(debounceTime(250)).subscribe(searchString => {
-				this.getOrganizations(searchString);
+			this.getOrganizations();
+			this.organizationSearchString$.pipe(debounceTime(250)).subscribe(searchString => {
+				this.organizationList = [];
+				this.organizationCount = 0;
+				this.organizationSearchString = searchString;
+				this.getOrganizations();
 			});
 		}
 		this.initAccountPolicyList();
@@ -107,7 +112,7 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	ngOnDestroy() {
-		this.organizationSearchString.unsubscribe();
+		this.organizationSearchString$.unsubscribe();
 		if (this.onLanguageChangeSubscription) {
 			this.onLanguageChangeSubscription.unsubscribe();
 		}
@@ -137,7 +142,7 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	searchParentOrganizations(value) {
-		this.organizationSearchString.next(value);
+		this.organizationSearchString$.next(value);
 	}
 
 	selectParentOrganization(org: any) {
@@ -158,27 +163,32 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.save.emit(null);
 	}
 
-	private getOrganizations(searchString) {
+	loadMoreOrganizations() {
+		if (this.organizationList.length < this.organizationCount) {
+			this.getOrganizations();
+		}
+	}
+
+	private getOrganizations() {
 		this.organizationsLoading = true;
+		const searchString = this.organizationSearchString;
+		if (this.getOrganizationsSubscription) {
+			this.getOrganizationsSubscription.unsubscribe();
+			this.getOrganizationsSubscription = null;
+		}
 		this.getOrganizationsSubscription = this.organizationsService.OrganizationGetManageableOrganizations({
 			organizationName: searchString,
-			limit: 10
+			sort: "organizationName",
+			limit: 10,
+			offset: this.organizationList.length
 		}).subscribe(
 			response => {
-				if (response.items.length === 1 && response.items[0].organizationName === searchString) {
+				if (this.organizationList.length === 0 && response.items.length === 1 && response.items[0].organizationName === searchString) {
 					this.selectParentOrganization(response.items[0]);
 				} else {
-					response.items.sort((org1, org2) => {
-						let result = 0;
-						if (org1.organizationName < org2.organizationName) {
-							result = -1;
-						} else if (org1.organizationName > org2.organizationName) {
-							result = 1;
-						}
-						return result;
-					});
-					this.organizationList = response.items;
+					this.organizationList = [ ...this.organizationList, ...response.items];
 				}
+				this.organizationCount = response.count;
 				this.getOrganizationsSubscription = null;
 				this.organizationsLoading = false;
 			},
@@ -194,7 +204,7 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 	private createFormControls() {
 		if (this.mode === "edit") {
 			this.logonId = new FormControl({value: "", disabled: true});
-			this.password = new FormControl("", Validators.minLength(8));
+			this.password = new FormControl("");
 			this.parentOrganization = new FormControl({value: "", disabled: true});
 		} else {
 			this.logonId = new FormControl("", HcValidators.required, control => {
@@ -229,8 +239,7 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 				});
 			});
 			this.password = new FormControl("", [
-				Validators.required,
-				Validators.minLength(8)
+				Validators.required
 			]);
 			this.parentOrganization = new FormControl("", [
 				Validators.required,

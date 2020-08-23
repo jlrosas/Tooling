@@ -75,6 +75,10 @@
 
 	<mat-form-field appearance="outline">
 		<mat-label>{{'ACCOUNTS.BILLING_ADDRESS'| translate}} {{'ACCOUNTS.OPTIONAL'| translate}}</mat-label>
+		<span class="filter-clear" *ngIf="address.value" (click)="clearAddress($event)">
+			<mat-icon>clear</mat-icon>
+			<span class="clear-margin">{{'ACCOUNTS.CLEAR' | translate}}</span>
+		</span>
 		<mat-select id="address"
 				formControlName="address"
 				placeholder="{{'ACCOUNTS.SELECT_BILLING_ADDRESS' | translate}}">
@@ -82,10 +86,6 @@
 				{{item.content}}
 			</mat-option>
 		</mat-select>
-		<span class="filter-clear" *ngIf="address.value" (click)="clearAddress($event)">
-			<mat-icon>clear</mat-icon>
-			<span class="clear-margin">{{'ACCOUNTS.CLEAR' | translate}}</span>
-		</span>
 	</mat-form-field>
 
 	<mat-dialog-actions>

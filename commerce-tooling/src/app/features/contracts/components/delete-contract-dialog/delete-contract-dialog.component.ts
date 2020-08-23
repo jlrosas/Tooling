@@ -22,7 +22,6 @@ import { ContractsService } from "../../../../rest/services/contracts.service";
 })
 export class DeleteContractDialogComponent implements OnInit {
 	deleteContractForm: FormGroup;
-	titleTextKey: string;
 	contractName: string;
 	contractId: string;
 	processing = false;

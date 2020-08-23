@@ -1,0 +1,44 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'SECURITY_POLICIES.SECURITY_POLICIES' | translate}}
+	</h1>
+	<div class="hc-stepper-section hc-paper">
+		<div class="hc-stepper-actions">
+			<h2 class="hc-type-h2">
+				{{'SECURITY_POLICIES.EDIT_SECURITY_POLICY' | translate}}
+			</h2>
+			<div>
+				<button class="mat-flat-button" type="button" (click)="cancel()">{{'SECURITY_POLICIES.CANCEL' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="save()">{{'SECURITY_POLICIES.SAVE' | translate}}</button>
+			</div>
+		</div>
+		<mat-vertical-stepper #stepper (selectionChange)="handleSelectionChange($event)">
+			<ng-template matStepperIcon="edit">
+				<mat-icon>check</mat-icon>
+			</ng-template>
+			<mat-step #securityPolicyDetailsStep label="{{'SECURITY_POLICIES.SECURITY_POLICY_DETAILS' | translate}}">
+				<hc-security-policy-details [stepper]="stepper" [step]="securityPolicyDetailsStep" mode="edit" (save)="save()">
+				</hc-security-policy-details>	
+			</mat-step>
+			<mat-step #definePasswordPolicy label="{{'SECURITY_POLICIES.DEFINE_PASSWORD_POLICY' | translate}}">
+				<hc-define-password-policy [stepper]="stepper" *ngIf="stepper.selected === definePasswordPolicy" [step]="definePasswordPolicy" mode="edit" (save)="save()">
+				</hc-define-password-policy>
+			</mat-step>
+			<mat-step #defineLockoutPolicy label="{{'SECURITY_POLICIES.DEFINE_LOCKOUT_POLICY' | translate}}">
+				<hc-define-lockout-policy *ngIf="stepper.selected === defineLockoutPolicy" [step]="defineLockoutPolicy" mode="edit" (save)="save()">
+				</hc-define-lockout-policy>
+			</mat-step>
+		</mat-vertical-stepper>
+	</div>
+</div>

@@ -1,0 +1,105 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'TAX_CATEGORIES.TAX_CATEGORIES' | translate}}
+	</h1>
+	<div class="hc-table-section hc-paper">
+		<!-- Search,Filter part(start) -->
+		<div class="hc-table-actions">
+			<form [formGroup]="listSearchForm" autocomplete="off">
+				<mat-form-field appearance="outline" class="icon-suffix">
+					<mat-label>{{'TAX_CATEGORIES.SEARCH' | translate}}</mat-label>
+					<input matInput (input)="searchTaxCategories($event.target.value)"
+							placeholder="{{'TAX_CATEGORIES.SEARCH_BY_NAME' | translate}}"
+							formControlName="searchText" >
+					<mat-icon matSuffix>search</mat-icon>
+					<span class="filter-clear" *ngIf="currentSearchString != null" (click)="clearSearch()">
+						<mat-icon>clear</mat-icon>
+						<span class="clear-margin">{{'TAX_CATEGORIES.CLEAR' | translate}}</span>
+					</span>
+				</mat-form-field>
+				<mat-form-field appearance="outline" class="store-filter icon-suffix">
+					<mat-label>{{'TAX_CATEGORIES.STORE'| translate}}</mat-label>
+					<input matInput id="store" (input)="searchStores($event.target.value)" placeholder="{{'TAX_CATEGORIES.SELECT_STORE_PLACEHOLDER'| translate}}"
+							formControlName="store" [matAutocomplete]="storeAutocomplete" (blur)="resetSelectedStore()">
+					<mat-autocomplete #storeAutocomplete="matAutocomplete" (optionSelected)="selectStore($event.option.value)">
+						<mat-option *ngFor="let store of storeList" [value]="store">
+							{{store.identifier}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-icon matSuffix>filter_list</mat-icon>
+				</mat-form-field>
+			</form>
+			<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'TAX_CATEGORIES.SHOW_FILTERS' | translate}}</mat-slide-toggle>
+			<button class="mat-flat-button mat-primary" (click)="createTaxCategory()">{{'TAX_CATEGORIES.NEW_BUTTON' | translate}}</button>
+			<button class="mat-icon-button-label" matTooltip="{{'TAX_CATEGORIES.REFRESH' | translate}}" mat-icon-button (click)="refresh()">
+				<mat-icon color="primary">refresh</mat-icon>
+			</button>
+		</div>
+		<div *ngIf="showFilters">
+			<div class="hc-table-filters">
+				<form [formGroup]="listFilterForm" autocomplete="off">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'TAX_CATEGORIES.TYPE_FILTER'| translate}}</mat-label>
+						<span class="filter-clear" *ngIf="selectedTaxType != null" (click)="clearSelectedTaxType($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'TAX_CATEGORIES.CLEAR' | translate}}</span>
+						</span>
+						<mat-select id="taxType"
+								placeholder="{{'TAX_CATEGORIES.SELECT_TYPE_PLACEHOLDER'| translate}}"
+								formControlName="taxType" (selectionChange)="selectTaxType($event.value)">
+							<mat-option *ngFor="let index of taxTypeTextIndicies" [value]="index">
+								{{taxTypeTextKeys[index] | translate}}
+							</mat-option>
+						</mat-select>		
+					</mat-form-field>					
+				</form>
+			</div>
+		</div>
+		<!-- Search,Filter part(end) -->
+
+		<!-- TABLE PART (START) -->
+		<div class="hc-table-wrapper">
+			<table mat-table [dataSource]="model" matSort matSortActive="{{activeColumn}}" matSortDirection="{{sortDirection}}">
+				<ng-container matColumnDef="name" sticky>
+					<th mat-header-cell *matHeaderCellDef mat-sort-header="">{{'TAX_CATEGORIES.NAME' | translate}}</th>
+					<td mat-cell *matCellDef="let row">					
+						<a [routerLink]="['/tax-categories/edit-tax-category', row.id, {storeId: selectedStore.id, storeOwnerId: selectedStore.ownerId}]">
+							{{row.name}} 
+						</a>
+					</td>
+				</ng-container>			
+				<ng-container matColumnDef="type">
+					<th mat-header-cell *matHeaderCellDef>{{'TAX_CATEGORIES.TYPE' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						{{row.type | translate}}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="actions" stickyEnd>
+					<th mat-header-cell *matHeaderCellDef>{{'TAX_CATEGORIES.ACTIONS' | translate}}</th>
+					<td mat-cell *matCellDef="let element">
+						<button matTooltip="{{'TAX_CATEGORIES.DELETE' | translate}}" mat-icon-button aria-label="delete" (click)="deleteTaxCategory(element)">
+							<mat-icon color="primary">delete</mat-icon>
+						</button>
+					</td>
+				</ng-container>
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+			<!-- TABLE PART (END) -->
+		</div>
+		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+				(page)="handlePage($event)">
+		</mat-paginator>
+	</div>
+</div>

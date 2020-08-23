@@ -70,6 +70,10 @@
 					</mat-form-field>
 					<mat-form-field appearance="outline">
 						<mat-label>{{'MESSAGES.STATUS_FILTER'| translate}}</mat-label>
+						<span class="filter-clear" *ngIf="statusFilter != null" (click)="clearStatus($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'APPROVALS.CLEAR' | translate}}</span>
+						</span>
 						<mat-select id="statusSelect" placeholder="{{'MESSAGES.SELECT_STATUS_PLACEHOLDER'| translate}}"
 								formControlName="statusSelect"
 								(selectionChange)="selectStatus($event.value)">
@@ -77,10 +81,6 @@
 								{{statusTextKeys[index] | translate}}
 							</mat-option>
 						</mat-select>
-						<span class="filter-clear" *ngIf="statusFilter != null" (click)="clearStatus($event)">
-							<mat-icon>clear</mat-icon>
-							<span class="clear-margin">{{'APPROVALS.CLEAR' | translate}}</span>
-						</span>
 					</mat-form-field>
 				</form>
 			</div>

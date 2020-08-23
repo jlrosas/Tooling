@@ -30,7 +30,10 @@
 				</mat-form-field>
 			</form>
 			<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'ORGANIZATIONS.SHOW_FILTERS' | translate}}</mat-slide-toggle>
-			<button class="mat-raised-button mat-primary" (click)="createOrganization()">{{'MEMBER_GROUPS.NEW_BUTTON' | translate}}</button>
+			<button class="mat-raised-button mat-primary" (click)="createOrganization()">{{'ORGANIZATIONS.NEW_BUTTON' | translate}}</button>
+			<button class="mat-icon-button-label" matTooltip="{{'ORGANIZATIONS.REFRESH' | translate}}" mat-icon-button (click)="refreshOrganizations()">
+				<mat-icon color="primary">refresh</mat-icon>
+			</button>
 		</div>
 		<div *ngIf="showFilters">
 			<div class="hc-table-filters">

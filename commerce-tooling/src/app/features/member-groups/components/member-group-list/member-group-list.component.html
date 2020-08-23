@@ -31,6 +31,9 @@
 			</form>
 			<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'MEMBER_GROUPS.SHOW_FILTERS' | translate}}</mat-slide-toggle>
 			<button class="mat-flat-button mat-primary" (click)="createMemberGroup()">{{'MEMBER_GROUPS.NEW_BUTTON' | translate}}</button>
+			<button class="mat-icon-button-label" matTooltip="{{'MEMBER_GROUPS.REFRESH' | translate}}" mat-icon-button (click)="refreshMemberGroups()">
+				<mat-icon color="primary">refresh</mat-icon>
+			</button>
 		</div>
 		<div *ngIf="showFilters">
 			<div class="hc-table-filters">
@@ -56,6 +59,10 @@
 					</mat-form-field>
 					<mat-form-field appearance="outline">
 						<mat-label>{{'MEMBER_GROUPS.TYPE_FILTER'| translate}}</mat-label>
+						<span class="filter-clear" *ngIf="memberGroupType != null" (click)="clearMemberGroupType($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'MEMBER_GROUPS.CLEAR' | translate}}</span>
+						</span>
 						<mat-select id="memberGroupTypeSelect" placeholder="{{'MEMBER_GROUPS.TYPE_PLACEHOLDER'| translate}}"
 								formControlName="memberGroupTypeDropdown"
 								(selectionChange)="selectMemberGroupType($event.value)">
@@ -63,10 +70,6 @@
 								{{typeTextKeys[index] | translate}}
 							 </mat-option>
 						</mat-select>
-						<span class="filter-clear" *ngIf="memberGroupType != null" (click)="clearMemberGroupType($event)">
-							<mat-icon>clear</mat-icon>
-							<span class="clear-margin">{{'MEMBER_GROUPS.CLEAR' | translate}}</span>
-						</span>
 					</mat-form-field>
 				</form>
 			</div>

@@ -16,6 +16,7 @@
 <div class="bx--row content-border">
 	<form class="bx--col-sm-4 bx--col-md-8 bx--col-lg-12" autocomplete="off">
 		<div class="hc-paper">
+			<hc-order-approval-summary *ngIf="flowTypeId === '10002'" orderId="{{entityId}}"></hc-order-approval-summary>
 			<hc-contract-approval-summary *ngIf="flowTypeId === '10003'" contractId="{{entityId}}"></hc-contract-approval-summary>
 			<hc-user-approval-summary *ngIf="flowTypeId === '10004'" userId="{{entityId}}"></hc-user-approval-summary>
 			<hc-organization-approval-summary *ngIf="flowTypeId === '10005'" organizationId="{{entityId}}"></hc-organization-approval-summary>

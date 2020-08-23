@@ -44,7 +44,7 @@ export class StorePreviewComponent implements OnInit, OnDestroy {
 			textKey: "STORE_PREVIEW.VIEWPORT_MOBILE",
 			width: 640,
 			height: 375,
-			resolution: "(640 x 375)",
+			resolution: "(667 x 375)",
 			orientation: "H"
 		},
 		{

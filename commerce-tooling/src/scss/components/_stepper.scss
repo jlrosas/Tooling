@@ -26,6 +26,21 @@
 		}
 	}
 
+	.hc-split-section {
+		display: flex;
+		width: 400px;
+
+		mat-form-field {
+			width: 192px;
+		}
+
+		.hc-split-section-half {
+			&:first-child {
+				margin-right: 16px;
+			}
+		}
+	}
+
 	.mat-vertical-stepper-content {
 		padding-top: spacing(1);
 	}

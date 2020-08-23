@@ -1,0 +1,2610 @@
+{
+	"host": "hostname.com",
+	"basePath": "/rest/admin/v2",
+	"schemes": [
+		"https"
+	],
+	"swagger": "2.0",
+	"info": {
+		"title": "Orders",
+		"version": "2.0"
+	},
+	"tags": [{
+			"name": "Orders",
+			"description": "This class provides RESTful service to manage orders."
+		},
+		{
+			"name": "Order Items",
+			"description": "This class provides RESTful service to manage order items."
+		}
+	],
+	"paths": {
+		"/orders": {
+			"post": {
+				"responses": {
+					"201": {
+						"description": "The requested completed successfully.",
+						"headers": {
+							"Location": {
+								"description": "Link to the newly created resource.",
+								"type": "string"
+							}
+						}
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"required": true,
+						"in": "body",
+						"description": "Request body.",
+						"name": "body",
+						"schema": {
+							"$ref": "#/definitions/OrderCreate"
+						}
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"description": "Create a new order.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Create a new order.",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "createOrder"
+			},
+			"get": {
+				"responses": {
+					"200": {
+						"schema": {
+							"$ref": "#/definitions/AllOrderDetails"
+						},
+						"description": "The requested completed successfully."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"default": 0,
+						"description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+						"in": "query",
+						"name": "offset",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"description": "The maximum number of records to return.",
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"type": "integer",
+						"format": "int32"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The unique string ID for identifying the user.",
+						"name": "userId",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The usage specifies the search method.",
+						"name": "usage",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The orderBy value is used to sort the response.",
+						"name": "orderBy",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order.",
+						"name": "id",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The order owner user ID.",
+						"name": "customerLogonId",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customerLogonId. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "userLogonSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The status of the order.",
+						"name": "orderStatus",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The status of the order item.",
+						"name": "orderItemStatus",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The sku.",
+						"name": "sku",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The order has not shipped.",
+						"name": "ordersNotFulFilled",
+						"in": "query",
+						"default": "false",
+						"enum": [
+							"false",
+							"true"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The order is blocked or not blocked.",
+						"name": "blockedStatus",
+						"in": "query",
+						"enum": [
+							"Y",
+							"N"
+						]
+					},
+					{
+						"required": false,
+						"type": "integer",
+						"format": "int32",
+						"description": "The fulfillment center ID.",
+						"name": "fulfillmentCenterId",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The order create start date and time.",
+						"name": "orderStartDateTime",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The order create end date and time.",
+						"name": "orderEndDateTime",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The order last update start date and time.",
+						"name": "orderLastUpdateStartDateTime",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The order last update end date and time.",
+						"name": "orderLastUpdateEndDateTime",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer first name.",
+						"name": "firstName",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer first name. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "firstNameSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer last name.",
+						"name": "lastName",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer last name. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "lastNameSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer address.",
+						"name": "address",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer address. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "addressSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer city.",
+						"name": "city",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer city. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "citySearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer zip code.",
+						"name": "zipCode",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer zip code. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "zipCodeSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer email address.",
+						"name": "email",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer email address. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "emailSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer phone number.",
+						"name": "phone",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer billing first name.",
+						"name": "billFirstName",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer billing first name. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "billFirstNameSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer billing last name.",
+						"name": "billLastName",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer billing last name. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "billLastNameSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer billing address.",
+						"name": "billAddress",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer billing address. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "billAddressSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer billing city.",
+						"name": "billCity",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer billing city. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "billCitySearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer billing zip code.",
+						"name": "billZipCode",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer billing zip code. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "billZipCodeSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer shipping first name.",
+						"name": "shipFirstName",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer shipping first name. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "shipFirstNameSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer shipping last name.",
+						"name": "shipLastName",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer shipping last name. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "shipLastNameSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer shipping address.",
+						"name": "shipAddress",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer shipping address. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "shipAddressSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer shipping city.",
+						"name": "shipCity",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer shipping city. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "shipCitySearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The customer shipping zip code.",
+						"name": "shipZipCode",
+						"in": "query"
+					},
+					{
+						"required": false,
+						"type": "string",
+						"description": "The criteria for searching customer shipping zip code. Available values: <br> 1 - Match case, begining with. <br> 2 - Match case, containing. <br> 3 - Ignore case, begining with . <br> 4 - Ignore case, containing. <br> 5 - Exact match.",
+						"name": "shipZipCodeSearchType",
+						"in": "query",
+						"default": "1",
+						"enum": [
+							"1",
+							"2",
+							"3",
+							"4",
+							"5"
+						]
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"description": "Get all the orders based on provided parameters. <BR> <BR> To search orders, at least one query parameter is required. <BR> Please note that storeId is a mandatory parameter as well. <BR> offset and limit are not the part of search order parameters.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Get all the orders based on provided parameters.",
+				"operationId": "getOrders"
+			}
+		},
+		"/orders/{id}/update-description": {
+			"post": {
+				"responses": {
+					"200": {
+						"description": "The requested completed successfully."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"404": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The specified resource could not be found."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order.",
+						"name": "id",
+						"in": "path"
+					},
+					{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"required": true,
+						"in": "body",
+						"description": "Request body.",
+						"name": "body",
+						"schema": {
+							"$ref": "#/definitions/OrderUpdate"
+						}
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"summary": "Update an existing order.",
+				"operationId": "updateOrder",
+				"description": "Update an existing order by its ID."
+			}
+		},
+		"/orders/{id}": {
+			"get": {
+				"responses": {
+					"200": {
+						"schema": {
+							"$ref": "#/definitions/Order"
+						},
+						"description": "The requested completed successfully."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+					"required": true,
+					"type": "string",
+					"in": "path",
+					"description": "The unique numeric ID for identifying the order.",
+					"name": "id"
+				}],
+				"tags": [
+					"Orders"
+				],
+				"description": "Get an order by ID.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Get an order by ID.",
+				"operationId": "getOrderById"
+			}
+		},
+		"/orders/{id}/cancel": {
+			"post": {
+				"responses": {
+					"200": {
+						"description": "The order has been cancelled."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order.",
+						"name": "id",
+						"in": "path"
+					},
+					{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"required": true,
+						"in": "body",
+						"description": "Request body.",
+						"name": "body",
+						"schema": {
+							"$ref": "#/definitions/OrderCancel"
+						}
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"description": "Cancel an order.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Cancel an order.",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "cancelOrder"
+			}
+		},
+		"/orders/{id}/items": {
+			"get": {
+				"responses": {
+					"200": {
+						"schema": {
+							"$ref": "#/definitions/OrderItemDetails"
+						},
+						"description": "The requested completed successfully."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order.",
+						"name": "id",
+						"in": "path"
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"description": "Get all the order items by an order ID.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Get all the order items by an order ID.",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "getOrderItemsByOrderId"
+			}
+		},
+		"/orders/{id}/comments": {
+			"post": {
+				"responses": {
+					"200": {
+						"description": "The comment has been added to the order."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order.",
+						"name": "id",
+						"in": "path"
+					},
+					{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"required": true,
+						"in": "body",
+						"description": "Request body.",
+						"name": "body",
+						"schema": {
+							"$ref": "#/definitions/OrderComment"
+						}
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"description": "Add a comment to an order.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Add a comment to an order.",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "addOrderComment"
+			},
+			"get": {
+				"responses": {
+					"200": {
+						"schema": {
+							"$ref": "#/definitions/OrderComments"
+						},
+						"description": "The requested completed successfully."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order.",
+						"name": "id",
+						"in": "path"
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"description": "Get all the order comments by an order ID.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Get all the order comments by an order ID.",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "getOrderComments"
+			}
+		},
+		"/orders/{id}/add-promotion-code": {
+			"post": {
+				"responses": {
+					"200": {
+						"description": "The promotion code has been added to the order."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order.",
+						"name": "id",
+						"in": "path"
+					},
+					{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"required": true,
+						"in": "body",
+						"description": "Request body.",
+						"name": "body",
+						"schema": {
+							"$ref": "#/definitions/OrderPromotionCode"
+						}
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"description": "Add a promotion code to an order.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Add a promotion code to an order.",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "addOrderPromotionCode"
+			}
+		},
+		"/orders/{id}/delete-promotion-code": {
+			"post": {
+				"responses": {
+					"204": {
+						"description": "The promotion code has been deleted from the order."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order.",
+						"name": "id",
+						"in": "path"
+					},
+					{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"required": true,
+						"in": "body",
+						"description": "Request body.",
+						"name": "body",
+						"schema": {
+							"$ref": "#/definitions/OrderPromotionCode"
+						}
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"description": "Delete a promotion code from an order.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Delete a promotion code from an order.",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "deleteOrderPromotionCode"
+			}
+		},
+		"/orders/{id}/block": {
+			"post": {
+				"responses": {
+					"200": {
+						"description": "The requested order has been blocked."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order.",
+						"name": "id",
+						"in": "path"
+					},
+					{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"required": true,
+						"in": "body",
+						"description": "Request body.",
+						"name": "body",
+						"schema": {
+							"$ref": "#/definitions/OrderBlock"
+						}
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"description": "Block an order.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Block an order.",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "blockOrder"
+			}
+		},
+		"/orders/{id}/unblock": {
+			"post": {
+				"responses": {
+					"200": {
+						"description": "The requested order has been unblocked."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order.",
+						"name": "id",
+						"in": "path"
+					},
+					{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"required": true,
+						"in": "body",
+						"description": "Request body.",
+						"name": "body",
+						"schema": {
+							"$ref": "#/definitions/OrderBlock"
+						}
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"description": "Unblock an order.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Unblock an order.",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "unblockOrder"
+			}
+		},
+		"/orders/{id}/calculate": {
+			"post": {
+				"responses": {
+					"200": {
+						"description": "The requested order has been calculated."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order.",
+						"name": "id",
+						"in": "path"
+					},
+					{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"required": true,
+						"in": "body",
+						"description": "Request body.",
+						"name": "body",
+						"schema": {
+							"$ref": "#/definitions/OrderCalculation"
+						}
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"description": "Calculate an order.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Calculate an order.",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "calculateOrder"
+			}
+		},
+		"/orders/{id}/process": {
+			"post": {
+				"responses": {
+					"200": {
+						"description": "The requested order has been processed."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order.",
+						"name": "id",
+						"in": "path"
+					},
+					{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"required": true,
+						"in": "body",
+						"description": "Request body.",
+						"name": "body",
+						"schema": {
+							"$ref": "#/definitions/OrderProcess"
+						}
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"description": "Process an order.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Process an order.",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "processOrder"
+			}
+		},
+		"/orders/{id}/override": {
+			"post": {
+				"responses": {
+					"200": {
+						"description": "The requested order adjustments completed successfully."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order.",
+						"name": "id",
+						"in": "path"
+					},
+					{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"required": true,
+						"in": "body",
+						"description": "Request body.",
+						"name": "body",
+						"schema": {
+							"$ref": "#/definitions/OrderOverride"
+						}
+					}
+				],
+				"tags": [
+					"Orders"
+				],
+				"description": "Override order shipping charges and order adjustments.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Override order shipping charges and order adjustments.",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "overrideOrder"
+			}
+		},
+		"/order-items": {
+			"post": {
+				"responses": {
+					"201": {
+						"description": "The requested completed successfully.",
+						"headers": {
+							"Location": {
+								"description": "Link to the newly created resource.",
+								"type": "string"
+							}
+						}
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"required": true,
+						"in": "body",
+						"description": "Request body.",
+						"name": "body",
+						"schema": {
+							"$ref": "#/definitions/OrderItemCreate"
+						}
+					}
+				],
+				"tags": [
+					"Order Items"
+				],
+				"description": "Create a new order item.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Create an order item.",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "createOrderItem"
+			}
+		},
+		"/order-items/{id}": {
+			"patch": {
+				"responses": {
+					"200": {
+						"description": "The requested completed successfully."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"404": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The specified resource could not be found."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"description": "The unique numeric ID for identifying the order item.",
+						"name": "id",
+						"in": "path"
+					},
+					{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					},
+					{
+						"required": true,
+						"in": "body",
+						"description": "The request body for creating an order item.",
+						"name": "body",
+						"schema": {
+							"$ref": "#/definitions/OrderItemCreate"
+						}
+					}
+				],
+				"tags": [
+					"Order Items"
+				],
+				"summary": "Update an existing order item.",
+				"operationId": "updateOrderItem",
+				"description": "Update an existing order item by its ID."
+			},
+			"delete": {
+				"responses": {
+					"204": {
+						"description": "The requested resource has been deleted."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"in": "path",
+						"description": "The unique numeric ID for identifying the order item.",
+						"name": "id"
+					},
+					{
+						"required": true,
+						"type": "integer",
+						"format": "int32",
+						"description": "The unique numeric ID for identifying the store.",
+						"name": "storeId",
+						"in": "query"
+					}
+				],
+				"tags": [
+					"Order Items"
+				],
+				"description": "Delete an order item by ID",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Delete an order item by ID.",
+				"operationId": "deleteOrderItem"
+			},
+			"get": {
+				"responses": {
+					"200": {
+						"schema": {
+							"$ref": "#/definitions/OrderItem"
+						},
+						"description": "The requested completed successfully."
+					},
+					"400": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Bad request. The request could not be understood by the server due to malformed syntax."
+					},
+					"401": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "Not authenticated. The user session is not valid."
+					},
+					"403": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponseContainer"
+						},
+						"description": "The user is not authorized to perform the specified request."
+					},
+					"500": {
+						"description": "Internal server error. For details, see the server log files."
+					}
+				},
+				"parameters": [{
+						"required": true,
+						"type": "string",
+						"in": "path",
+						"description": "The unique numeric ID for identifying the order item.",
+						"name": "id"
+					}
+				],
+				"tags": [
+					"Order Items"
+				],
+				"description": "Get an order item by ID.",
+				"produces": [
+					"application/json"
+				],
+				"summary": "Get an order item by ID.",
+				"operationId": "getOrderItemById"
+			}
+		}
+	},
+	"definitions": {
+		"ErrorResponseContainer": {
+			"description": "The error message model.",
+			"properties": {
+				"errors": {
+					"items": {
+						"$ref": "#/definitions/Error"
+					},
+					"type": "array"
+				},
+				"requestId": {
+					"description": "The request identifier.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Error": {
+			"description": "The error message item model.",
+			"properties": {
+				"code": {
+					"description": "The error message code.",
+					"type": "string"
+				},
+				"correlationId": {
+					"description": "The unique identifier for the request.",
+					"type": "string"
+				},
+				"locale": {
+					"description": "The locale of the error message.",
+					"type": "string"
+				},
+				"message": {
+					"description": "The error message.",
+					"type": "string"
+				},
+				"messageArguments": {
+					"description": "The arguments used to construct the error message.",
+					"items": {
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"messageKey": {
+					"description": "The error message key.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"OrderCreate": {
+			"properties": {
+				"description": {
+					"description": "A mnemonic description of the order, entered by the customer, suitable for display to the customer.",
+					"type": "string"
+				},
+				"userId": {
+					"description": "The unique numeric ID for identifying the user(shopper) of the order.",
+					"type": "string"
+				}
+			}
+		},
+		"OrderUpdate": {
+			"properties": {
+				"description": {
+					"description": "A mnemonic description of the order, entered by the customer, suitable for display to the customer.",
+					"type": "string"
+				}
+			}
+		},
+		"Order": {
+			"properties": {
+				"id": {
+					"description": "The unique numeric ID for identifying the order.",
+					"type": "string"
+				},
+				"addressId": {
+					"description": "This field is deprecated. In versions WC 5.6.1 and earlier, this field contained the billing address. In version WC 6.0 and later, the billing address is part of payment data and is stored in PPCEXTDATA table as encrypted data.",
+					"type": "string"
+				},
+				"blocked": {
+					"default": 0,
+					"description": "Indicates if this order has a block placed against it or not. Available values: <br> 0 - Unblocked. <br> 1 - Blocked.",
+					"enum": [
+						0,
+						1
+					],
+					"format": "int32",
+					"type": "integer"
+				},
+				"businessChannelId": {
+					"description": "The business channel ID of the order.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"buyerPurchaseOrderNumberId": {
+					"description": "The unique numeric ID for identifying the buyer purchase order number related to the order.",
+					"type": "string"
+				},
+				"comment": {
+					"description": "Comments from the customer.",
+					"type": "string"
+				},
+				"currency": {
+					"description": "The currency for monetary amounts associated with this order. This is the currency code according to ISO 4217 standards.",
+					"type": "string"
+				},
+				"description": {
+					"description": "A mnemonic description of the order, entered by the customer, suitable for display to the customer.",
+					"type": "string"
+				},
+				"editorUserId": {
+					"description": "The unique numeric ID for the user editing the order.",
+					"type": "string"
+				},
+				"expiredDateTime": {
+					"description": "This entry is only relevant when the row refers to a quote, type = QOT. This field then indicates the expiration date for that quote.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"field1": {
+					"description": "A customizable field.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"field2": {
+					"description": "A customizable field.",
+					"type": "number"
+				},
+				"field3": {
+					"description": "A customizable field.",
+					"type": "string"
+				},
+				"lock": {
+					"description": "Reserved for HCL internal use.",
+					"type": "string"
+				},
+				"merchantOrderId": {
+					"description": "The merchant-assigned order reference number.",
+					"type": "string"
+				},
+				"notificationId": {
+					"description": "Notification identifier referring to the rows in the NOTIFY table that store notification attributes. These attributes override the defaults for notifications related to this order.",
+					"type": "string"
+				},
+				"orderChannelTypeId": {
+					"description": "Reserved for HCL internal use.",
+					"type": "string"
+				},
+				"orderProcessSystemId": {
+					"description": "This field indicates the Order Processing system for the order.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"organizationId": {
+					"description": "The immediate parent organization ID of the creator.",
+					"type": "string"
+				},
+				"placedDateTime": {
+					"description": "The time this order was processed by the OrderProcess command.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"providerOrderNumber": {
+					"description": "Reserved for HCL internal use.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"sequence": {
+					"default": 0,
+					"description": "Can be used by a user interface to control the sequence of orders in a list.",
+					"type": "number"
+				},
+				"shipAsComplete": {
+					"default": "Y",
+					"description": "Reserved for HCL internal use",
+					"type": "string"
+				},
+				"sourceId": {
+					"description": "This field indicates the sources from which this order came, if any. This field is relevant for orders that were generated from a previously saved quote, for example. In that situation, the QuoteId would be saved here.",
+					"type": "string"
+				},
+				"status": {
+					"description": "The status of the order. This is similar to order states. For specific values of status and their descriptions.",
+					"type": "string"
+				},
+				"storeId": {
+					"description": "The store entity the order is part of. This is normally a store unless STATUS is Q, in which case it is normally a store group.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"totalAdjustment": {
+					"default": 0,
+					"description": "The sum of total adjustment for all the OrderItems in the order. This field also includes all kinds of shipping charge adjustments like discount, coupon, shipping adjustment and surcharge.",
+					"type": "number"
+				},
+				"totalProductPrice": {
+					"default": 0,
+					"description": "The sum of total price of all the OrderItems in the Order.",
+					"type": "number"
+				},
+				"totalShippingCharge": {
+					"description": "The sum of shipping charges for all the order items in the order.",
+					"type": "number"
+				},
+				"totalShippingTax": {
+					"description": "The sum of shipping tax amount for all the OrderItems in the Order.",
+					"type": "number"
+				},
+				"totalTax": {
+					"default": 0,
+					"description": "The sum of tax amount for all the OrderItems in the Order.",
+					"type": "number"
+				},
+				"transferStatus": {
+					"description": "The order transfer status. Available values: <br> 0 - the order is in the initial status. <br> 1 - the order is in the transferring status. <br> 2 - the order in the transferred status. <br> null - the order is in the initial status, same as status 0.",
+					"enum": [
+						"null",
+						0,
+						1,
+						2
+					],
+					"type": "integer"
+				},
+				"type": {
+					"description": "For an order, TYPE indicates whether it is a regular order (ORD), private requisition list order (PRL), shareable requisition list order (SRL), standing order (STD), quotation order (QUT), quote (QOT), profile order (QUK), recurring order (REC), or subscription (SUB).",
+					"enum": [
+						"ORD",
+						"PRL",
+						"QOT",
+						"QUK",
+						"QUT",
+						"REC",
+						"SRL",
+						"STD",
+						"SUB"
+					],
+					"type": "string"
+				},
+				"updatedDateTime": {
+					"description": "The time this order was most recently updated.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"userId": {
+					"description": "The unique numeric ID for the user that placed the order.",
+					"type": "string"
+				},
+				"discount": {
+					"description": "The order level discount adjustment.",
+					"type": "number"
+				},
+				"estimatedShipDateTime": {
+					"description": "The estimated ship date of the order.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"total": {
+					"description": "The grand total of the order.",
+					"type": "number"
+				},
+				"displayAdjustment": {
+					"description": "The order level display adjustment.",
+					"type": "number"
+				},
+				"paymentInstructions": {
+					"items": {
+						"$ref": "#/definitions/PaymentInstruction"
+					},
+					"type": "array"
+				}
+			}
+		},
+		"PaymentInstruction": {
+			"properties": {
+				"id": {
+					"description": "The unique numeric ID for identifying the payment instruction.",
+					"type": "string"
+				},
+				"paymentMethod": {
+					"description": "The payment method.",
+					"type": "string"
+				},
+				"amount": {
+					"description": "The payment amount.",
+					"type": "number"
+				},
+				"protocolData": {
+					"description": "The protocol data for the payment instruction.",
+					"type": "object",
+					"additionalProperties": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"AllOrderDetails": {
+			"properties": {
+				"count": {
+					"description": "The count shows total number of items.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"href": {
+					"type": "string",
+					"format": "uri"
+				},
+				"items": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/AllOrderDetail"
+					}
+				}
+			}
+		},
+		"AllOrderDetail": {
+			"properties": {
+				"id": {
+					"description": "The promotion code.",
+					"type": "string"
+				},
+				"isOrderBlocked": {
+					"description": "The promotion code.",
+					"type": "string"
+				},
+				"orderLastUpdatedDate": {
+					"description": "The promotion code.",
+					"type": "string"
+				},
+				"orderPlacedDate": {
+					"description": "The promotion code.",
+					"type": "string"
+				},
+				"orderStatus": {
+					"description": "The promotion code.",
+					"type": "string"
+				},
+				"orderTotal": {
+					"description": "The promotion code.",
+					"type": "string"
+				},
+				"userLogon": {
+					"description": "The promotion code.",
+					"type": "string"
+				}
+			}
+		},
+		"OrderPromotionCode": {
+			"properties": {
+				"promotionCode": {
+					"description": "The promotion code.",
+					"type": "string"
+				}
+			}
+		},
+		"OrderCancel": {
+			"properties": {
+				"email": {
+					"description": "The email address for notifying order cancel status.",
+					"type": "string"
+				}
+			}
+		},
+		"OrderComment": {
+			"properties": {
+				"email": {
+					"description": "The email address for notifying order comment.",
+					"type": "string"
+				},
+				"comment": {
+					"description": "The content of the order comment.",
+					"type": "string"
+				}
+			}
+		},
+		"OrderComments": {
+			"properties": {
+			    "count": {
+					"description": "The count shows total number of items.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"items": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/OrderComment"
+					}
+				}
+			}
+		},
+		"OrderItemDetails": {
+			"properties": {
+			    "count": {
+					"description": "The count shows total number of items.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"items": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/OrderItemDetail"
+					}
+				}
+			}
+		},
+		"OrderItemDetail": {
+			"properties": {
+				"id": {
+					"description": "The unique numeric ID for identifying the order item.",
+					"type": "string"
+				},
+				"addressId": {
+					"description": "The unique numeric ID for identifying the shipping address, if any, for this order item.",
+					"type": "string"
+				},
+				"catalogEntryId": {
+					"description": "The catalog entry id, if any, of the product being purchased.",
+					"type": "string"
+				},
+				"partNumber": {
+					"description": "The part number of the catalog entry for the product.",
+					"type": "string"
+				},
+				"price": {
+					"description": "The price for the nominal quantity of the product",
+					"type": "number"
+				},
+				"quantity": {
+					"description": "The actual quantity being purchased, in the unit of measurement specified by quantity measure.",
+					"format": "double",
+					"type": "number"
+				},
+				"shippingModeId": {
+					"description": "The unique numeric ID for identifying the shipping mode, if still known.",
+					"format": "int32",
+					"type": "integer"
+				}
+			}
+		},
+		"OrderBlock": {
+			"properties": {
+				"comment": {
+					"description": "This field records any comments pertaining to this block.",
+					"type": "string"
+				},
+				"reasonCodeId": {
+					"description": "The reason code ID for the block reason.",
+					"type": "integer",
+					"format": "int32"
+				}
+			}
+		},
+		"OrderItemCreate": {
+			"properties": {
+				"catalogEntryId": {
+					"description": "The catalog entry id, if any, of the product being purchased.",
+					"type": "string"
+				},
+				"orderId": {
+					"description": "The unique numeric ID for identifying the order of which the order item is part.",
+					"type": "string"
+				},
+				"comment": {
+					"description": "Comments from the customer, such as a greeting for a gift.",
+					"type": "string"
+				},
+				"description": {
+					"description": "A mnemonic description of the order item, suitable for display to the customer.",
+					"type": "string"
+				},
+				"isExpedited": {
+					"description": "Indicates that the item should receive expedited handling in fulfillment. \n  * 'Y' - indicates that it should receive expedited handling. \n  * 'N' - indicates that it should not (this is the default).\n",
+					"enum": [
+						"N",
+						"Y"
+					],
+					"default": "N",
+					"type": "string"
+				},
+				"field1": {
+					"description": "Customizable field 1.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"field2": {
+					"description": "Customizable field 2.",
+					"type": "string"
+				},
+				"partNumber": {
+					"description": "The part number of the catalog entry for the product.",
+					"type": "string"
+				},
+				"quantity": {
+					"description": "The actual quantity being purchased, in the unit of measurement specified by quantity measure.",
+					"format": "double",
+					"type": "number"
+				}
+			}
+		},
+		"OrderItem": {
+			"properties": {
+				"id": {
+					"description": "The unique numeric ID for identifying the order item.",
+					"type": "string"
+				},
+				"addressId": {
+					"description": "The unique numeric ID for identifying the shipping address, if any, for this order item.",
+					"type": "string"
+				},
+				"adjustmentSum": {
+					"description": "The total of the adjustments.",
+					"type": "number"
+				},
+				"allocatedFulfillmentCenterId": {
+					"description": "The fulfillment center from which inventory for this order item is allocated or backordered.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"allocatedQuantity": {
+					"description": "Quantity allocated or backordered for this order item.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"allocationAddressId": {
+					"description": "The unique numeric ID for identifying the shipping address used when inventory for this order item was allocated or backordered.",
+					"type": "string"
+				},
+				"availableQuantity": {
+					"description": "If specified, indicates the quantity available for purchase.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"basePrice": {
+					"description": "If price was converted from a currency different from the order item currency, base price is the price that was converted to determine the price.",
+					"type": "number"
+				},
+				"basePriceCurrency": {
+					"description": "The currency of the base price.",
+					"type": "string"
+				},
+				"catalogEntryId": {
+					"description": "The catalog entry id, if any, of the product being purchased.",
+					"type": "string"
+				},
+				"comment": {
+					"description": "Comments from the customer, such as a greeting for a gift.",
+					"type": "string"
+				},
+				"configurationId": {
+					"description": "The identifier that is provided by an external product configurator.",
+					"type": "string"
+				},
+				"contractId": {
+					"description": "The TradingAgreement, if known, that determines the TermAndCondition objects (including how the price is determined) that apply to this order item.",
+					"type": "string"
+				},
+				"correlationGroup": {
+					"description": "Normally this is the same as order item id. except 1. When an order item is split by the AllocateInventory task command, the newly created OrderItem inherits the CORRELATIONGROUP value from the original order item. 2. When the PREPAREFLAGS column indicates \"quotation\", the OrderItem inherits the CORRELATIONGROUP value from the corresponding OrderItem in the parent order.\n",
+					"type": "string"
+				},
+				"createdDateTime": {
+					"description": "The date and time this order item was created.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"currency": {
+					"description": "The currency of order item monetary amounts other than base price. This is the same as the currency of the order. This is a currency code according to ISO 4217 standards.",
+					"type": "string"
+				},
+				"description": {
+					"description": "A mnemonic description of the order Item, suitable for display to the customer.",
+					"type": "string"
+				},
+				"estimatedAvailableDateTime": {
+					"description": "An estimate of when sufficient inventory will be available to fulfill this order item. This estimate does not include the shipping offset.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"field1": {
+					"description": "Customizable field 1.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"field2": {
+					"description": "Customizable field 2.",
+					"type": "string"
+				},
+				"fulfillmentCenterId": {
+					"description": "The unique numeric ID for identifying the fulfillment center, if known, from which the product will ship.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"fulfillmentStatus": {
+					"description": "The fulfillment status of the order item:\n * 'INT' - not yet released for fulfillment.\n * 'OUT' - released for fulfillment.\n * 'SHIP' - shipment confirmed.\n * 'HOLD' - a temporary status between INT and OUT status.\n",
+					"enum": [
+						"HOLD",
+						"HSIP",
+						"INT",
+						"OUT"
+					],
+					"type": "string"
+				},
+				"inventoryStatus": {
+					"description": "The status for the order item. It may not be the same as the status in the order. The allocation status of inventory for this order item:\n  * 'NALC' - Inventory is not allocated nor on back-order.\n  * 'BO' - Inventory is on back-order.\n  * 'ALLC' - Inventory is allocated.\n  * 'FUL' - Inventory has been released for fulfillment.\n  * 'AVL' - Inventory is available.\n",
+					"enum": [
+						"ALLO",
+						"AVL",
+						"BO",
+						"FUL",
+						"NALC"
+					],
+					"type": "string"
+				},
+				"isExpedited": {
+					"description": "Indicates that the item should receive expedited handling in fulfillment. \n  * 'Y' - indicates that it should receive expedited handling. \n  * 'N' - indicates that it should not (this is the default).\n",
+					"enum": [
+						"N",
+						"Y"
+					],
+					"default": "N",
+					"type": "string"
+				},
+				"itemSpecId": {
+					"description": "The specified item to be allocated from available inventory and shipped to the customer.",
+					"type": "string"
+				},
+				"lastAllocatedUpdatedDateTime": {
+					"description": "The most recent date and time inventory was checked (for unallocated order items), allocated, or backordered, for this order item.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"lineItemType": {
+					"description": "If specified, indicates the type of the order item. ALT = the order item represents an alternative item (might not be exactly what the customer requested).",
+					"type": "string"
+				},
+				"neededQuantity": {
+					"description": "Quantity needed for fulfillment.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"offerId": {
+					"description": "The unique numeric ID for identifying the offer, if any, and if it still exists, from which price was obtained.",
+					"type": "string"
+				},
+				"orderId": {
+					"description": "The unique numeric ID for identifying the order of which the order item is part.",
+					"type": "string"
+				},
+				"orderReleaseNumber": {
+					"description": "The associated order release, if any.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"partNumber": {
+					"description": "The part number of the catalog entry for the product.",
+					"type": "string"
+				},
+				"prepareFlags": {
+					"description": "Contains the following bit flags indicating special processing associated with this order item.\n  * 1 - generated. The order item was generated during a previous execution of the OrderPrepare command. The next time the OrderPrepare command is run, it first removes all generated order items so that they can be regenerated when applicable.\n  * 2 - priceOverride. The price of the order item has been manually entered and will not be changed by customer commands.\n  * 4 - fulfillmentCenterOverride. The fulfillment center has been manually specified and will not be changed by customer commands.\n  * 8 - directCalculationCodeAttachment. CalculationCodes may be directly attached to the order item. The default CalculationCodeCombineMethod will not look for direct attachments unless this flag is true.\n  * 16 - shippingChargeByCarrier. The contract for this order item indicates that no shipping charge will be calculated by WebSphere Commerce. It may be calculated and charged by the carrier on fulfillment.\n  * 32 - quotation. The order item was obtained from a quotation. The price will not be automatically refreshed by customer commands.\n  * 64 - notConfigured. Price lookup and inventory allocation for this order item is not done using the component items found in the OICOMPddST table. This flag does not need to be set for order items whose CONFIGURATIONID column value is null.\n  * 128 - autoAdd. This order item, such as a free gift, was automatically added to the order by the OrderCalculate command. This flag is for information-display purposes only and does not affect price calculations.\n  * 256 - hasPersonalizationAttributes. The order item contains personalization attributes.\n  * 512 - skipRepricing. The order item was marked as not to be repriced. For example, it is set as skipRepricing when a quote is generated into an order if the quote has not expired.\n  * 1024 - shippingAdjusted, The order items shipping charge is manually adjusted.\n  * 2048 - priceRefreshed. The order items price has already been refreshed.\n",
+					"format": "int32",
+					"type": "integer"
+				},
+				"price": {
+					"description": "The price for the nominal quantity of the product",
+					"type": "number"
+				},
+				"promisedAvailableDateTime": {
+					"description": "When an order is placed, this would be set to estimated available time. After that it would normally not be updated, although a CSR could manually update this to reflect a verbal commitment made to the customer.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"promisedShippingDateTime": {
+					"description": "The promised shipping time.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"quantity": {
+					"description": "The actual quantity being purchased, in the unit of measurement specified by quantity measure.",
+					"format": "double",
+					"type": "number"
+				},
+				"releasedDateTime": {
+					"description": "The date and time this order item was released for fulfillment.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"requestedShipDateTime": {
+					"description": "The ship date and time that has been requested for the order item. When no date (null) is specified, the ship date will be whenever the item is available to be shipped. When a date is specified, the ship date will be no sooner than the requested date. This is because a backorder could delay the ship date beyond the requested date.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"shippedDateTime": {
+					"description": "The date and time this order item was manifested for shipment.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"shippingCharge": {
+					"description": "The base shipping charge associated with the order item. It is the shipping charge before any adjustments.",
+					"type": "number"
+				},
+				"shippingModeId": {
+					"description": "The unique numeric ID for identifying the shipping mode, if still known.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"shippingOffset": {
+					"description": "An estimate of how many seconds it will take to ship this item once the order is placed and inventory has been allocated.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"shippingTaxAmount": {
+					"description": "The total shipping taxes associated with this order item.",
+					"type": "number"
+				},
+				"status": {
+					"description": "The status for the order item. It may not be the same as the status in the order.",
+					"type": "string"
+				},
+				"storeId": {
+					"description": "The unique numeric ID for identifying the store of which the order is part.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"supplierData": {
+					"description": "Generated and used by the external system that originates an order. This value can be returned with a quotation, and sent when an order is placed on an external system. For example, this column can be used to contain a supplier distribution center ID.",
+					"type": "string"
+				},
+				"supplierPartNumber": {
+					"description": "The supplier part number, if known. Suitable for display to the customer.",
+					"type": "string"
+				},
+				"taxAmount": {
+					"description": "The total sales taxes associated with this order item, in the currency specified by currency.",
+					"type": "number"
+				},
+				"termConditionId": {
+					"description": "The TermAndCondition, if known, that determined the price for this order item.",
+					"type": "string"
+				},
+				"tieCode": {
+					"description": "Used for items that are shipping at the same time (Ship Together).",
+					"format": "int32",
+					"type": "integer"
+				},
+				"totalAdjustment": {
+					"description": "The total of the monetary amounts of the order item adjustments for this order item. This column also includes all kinds of shipping charge adjustments like discount, coupon, shipping adjustment and surcharge.",
+					"type": "number"
+				},
+				"totalProduct": {
+					"description": "The total prices of the order item (price times quantity)",
+					"type": "number"
+				},
+				"totalShippingCharge": {
+					"description": "The shipping charge total of this order item. The shipping charge total is the sum of the base shipping charge and the total shipping adjustment.",
+					"type": "number"
+				},
+				"updatedDateTime": {
+					"description": "The most recent date and time this order item was updated. Changing inventory allocation related information does not cause this timestamp to be updated",
+					"format": "date-time",
+					"type": "string"
+				},
+				"catalogEntryName": {
+					"description": "The name of the catalog entry associated with this order item.",
+					"type": "string"
+				},
+				"shipmentTrackingIds": {
+					"description": "The shipment tracking IDs associated with this order item.",
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"shippingModeDescription": {
+					"description": "The description of the shipping mode associated with this order item.",
+					"type": "string"
+				},
+				"displayAdjustment": {
+					"description": "The order item level display adjustment.",
+					"type": "number"
+				}
+			}
+		},
+		"OrderCalculation": {
+			"properties": {
+				"userId": {
+					"description": "The unique numeric ID for identifying the user (shopper) who created the order.",
+					"type": "integer",
+					"format": "int32"
+				}
+			}
+		},
+		"OrderProcess": {
+			"properties": {
+				"userId": {
+					"description": "The unique numeric ID for identifying the user (shopper) who created the order.",
+					"type": "integer",
+					"format": "int32"
+				},
+				"totalAdjustment": {
+					"default": 0,
+					"description": "The total adjustment for all the  OrderItems in the order. This field also includes all kinds of shipping charge adjustments like discount, coupon, shipping adjustment and surcharge.",
+					"type": "number"
+				},
+				"totalShippingCharges": {
+					"default": 0,
+					"description": "The shipping charges for the order.",
+					"type": "number"
+				},
+				"couponId": {
+					"description": "The coupon ID for the order.",
+					"type": "string"
+				},
+				"billingAddressId": {
+					"description": "The unique numeric ID for identifying the customer's billing address.",
+					"type": "integer",
+					"format": "int32"
+				},
+				"email": {
+					"description": "The customer email address.",
+					"type": "string"
+				},
+				"comment": {
+					"description": "Comments from the customer.",
+					"type": "string"
+				}
+			}
+		},
+		"OrderOverride": {
+			"properties": {
+				"userId": {
+					"description": "The unique numeric ID for identifying the user (shopper) who created order.",
+					"type": "string"
+				},
+				"couponId": {
+					"description": "The coupon ID for the order.",
+					"type": "string"
+				},
+				"totalAdjustment": {
+					"default": 0,
+					"description": "The total adjustment for all the  OrderItems in the order.",
+					"type": "number"
+				},
+				"totalShippingCharges": {
+					"default": 0,
+					"description": "The shipping charges for the order.",
+					"type": "number"
+				}
+			}
+		},
+		"OrderItemCreateResponse": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "integer",
+					"format": "int64",
+					"description": "The unique numeric ID for identifying the order item."
+				}
+			},
+			"description": "A response of order item create."
+		}
+	}
+}

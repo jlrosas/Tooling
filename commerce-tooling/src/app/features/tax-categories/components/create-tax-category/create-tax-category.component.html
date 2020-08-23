@@ -1,0 +1,48 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'TAX_CATEGORIES.TAX_CATEGORIES' | translate}}
+	</h1>
+	<div class="hc-stepper-section hc-paper">
+		<div class="hc-stepper-actions">
+			<h2 class="hc-type-h2">
+				{{'TAX_CATEGORIES.NEW_TAX_CATEGORY' | translate}}
+			</h2>
+			<div>
+				<button class="mat-flat-button" type="button" (click)="cancel()">{{'TAX_CATEGORIES.CANCEL' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="submit()">{{'TAX_CATEGORIES.FINISH' | translate}}</button>
+			</div>
+		</div>
+		<mat-vertical-stepper [linear]="true" #stepper>
+			<ng-template matStepperIcon="edit">
+				<mat-icon>check</mat-icon>
+			</ng-template>
+			<mat-step #detailsStep label="{{'TAX_CATEGORIES.TAX_CATEGORY_DETAILS' | translate}}">
+				<hc-tax-category-details [stepper]="stepper" [step]="detailsStep" mode="create">
+				</hc-tax-category-details>
+			</mat-step>
+			<mat-step optional #displayNameStep label="{{'TAX_CATEGORIES.DESCRIPTION' | translate}} {{'TAX_CATEGORIES.OPTIONAL' | translate}}">
+				<hc-tax-category-display-name *ngIf="stepper.selected === displayNameStep" [stepper]="stepper" [step]="displayNameStep" mode="create" (save)="submit()">
+				</hc-tax-category-display-name>
+			</mat-step>
+			<mat-step #codesStep label="{{'TAX_CATEGORIES.TAX_CATEGORY_CODES' | translate}}">
+				<hc-tax-category-codes *ngIf="stepper.selected === codesStep" [stepper]="stepper" [step]="codesStep" mode="create" (save)="submit()">
+				</hc-tax-category-codes>
+			</mat-step>
+			<mat-step #ratesStep label="{{'TAX_CATEGORIES.TAX_RATES' | translate}}">
+				<hc-tax-category-rates *ngIf="stepper.selected === ratesStep" [step]="ratesStep" mode="create" (save)="submit()">
+				</hc-tax-category-rates>
+			</mat-step>
+		</mat-vertical-stepper>
+	</div>
+</div>

@@ -76,6 +76,10 @@
     .mat-form-field-flex {
         margin-top: 0;
         padding: 0;
+        padding-right: spacing(0.75);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 
     .mat-form-field-wrapper {
@@ -84,15 +88,17 @@
 
         .mat-form-field-flex {
             .mat-form-field-suffix {
-                top: 50%;
-                transform: translateY(-50%);
-                position: absolute;
-                right: spacing(0.75);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                top: 0;
+                margin: spacing(0.75) 0;
                 height: map-get($hc-input, height) - spacing(1.5);
                 width: map-get($hc-input, height) - spacing(1.5);
-                line-height: map-get($hc-input, height) - spacing(1.5);
                 text-align: center;
                 border-radius: 50%;
+                @include hc-transition(background, 250ms);
 
                 &:hover {
                     background: map-get($hc-color-blue, 10);
@@ -100,13 +106,6 @@
                     .mat-icon {
                         color: map-get($hc-color-blue, 100);
                     }   
-                }
-
-                .mat-icon {
-                    display: block;
-                    height: 100%;
-                    width: 100%;
-                    line-height: map-get($hc-input, height) - spacing(1.5);
                 }
 
                 .mat-datepicker-toggle {
@@ -123,19 +122,13 @@
 
     // Clear button
 	.filter-clear {
-        z-index: zIndex(clear-button);
 		font-size: 12px;
-		display: inline-block;
-		position: absolute;
-		top: 0;
-		right: spacing(1);
-		color: map-get($hc-color-blue, 100);
-		line-height: map-get($hc-input, height) - spacing(3);
+        color: map-get($hc-color-blue, 100);
+        height: spacing(4);
+        line-height: spacing(4);
 		cursor: pointer;
-		vertical-align: middle;
 		white-space: nowrap;
 		padding: 0 spacing(1);
-		margin: spacing(1.5) 0;
         border-radius: spacing(2);
         background: rgba(255, 255, 255, 0.6);
 		@include hc-transition(background, 250ms);
@@ -169,21 +162,13 @@
         }
     }
 
-    mat-datepicker,
-    mat-select {
-        & ~ .filter-clear {
-            right: spacing(6);
-        }
-    }
-
-    &.icon-suffix .filter-clear {
-        right: spacing(6);
-    }
-
     // Text Input area styling
     .mat-input-element {
         margin-top: 0;
-        padding: 0 spacing(1.5);
+        padding: 0 0 0 spacing(1.5);
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
     
     // Label Styling
@@ -198,7 +183,7 @@
         line-height: map-get($hc-input, height);
         top: 0;
         margin-top: 0;
-        padding-left: spacing(1.5);
+        padding: 0 spacing(1) 0 spacing(1.5);
         color: map-get($hc-color-grey, dark20);
         @include hc-transition(transform, 150ms);
     }
@@ -225,7 +210,9 @@
     .mat-form-field-infix {
         padding: 0;
         border: 0;
-        width: auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
     
     .mat-icon-button {

@@ -32,7 +32,7 @@
 			</mat-form-field>
 			<mat-form-field appearance="outline" *ngIf="mode === 'create'">
 				<mat-label>{{'MEMBER_GROUPS.NAME'| translate}}</mat-label>
-				<input matInput id="memberGroupName" formControlName="memberGroupName" (input)="validateMemberGroupName()" required>
+				<input matInput id="memberGroupName" formControlName="memberGroupName" (input)="validateMemberGroupName()" required  [maxlength]="253">
 			</mat-form-field>
 			<mat-form-field appearance="outline" *ngIf="mode === 'edit'">
 				<mat-label>{{'MEMBER_GROUPS.NAME'| translate}}</mat-label>
@@ -40,7 +40,7 @@
 			</mat-form-field>
 			<mat-form-field appearance="outline">
 				<mat-label>{{'MEMBER_GROUPS.DESCRIPTION'| translate}} {{'MEMBER_GROUPS.OPTIONAL' | translate}}</mat-label>
-				<input matInput id="description" #descriptionInput formControlName="description" (input)="validateDescription()">
+				<input matInput id="description" #descriptionInput formControlName="description" (input)="validateDescription()" [maxlength]="4000">
 			</mat-form-field>
 			<mat-form-field appearance="outline" *ngIf="mode === 'create'">
 				<mat-label>{{'MEMBER_GROUPS.PARENT_ORGANIZATION'| translate}}</mat-label>

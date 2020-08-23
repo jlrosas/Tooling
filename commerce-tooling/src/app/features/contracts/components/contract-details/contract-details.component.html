@@ -21,9 +21,9 @@
 				<mat-label>{{'CONTRACTS.DESCRIPTION'| translate}}</mat-label>
 				<input matInput #descriptionInput id="description" formControlName="description"
 						(input)="validateDescription()" autocomplete="off" required>
-            </mat-form-field>
-            <div>
-                <div class="datepicker-section">
+			</mat-form-field>
+            <div class="hc-split-section">
+                <div class="hc-split-section-half">
                     <mat-checkbox formControlName="startsImmediately" (change)="changeStartsImmediately($event)">
                         {{'CONTRACTS.STARTS_IMMEDIATELY'| translate}}
                     </mat-checkbox>
@@ -42,7 +42,7 @@
 						</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="datepicker-section">
+                <div class="hc-split-section-half">
                     <mat-checkbox formControlName="noExpiryDate" (change)="changeNoExpiryDate($event)">
                         {{'CONTRACTS.NO_EXPIRY_DATE'| translate}}
                     </mat-checkbox>

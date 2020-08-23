@@ -306,6 +306,10 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 		});
 	}
 
+	refreshUsers() {
+		this.getManageableUsers();
+	}
+
 	private createFormControls() {
 		this.parentOrganization = new FormControl(this.parentOrganizationFilter.label);
 		this.role = new FormControl(this.roleId);

@@ -1,0 +1,66 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div class="bx--row">
+	<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+		<div class="hc-table-section hc-paper-section hc-paper">
+			<button class="mat-flat-button mat-primary" type="button" (click)="createTaxRate()">{{'TAX_CATEGORIES.NEW_BUTTON' | translate}}</button>
+			<!-- TABLE PART (START) -->
+			<div class="hc-table-wrapper">
+				<table mat-table [dataSource]="model">
+		
+					<ng-container matColumnDef="rate">
+						<th mat-header-cell *matHeaderCellDef>{{'TAX_CATEGORIES.TAX_RATE' | translate}}</th>
+						<td mat-cell *matCellDef="let row">					
+							<a class="hc-table-item-action" (click)="editTaxRate(row)">{{row.rate}}</a>
+						</td>
+					</ng-container>
+		
+					<ng-container matColumnDef="jurisdiction" sticky>
+						<th mat-header-cell *matHeaderCellDef>{{'TAX_CATEGORIES.JURISDICTION' | translate}}</th>
+						<td mat-cell *matCellDef="let row">
+							{{row.jurisdictionGroupCode}}
+						</td>
+					</ng-container>
+		
+					<ng-container matColumnDef="fulfillmentCenter">
+						<th mat-header-cell *matHeaderCellDef>{{'TAX_CATEGORIES.FULFILLMENT_CENTER' | translate}}</th>
+						<td mat-cell *matCellDef="let row">
+							{{row.fulfillmentCenterName}}
+						</td>
+					</ng-container>
+			
+					<ng-container matColumnDef="actions" stickyEnd>
+						<th mat-header-cell *matHeaderCellDef> {{'TAX_CATEGORIES.ACTIONS' | translate}} </th>
+						<td mat-cell *matCellDef="let row; let i = index">
+							<button matTooltip="{{'TAX_CATEGORIES.DELETE' | translate}}" mat-icon-button aria-label="delete" (click)="deleteTaxRate(i)">
+								<mat-icon color="primary">delete</mat-icon>
+							</button>
+						</td>
+					</ng-container>
+			
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+			</div>
+			<!-- TABLE PART (END) -->
+		</div>
+	</div>
+</div>
+<div class="bx--row">
+	<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+		<div>
+			<button class="mat-flat-button" type="button" matStepperPrevious *ngIf="mode === 'create'">{{'TAX_CATEGORIES.BACK'| translate}}</button>
+			<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'create'">{{'TAX_CATEGORIES.FINISH' | translate}}</button>
+			<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'edit'">{{'TAX_CATEGORIES.SAVE' | translate}}</button>
+		</div>
+	</div>
+</div>

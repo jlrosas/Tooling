@@ -1,0 +1,50 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'SHIPPING_MODES.DESCRIPTION' | translate}}</h4>
+<form [formGroup]="descriptionForm" autocomplete="off">
+	<mat-form-field appearance="outline" *ngIf="mode === 'create'">
+		<mat-label>{{'SHIPPING_MODES.LANGUAGE'| translate}}</mat-label>
+		<mat-select	id="language" #languageSelect
+				placeholder="{{'SHIPPING_MODES.SELECT_LANGUAGE' | translate}}"
+				formControlName="language"
+				required>
+			<mat-option *ngFor="let language of languageIdList" [value]="language">
+				{{languageList[language]}}
+			</mat-option>
+		</mat-select>
+		<mat-error *ngIf="language.errors && language.errors.duplicate">
+			{{'SHIPPING_MODES.LANGUAGE_ALREADY_EXISTS' | translate }}
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field appearance="outline" *ngIf="mode === 'edit'">
+		<mat-label>{{'SHIPPING_MODES.LANGUAGE'| translate}}</mat-label>
+		<input id="language" matInput formControlName="language">
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>{{'SHIPPING_MODES.DESCRIPTION'| translate}}</mat-label>
+		<input matInput id="description" #descriptionInput formControlName="description" [maxlength]="254" autocomplete="off">
+	</mat-form-field>
+	<mat-form-field appearance="outline">
+		<mat-label>{{'SHIPPING_MODES.ADDITIONAL_DESCRIPTION'| translate}}</mat-label>
+		<input matInput id="additionalDescription" formControlName="additionalDescription" [maxlength]="254" autocomplete="off">
+	</mat-form-field>
+	<mat-form-field appearance="outline">
+		<mat-label>{{'SHIPPING_MODES.ESTIMATED_DELIVERY_TIME_DESCRIPTION'| translate}}</mat-label>
+		<input matInput id="estimateDeliveryTime" formControlName="estimateDeliveryTime" [maxlength]="254" autocomplete="off">
+	</mat-form-field>
+
+	<mat-dialog-actions>
+		<button class="mat-flat-button" type="button" (click)="cancel()">{{'SHIPPING_MODES.CANCEL' | translate}}</button>
+		<button class="mat-flat-button mat-primary" type="button" (click)="save()">{{'SHIPPING_MODES.SAVE' | translate}}</button>
+	</mat-dialog-actions>
+</form>

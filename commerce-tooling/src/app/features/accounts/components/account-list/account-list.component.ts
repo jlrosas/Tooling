@@ -30,14 +30,12 @@ import { PreferenceService } from "../../../../services/preference.service";
 	styleUrls: ["./account-list.component.scss"]
 })
 export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
-	listFilterForm: FormGroup;
 	listSearchForm: FormGroup;
 	displayedColumns: string[] = ["name", "contracts", "actions"];
 	searchText: FormControl;
 	store: FormControl;
 	storeList: Array<any> = [];
 	selectedStore = null;
-	showFilters = false;
 	responsiveCols = 12;
 	currentSearchString = null;
 
@@ -189,12 +187,22 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.getStoreNameSubscription.unsubscribe();
 			this.getStoreNameSubscription = null;
 		}
+		const currentStoreId = this.selectedStore ? this.selectedStore.id : null;
 		this.currentUserService.setPreferredStore(store.identifier);
 		this.selectedStore = store;
 		this.store.setValue(store.identifier);
-		this.storeList = [];
-		this.paginator.pageIndex = 0;
-		this.getAccounts();
+		if (currentStoreId !== store.id) {
+			this.paginator.pageIndex = 0;
+			this.getAccounts();
+			this.storeList = [];
+			this.searchStores("");
+		}
+	}
+
+	resetSelectedStore() {
+		if (this.selectedStore) {
+			this.store.setValue(this.selectedStore.identifier);
+		}
 	}
 
 	createAccount() {
@@ -205,11 +213,6 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	gotoContracts(accountId: any) {
 		this.router.navigate(["/contracts/contract-list", {accountId: accountId, storeId: this.selectedStore.id}]);
-	}
-
-	toggleShowFilters(e: any) {
-		this.preferenceService.save(this.preferenceToken, { showFilters: e.checked });
-		this.showFilters = e.checked;
 	}
 
 	onResponsiveColsChange(cols: number) {
@@ -232,17 +235,19 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 		});
 	}
 
+	refreshAccounts() {
+		this.getAccounts();
+	}
+
 	private createFormControls() {
 		this.searchText = new FormControl(this.currentSearchString);
 		this.store = new FormControl("");
 	}
 
 	private createForm() {
-		this.listFilterForm = new FormGroup({
-			store: this.store
-		});
 		this.listSearchForm = new FormGroup({
-			searchText: this.searchText
+			searchText: this.searchText,
+			store: this.store
 		});
 	}
 
@@ -310,8 +315,7 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 			const {
 				pageSize,
 				sort,
-				searchString,
-				showFilters
+				searchString
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -323,9 +327,6 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 			if (searchString) {
 				this.currentSearchString = searchString;
-			}
-			if (showFilters) {
-				this.showFilters = showFilters;
 			}
 		}
 	}

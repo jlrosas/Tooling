@@ -1,0 +1,32 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="detailsForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SHIPPING_CODES.NAME'| translate}}</mat-label>
+				<input #nameInput matInput id="name" formControlName="name" required [maxlength]="128"
+						(input)="validateName()"/>
+				<mat-error *ngIf="name.errors && name.errors.duplicateName">
+					{{'SHIPPING_CODES.DUPLICATE_NAME_ERROR' | translate }}
+				</mat-error>
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()">{{'SHIPPING_CODES.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

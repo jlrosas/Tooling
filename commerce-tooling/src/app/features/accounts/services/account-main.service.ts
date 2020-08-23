@@ -101,12 +101,13 @@ export class AccountMainService {
 							},
 							error => {
 								observer.error(error);
+								observer.complete();
+								this.processing = false;
 							}
 						);
 					}
 				},
 				error => {
-					console.log(error);
 					observer.error(error);
 					observer.complete();
 					this.processing = false;

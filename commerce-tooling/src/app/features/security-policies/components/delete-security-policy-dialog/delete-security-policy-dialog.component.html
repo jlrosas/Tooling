@@ -1,0 +1,21 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'SECURITY_POLICIES.DELETE_SECURITY_POLICY' | translate}}</h4>
+
+<form [formGroup]="deleteSecurityPolicyForm" autocomplete="off">
+	<mat-label>{{'SECURITY_POLICIES.DELETE_SECURITY_POLICY_CONFIRMATION'| translate: {name: securityPolicyName} }}</mat-label>
+</form>
+
+<mat-dialog-actions>
+	<button class="mat-flat-button" type="button" (click)="cancel()">{{'SECURITY_POLICIES.CANCEL' | translate}}</button>
+	<button class="mat-flat-button mat-primary"(click)="deleteSecurityPolicy()">{{'SECURITY_POLICIES.DELETE' | translate}}</button>
+</mat-dialog-actions>

@@ -46,6 +46,7 @@ import {
 	OrganizationApprovalSummaryComponent
 } from "./components/organization-approval-summary/organization-approval-summary.component";
 import { UserApprovalSummaryComponent } from "./components/user-approval-summary/user-approval-summary.component";
+import { OrderApprovalSummaryComponent } from "./components/order-approval-summary/order-approval-summary.component";
 import { ApprovalDialogComponent } from "./components/approval-dialog/approval-dialog.component";
 import { OrganizationNameService } from "../../services/organization-name.service";
 import { StoreNameService } from "../../services/store-name.service";
@@ -88,6 +89,7 @@ import { CurrencyService } from "../../services/currency.service";
 		ContractApprovalSummaryComponent,
 		OrganizationApprovalSummaryComponent,
 		UserApprovalSummaryComponent,
+		OrderApprovalSummaryComponent,
 		ApprovalDialogComponent
 	],
 	entryComponents: [ApprovalDialogComponent],

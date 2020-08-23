@@ -57,7 +57,7 @@ class OnlineStoresService extends __BaseService {
    *
    * @return The operation is successful.
    */
-  getOnlineStoresResponse(params: OnlineStoresService.GetOnlineStoresParams): __Observable<__StrictHttpResponse<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>}>> {
+  getOnlineStoresResponse(params: OnlineStoresService.GetOnlineStoresParams): __Observable<__StrictHttpResponse<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -77,7 +77,7 @@ class OnlineStoresService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>}>;
+        return _r as __StrictHttpResponse<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>}>;
       })
     );
   }
@@ -93,9 +93,9 @@ class OnlineStoresService extends __BaseService {
    *
    * @return The operation is successful.
    */
-  getOnlineStores(params: OnlineStoresService.GetOnlineStoresParams): __Observable<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>}> {
+  getOnlineStores(params: OnlineStoresService.GetOnlineStoresParams): __Observable<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>}> {
     return this.getOnlineStoresResponse(params).pipe(
-      __map(_r => _r.body as {count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>})
+      __map(_r => _r.body as {count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>})
     );
   }
 
@@ -112,7 +112,7 @@ class OnlineStoresService extends __BaseService {
    *
    * @return The operation is successful.
    */
-  getOnlineStoresByIdentifierResponse(params: OnlineStoresService.GetOnlineStoresByIdentifierParams): __Observable<__StrictHttpResponse<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>}>> {
+  getOnlineStoresByIdentifierResponse(params: OnlineStoresService.GetOnlineStoresByIdentifierParams): __Observable<__StrictHttpResponse<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -133,7 +133,7 @@ class OnlineStoresService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>}>;
+        return _r as __StrictHttpResponse<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>}>;
       })
     );
   }
@@ -151,9 +151,9 @@ class OnlineStoresService extends __BaseService {
    *
    * @return The operation is successful.
    */
-  getOnlineStoresByIdentifier(params: OnlineStoresService.GetOnlineStoresByIdentifierParams): __Observable<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>}> {
+  getOnlineStoresByIdentifier(params: OnlineStoresService.GetOnlineStoresByIdentifierParams): __Observable<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>}> {
     return this.getOnlineStoresByIdentifierResponse(params).pipe(
-      __map(_r => _r.body as {count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>})
+      __map(_r => _r.body as {count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>})
     );
   }
 
@@ -170,7 +170,7 @@ class OnlineStoresService extends __BaseService {
    *
    * @return The operation is successful.
    */
-  getOnlineStoresByRelatedStoreIdResponse(params: OnlineStoresService.GetOnlineStoresByRelatedStoreIdParams): __Observable<__StrictHttpResponse<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>}>> {
+  getOnlineStoresByRelatedStoreIdResponse(params: OnlineStoresService.GetOnlineStoresByRelatedStoreIdParams): __Observable<__StrictHttpResponse<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -191,7 +191,7 @@ class OnlineStoresService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>}>;
+        return _r as __StrictHttpResponse<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>}>;
       })
     );
   }
@@ -209,9 +209,9 @@ class OnlineStoresService extends __BaseService {
    *
    * @return The operation is successful.
    */
-  getOnlineStoresByRelatedStoreId(params: OnlineStoresService.GetOnlineStoresByRelatedStoreIdParams): __Observable<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>}> {
+  getOnlineStoresByRelatedStoreId(params: OnlineStoresService.GetOnlineStoresByRelatedStoreIdParams): __Observable<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>}> {
     return this.getOnlineStoresByRelatedStoreIdResponse(params).pipe(
-      __map(_r => _r.body as {count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>})
+      __map(_r => _r.body as {count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>})
     );
   }
 
@@ -219,7 +219,7 @@ class OnlineStoresService extends __BaseService {
    * @param id The unique numeric ID for identifying the online store.
    * @return The operation is successful.
    */
-  getOnlineStoreResponse(id: number): __Observable<__StrictHttpResponse<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>> {
+  getOnlineStoreResponse(id: number): __Observable<__StrictHttpResponse<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -237,7 +237,7 @@ class OnlineStoresService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}>;
+        return _r as __StrictHttpResponse<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>;
       })
     );
   }
@@ -246,9 +246,9 @@ class OnlineStoresService extends __BaseService {
    * @param id The unique numeric ID for identifying the online store.
    * @return The operation is successful.
    */
-  getOnlineStore(id: number): __Observable<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string}> {
+  getOnlineStore(id: number): __Observable<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}> {
     return this.getOnlineStoreResponse(id).pipe(
-      __map(_r => _r.body as {catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: number, state?: string, type?: string, unregisterMarketingEvent?: string})
+      __map(_r => _r.body as {catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string})
     );
   }
 
@@ -629,7 +629,7 @@ class OnlineStoresService extends __BaseService {
    * @param onlineStoreId The unique numeric ID for identifying the online store.
    * @return The operation is successful.
    */
-  getOnlineStoreDefaultCatalogsResponse(onlineStoreId: number): __Observable<__StrictHttpResponse<{count?: number, items?: Array<{catalogId?: number, id?: number, onlineStoreId?: number, storeId?: number}>}>> {
+  getOnlineStoreDefaultCatalogsResponse(onlineStoreId: number): __Observable<__StrictHttpResponse<{count?: number, items?: Array<{catalogId?: string, id?: string, onlineStoreId?: number, storeId?: number}>}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -647,7 +647,7 @@ class OnlineStoresService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<{count?: number, items?: Array<{catalogId?: number, id?: number, onlineStoreId?: number, storeId?: number}>}>;
+        return _r as __StrictHttpResponse<{count?: number, items?: Array<{catalogId?: string, id?: string, onlineStoreId?: number, storeId?: number}>}>;
       })
     );
   }
@@ -656,9 +656,9 @@ class OnlineStoresService extends __BaseService {
    * @param onlineStoreId The unique numeric ID for identifying the online store.
    * @return The operation is successful.
    */
-  getOnlineStoreDefaultCatalogs(onlineStoreId: number): __Observable<{count?: number, items?: Array<{catalogId?: number, id?: number, onlineStoreId?: number, storeId?: number}>}> {
+  getOnlineStoreDefaultCatalogs(onlineStoreId: number): __Observable<{count?: number, items?: Array<{catalogId?: string, id?: string, onlineStoreId?: number, storeId?: number}>}> {
     return this.getOnlineStoreDefaultCatalogsResponse(onlineStoreId).pipe(
-      __map(_r => _r.body as {count?: number, items?: Array<{catalogId?: number, id?: number, onlineStoreId?: number, storeId?: number}>})
+      __map(_r => _r.body as {count?: number, items?: Array<{catalogId?: string, id?: string, onlineStoreId?: number, storeId?: number}>})
     );
   }
 
@@ -1416,7 +1416,7 @@ module OnlineStoresService {
     /**
      * The request body.
      */
-    body: {catalogId?: number, id?: number, onlineStoreId?: number, storeId?: number};
+    body: {catalogId?: string, id?: string, onlineStoreId?: number, storeId?: number};
   }
 
   /**
@@ -1432,7 +1432,7 @@ module OnlineStoresService {
     /**
      * The unique numeric ID for identifying the default catalog.
      */
-    id: number;
+    id: string;
   }
 
   /**

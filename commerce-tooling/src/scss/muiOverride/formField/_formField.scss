@@ -13,3 +13,9 @@ mat-form-field {
     @import "select";
     @import "textarea";
 }
+
+.mat-input-element[type="time"] {
+    &::-webkit-calendar-picker-indicator {
+        display: none;
+    }
+}

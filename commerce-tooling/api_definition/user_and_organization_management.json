@@ -391,7 +391,7 @@
           {
             "required": false,
             "type": "integer",
-            "format": "int64",
+            "format": "int32",
             "description": "The unique numeric ID of the store for which the organizations are being managed. This parameter should be passed if the taskName is CreateAccount.",
             "in": "query",
             "name": "storeId"
@@ -789,7 +789,7 @@
           {
             "required": true,
             "type": "integer",
-            "format": "int64",
+            "format": "int32",
             "description": "The unique numeric ID of the store where the attribute applies.",
             "in": "query",
             "name": "storeId"
@@ -933,7 +933,7 @@
           {
             "required": true,
             "type": "integer",
-            "format": "int64",
+            "format": "int32",
             "description": "The unique numeric ID of the store where the attribute applies.",
             "in": "path",
             "name": "storeId"
@@ -997,7 +997,7 @@
           {
             "required": true,
             "type": "integer",
-            "format": "int64",
+            "format": "int32",
             "description": "The unique numeric ID of the store where the attribute applies.",
             "in": "path",
             "name": "storeId"
@@ -1074,7 +1074,7 @@
             "required": true,
             "name": "storeId",
             "type": "integer",
-            "format": "int64",
+            "format": "int32",
             "description": "The unique numeric ID of the store where the attribute applies.",
             "in": "path"
           },
@@ -1819,7 +1819,7 @@
           {
             "required": true,
             "type": "integer",
-            "format": "int64",
+            "format": "int32",
             "description": "The unique numeric ID of the store where the attribute applies.",
             "in": "query",
             "name": "storeId"
@@ -1963,7 +1963,7 @@
           {
             "required": true,
             "type": "integer",
-            "format": "int64",
+            "format": "int32",
             "description": "The unique numeric ID of the store where the attribute applies.",
             "in": "path",
             "name": "storeId"
@@ -2027,7 +2027,7 @@
           {
             "required": true,
             "type": "integer",
-            "format": "int64",
+            "format": "int32",
             "description": "The unique numeric ID of the store where the attribute applies.",
             "in": "path",
             "name": "storeId"
@@ -2104,7 +2104,7 @@
             "required": true,
             "name": "storeId",
             "type": "integer",
-            "format": "int64",
+            "format": "int32",
             "description": "The unique numeric ID of the store where the attribute applies.",
             "in": "path"
           },
@@ -2336,8 +2336,7 @@
           },
           {
             "required": true,
-            "type": "integer",
-            "format": "int64",
+            "type": "string",
             "description": "The unique numeric ID for identifying the address.",
             "in": "path",
             "name": "id"
@@ -2386,8 +2385,7 @@
         "parameters": [
           {
             "required": true,
-            "type": "integer",
-            "format": "int64",
+            "type": "string",
             "description": "The unique numeric ID for identifying the address.",
             "in": "path",
             "name": "id"
@@ -2444,8 +2442,7 @@
         "parameters": [
           {
             "required": true,
-            "type": "integer",
-            "format": "int64",
+            "type": "string",
             "name": "id",
             "description": "The unique numeric ID for identifying the address.",
             "in": "path"
@@ -2526,8 +2523,7 @@
       "description": "The addresses of users and organizations. An address can be the a user's own address or alternative address that is used for billing or shipping purposes.",
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": "The unique numeric ID for identifying the address."
         },
         "address1": {

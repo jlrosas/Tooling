@@ -8,21 +8,13 @@
 
  *-------------------------------------------------------------------
  */
- 
-.datepicker-section {
-	width: 192px;
-	margin-top: 16px;
-	display: inline-block;
 
-	&:first-child {
-		margin-right: 16px;
+ .hc-split-section-half {
+	mat-checkbox {
+		margin: 12px 0 8px;
 	}
 
 	mat-form-field {
-		margin-top: 8px;
-	}
-
-	.mat-form-field-appearance-outline {
-		max-width: 100%;
+		margin-top: 0;
 	}
 }

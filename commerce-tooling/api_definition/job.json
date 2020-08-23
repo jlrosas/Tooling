@@ -493,8 +493,7 @@
                 },
                 "userId": {
                     "description": "The unique numeric ID for identifying the user on whose behalf the job is run. By default, the user ID of the current user is used as the value.",
-                    "type": "integer",
-                    "format": "int64"
+                    "type": "string"
                 }
             }
         }

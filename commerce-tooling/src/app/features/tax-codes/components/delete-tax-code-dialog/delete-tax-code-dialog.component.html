@@ -1,0 +1,21 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'TAX_CODES.DELETE_TAX_CODE' | translate}}</h4>
+
+<form [formGroup]="deleteTaxCodeForm" autocomplete="off">
+	<mat-label>{{'TAX_CODES.DELETE_TAX_CONFIRMATION'| translate: {taxCodeName: taxCodeName} }}</mat-label>
+</form>
+
+<mat-dialog-actions>
+	<button class="mat-flat-button" type="button" (click)="cancel()">{{'TAX_CODES.CANCEL' | translate}}</button>
+	<button class="mat-flat-button mat-primary" (click)="deleteTaxCode()">{{'TAX_CODES.DELETE' | translate}}</button>
+</mat-dialog-actions>

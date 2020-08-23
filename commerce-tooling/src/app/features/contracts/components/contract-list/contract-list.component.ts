@@ -345,28 +345,36 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 		const files = this.importFileInput.nativeElement.files;
 		for (let i = 0; i < files.length; i++) {
 			const file: any = files[i];
-			file.text().then(text => {
-				this.contractsService.importContract({
-					storeId: this.storeId,
-				 	body: text
-				 }).subscribe(
-				 	 response => {
-				 		 this.translateService.get("CONTRACTS.CONTRACT_IMPORTED_MESSAGE").subscribe((message: string) => {
-				 			 this.alertService.success({message});
-				 		 });
-				 		 this.getContracts();
-				 	 },
-				 	 errorResponse => {
-				 		 if (errorResponse.error && errorResponse.error.errors) {
-				 			 errorResponse.error.errors.forEach(error => {
-				 				 this.alertService.error({message: error.errorMessage});
-				 			 });
-				 		 } else {
-				 			 console.log(errorResponse);
-				 		 }
-				 	 }
-				 );
-			});
+			const fileName = file.name;
+			const fileType = file.type;
+			if (fileName.includes(".xml") && fileType === "text/xml") {
+				file.text().then(text => {
+					this.contractsService.importContract({
+						storeId: this.storeId,
+					 	body: text
+					 }).subscribe(
+					 	 response => {
+					 		 this.translateService.get("CONTRACTS.CONTRACT_IMPORTED_MESSAGE").subscribe((message: string) => {
+					 			 this.alertService.success({message});
+					 		 });
+					 		 this.getContracts();
+					 	 },
+					 	 errorResponse => {
+					 		 if (errorResponse.error && errorResponse.error.errors) {
+					 			 errorResponse.error.errors.forEach(error => {
+					 				 this.alertService.error({message: error.errorMessage});
+					 			 });
+					 		 } else {
+					 			 console.log(errorResponse);
+					 		 }
+					 	 }
+					 );
+				});
+			} else  {
+				this.translateService.get("CONTRACTS.INVALID_XML_FILE").subscribe((message: string) => {
+					this.alertService.error({message});
+				});
+			}
 		}
 	}
 

@@ -323,6 +323,10 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 		});
 	}
 
+	refreshMemberGroups() {
+		this.getMemberGroups();
+	}
+
 	private createFormControls() {
 		this.parentOrganization = new FormControl(this.parentOrganizationFilter.label);
 		this.memberGroupTypeDropdown = new FormControl(this.memberGroupTypeFilter.label);

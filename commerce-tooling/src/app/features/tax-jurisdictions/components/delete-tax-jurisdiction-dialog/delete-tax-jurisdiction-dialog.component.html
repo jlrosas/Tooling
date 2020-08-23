@@ -1,0 +1,21 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'TAX_JURISDICTIONS.DELETE_TAX_JURISDICTION' | translate}}</h4>
+
+<form [formGroup]="deleteJurisdictionForm" autocomplete="off">
+	<mat-label>{{'TAX_JURISDICTIONS.DELETE_TAX_JURISDICTION_CONFIRMATION'| translate: {jurisdiction: jurisdiction} }}</mat-label>
+</form>
+
+<mat-dialog-actions>
+	<button class="mat-raised-button" type="button" (click)="cancel()">{{'TAX_JURISDICTIONS.CANCEL' | translate}}</button>
+	<button class="mat-raised-button mat-primary"(click)="deleteJurisdiction()">{{'TAX_JURISDICTIONS.DELETE' | translate}}</button>
+</mat-dialog-actions>

@@ -190,7 +190,7 @@ class AddressesService extends __BaseService {
    * Delete an address  by ID.
    * @param id The unique numeric ID for identifying the address.
    */
-  AddressesDeleteByAddressIdResponse(id: number): __Observable<__StrictHttpResponse<null>> {
+  AddressesDeleteByAddressIdResponse(id: string): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -217,7 +217,7 @@ class AddressesService extends __BaseService {
    * Delete an address  by ID.
    * @param id The unique numeric ID for identifying the address.
    */
-  AddressesDeleteByAddressId(id: number): __Observable<null> {
+  AddressesDeleteByAddressId(id: string): __Observable<null> {
     return this.AddressesDeleteByAddressIdResponse(id).pipe(
       __map(_r => _r.body as null)
     );
@@ -321,7 +321,7 @@ module AddressesService {
     /**
      * The unique numeric ID for identifying the address.
      */
-    id: number;
+    id: string;
 
     /**
      * The comma-separated set of properties to be returned. If no properties are specified, all properties are returned.
@@ -337,7 +337,7 @@ module AddressesService {
     /**
      * The unique numeric ID for identifying the address.
      */
-    id: number;
+    id: string;
 
     /**
      * Request body. The "selfAddress" and "status" fields are managed and it cannot be specified.

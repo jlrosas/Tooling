@@ -52,10 +52,10 @@ export class CreateUserComponent {
 				}
 			});
 			if (valid && completedSteps >= 1) {
-				this.userMainService.createUser().subscribe(response => {
+				this.userMainService.createUser().subscribe(name => {
 					this.userMainService.clearData();
 					this.router.navigate(["/users"]);
-					this.translateService.get("USER_MANAGEMENT.USER_CREATED_MESSAGE").subscribe((message: string) => {
+					this.translateService.get("USER_MANAGEMENT.USER_CREATED_MESSAGE", { name }).subscribe((message: string) => {
 						this.alertService.success({message});
 					});
 				},

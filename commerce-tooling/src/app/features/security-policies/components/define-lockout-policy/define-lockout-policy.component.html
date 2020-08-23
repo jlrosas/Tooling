@@ -1,0 +1,43 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="lockoutPolicyForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SECURITY_POLICIES.ACCOUNT_LOCKOUT_THRESHOLD'| translate}}</mat-label>
+				<input #lockoutThresholdInput matInput id="lockoutThreshold" formControlName="lockoutThreshold" required [maxlength]="5"
+						(input)="validateLockoutThreshold()"/>
+				<mat-error *ngIf="lockoutThreshold.errors && lockoutThreshold.errors.invalidLockoutThreshold">
+					{{'SECURITY_POLICIES.INVALID_VALUE_FOR_NUMERIC_FIELD' | translate}}
+				</mat-error>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SECURITY_POLICIES.WAIT_TIME'| translate}}</mat-label>
+				<input matInput id="waitTime" formControlName="waitTime" required [maxlength]="5"
+						(input)="validateWaitTime()"/>
+				<mat-error *ngIf="waitTime.errors && waitTime.errors.invalidWaitTime">
+					{{'SECURITY_POLICIES.INVALID_VALUE_FOR_NUMERIC_FIELD' | translate}}
+				</mat-error>
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" matStepperPrevious type="button" *ngIf="mode == 'create'">{{'SECURITY_POLICIES.BACK'| translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'create'">{{'SECURITY_POLICIES.FINISH' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'edit'">{{'SECURITY_POLICIES.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

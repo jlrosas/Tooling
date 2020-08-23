@@ -229,35 +229,43 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 			const files = this.importFileInput.nativeElement.files;
 			for (let i = 0; i < files.length; i++) {
 				const file: any = files[i];
-				file.text().then(text => {
-					this.extendedSitesService.importExtendedSiteResponse({
-						storeId: this.selectedHubStore.id,
-						body: text
-					}).subscribe(
-						response => {
-							this.translateService.get("EXTENDED_SITES.STORE_IMPORTED_MESSAGE").subscribe((message: string) => {
-								this.alertService.success({message});
-							});
-							this.getExtendedSites();
-						},
-						errorResponse => {
-							if (errorResponse.error && errorResponse.error.errors) {
-								errorResponse.error.errors.forEach(error => {
-									if (error.errorKey === "_ERR_CONTRACT_UNIQUE_KEY_ALREADY_EXISTS") {
-										this.translateService.get("EXTENDED_SITES.DUPLICATE_EXTENDED_SITE").subscribe((message: string) => {
-											this.alertService.error({message});
-										});
-									} else {
-										this.alertService.error({message: error.errorMessage});
-									}
+				const fileName = file.name;
+				const fileType = file.type;
+				if (fileName.includes(".xml") && fileType === "text/xml") {
+					file.text().then(text => {
+						this.extendedSitesService.importExtendedSiteResponse({
+							storeId: this.selectedHubStore.id,
+							body: text
+						}).subscribe(
+							response => {
+								this.translateService.get("EXTENDED_SITES.STORE_IMPORTED_MESSAGE").subscribe((message: string) => {
+									this.alertService.success({message});
 								});
 								this.getExtendedSites();
-							} else {
-								console.log(errorResponse);
+							},
+							errorResponse => {
+								if (errorResponse.error && errorResponse.error.errors) {
+									errorResponse.error.errors.forEach(error => {
+										if (error.errorKey === "_ERR_CONTRACT_UNIQUE_KEY_ALREADY_EXISTS") {
+											this.translateService.get("EXTENDED_SITES.DUPLICATE_EXTENDED_SITE").subscribe((message: string) => {
+												this.alertService.error({message});
+											});
+										} else {
+											this.alertService.error({message: error.errorMessage});
+										}
+									});
+									this.getExtendedSites();
+								} else {
+									console.log(errorResponse);
+								}
 							}
-						}
-					);
-				});
+						);
+					});
+				} else  {
+					this.translateService.get("EXTENDED_SITES.INVALID_XML_FILE").subscribe((message: string) => {
+						this.alertService.error({message});
+					});
+				}
 			}
 		}
 	}
@@ -359,6 +367,10 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 		this.selectedHubStore = store;
 		this.hubStore.setValue(store.identifier);
 		this.paginator.pageIndex = 0;
+		this.getExtendedSites();
+	}
+
+	refreshExtendedSites() {
 		this.getExtendedSites();
 	}
 

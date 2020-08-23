@@ -55,6 +55,10 @@
 					</mat-form-field>
 					<mat-form-field appearance="outline">
 						<mat-label>{{'APPROVALS.PROCESS_FILTER'| translate}}</mat-label>
+						<span class="filter-clear" *ngIf="processFilter != null" (click)="clearProcess($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'APPROVALS.CLEAR' | translate}}</span>
+						</span>
 						<mat-select id="processSelect" placeholder="{{'APPROVALS.SELECT_PROCESS_PLACEHOLDER'| translate}}"
 								formControlName="processSelect"
 								(selectionChange)="selectProcess($event.value)">
@@ -62,13 +66,13 @@
 								{{processTextKeys[index] | translate}}
 							 </mat-option>
 						</mat-select>
-						<span class="filter-clear" *ngIf="processFilter != null" (click)="clearProcess($event)">
-							<mat-icon>clear</mat-icon>
-							<span class="clear-margin">{{'APPROVALS.CLEAR' | translate}}</span>
-						</span>
 					</mat-form-field>
 					<mat-form-field appearance="outline">
 						<mat-label>{{'APPROVALS.STATUS_FILTER'| translate}}</mat-label>
+						<span class="filter-clear" *ngIf="statusFilter != null" (click)="clearStatus($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'APPROVALS.CLEAR' | translate}}</span>
+						</span>
 						<mat-select id="statusSelect" placeholder="{{'APPROVALS.SELECT_STATUS_PLACEHOLDER'| translate}}"
 							   formControlName="statusSelect"
 							   (selectionChange)="selectStatus($event.value)">
@@ -76,10 +80,6 @@
 								{{statusTextKeys[index] | translate}}
 							</mat-option>
 						</mat-select>
-						<span class="filter-clear" *ngIf="statusFilter != null" (click)="clearStatus($event)">
-							<mat-icon>clear</mat-icon>
-							<span class="clear-margin">{{'APPROVALS.CLEAR' | translate}}</span>
-						</span>
 					</mat-form-field>
 					<mat-form-field appearance="outline" title="{{'APPROVALS.SUBMIT_START_DATE_FILTER'| translate}}">
 						<mat-label>{{'APPROVALS.SUBMIT_START_DATE_FILTER'| translate}}</mat-label>

@@ -33,6 +33,9 @@
 			<button class="mat-flat-button mat-primary" (click)="createExtendedSite()">{{'EXTENDED_SITES.NEW' | translate}}</button>
 			<button class="mat-flat-button mat-secondary" (click)="importFileInput.click()">{{'EXTENDED_SITES.IMPORT' | translate}}</button>
 			<input hidden="true" #importFileInput type="file" accept=".xml" (change)="importExtendedSite()" />
+			<button class="mat-icon-button-label" matTooltip="{{'EXTENDED_SITES.REFRESH' | translate}}" mat-icon-button (click)="refreshExtendedSites()">
+				<mat-icon color="primary">refresh</mat-icon>
+			</button>
 		</div>
 		<div *ngIf="showFilters">
 			<div class="hc-table-filters">
@@ -50,6 +53,10 @@
 					</mat-form-field>
 					<mat-form-field appearance="outline">
 						<mat-label>{{'EXTENDED_SITES.STATUS_FILTER'| translate}}</mat-label>
+						<span class="filter-clear" *ngIf="selectedStatus != null" (click)="clearStatus($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'EXTENDED_SITES.CLEAR' | translate}}</span>
+						</span>
 						<mat-select id="statusSelect" placeholder="{{'EXTENDED_SITES.SELECT_STATUS'| translate}}"
 								formControlName="statusSelect"
 								(selectionChange)="selectStatus($event.value)">
@@ -57,10 +64,6 @@
 								{{statusTextKeys[index] | translate}}
 							 </mat-option>
 						</mat-select>
-						<span class="filter-clear" *ngIf="selectedStatus != null" (click)="clearStatus($event)">
-							<mat-icon>clear</mat-icon>
-							<span class="clear-margin">{{'EXTENDED_SITES.CLEAR' | translate}}</span>
-						</span>
 					</mat-form-field>
 				</form>
 			</div>

@@ -1,0 +1,119 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'SHIPPING_CODES.SHIPPING_CODES' | translate}}
+	</h1>
+	<div class="hc-table-section hc-paper">
+		<!-- Search,Filter part(start) -->
+		<div class="hc-table-actions">
+			<form [formGroup]="listSearchForm" autocomplete="off">
+				<mat-form-field appearance="outline" class="icon-suffix">
+					<mat-label>{{'SHIPPING_CODES.SEARCH' | translate}}</mat-label>
+					<input matInput (input)="searchShippingCodes($event.target.value)"
+							placeholder="{{'SHIPPING_CODES.SEARCH_BY_NAME' | translate}}"
+							formControlName="searchText" >
+					<mat-icon matSuffix>search</mat-icon>
+					<span class="filter-clear" *ngIf="currentSearchString != null" (click)="clearSearch()">
+						<mat-icon>clear</mat-icon>
+						<span class="clear-margin">{{'SHIPPING_CODES.CLEAR' | translate}}</span>
+					</span>
+				</mat-form-field>
+				<mat-form-field appearance="outline" class="store-filter icon-suffix">
+					<mat-label>{{'SHIPPING_CODES.SELECTED_STORE'| translate}}</mat-label>
+					<input matInput id="store" (input)="searchStores($event.target.value)" placeholder="{{'SHIPPING_CODES.SELECT_STORE_PLACEHOLDER'| translate}}"
+							formControlName="store" [matAutocomplete]="storeAutocomplete" (blur)="resetSelectedStore()">
+					<mat-autocomplete #storeAutocomplete="matAutocomplete" (optionSelected)="selectStore($event.option.value)">
+						<mat-option *ngFor="let store of storeList" [value]="store">
+							{{store.identifier}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-icon matSuffix>filter_list</mat-icon>
+				</mat-form-field>
+			</form>
+			<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'SHIPPING_CODES.SHOW_FILTERS' | translate}}</mat-slide-toggle>
+			<button class="mat-flat-button mat-primary" (click)="createShippingCode()">{{'SHIPPING_CODES.NEW_BUTTON' | translate}}</button>
+			<button class="mat-icon-button-label" matTooltip="{{'SHIPPING_CODES.REFRESH' | translate}}" mat-icon-button (click)="refreshShippingCodes()">
+				<mat-icon color="primary">refresh</mat-icon>
+			</button>
+		</div>
+		<div *ngIf="showFilters">
+			<div class="hc-table-filters">
+				<form [formGroup]="listFilterForm" autocomplete="off">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'SHIPPING_CODES.STATUS_FILTER'| translate}}</mat-label>
+						<span class="filter-clear" *ngIf="statusFilter != null" (click)="clearStatus($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'SHIPPING_CODES.CLEAR' | translate}}</span>
+						</span>
+						<mat-select id="statusSelect" placeholder="{{'SHIPPING_CODES.SELECT_STATUS_PLACEHOLDER'| translate}}"
+								formControlName="statusSelect"
+								(selectionChange)="selectStatus($event.value)">
+							<mat-option *ngFor="let index of statusTextIndices" [value]="index">
+								{{statusTextKeys[index] | translate}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</form>
+			</div>
+		</div>
+		<!-- Search,Filter part(end) -->
+
+		<!-- TABLE PART (START) -->
+		<div class="hc-table-wrapper">
+			<table mat-table [dataSource]="model" matSort matSortActive="{{activeColumn}}" matSortDirection="{{sortDirection}}">
+				<ng-container matColumnDef="calculationCode" sticky>
+					<th mat-header-cell *matHeaderCellDef mat-sort-header="">{{'SHIPPING_CODES.NAME' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						<a [routerLink]="['/shipping-codes/edit-shipping-code', row.id, {storeId: selectedStore.id}]">{{row.calculationCode}}</a>
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="status">
+					<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CODES.STATUS' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						<mat-icon class="approved-status" *ngIf="row.status == 1">brightness_1</mat-icon>
+						<mat-icon class="rejected-status" *ngIf="row.status == 0">brightness_1</mat-icon>
+						{{(row.status === 0 ? 'SHIPPING_CODES.DEACTIVATED' : 'SHIPPING_CODES.ACTIVATED') | translate}}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="actions" stickyEnd>
+					<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CODES.ACTIONS' | translate}}</th>
+					<td mat-cell *matCellDef="let element">
+						<button matTooltip="{{'SHIPPING_CODES.DELETE' | translate}}" mat-icon-button aria-label="delete" (click)="deleteShippingCode(element)">
+							<mat-icon color="primary">delete</mat-icon>
+						</button>
+						<button class="button-icon" mat-icon-button [matMenuTriggerFor]="appMenu">
+							<mat-icon class="vert-icon">more_vert</mat-icon>
+						</button>
+						<mat-menu #appMenu="matMenu">
+							<ng-template matMenuContent>
+								<button mat-menu-item *ngIf="element.status === 0"
+										(click)="setShippingCodeStatus(element.id, 1)">
+										{{'SHIPPING_CODES.ACTIVATE' | translate}}
+								</button>
+								<button mat-menu-item *ngIf="element.status === 1"
+										(click)="setShippingCodeStatus(element.id, 0)">
+										{{'SHIPPING_CODES.DEACTIVATE' | translate}}
+								</button>
+							</ng-template>
+						</mat-menu>
+				</ng-container>
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+			<!-- TABLE PART (END) -->
+		</div>
+		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+				(page)="handlePage($event)">
+		</mat-paginator>
+	</div>
+</div>

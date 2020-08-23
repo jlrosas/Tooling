@@ -1,0 +1,58 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="descriptionForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<div class="bx--row">
+				<div class="bx--col-lg-6">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'TAX_CATEGORIES.LANGUAGE'| translate}}</mat-label>
+						<mat-select	id="language" #languageSelect
+								placeholder="{{'TAX_CATEGORIES.SELECT_LANGUAGE' | translate}}"
+								formControlName="language"
+								(selectionChange)="selectLanguage($event.value)">
+							<mat-option *ngFor="let language of languageList" [value]="language">
+								{{language.description}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<mat-form-field appearance="outline">
+						<mat-label>{{'TAX_CATEGORIES.DISPLAY_NAME'| translate}}</mat-label>
+						<input matInput id="displayName" formControlName="displayName" (input)="validateDisplayName()">
+					</mat-form-field>
+				</div>
+				<div class="select-group-content bx--col-lg-5">
+					<div class="hc-type-label">{{'TAX_CATEGORIES.DISPLAY_NAMES'| translate}}</div>
+					<div class="hc-chip-list-section">
+						<span *ngIf="descriptions.length==0">{{'TAX_CATEGORIES.NO_DEFINED_DISPLAY_NAMES'| translate}}</span>
+						<mat-chip-list #displayNameList>
+							<mat-chip *ngFor="let description of descriptions" [selectable]="false"
+									[removable]="true" (removed)="removeDescription(description)">
+									{{description.languageDescription}} - {{description.description}}
+								<mat-icon matChipRemove>cancel</mat-icon>
+							</mat-chip>
+						</mat-chip-list>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" type="button" matStepperPrevious *ngIf="mode === 'create'">{{'TAX_CATEGORIES.BACK'| translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="next()" *ngIf="mode === 'create'">{{'TAX_CATEGORIES.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'TAX_CATEGORIES.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

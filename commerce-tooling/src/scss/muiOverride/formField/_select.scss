@@ -13,10 +13,15 @@
             line-height: map-get($hc-input, height) - spacing(2);
         }
 
-        .filter-clear ~ mat-select {
-            .mat-select-value {
-                padding-right: spacing(9);
-                background: beige;
+        .filter-clear {
+            position: absolute;
+            right: spacing(4.5);
+            z-index: zIndex(input-clear-button);
+
+            & + .mat-select:not(.mat-select-empty) {
+                .mat-select-value {
+                    padding-right: spacing(7);
+                }
             }
         }
     }
@@ -26,21 +31,26 @@
     .mat-select {
         height: map-get($hc-input, height);
     }
+
     .mat-select-arrow-wrapper {
         width: spacing(5);
         transform: none;
 
         .mat-select-arrow {
-            margin: 0 spacing(2.5);
+            margin: 0 spacing(1.5);
             border-left: spacing(.75) solid transparent;
             border-right: spacing(.75) solid transparent;
             border-top: spacing(.75) solid;
         }
     }
+
+    .mat-select + .filter-clear {
+        position: absolute;
+        right: spacing(5);
+    }
 }
 
 &.hc-form-field-small {
-
     &.mat-form-field-type-mat-select {
         .mat-select-value {
             font-size: 14px;

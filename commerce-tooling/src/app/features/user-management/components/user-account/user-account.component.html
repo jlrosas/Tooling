@@ -30,17 +30,11 @@
 				<mat-label>{{'USER_MANAGEMENT.PASSWORD'| translate}}</mat-label>
 				<input matInput type="password" id="password" formControlName="password" (input)="validatePassword()" [required]="mode==='create'" autocomplete="off">
 				<mat-icon matSuffix (click)="passwordVisible = !passwordVisible" class="action-icon">{{passwordVisible ? 'visibility' : 'visibility_off'}}</mat-icon>
-				<mat-error *ngIf="password.errors && password.errors.minlength">
-					{{'USER_MANAGEMENT.PASSWORD_ERROR' | translate }}
-				</mat-error>
 			</mat-form-field>
 			<mat-form-field *ngIf="passwordVisible" appearance="outline">
 				<mat-label>{{'USER_MANAGEMENT.PASSWORD'| translate}}</mat-label>
 				<input matInput type="text" id="password" formControlName="password" (input)="validatePassword()" [required]="mode==='create'" autocomplete="off">
 				<mat-icon matSuffix (click)="passwordVisible = !passwordVisible" class="action-icon">{{passwordVisible ? 'visibility' : 'visibility_off'}}</mat-icon>
-				<mat-error *ngIf="password.errors && password.errors.minlength">
-					{{'USER_MANAGEMENT.PASSWORD_ERROR' | translate }}
-				</mat-error>
 			</mat-form-field>
 			<mat-form-field appearance="outline"*ngIf="mode === 'create'">
 				<mat-label>{{'USER_MANAGEMENT.PARENT_ORGANIZATION'| translate}}</mat-label>
@@ -53,6 +47,11 @@
 					<mat-option *ngFor="let org of organizationList" [value]="org">
 						{{org.organizationName}}
 					</mat-option>
+					<div class="mat-select-controller" *ngIf="organizationCount > organizationList.length">
+						<button matTooltip="{{'USER_MANAGEMENT.MORE' | translate}}" mat-icon-button (click)="loadMoreOrganizations()">
+							<mat-icon color="primary">more_horiz</mat-icon>
+						</button>
+					</div>
 					<mat-option *ngIf="!organizationsLoading && organizationList && organizationList.length == 0" [value]="null">
 						{{'USER_MANAGEMENT.NO_MATCHING_RECORDS_FOUND' | translate }}
 					</mat-option>

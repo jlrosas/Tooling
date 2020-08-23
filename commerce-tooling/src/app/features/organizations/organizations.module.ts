@@ -46,6 +46,7 @@ import { MatDividerModule } from "@angular/material/divider";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { DirectivesModule } from "../../directives/directives.module";
+import { MatTooltipModule } from "@angular/material";
 import { OrganizationGroupsComponent } from "./components/organization-groups/organization-groups.component";
 import { CreateOrganizationComponent } from "./components/create-organization/create-organization.component";
 import { EditOrganizationComponent } from "./components/edit-organization/edit-organization.component";
@@ -80,7 +81,8 @@ import { EditOrganizationComponent } from "./components/edit-organization/edit-o
 		MatDividerModule,
 		MatSelectModule,
 		MatSlideToggleModule,
-		DirectivesModule
+		DirectivesModule,
+		MatTooltipModule
 	],
 	declarations: [
 		OrganizationListComponent,

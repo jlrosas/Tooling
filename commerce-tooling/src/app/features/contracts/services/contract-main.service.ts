@@ -91,6 +91,8 @@ export class ContractMainService {
 							},
 							error => {
 								observer.error(error);
+								observer.complete();
+								this.processing = false;
 							}
 						);
 					}

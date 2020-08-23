@@ -44,6 +44,10 @@
 				<form [formGroup]="listFilterForm" autocomplete="off">
 					<mat-form-field appearance="outline">
 						<mat-label>{{'CONTRACTS.STATUS_FILTER'| translate}}</mat-label>
+						<span class="filter-clear" *ngIf="statusFilter != null" (click)="clearStatus($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'CONTRACTS.CLEAR' | translate}}</span>
+						</span>
 						<mat-select id="statusSelect" placeholder="{{'CONTRACTS.SELECT_STATUS_PLACEHOLDER'| translate}}"
 								formControlName="statusSelect"
 								(selectionChange)="selectStatus($event.value)">
@@ -51,10 +55,6 @@
 								{{statusTextKeys[index] | translate}}
 							</mat-option>
 						</mat-select>
-						<span class="filter-clear" *ngIf="statusFilter != null" (click)="clearStatus($event)">
-							<mat-icon>clear</mat-icon>
-							<span class="clear-margin">{{'CONTRACTS.CLEAR' | translate}}</span>
-						</span>
 					</mat-form-field>
 				</form>
 			</div>

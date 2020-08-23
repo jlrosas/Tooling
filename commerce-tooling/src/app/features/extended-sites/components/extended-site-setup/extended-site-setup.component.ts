@@ -9,7 +9,7 @@
  *-------------------------------------------------------------------
  */
 
-import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
@@ -26,7 +26,7 @@ import { debounceTime } from "rxjs/operators";
 	styleUrls: ["./extended-site-setup.component.scss"],
 	selector: "hc-extended-site-setup"
 })
-export class ExtendedSiteSetupComponent implements OnInit, AfterViewInit {
+export class ExtendedSiteSetupComponent implements OnInit, AfterViewInit, OnDestroy {
 	@Input() step: MatStep;
 	@Output() save: EventEmitter<any> = new EventEmitter<any>();
 
@@ -42,10 +42,12 @@ export class ExtendedSiteSetupComponent implements OnInit, AfterViewInit {
 	sharedOwnerOrganizationList: Array<any> = [];
 
 	sharedOwner = false;
+	organizationCount = 0;
+	organizationSearchString = "";
 
 	@ViewChild("organizationInput", {static: false}) organizationInput: ElementRef<HTMLInputElement>;
 
-	private organizationSearchString: Subject<string> = new Subject<string>();
+	private organizationSearchString$: Subject<string> = new Subject<string>();
 	private getOrganizationsSubscription: Subscription = null;
 	private storefrontAssetStoreSearchString: Subject<string> = new Subject<string>();
 	private getStorefrontAssetStoresSubscription: Subscription = null;
@@ -85,8 +87,11 @@ export class ExtendedSiteSetupComponent implements OnInit, AfterViewInit {
 		if (!this.extendedSiteMainService.extendedSiteData.organizationId) {
 			this.getDefaultOrganization();
 		}
-		this.organizationSearchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.getOrganizations(searchString);
+		this.organizationSearchString$.pipe(debounceTime(250)).subscribe(searchString => {
+			this.organizationList = [];
+			this.organizationCount = 0;
+			this.organizationSearchString = searchString;
+			this.getOrganizations();
 		});
 		this.storefrontAssetStoreSearchString.pipe(debounceTime(250)).subscribe(searchString => {
 			this.getStorefrontAssetStores(searchString);
@@ -112,11 +117,23 @@ export class ExtendedSiteSetupComponent implements OnInit, AfterViewInit {
 		}, 250);
 	}
 
+	ngOnDestroy() {
+		this.sharedOwnerOrganizationSearchString.unsubscribe();
+		this.organizationSearchString$.unsubscribe();
+	}
+
 	triggerSave() {
 		this.save.emit(null);
 	}
 
-	getOrganizations(searchString: string) {
+	loadMoreOrganizations() {
+		if (this.organizationList.length < this.organizationCount) {
+			this.getOrganizations();
+		}
+	}
+
+	getOrganizations() {
+		const searchString = this.organizationSearchString;
 		if (this.getOrganizationsSubscription !== null) {
 			this.getOrganizationsSubscription.unsubscribe();
 			this.getOrganizationsSubscription = null;
@@ -125,24 +142,19 @@ export class ExtendedSiteSetupComponent implements OnInit, AfterViewInit {
 		this.extendedSiteMainService.extendedSiteData.organizationName = null;
 		this.getOrganizationsSubscription = this.organizationsService.OrganizationGetManageableOrganizations({
 			organizationName: searchString,
-			limit: 10
+			sort: "organizationName",
+			limit: 10,
+			offset: this.organizationList.length
 		}).subscribe(
 			response => {
-				if (response.items.length === 1 && response.items[0].organizationName === this.organization.value) {
+				if (this.organizationList.length === 0 && response.items.length === 1 &&
+						response.items[0].organizationName === this.organization.value) {
 					this.selectOrganization(response.items[0]);
 				} else {
-					response.items.sort((org1, org2) => {
-						let result = 0;
-						if (org1.organizationName < org2.organizationName) {
-							result = -1;
-						} else if (org1.organizationName > org2.organizationName) {
-							result = 1;
-						}
-						return result;
-					});
-					this.organizationList = response.items;
+					this.organizationList = [ ...this.organizationList, ...response.items];
 				}
 				this.getOrganizationsSubscription = null;
+				this.organizationCount = response.count;
 			},
 			error => {
 				this.getOrganizationsSubscription = null;
@@ -152,7 +164,7 @@ export class ExtendedSiteSetupComponent implements OnInit, AfterViewInit {
 	}
 
 	searchOrganizations(value) {
-		this.organizationSearchString.next(value);
+		this.organizationSearchString$.next(value);
 	}
 
 	selectOrganization(org: any) {

@@ -16,8 +16,8 @@
 	<div class="hc-table-section hc-paper">
 		<!-- Search,Filter part(start) -->
 		<div class="hc-table-actions">
-			<form [formGroup]="listSearchForm" autocomplete="off" class="icon-suffix">
-				<mat-form-field appearance="outline">
+			<form [formGroup]="listSearchForm" autocomplete="off">
+				<mat-form-field appearance="outline" class="icon-suffix">
 					<mat-label>{{'ACCOUNTS.SEARCH' | translate}}</mat-label>
 					<input matInput (input)="searchAccounts($event.target.value)"
 							placeholder="{{'ACCOUNTS.SEARCH_BY_CUSTOMER' | translate}}"
@@ -28,25 +28,22 @@
 						<span class="clear-margin">{{'ACCOUNTS.CLEAR' | translate}}</span>
 					</span>
 				</mat-form-field>
+				<mat-form-field appearance="outline" class="store-filter icon-suffix">
+					<mat-label>{{'ACCOUNTS.STORE_FILTER'| translate}}</mat-label>
+					<input matInput id="store" (input)="searchStores($event.target.value)" placeholder="{{'ACCOUNTS.SELECT_STORE_PLACEHOLDER'| translate}}"
+							formControlName="store" [matAutocomplete]="storeAutocomplete" (blur)="resetSelectedStore()">
+					<mat-autocomplete #storeAutocomplete="matAutocomplete" (optionSelected)="selectStore($event.option.value)">
+						<mat-option *ngFor="let store of storeList" [value]="store">
+							{{store.identifier}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-icon matSuffix>filter_list</mat-icon>
+				</mat-form-field>
 			</form>
-			<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'ACCOUNTS.SHOW_FILTERS' | translate}}</mat-slide-toggle>
 			<button *hcRole="[-1,-18,-4]" class="mat-flat-button mat-primary" (click)="createAccount()">{{'ACCOUNTS.NEW_BUTTON' | translate}}</button>
-		</div>
-		<div *ngIf="showFilters">
-			<div class="hc-table-filters">
-				<form [formGroup]="listFilterForm" autocomplete="off">
-					<mat-form-field appearance="outline">
-						<mat-label>{{'ACCOUNTS.STORE_FILTER'| translate}}</mat-label>
-						<input matInput id="store" (input)="searchStores($event.target.value)" placeholder="{{'ACCOUNTS.SELECT_STORE_PLACEHOLDER'| translate}}"
-									formControlName="store" [matAutocomplete]="storeAutocomplete">
-						<mat-autocomplete #storeAutocomplete="matAutocomplete" (optionSelected)="selectStore($event.option.value)">
-							<mat-option *ngFor="let store of storeList" [value]="store">
-								{{store.identifier}}
-							</mat-option>
-						</mat-autocomplete>
-					</mat-form-field>
-				</form>
-			</div>
+			<button class="mat-icon-button-label" matTooltip="{{'ACCOUNTS.REFRESH' | translate}}" mat-icon-button (click)="refreshAccounts()">
+				<mat-icon color="primary">refresh</mat-icon>
+			</button>
 		</div>
 		<!-- Search,Filter part(end) -->
 

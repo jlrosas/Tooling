@@ -1,0 +1,62 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="detailsForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'TAX_JURISDICTIONS.NAME'| translate}}</mat-label>
+				<input matInput #nameInput id="name" #nameInput formControlName="name"
+						(input)="validateName()" autocomplete="off" [maxlength]="30" required>
+				<mat-error *ngIf="name.errors && name.errors.duplicateName">
+					{{'TAX_JURISDICTIONS.DUPLICATE_NAME_ERROR' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'TAX_JURISDICTIONS.COUNTRY'| translate}}</mat-label>
+				<input matInput id="country"
+						formControlName="country"
+						[matAutocomplete]="countryAutoComplete"
+						(input)="validateCountry()" autocomplete="off" required>
+				<mat-autocomplete #countryAutoComplete="matAutocomplete" (optionSelected)="selectCountry($event.option.value)">
+					<mat-option *ngFor="let country of filteredCountryList" [value]="country">
+						{{country.name}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="country.errors && country.errors.invalidCountry">
+					{{'TAX_JURISDICTIONS.INVALID_COUNTRY' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'TAX_JURISDICTIONS.STATE_PROVINCE_REGION'| translate}} {{'TAX_JURISDICTIONS.OPTIONAL' | translate}}</mat-label>
+				<input matInput id="state"
+						formControlName="state"
+						[matAutocomplete]="stateAutoComplete"
+						(input)="validateState()" autocomplete="off" [maxlength]="128">
+				<mat-autocomplete #stateAutoComplete="matAutocomplete" (optionSelected)="selectState($event.option.value)">
+					<mat-option *ngFor="let state of filteredStateList" [value]="state">
+						{{state.name}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="state.errors && state.errors.invalidState">
+					{{'TAX_JURISDICTIONS.INVALID_STATE' | translate }}
+				</mat-error>
+			</mat-form-field>	
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()">{{'TAX_JURISDICTIONS.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

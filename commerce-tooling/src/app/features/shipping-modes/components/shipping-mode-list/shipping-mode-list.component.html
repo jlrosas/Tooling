@@ -1,0 +1,148 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'SHIPPING_MODES.SHIPPING_MODES' | translate}}
+	</h1>
+	<div class="hc-table-section hc-paper">
+		<!-- Search,Filter part(start) -->
+		<div class="hc-table-actions">
+			<form [formGroup]="listSearchForm" autocomplete="off">
+				<mat-form-field appearance="outline" class="icon-suffix">
+					<mat-label>{{'SHIPPING_MODES.SEARCH' | translate}}</mat-label>
+					<input matInput (input)="searchShippingModes($event.target.value)"
+							placeholder="{{'SHIPPING_MODES.SEARCH_BY_SERVICE' | translate}}"
+							formControlName="searchText" >
+					<mat-icon matSuffix>search</mat-icon>
+					<span class="filter-clear" *ngIf="currentSearchString != null" (click)="clearSearch()">
+						<mat-icon>clear</mat-icon>
+						<span class="clear-margin">{{'SHIPPING_MODES.CLEAR' | translate}}</span>
+					</span>
+				</mat-form-field>
+				<mat-form-field appearance="outline" class="store-filter icon-suffix">
+					<mat-label>{{'SHIPPING_MODES.SELECTED_STORE'| translate}}</mat-label>
+					<input matInput id="store" (input)="searchStores($event.target.value)" placeholder="{{'ACCOUNTS.SELECT_STORE_PLACEHOLDER'| translate}}"
+							formControlName="store" [matAutocomplete]="storeAutocomplete" (blur)="resetSelectedStore()">
+					<mat-autocomplete #storeAutocomplete="matAutocomplete" (optionSelected)="selectStore($event.option.value)">
+						<mat-option *ngFor="let store of storeList" [value]="store">
+							{{store.identifier}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-icon matSuffix>filter_list</mat-icon>
+				</mat-form-field>
+			</form>
+			<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'SHIPPING_MODES.SHOW_FILTERS' | translate}}</mat-slide-toggle>
+			<button class="mat-flat-button mat-primary" (click)="createShippingMode()">{{'SHIPPING_MODES.NEW_BUTTON' | translate}}</button>
+			<button matTooltip="{{'SHIPPING_MODES.REFRESH' | translate}}" mat-icon-button (click)="refresh()">
+				<mat-icon color="primary">refresh</mat-icon>
+			</button>
+		</div>
+		<div *ngIf="showFilters">
+			<div class="hc-table-filters">
+				<form [formGroup]="listFilterForm" autocomplete="off">
+					<mat-form-field appearance="outline" class="icon-suffix">
+						<mat-label>{{'SHIPPING_MODES.CARRIER_FILTER'| translate}}</mat-label>
+						<input matInput id="carrier" (input)="searchCarriers($event.target.value)" placeholder="{{'SHIPPING_MODES.SELECT_CARRIER_PLACEHOLDER'| translate}}"
+								formControlName="carrier" [matAutocomplete]="carrierAutocomplete">
+						<mat-autocomplete #carrierAutocomplete="matAutocomplete" (optionSelected)="selectCarrier($event.option.value)">
+							<mat-option *ngFor="let carrier of carrierList" [value]="carrier">
+								{{carrier}}
+							</mat-option>
+						</mat-autocomplete>
+						<mat-icon matSuffix>filter_list</mat-icon>
+						<span class="filter-clear" *ngIf="selectedCarrier != null" (click)="searchCarriers('')">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'SHIPPING_MODES.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+					<mat-form-field appearance="outline" class="icon-suffix">
+						<mat-label>{{'SHIPPING_MODES.SERVICE_FILTER'| translate}}</mat-label>
+						<input matInput id="service" (input)="searchServices($event.target.value)" placeholder="{{'SHIPPING_MODES.SELECT_SERVICE_PLACEHOLDER'| translate}}"
+								formControlName="service" [matAutocomplete]="serviceAutocomplete">
+						<mat-autocomplete #serviceAutocomplete="matAutocomplete" (optionSelected)="selectService($event.option.value)">
+							<mat-option *ngFor="let service of serviceList" [value]="service">
+								{{service}}
+							</mat-option>
+						</mat-autocomplete>
+						<mat-icon matSuffix>filter_list</mat-icon>
+						<span class="filter-clear" *ngIf="selectedService != null" (click)="searchServices('')">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'SHIPPING_MODES.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+				</form>
+			</div>
+		</div>
+		<!-- Search,Filter part(end) -->
+
+		<!-- TABLE PART (START) -->
+		<div class="hc-table-wrapper">
+			<table mat-table [dataSource]="model" matSort matSortActive="{{activeColumn}}" matSortDirection="{{sortDirection}}">
+				<ng-container matColumnDef="carrier" sticky>
+					<th mat-header-cell *matHeaderCellDef mat-sort-header="">{{'SHIPPING_MODES.CARRIER' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						{{row.carrier}}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="shippingCode">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header="">{{'SHIPPING_MODES.SERVICE' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						<a *ngIf="row.storeId === selectedStore.id" [routerLink]="['/shipping-modes/edit-shipping-mode', row.id, {storeId: selectedStore.id}]">{{row.service}}</a>
+						<span *ngIf="row.storeId !== selectedStore.id">{{row.service}}</span>
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="estimatedDeliveryTime">
+					<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_MODES.ESTIMATED_DELIVERY_TIME' | translate}}</th>
+					<td mat-cell *matCellDef="let row">{{row.estimatedDeliveryTime}}</td>
+				</ng-container>
+				<ng-container matColumnDef="description">
+					<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_MODES.DESCRIPTION' | translate}}</th>
+					<td mat-cell *matCellDef="let row">{{row.description}}</td>
+				</ng-container>				
+				<ng-container matColumnDef="trackingURL">
+					<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_MODES.TRACKING_URL' | translate}}</th>
+					<td mat-cell *matCellDef="let row">{{row.trackingURL}}</td>
+				</ng-container>		
+				<ng-container matColumnDef="default">
+					<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_MODES.DEFAULT' | translate}}</th>
+					<td mat-cell *matCellDef="let row">{{ (row.id === defaultShipModeId) ? ('SHIPPING_MODES.YES' | translate) : ''}}</td>
+				</ng-container>
+				<ng-container matColumnDef="actions" stickyEnd>
+					<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_MODES.ACTIONS' | translate}}</th>
+					<td mat-cell *matCellDef="let element">
+						<div style="float: right;">	
+							<button  *ngIf="element.storeId === selectedStore.id" class="button-icon" matTooltip="{{'SHIPPING_MODES.DELETE' | translate}}" mat-icon-button aria-label="delete" (click)="deleteShippingMode(element)">
+								<mat-icon color="primary">delete</mat-icon>
+							</button>
+							<button class="button-icon" *ngIf="element.id !== defaultShipModeId" mat-icon-button [matMenuTriggerFor]="appMenu">
+								<mat-icon class="vert-icon">more_vert</mat-icon>
+							</button>
+							<mat-menu #appMenu="matMenu">
+								<ng-template matMenuContent>
+									<button mat-menu-item matTooltip="{{'SHIPPING_MODES.SET_AS_DEFAULT' | translate}}" matTooltipPosition="below" (click)="setAsDefault(element.id)">
+										{{'SHIPPING_MODES.SET_AS_DEFAULT' | translate}}
+									</button>
+								</ng-template>
+							</mat-menu>
+						</div>
+					</td>
+				</ng-container>
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+			<!-- TABLE PART (END) -->
+		</div>
+		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+				(page)="handlePage($event)">
+		</mat-paginator>
+	</div>
+</div>

@@ -1,0 +1,62 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="detailsForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SHIPPING_MODES.CARRIER'| translate}}</mat-label>
+				<input matInput id="carrier" #carrierInput formControlName="carrier"
+						[matAutocomplete]="carrierAutocomplete"
+						(input)="validateCarrier()"
+						[maxlength]="30"
+						required>
+				<mat-autocomplete #carrierAutocomplete="matAutocomplete" (optionSelected)="selectCarrier($event.option.value)">
+					<mat-option *ngFor="let carrier of carrierList" [value]="carrier">
+						{{carrier}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="carrier.errors && carrier.errors.duplicate">
+					{{'SHIPPING_MODES.CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SHIPPING_MODES.SERVICE'| translate}}</mat-label>
+				<input matInput id="service" formControlName="service"
+						[matAutocomplete]="serviceAutocomplete"
+						(input)="validateService()"
+						[maxlength]="30"
+						required>
+				<mat-autocomplete #serviceAutocomplete="matAutocomplete" (optionSelected)="selectService($event.option.value)">
+					<mat-option *ngFor="let service of serviceList" [value]="service">
+						{{service}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="service.errors && service.errors.duplicate">
+					{{'SHIPPING_MODES.CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SHIPPING_MODES.TRACKING_URL'| translate}}</mat-label>
+				<input matInput id="trackingURL" #trackingURLInput formControlName="trackingURL"
+						(input)="validateTrackingUrl()" [maxlength]="254" autocomplete="off">
+            </mat-form-field>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button mat-primary" type="button" (click)="next()" *ngIf="mode === 'create'">{{'SHIPPING_MODES.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'SHIPPING_MODES.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>
