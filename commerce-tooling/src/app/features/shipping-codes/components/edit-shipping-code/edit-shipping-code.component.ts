@@ -74,15 +74,6 @@ export class EditShippingCodeComponent {
 						this.translateService.get("SHIPPING_CODES.SHIPPING_CODE_SAVED_MESSAGE").subscribe((message: string) => {
 							this.alertService.success({message});
 						});
-					},
-					errorResponse => {
-						if (errorResponse.error && errorResponse.error.errors) {
-							errorResponse.error.errors.forEach((error: { message: string; }) => {
-								this.alertService.error({message: error.message});
-							});
-						} else {
-							console.log(errorResponse);
-						}
 					});
 				} else {
 					this.translateService.get("SHIPPING_CODES.INPUT_ERROR").subscribe((message: string) => {

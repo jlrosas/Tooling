@@ -236,20 +236,17 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 			usage: "HCL_SiteAdminStoreList",
 			identifier: "*" + searchString + "*",
 			limit: 10
-	 	}).subscribe(
-	 		response => {
-		 		this.getStoresSubscription = null;
-		 		if (response.items.length === 1 && response.items[0].identifier === this.storeDropdown.value) {
-		 			this.selectStore(response.items[0]);
-		 		} else {
-		 			this.storeList = response.items;
-		 		}
-			},
-			error => {
-				this.getStoresSubscription = null;
-				console.log(error);
-			}
-		);
+	 	}).subscribe(response => {
+	 		this.getStoresSubscription = null;
+	 		if (response.items.length === 1 && response.items[0].identifier === this.storeDropdown.value) {
+	 			this.selectStore(response.items[0]);
+	 		} else {
+	 			this.storeList = response.items;
+	 		}
+		},
+		error => {
+			this.getStoresSubscription = null;
+		});
 	}
 
 	getApplicationTypeList() {

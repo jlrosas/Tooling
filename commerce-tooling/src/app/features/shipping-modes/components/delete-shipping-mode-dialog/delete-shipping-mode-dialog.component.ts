@@ -68,20 +68,12 @@ export class DeleteShippingModeDialogComponent implements OnInit {
 					},
 					errorResponse => {
 						this.processing = false;
-						if (errorResponse.error = errorResponse.error.errors) {
-							errorResponse.error.errors.forEach(error => {
-								this.alertService.error({message: error.errorMessage});
-							});
-						} else {
-							console.log(errorResponse);
-						}
 					});
 				} else {
 					this.triggerDelete();
 				}
 			}, error => {
 				this.processing = false;
-				console.log(error);
 			});
 		}
 	}
@@ -96,13 +88,6 @@ export class DeleteShippingModeDialogComponent implements OnInit {
 		},
 		errorResponse => {
 			this.processing = false;
-			if (errorResponse.error && errorResponse.error.errors) {
-				errorResponse.error.errors.forEach(error => {
-					this.alertService.error({message: error.message});
-				});
-			} else {
-				console.log(errorResponse);
-			}
 		});
 	}
 }

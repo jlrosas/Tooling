@@ -63,15 +63,6 @@ export class EditAccountComponent {
 					this.translateService.get("ACCOUNTS.ACCOUNT_SAVED_MESSAGE").subscribe((message: string) => {
 						this.alertService.success({message});
 					});
-				},
-				errorResponse => {
-					if (errorResponse.error && errorResponse.error.errors) {
-						errorResponse.error.errors.forEach((error: { errorMessage: string; }) => {
-							this.alertService.error({message: error.errorMessage});
-						});
-					} else {
-						console.log(errorResponse);
-					}
 				});
 			} else {
 				this.translateService.get("ACCOUNTS.INPUT_ERROR").subscribe((message: string) => {

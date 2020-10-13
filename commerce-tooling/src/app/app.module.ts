@@ -15,6 +15,7 @@ import { NgModule, Provider, APP_INITIALIZER } from "@angular/core";
 import { HttpModule } from "@angular/http";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
+import { MatNativeDateModule } from "@angular/material/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -22,7 +23,6 @@ import { ApiConfiguration } from "./rest/api-configuration";
 import { ApiModule } from "./rest/api.module";
 import { FormsModule } from "@angular/forms";
 
-import { NotificationModule } from "carbon-components-angular";
 import { AuthService } from "./services/auth.service";
 import { CurrentUserService } from "./services/current-user.service";
 import { FeatureService } from "./services/feature.service";
@@ -32,6 +32,10 @@ import { JwtInterceptor } from "./rest/interceptor";
 import { SharedModule } from "./shared/shared.module";
 import { AlertListComponent } from "./components/alert-list/alert-list.component";
 import { TrimRequestBodyInterceptor } from "./rest/trim-request-data-interceptor";
+import { ErrorHandlerInterceptor } from "./rest/api-error-handler-interceptor";
+import { AlertComponent } from "./components/alert/alert.component";
+import { MatSnackBarModule } from "@angular/material";
+import { MatIconModule } from "@angular/material/icon";
 
 export function initApiConfiguration(config: ApiConfiguration): () => Promise<any> {
 	return (): Promise<any> => {
@@ -51,7 +55,7 @@ export function initApiConfiguration(config: ApiConfiguration): () => Promise<an
 					}
 				};
 				window.addEventListener("message", eventListener);
-				window.top.postMessage({"action": "API_HOST_FETCH_REQUEST"}, "*");
+				window.parent.postMessage({"action": "API_HOST_FETCH_REQUEST"}, "*");
 			} else {
 				resolve();
 			}
@@ -71,7 +75,8 @@ export const INIT_API_CONFIGURATION: Provider = {
 		AppComponent,
 		FeatureEnabledDirective,
 		FeatureDisabledDirective,
-		AlertListComponent
+		AlertListComponent,
+		AlertComponent
 	],
 	imports: [
 		BrowserModule,
@@ -79,9 +84,11 @@ export const INIT_API_CONFIGURATION: Provider = {
 		AppRoutingModule,
 		FormsModule,
 		HttpModule,
+		MatNativeDateModule,
 		SharedModule.forRoot(),
 		ApiModule,
-		NotificationModule
+		MatSnackBarModule,
+		MatIconModule
 	],
 	providers: [
 		INIT_API_CONFIGURATION,
@@ -90,12 +97,17 @@ export const INIT_API_CONFIGURATION: Provider = {
 		FeatureService,
 		{
 			provide: HTTP_INTERCEPTORS,
-			useClass: JwtInterceptor,
+			useClass: TrimRequestBodyInterceptor,
 			multi: true
 		},
 		{
 			provide: HTTP_INTERCEPTORS,
-			useClass: TrimRequestBodyInterceptor,
+			useClass: ErrorHandlerInterceptor,
+			multi: true
+		},
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: JwtInterceptor,
 			multi: true
 		},
 		{

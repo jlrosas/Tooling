@@ -29,10 +29,12 @@
 					</span>
 				</mat-form-field>
 			</form>
-			<button *hcRole="[-1]" class="mat-flat-button mat-primary" (click)="createSecurityPolicy()">{{'SECURITY_POLICIES.NEW_BUTTON' | translate}}</button>
-			<button class="mat-icon-button-label" matTooltip="{{'SECURITY_POLICIES.REFRESH' | translate}}" mat-icon-button (click)="refreshSecurityPolicies()">
-				<mat-icon color="primary">refresh</mat-icon>
-			</button>
+			<div class="hc-table-buttons">
+				<button *hcRole="[-1]" class="mat-flat-button mat-primary" (click)="createSecurityPolicy()">{{'SECURITY_POLICIES.NEW_BUTTON' | translate}}</button>
+				<button class="mat-icon-button-label" matTooltip="{{'SECURITY_POLICIES.REFRESH' | translate}}" mat-icon-button (click)="refreshSecurityPolicies()">
+					<mat-icon color="primary">refresh</mat-icon>
+				</button>
+			</div>
 		</div>
 		<!-- Search,Filter part(end) -->
 
@@ -58,7 +60,7 @@
 			</table>
 			<!-- TABLE PART (END) -->
 		</div>
-		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+		<mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
 				(page)="handlePage($event)">
 		</mat-paginator>
 	</div>

@@ -28,12 +28,14 @@
 					</span>
 				</mat-form-field>
 			</form>
-			<button matTooltip="{{'REGISTRIES.UPDATE_ALL_REGISTRIES' | translate}}" mat-icon-button (click)="updateAllRegistries()">
-				<mat-icon color="primary">update</mat-icon>
-			</button>
-			<button matTooltip="{{'REGISTRIES.REFRESH' | translate}}" mat-icon-button (click)="refresh()">
-				<mat-icon color="primary">refresh</mat-icon>
-			</button>			
+			<div class="hc-table-buttons">
+				<button matTooltip="{{'REGISTRIES.UPDATE_ALL_REGISTRIES' | translate}}" mat-icon-button (click)="updateAllRegistries()">
+					<mat-icon color="primary">update</mat-icon>
+				</button>
+				<button matTooltip="{{'REGISTRIES.REFRESH' | translate}}" mat-icon-button (click)="refresh()">
+					<mat-icon color="primary">refresh</mat-icon>
+				</button>			
+			</div>
 		</div>
 		<!-- TABLE PART (START) -->
 		<div class="hc-table-wrapper">
@@ -72,7 +74,7 @@
 		</div>
 		<!-- TABLE PART (END) -->
 	
-		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)">
+		<mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)">
 		</mat-paginator>
 	</div>
 </div>

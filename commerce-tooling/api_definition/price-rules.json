@@ -1,4 +1,9 @@
 {
+  "host": "hostname.com",
+  "basePath": "/rest/admin/v2",
+  "schemes": [
+    "https"
+  ],
   "swagger": "2.0",
   "info": {
     "title": "Price Rule Admininistrative REST APIs",
@@ -399,6 +404,15 @@
             "name": "id",
             "required": true,
             "type": "string"
+          },
+          {
+            "description": "The unique numeric ID for identifying the store.",
+            "format": "int32",
+            "in": "query",
+            "name": "storeId",
+            "required": false,
+            "type": "integer",
+            "x-context-data": "storeId"
           }
         ],
         "responses": {

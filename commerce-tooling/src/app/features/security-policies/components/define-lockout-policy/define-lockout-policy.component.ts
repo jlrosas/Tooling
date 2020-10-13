@@ -114,4 +114,3 @@ export class DefineLockoutPolicyComponent implements OnInit, AfterViewInit {
 		});
 	}
 }
-

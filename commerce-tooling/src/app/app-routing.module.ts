@@ -70,6 +70,10 @@ const routes: Routes = [
 		loadChildren: "./features/shipping-codes/shipping-codes.module#ShippingCodesModule"
 	},
 	{
+		path: "shipping-charges",
+		loadChildren: "./features/shipping-charges/shipping-charges.module#ShippingChargesModule"
+	},
+	{
 		path: "security-policies",
 		loadChildren: "./features/security-policies/security-policies.module#SecurityPoliciesModule"
  	},
@@ -84,7 +88,7 @@ const routes: Routes = [
 	{
 		path: "tax-codes",
 		loadChildren: "./features/tax-codes/tax-codes.module#TaxCodesModule"
- 	}
+	}
 ];
 
 @NgModule({

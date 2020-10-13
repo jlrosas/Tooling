@@ -42,10 +42,10 @@
     "STATE_PROVINCE_REGION": "都道府県",
     "ZIP_POSTAL_CODE": "郵便番号",
     "BACK": "戻る",
-    "SELECT_AN_ORGANIZATION": "組織を選択して、使用可能な役割のリストからユーザーの役割を選択してください。ユーザーは複数の組織で役割を持つことができます。",
+    "SELECT_AN_ORGANIZATION": "組織を選択して、使用可能な役割から選択してください。",
     "NO_ORGANIZATION_SELECTED": "組織を選択します。",
     "ORGANIZATION": "組織",
-    "AVAILABLE_ROLES": "使用可能な役割",
+    "AVAILABLE_ROLES": "使用可能な役割から選択",
     "SELECT_ROLE_PLACEHOLDER": "役割の選択",
     "SELECTED_ROLES": "選択した役割",
     "INCLUDE": "含める",
@@ -57,7 +57,7 @@
     "FINISH": "完了",
     "SAVE": "保存",
     "EDIT_USER": "ユーザーの編集",
-    "USER_CREATED_MESSAGE": "ユーザーは正常に作成されました。",
+    "USER_CREATED_MESSAGE": "ユーザー '{{name}}' は正常に作成されました。",
     "USER_SAVED_MESSAGE": "ユーザーは正常に保存されました。",
     "INVALID_COUNTRY": "無効な国です。",
     "INVALID_STATE": "無効な都道府県です。",
@@ -69,7 +69,8 @@
     "DISABLED": "無効化",
     "USER_ENABLED_MESSAGE": "ユーザーは正常に有効化されました。",
     "USER_DISABLED_MESSAGE": "ユーザーは正常に無効化されました。",
-    "MORE": "もっと見る"
+    "MORE": "もっと見る",
+    "REFRESH": "リフレッシュ"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "組織",
@@ -133,7 +134,8 @@
     "PARENT_ORGANIZATION_ERROR": "無効な親組織です。",
     "INVALID_COUNTRY": "無効な国です。",
     "INVALID_STATE": "無効な都道府県です。",
-    "DUPLICATE_ORGANIZATION": "組織が既に存在します。"
+    "DUPLICATE_ORGANIZATION": "組織が既に存在します。",
+    "REFRESH": "リフレッシュ"
   },
   "APPROVALS": {
     "APPROVALS": "承認",
@@ -259,7 +261,7 @@
     "TOTAL": "合計"
   },
   "MEMBER_GROUPS": {
-    "GROUPS": "グループ",
+    "GROUPS": "メンバー・グループ",
     "NEW_BUTTON": "新規",
     "NAME": "名前",
     "SEARCH": "検索",
@@ -293,7 +295,7 @@
     "ROLES_IN_ORGANIZATIONS": "指定された組織におけるユーザーの役割",
     "IGNORE_ROLES_IN_ORGANIZATIONS": "指定された組織におけるユーザーの役割を無視する",
     "CHECK_ROLES_IN_ORGANIZATIONS": "ユーザーは指定された組織で一致する役割が必要です。",
-    "SELECT_AN_ORGANIZATION": "組織を選択して、使用可能な役割のリストからユーザーの役割を選択してください。ユーザーは複数の組織で役割を持つことができます。",
+    "SELECT_AN_ORGANIZATION": "組織を選択して、使用可能な役割から選択してください。",
     "NO_ORGANIZATION_SELECTED": "組織を選択します。",
     "REGISTRATION_STATUS": "登録状況",
     "IGNORE_REGISTRATION_STATUS": "ユーザーの登録状況を無視する",
@@ -327,10 +329,11 @@
     "MEMBER_GROUP_DELETED_MESSAGE": "メンバー・グループは正常に削除されました。",
     "DELETE_MEMBER_GROUP": "メンバー・グループの削除",
     "DELETE_MEMBER_GROUP_CONFIRMATION": "'{{name}}' を削除しますか?",
-    "DELETE": "削除"
+    "DELETE": "削除",
+    "REFRESH": "リフレッシュ"
   },
   "EXTENDED_SITES": {
-    "STORES": "ストア",
+    "STORES": "拡張サイト・ストア",
     "NEW_STORE": "新規ストア",
     "STORE_DETAILS": "ストア詳細",
     "SETUP": "セットアップ",
@@ -387,7 +390,9 @@
     "DUPLICATE_EXTENDED_SITE": "ストアは既に存在します。",
     "SHARED_OWNER_CHECKBOX": "同じ所有組織を指定して、他のストアのユーザーがこのストアにアクセスできるようにする",
     "SHARED_OWNER_ORGANIZATION": "ストア組織の共有",
-    "MORE": "もっと見る"
+    "MORE": "もっと見る",
+    "INVALID_XML_FILE": "有効な XML ファイル (.xml) を選択してください。",
+    "REFRESH": "リフレッシュ"
   },
   "STORE_PREVIEW": {
     "STORE_PREVIEW": "ストア・プレビュー",
@@ -498,7 +503,8 @@
     "DESCRIPTION_NOT_UNIQUE": "説明は既に存在します。",
     "CHECKING_ACCOUNT_NUMBER": "アカウント番号の確認中",
     "CHECK_ROUTING_NUMBER": "ルーティング番号の確認",
-    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "購入オーダー番号は既に存在します。"
+    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "購入オーダー番号は既に存在します。",
+    "REFRESH": "リフレッシュ"
   },
   "SCHEDULER": {
     "SCHEDULER": "スケジューラー",
@@ -773,7 +779,8 @@
     "INVALID_MINIMUM_AMOUNT": "最小金額が無効です。",
     "CONTRACT_IMPORTED_MESSAGE": "契約は正常にインポートされました。",
     "DUPLICATE_CONTRACT": "契約を作成できません。この名前の契約は既に存在するか、最近削除されています。この名前の契約が削除対象としてマークされている場合、契約名を再利用する前にデータベース・クリーンアップ・ユーティリティーを実行する必要があります。これは、サイト管理者が行うことができます。",
-    "ACCOUNT": "アカウント"
+    "ACCOUNT": "アカウント",
+    "INVALID_XML_FILE": "有効な XML ファイル (.xml) を選択してください。"
   },
   "MESSAGES": {
     "MESSAGES": "メッセージ",
@@ -915,9 +922,10 @@
   "SHIPPING_JURISDICTIONS": {
     "SHIPPING_JURISDICTIONS": "配送管轄区域",
     "SEARCH": "検索",
-    "SEARCH_BY_NAME": "名前別",
+    "SEARCH_BY_NAME": "管轄区域別",
     "STATE_FILTER": "都道府県フィルター",
     "COUNTRY_FILTER": "国フィルター",
+    "CITY_FILTER": "市区町村フィルター",
     "STORE_FILTER": "ストア・フィルター",
     "SELECTED_STORE": "ストアの選択",
     "CLEAR": "クリア",
@@ -933,6 +941,7 @@
     "BACK": "戻る",
     "SAVE": "保存",
     "INPUT_ERROR": "ページ上にエラーがあります。",
+    "SELECT_CITY_PLACEHOLDER": "市区町村を選択",
     "SELECT_STATE_PLACEHOLDER": "都道府県の選択",
     "SELECT_COUNTRY_PLACEHOLDER": "国の選択",
     "JURISDICTION": "管轄区域",
@@ -991,7 +1000,7 @@
     "LANGUAGE": "言語",
     "ESTIMATED_DELIVERY_TIME": "配達予定日",
     "EDIT_SHIPPING_MODE": "配送モードの編集",
-    "DEFAULT_SET_SUCCESS_MESSAGE": "配送モードは正常に更新されました。",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "デフォルトの配送モードは正常に更新されました。",
     "SHIPPING_MODE_SAVED_MESSAGE": "配送モードは正常に保存されました。",
     "SHIPPING_MODE_CREATED_MESSAGE": "配送モード '{{name}}' は正常に作成されました。",
     "DELETE_SHIPPING_MODE": "配送モードの削除",
@@ -1004,7 +1013,8 @@
     "ESTIMATED_DELIVERY_TIME_DESCRIPTION": "配達予定日の説明",
     "TRACKING_URL": "配送業者追跡 URL",
     "SET_AS_DEFAULT": "デフォルトに設定",
-    "LANGUAGE_ALREADY_EXISTS": "この言語の説明は既に存在します。"
+    "LANGUAGE_ALREADY_EXISTS": "この言語の説明は既に存在します。",
+    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "選択された配送サービスの組み合わせは既に存在します。"
   },
   "SHIPPING_CODES": {
     "SHIPPING_CODES": "配送コード",
@@ -1060,7 +1070,6 @@
     "CLEAR": "クリア",
     "ACTIONS": "アクション",
     "NEW_BUTTON": "新規",
-    "NEW_SHIPPING_CHARGES": "新しい料金コード",
     "OPTIONAL": "(オプション)",
     "NEXT": "次へ",
     "CANCEL": "キャンセル",
@@ -1073,7 +1082,6 @@
     "REFRESH": "リフレッシュ",
     "DELETE": "削除",
     "NAME": "名前",
-    "CHARGES_TYPES": "料金タイプ",
     "CHARGES_TYPE": "料金タイプ",
     "CHARGES_TYPE_PLACEHOLDER": "料金タイプの選択",
     "UNIT": "単位",
@@ -1082,7 +1090,6 @@
     "SHIPPING_CHARGES_FOR": "{{shippingCodeName}} の配送料",
     "NO_MATCHING_RECORDS_FOUND": "一致するレコードが見つかりませんでした",
     "UNIT_PLACEHOLDER": "単位の選択",
-    "STORE_NOT_SELECTED": "ストアが選択されていません。",
     "NEW_SHIPPING_CHARGE": "新しい配送料",
     "EDIT_SHIPPING_CHARGE": "配送料の編集",
     "SHIPPING_CHARGE_DETAILS": "料金詳細の定義",
@@ -1095,17 +1102,16 @@
     "ALWAYS": "常に",
     "SHIPPING_CHARGE_START": "開始",
     "SHIPPING_CHARGE_END": "終了",
-    "SHIPPING_CHARGE_END_IS_SMALLER": "終了日は開始日より後にしてください。",
-    "CHARGE_START": "開始",
-    "CHARGE_END": "終了",
+    "BEFORE_START_DATE": "終了日を開始日より前にすることはできません。",
+    "RANGE": "範囲",
+    "RANGE_START": "範囲の開始",
     "DELETE_SHIPPING_CHARGE": "配送料の削除",
     "DELETE_SHIPPING_CHARGE_CONFIRMATION": "'{{name}}' を削除しますか?",
     "FULFILLMENT_CENTER": "フルフィルメント・センター",
     "JURISDICTION": "管轄区域",
     "SHIPPING_MODE": "配送モード",
     "PRECEDENCE": "優先順位",
-    "NEW_FULFILLMENT_OPTION": "新しいフルフィルメント・オプション",
-    "EDIT_FULFILLMENT_OPTION": "フルフィルメント・オプションの編集",
+    "FULFILLMENT_OPTION": "フルフィルメント・オプション",
     "INVALID_PRECEDENCE": "優先順位は数字としてください。",
     "CREATE_FULFILLMENT_OPTION_MESSAGE": "フルフィルメント・センターを管轄区域と配送モードに関連付けることで、フルフィルメント・オプションを作成します。",
     "DUPLICATE_FULFILLMENT_OPTION_ERROR": "フルフィルメント・センター、管轄区域および配送モードが同じフルフィルメント・オプションが既に存在します。",
@@ -1113,8 +1119,9 @@
     "FULFILLMENT_CENTER_ERROR": "無効なフルフィルメント・センター",
     "JURISDICTION_ERROR": "無効な管轄区域",
     "SHIPPING_MODE_ERROR": "無効な配送モード",
-    "SEARCH_BY_NAME_DESCRIPTION": "名前別",
+    "SEARCH_BY_NAME": "名前別",
     "SHIPPING_CHARGE_DELETED_MESSAGE": "配送料は正常に削除されました。",
+    "SHIPPING_CHARGE_SAVED_MESSAGE": "配送料は正常に保存されました。",
     "INVALID_DATE": "日付が無効です。",
     "BY_QUANTITY": "数量別",
     "BY_WEIGHT": "重量別",
@@ -1122,9 +1129,14 @@
     "CHARGE": "料金",
     "CURRENCY": "通貨",
     "UNIT_OF_MEASURE": "計量単位",
-    "RANGE_IS_OUT_OF_RANGE": "開始が範囲外です",
     "DUPLICATE_RANGE": "範囲は既に存在します",
-    "DUPLICATE_NAME_ERROR": "セキュリティ・コード名は既に存在します"
+    "DUPLICATE_NAME_ERROR": "配送料名は既に存在します",
+    "INVALID_RANGE_START": "範囲の開始が無効です",
+    "INVALID_CHARGE": "料金が無効です",
+    "FROM_START_TO_END": "{{start}} ～ {{end}}",
+    "FROM_START_AND_UP": "{{start}} 以上",
+    "SHIPPING_CHARGE_CREATED_MESSAGE": "配送料 '{{name}}' は正常に作成されました。",
+    "NO_RANGES_ERROR": "少なくとも 1 つの料金範囲を定義する必要があります。"
   },
   "TRANSPORTS": {
     "TRANSPORTS": "トランスポート",
@@ -1176,7 +1188,8 @@
     "DELETE_MESSAGE_TYPE": "メッセージ・タイプの削除",
     "DELETE": "削除",
     "MESSAGE_TYPES_DELETED_MESSAGE": "メッセージ・タイプは正常に削除されました。",
-    "NOT_COMPLETE_ERROR": "このページの情報は不完全です。次のステップに進みます。"
+    "NOT_COMPLETE_ERROR": "このページの情報は不完全です。次のステップに進みます。",
+    "REFRESH": "リフレッシュ"
   },
   "SECURITY_POLICIES": {
     "SECURITY_POLICIES": "セキュリティ・ポリシー",
@@ -1216,12 +1229,13 @@
     "NO_OF_PASSWORDS_KEPT_PASSWORD_HISTORY": "パスワード履歴に保存されるパスワードの数",
     "DEFINE_CRITERIA": "パスワード・ポリシーの条件を定義します。",
     "ALLOW_USER_ID_PASSWORD_MATCH": "ユーザー ID とパスワードの一致を許可します。",
-    "DO_NOT_ALLOW": "許可しない",
+    "DO_NOT_ALLOW": "ユーザー ID とパスワードの一致は許可されません。",
     "ACCOUNT_LOCKOUT_THRESHOLD": "アカウント・ロックアウトしきい値",
     "WAIT_TIME": "待機時間",
     "INVALID_VALUE_FOR_NUMERIC_FIELD": "無効な値です。値は数字としてください。",
     "DELETE_SECURITY_POLICY": "セキュリティ・ポリシーの削除",
-    "DELETE_SECURITY_POLICY_CONFIRMATION": "'{{name}}' を削除しますか?"
+    "DELETE_SECURITY_POLICY_CONFIRMATION": "'{{name}}' を削除しますか?",
+    "SECURITY_POLICY_DELETE_NOT_ALLOWED": "セキュリティー・ポリシーを削除することはできません。複数のユーザーに割り当てられています。"
   },
   "TAX_CODES": {
     "TAX_CODES": "税コード",
@@ -1238,6 +1252,7 @@
     "CANCEL": "キャンセル",
     "BACK": "戻る",
     "SAVE": "保存",
+    "FINISH": "完了",
     "INPUT_ERROR": "ページ上にエラーがあります。",
     "DESCRIPTION": "説明",
     "SHOW_FILTERS": "フィルターの表示",
@@ -1254,10 +1269,14 @@
     "NAME": "名前",
     "TYPE": "タイプ",
     "STORE": "ストア",
+    "DEFAULT": "デフォルト",
     "TYPE_FILTER": "タイプ",
     "SELECT_TYPE_PLACEHOLDER": "タイプの選択",
     "TAX_TYPE_SALES": "消費税",
-    "TAX_TYPE_SHIPPING": "配送税"
+    "TAX_TYPE_SHIPPING": "配送税",
+    "IS_DEFAULT": "はい",
+    "SET_AS_DEFAULT": "デフォルトに設定",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "デフォルトの税コードは正常に更新されました。"
   },
   "TAX_CATEGORIES": {
     "TAX_CATEGORIES": "税区分",
@@ -1281,7 +1300,7 @@
     "FINISH": "完了",
     "EDIT_TAX_CATEGORY": "税区分の編集",
     "TAX_CATEGORY_SAVED_MESSAGE": "税区分は正常に保存されました。",
-    "TAX_CATEGORY_CREATED_MESSAGE": "税区分は正常に作成されました。",
+    "TAX_CATEGORY_CREATED_MESSAGE": "税カテゴリー '{{name}}' は正常に作成されました。",
     "DELETE_TAX_CATEGORY": "税区分の削除",
     "DELETE_TAX_CATEGORY_CONFIRMATION": "'{{name}}' を削除しますか?",
     "DELETE": "削除",
@@ -1290,7 +1309,6 @@
     "NAME": "名前",
     "STORE": "ストア",
     "SELECT_STORE_PLACEHOLDER": "ストアの選択",
-    "INVALID_STORE": "ストアが無効です",
     "TYPE": "税金のタイプ",
     "INCLUDE_IN_DISPLAY_PRICE": "表示価格に含む",
     "TYPE_FILTER": "税金のタイプ",
@@ -1298,7 +1316,7 @@
     "TAX_TYPE_SALES": "消費税",
     "TAX_TYPE_SHIPPING": "配送税",
     "TAX_RATES": "税率の定義",
-    "TAX_CATEGORY_ASSIGNMENT": "税コードの定義",
+    "TAX_CATEGORY_CODES": "税コードの定義",
     "DISPLAY_NAME": "表示名",
     "DISPLAY_NAMES": "表示名",
     "LANGUAGE": "言語",
@@ -1306,9 +1324,14 @@
     "ADD_DISPLAY_NAME": "表示名の追加",
     "NO_DEFINED_DISPLAY_NAMES": "表示名が定義されていません",
     "FULFILLMENT_CENTER": "フルフィルメント・センター",
-    "DEFINE_RATES_PER_JURISDICTION": "この税区分が適用される管轄区域ごとに、税率を定義します。",
+    "INVALID_FULFILLMENT_CENTER": "無効なフルフィルメント・センター",
+    "SELECT_FULFILLMENT_CENTER": "フルフィルメント・センターの選択",
+    "DEFINE_RATES_PER_JURISDICTION": "管轄区域およびフルフィルメント・センターの税率を定義します。",
     "JURISDICTION": "管轄区域",
-    "TAX_RATE": "税率 (%)",
+    "SELECT_JURISDICTION": "管轄区域の選択",
+    "INVALID_JURISDICTION": "無効な管轄区域",
+    "TAX_RATE": "税率",
+    "INVALID_TAX_RATE": "税率が無効です",
     "SELECTED_RATES": "定義済みの税率",
     "ADD_TAX_RATE": "税率の追加",
     "NO_DEFINED_TAX_RATES": "税率が定義されていません",
@@ -1316,12 +1339,16 @@
     "TAX_CODE": "税コード",
     "ADD_TAX_CODE": "税コードの追加",
     "SELECTED_TAX_CODES": "定義済みの税コード",
-    "NO_DEFINED_TAX_CODES": "税コードが選択されていません"
+    "NO_DEFINED_TAX_CODES": "税コードが選択されていません",
+    "DUPLICATE_NAME_ERROR": "税カテゴリー名は既に存在します",
+    "DUPLICATE_TAX_RATE": "指定された管轄区域およびフルフィルメント・センターの税率は既に存在します。",
+    "NO_TAX_CODES_ERROR": "少なくとも 1 つの税コードを定義する必要があります。",
+    "NO_TAX_RATES_ERROR": "少なくとも 1 つの税率を定義する必要があります。"
   },
   "TAX_JURISDICTIONS": {
     "TAX_JURISDICTIONS": "税務管轄区域",
     "SEARCH": "検索",
-    "SEARCH_BY_NAME": "名前別",
+    "SEARCH_BY_NAME": "管轄区域別",
     "STATE_FILTER": "都道府県フィルター",
     "COUNTRY_FILTER": "国フィルター",
     "STORE_FILTER": "ストア・フィルター",
@@ -1358,6 +1385,7 @@
     "DELETE": "削除",
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "税務管轄区域は正常に削除されました。",
     "NOT_COMPLETE_ERROR": "このページの情報は不完全です。次のステップに進みます。",
-    "DUPLICATE_NAME_ERROR": "税務管轄区域名は既に存在します"
+    "DUPLICATE_NAME_ERROR": "税務管轄区域名は既に存在します",
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "管轄区域 '{{jurisdictionName}}' は削除できません。税カテゴリーで使用されています。"
   }
 }

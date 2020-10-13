@@ -40,11 +40,13 @@
 					<mat-icon matSuffix>filter_list</mat-icon>
 				</mat-form-field>
 			</form>
-			<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'TAX_CATEGORIES.SHOW_FILTERS' | translate}}</mat-slide-toggle>
-			<button class="mat-flat-button mat-primary" (click)="createTaxCategory()">{{'TAX_CATEGORIES.NEW_BUTTON' | translate}}</button>
-			<button class="mat-icon-button-label" matTooltip="{{'TAX_CATEGORIES.REFRESH' | translate}}" mat-icon-button (click)="refresh()">
-				<mat-icon color="primary">refresh</mat-icon>
-			</button>
+			<div class="hc-table-buttons">
+				<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'TAX_CATEGORIES.SHOW_FILTERS' | translate}}</mat-slide-toggle>
+				<button class="mat-flat-button mat-primary" (click)="createTaxCategory()">{{'TAX_CATEGORIES.NEW_BUTTON' | translate}}</button>
+				<button class="mat-icon-button-label" matTooltip="{{'TAX_CATEGORIES.REFRESH' | translate}}" mat-icon-button (click)="refresh()">
+					<mat-icon color="primary">refresh</mat-icon>
+				</button>
+			</div>
 		</div>
 		<div *ngIf="showFilters">
 			<div class="hc-table-filters">
@@ -98,7 +100,7 @@
 			</table>
 			<!-- TABLE PART (END) -->
 		</div>
-		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+		<mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
 				(page)="handlePage($event)">
 		</mat-paginator>
 	</div>

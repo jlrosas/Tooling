@@ -29,8 +29,12 @@
                         "in": "query",
                         "description": "The calculation scale ID.",
                         "required": false,
-                        "type": "integer",
-                        "format": "int32"
+                        "type": "array",
+                        "collectionFormat": "multi",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
                     },
                     {
                         "name": "scaleCode",

@@ -89,7 +89,7 @@ export class ShippingModeMainService {
 					this.currentShippingModeId = id;
 				}
 				const args: ShippingModesService.GetShippingModeByIdParams = {
-					id: id
+					id
 				};
 				this.shippingModesService.getShippingModeById(args).subscribe(
 					(item: any) => {

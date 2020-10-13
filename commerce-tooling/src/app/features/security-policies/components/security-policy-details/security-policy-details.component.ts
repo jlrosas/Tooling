@@ -172,4 +172,3 @@ export class SecurityPolicyDetailsComponent implements OnInit, OnDestroy, AfterV
 		});
 	}
 }
-

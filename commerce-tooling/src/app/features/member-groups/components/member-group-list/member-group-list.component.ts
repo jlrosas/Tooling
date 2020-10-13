@@ -43,7 +43,7 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 	currentSearchString = null;
 	memberGroupType = null;
 	organizationList: Array<any> = [];
-	parentOrganizationId = null;
+	parentOrganizationFilter = null;
 	showFilters = false;
 	responsiveCols = 12;
 	organizationsLoading = false;
@@ -63,6 +63,7 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 	preferenceToken: string;
 	activeColumn = "name";
 	sortDirection = "asc";
+	pageIndex = 0;
 
 	private parentOrgSearchString: Subject<string> = new Subject<string>();
 	private getOrganizationsSubscription: Subscription = null;
@@ -77,7 +78,7 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 	};
 
 	private typeTextIndices = Object.keys({
-		"CustomerPrice": "MEMBER_GROUPS.CUSTOMER_PRICE",
+		"CustomerPrice": "MEMBER_GROUPS.CUSTOMER_PRICE"
 	});
 	private dialogConfig = {
 		maxWidth: "80%",
@@ -86,8 +87,6 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 		disableClose: true,
 		autoFocus: true
 	};
-	private memberGroupTypeFilter = {label: "", value: ""};
-	private parentOrganizationFilter = {label: "", value: ""};
 
 	constructor(private router: Router,
 			private translateService: TranslateService,
@@ -105,8 +104,7 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 		this.createFormControls();
 		this.createForm();
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.currentSearchString = searchString;
 			this.getMemberGroups();
 		});
@@ -118,8 +116,7 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 
 	ngAfterViewInit() {
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getMemberGroups();
 		});
 		this.currentUserService.getRoles().subscribe((currentUserRoles: Array<number>) => {
@@ -149,23 +146,21 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 
 	public handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getMemberGroups();
 	}
 
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getMemberGroups();
 	}
 
 	clearParentOrgFilter() {
-		this.parentOrganizationId = null;
+		this.parentOrganizationFilter = null;
 		this.parentOrganization.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { parentOrganizationFilter: null });
+		this.pageIndex = 0;
 		this.getMemberGroups();
 		this.searchOrganizations("");
 	}
@@ -175,8 +170,18 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 	}
 
 	getMemberGroups() {
+		this.preferenceService.save(this.preferenceToken, {
+			searchString: this.currentSearchString,
+			sort: this.sort,
+			pageIndex: this.pageIndex,
+			pageSize: this.pageSize,
+			filter: {
+				memberGroupTypeFilter: this.memberGroupType,
+				parentOrganizationFilter: this.parentOrganizationFilter
+			}
+		});
 		const args: MemberGroupsService.GetMemberGroupsParams = {
-			offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+			offset: this.pageIndex * this.paginator.pageSize,
 			limit: this.paginator.pageSize,
 			usage: this.usageArray
 		};
@@ -186,8 +191,8 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 		if (this.memberGroupType != null) {
 			args.usage = [this.memberGroupType];
 		}
-		if (this.parentOrganizationId != null) {
-			args.ownerId = this.parentOrganizationId;
+		if (this.parentOrganizationFilter != null) {
+			args.ownerId = this.parentOrganizationFilter.id;
 		}
 		let sort = this.sort.active;
 		if (this.sort.direction === "asc") {
@@ -215,7 +220,7 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 					parentOrganizationName: "",
 					description: item.description,
 					usage: item.usage,
-					typeTextKey: typeTextKey
+					typeTextKey
 				};
 				this.organizationNameService.getOrganizationName(item.ownerId).subscribe(organizationName => {
 					memberGroup.parentOrganizationName = organizationName;
@@ -234,10 +239,8 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 
 	selectMemberGroupType(memberGroupType: string) {
 		if (this.memberGroupType !== memberGroupType) {
-			this.preferenceService.saveFilter(this.preferenceToken,
-				{memberGroupTypeFilter: {label: this.memberGroupTypeDropdown.value, value: memberGroupType}});
 			this.memberGroupType = memberGroupType;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getMemberGroups();
 		}
 	}
@@ -245,8 +248,7 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 	clearMemberGroupType($event) {
 		this.memberGroupType = null;
 		this.memberGroupTypeDropdown.setValue(null);
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { memberGroupTypeFilter: null });
+		this.pageIndex = 0;
 		this.getMemberGroups();
 		$event.stopPropagation();
 	}
@@ -260,31 +262,28 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 		this.getOrganizationsSubscription = this.organizationsService.OrganizationGetManageableOrganizations({
 			organizationName: orgString,
 			limit: 10
-		}).subscribe(
-			response => {
-				if (response.items.length === 1 && response.items[0].organizationName === this.parentOrganization.value) {
-					this.selectParentOrganization(response.items[0]);
-				} else {
-					response.items.sort((org1, org2) => {
-						let result = 0;
-						if (org1.organizationName < org2.organizationName) {
-							result = -1;
-						} else if (org1.organizationName > org2.organizationName) {
-							result = 1;
-						}
-						return result;
-					});
-					this.organizationList = response.items;
-				}
-				this.getOrganizationsSubscription = null;
-				this.organizationsLoading = false;
-			},
-			error => {
-				this.getOrganizationsSubscription = null;
-				this.organizationsLoading = false;
-				console.log(error);
+		}).subscribe(response => {
+			if (response.items.length === 1 && response.items[0].organizationName === this.parentOrganization.value) {
+				this.selectParentOrganization(response.items[0]);
+			} else {
+				response.items.sort((org1, org2) => {
+					let result = 0;
+					if (org1.organizationName < org2.organizationName) {
+						result = -1;
+					} else if (org1.organizationName > org2.organizationName) {
+						result = 1;
+					}
+					return result;
+				});
+				this.organizationList = response.items;
 			}
-		);
+			this.getOrganizationsSubscription = null;
+			this.organizationsLoading = false;
+		},
+		error => {
+			this.getOrganizationsSubscription = null;
+			this.organizationsLoading = false;
+		});
 	}
 
 	searchOrganizations(searchString: string) {
@@ -294,11 +293,12 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 	selectParentOrganization(org: any) {
 		if (org) {
 			this.parentOrganization.setValue(org.organizationName);
-			this.preferenceService.saveFilter(this.preferenceToken,
-				{parentOrganizationFilter: {label: org.organizationName, value: org.id}});
-			if (this.parentOrganizationId !== org.id) {
-				this.parentOrganizationId = org.id;
-				this.paginator.pageIndex = 0;
+			if (this.parentOrganizationFilter == null || this.parentOrganizationFilter.id !== org.id) {
+				this.parentOrganizationFilter = {
+					id: org.id,
+					organizationName: org.organizationName
+				};
+				this.pageIndex = 0;
 				this.getMemberGroups();
 			}
 		} else {
@@ -328,8 +328,8 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 	}
 
 	private createFormControls() {
-		this.parentOrganization = new FormControl(this.parentOrganizationFilter.label);
-		this.memberGroupTypeDropdown = new FormControl(this.memberGroupTypeFilter.label);
+		this.parentOrganization = new FormControl(this.parentOrganizationFilter ? this.parentOrganizationFilter.organizationName : "");
+		this.memberGroupTypeDropdown = new FormControl(this.memberGroupType);
 		this.searchText = new FormControl(this.currentSearchString);
 	}
 
@@ -352,7 +352,8 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 				sort,
 				searchString,
 				filter,
-				showFilters
+				showFilters,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -367,17 +368,14 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 			}
 			if (filter) {
 				const {memberGroupTypeFilter, parentOrganizationFilter} = filter;
-				if (memberGroupTypeFilter) {
-					this.memberGroupTypeFilter = memberGroupTypeFilter;
-					this.memberGroupType = memberGroupTypeFilter.value;
-				}
-				if (parentOrganizationFilter) {
-					this.parentOrganizationFilter = parentOrganizationFilter;
-					this.parentOrganizationId = parentOrganizationFilter.value;
-				}
+				this.memberGroupType = memberGroupTypeFilter;
+				this.parentOrganizationFilter = parentOrganizationFilter;
 			}
 			if (showFilters) {
 				this.showFilters = showFilters;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}

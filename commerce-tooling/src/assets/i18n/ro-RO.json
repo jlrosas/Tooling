@@ -42,10 +42,10 @@
     "STATE_PROVINCE_REGION": "Stat / Provincie / Regiune",
     "ZIP_POSTAL_CODE": "Cod zip / poștal",
     "BACK": "Înapoi",
-    "SELECT_AN_ORGANIZATION": "Selectați o organizație și alegeți rolurile utilizatorului din lista cu roluri disponibile. Un utilizator poate avea roluri în mai multe organizații.",
+    "SELECT_AN_ORGANIZATION": "Selectați o organizație și alegeți din rolurile disponibile.",
     "NO_ORGANIZATION_SELECTED": "Selectați o organizație.",
     "ORGANIZATION": "Organizație",
-    "AVAILABLE_ROLES": "Roluri disponibile",
+    "AVAILABLE_ROLES": "Selectați din rolurile disponibile",
     "SELECT_ROLE_PLACEHOLDER": "Selectare rol",
     "SELECTED_ROLES": "Roluri selectate",
     "INCLUDE": "Includere",
@@ -57,7 +57,7 @@
     "FINISH": "Finalizare",
     "SAVE": "Salvare",
     "EDIT_USER": "Editare utilizator",
-    "USER_CREATED_MESSAGE": "Utilizatorul a fost creat cu succes.",
+    "USER_CREATED_MESSAGE": "Utilizatorul '{{name}}' a fost creat cu succes.",
     "USER_SAVED_MESSAGE": "Utilizatorul a fost salvat cu succes.",
     "INVALID_COUNTRY": "Țară nevalidă.",
     "INVALID_STATE": "Stat, provincie sau regiune nevalide.",
@@ -69,7 +69,8 @@
     "DISABLED": "Dezactivat",
     "USER_ENABLED_MESSAGE": "Utilizatorul a fost activat cu succes.",
     "USER_DISABLED_MESSAGE": "Utilizatorul a fost dezactivat cu succes.",
-    "MORE": "Mai mult"
+    "MORE": "Mai mult",
+    "REFRESH": "Reîncărcare"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Organizații",
@@ -133,7 +134,8 @@
     "PARENT_ORGANIZATION_ERROR": "Organizație părinte nevalidă.",
     "INVALID_COUNTRY": "Țară nevalidă.",
     "INVALID_STATE": "Stat, provincie sau regiune nevalide.",
-    "DUPLICATE_ORGANIZATION": "Organizzația există deja."
+    "DUPLICATE_ORGANIZATION": "Organizzația există deja.",
+    "REFRESH": "Reîncărcare"
   },
   "APPROVALS": {
     "APPROVALS": "Aprobări",
@@ -259,7 +261,7 @@
     "TOTAL": "Total"
   },
   "MEMBER_GROUPS": {
-    "GROUPS": "Grupuri",
+    "GROUPS": "Grupuri membri",
     "NEW_BUTTON": "Nou",
     "NAME": "Nume",
     "SEARCH": "Căutare",
@@ -293,7 +295,7 @@
     "ROLES_IN_ORGANIZATIONS": "Rolurile utilizatorului în organizațiile menționate",
     "IGNORE_ROLES_IN_ORGANIZATIONS": "Ignoră rolurile utilizatorului în organizațiile menționate",
     "CHECK_ROLES_IN_ORGANIZATIONS": "Utilizatorul ar trebui să aibă un rol corespunzător în organizația menționată.",
-    "SELECT_AN_ORGANIZATION": "Selectați o organizație și alegeți rolul utilizatorului din lista cu roluri disponibile. Un utilizator poate avea un rol în mai multe organizații.",
+    "SELECT_AN_ORGANIZATION": "Selectați o organizație și alegeți din rolurile disponibile.",
     "NO_ORGANIZATION_SELECTED": "Selectați o organizație.",
     "REGISTRATION_STATUS": "Stare înregistrare",
     "IGNORE_REGISTRATION_STATUS": "Ignorați starea de înregistrare a utilizatorului",
@@ -327,10 +329,11 @@
     "MEMBER_GROUP_DELETED_MESSAGE": "Grupul membru a fost șters cu succes.",
     "DELETE_MEMBER_GROUP": "Ștergere grup membru",
     "DELETE_MEMBER_GROUP_CONFIRMATION": "Doriți să ștergeți '{{name}}'?",
-    "DELETE": "Ștergere"
+    "DELETE": "Ștergere",
+    "REFRESH": "Reîncărcare"
   },
   "EXTENDED_SITES": {
-    "STORES": "Magazine",
+    "STORES": "Magazine site-uri extinse",
     "NEW_STORE": "Magazin nou",
     "STORE_DETAILS": "Detalii magazin",
     "SETUP": "Configurare",
@@ -387,7 +390,9 @@
     "DUPLICATE_EXTENDED_SITE": "Magazinul există deja.",
     "SHARED_OWNER_CHECKBOX": "Permite utilizatorilor celorlalte magazine să acceseze acest magazin prin specificarea aceleași organizații deținătoare",
     "SHARED_OWNER_ORGANIZATION": "Organizație magazin partajată",
-    "MORE": "Mai mult"
+    "MORE": "Mai mult",
+    "INVALID_XML_FILE": "Selectați un fișier XML valid (.xml).",
+    "REFRESH": "Reîncărcare"
   },
   "STORE_PREVIEW": {
     "STORE_PREVIEW": "Previzualizare magazin",
@@ -498,7 +503,8 @@
     "DESCRIPTION_NOT_UNIQUE": "Descrierea există deja.",
     "CHECKING_ACCOUNT_NUMBER": "Se verifică numărul contului",
     "CHECK_ROUTING_NUMBER": "Se verifică numărul de rutare",
-    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "Numărul comenzii de achiziție există deja."
+    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "Numărul comenzii de achiziție există deja.",
+    "REFRESH": "Reîncărcare"
   },
   "SCHEDULER": {
     "SCHEDULER": "Programator",
@@ -773,7 +779,8 @@
     "INVALID_MINIMUM_AMOUNT": "Sumă minimă nevalidă.",
     "CONTRACT_IMPORTED_MESSAGE": "Contract a fost importat cu succes.",
     "DUPLICATE_CONTRACT": "Contractul nu poate fi creat. Există deja un contract cu acest nume sau acesta a fost șters recent. Dacă un contract cu acest nume este marcat pentru ștergere, utilitarul Curățare bază de date trebuie rulat înainte de a refolosi numele contractului. Acest lucru poate fi făcut de către Administratorul site-ului.",
-    "ACCOUNT": "Cantitate"
+    "ACCOUNT": "Cantitate",
+    "INVALID_XML_FILE": "Selectați un fișier XML valid (.xml)."
   },
   "MESSAGES": {
     "MESSAGES": "Mesaje",
@@ -915,9 +922,10 @@
   "SHIPPING_JURISDICTIONS": {
     "SHIPPING_JURISDICTIONS": "Jurisdicții de livrare",
     "SEARCH": "Căutare",
-    "SEARCH_BY_NAME": "După nume",
+    "SEARCH_BY_NAME": "După jurisdicție",
     "STATE_FILTER": "Filtrare stare",
     "COUNTRY_FILTER": "Filtru de țară",
+    "CITY_FILTER": "Filtru oraș",
     "STORE_FILTER": "Filtru magazin",
     "SELECTED_STORE": "Magazin selectat",
     "CLEAR": "Golire",
@@ -933,6 +941,7 @@
     "BACK": "Înapoi",
     "SAVE": "Salvare",
     "INPUT_ERROR": "Există erori în pagină.",
+    "SELECT_CITY_PLACEHOLDER": "Selectare oraș",
     "SELECT_STATE_PLACEHOLDER": "Selectare stat",
     "SELECT_COUNTRY_PLACEHOLDER": "Selectare țară",
     "JURISDICTION": "Jurisdicție",
@@ -991,7 +1000,7 @@
     "LANGUAGE": "Limbă",
     "ESTIMATED_DELIVERY_TIME": "Timp de livrare estimat",
     "EDIT_SHIPPING_MODE": "Editare mod de livrare",
-    "DEFAULT_SET_SUCCESS_MESSAGE": "Modul de livrare a fost actualizat cu succes.",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "Modul implicit de livrare a fost actualizat cu succes.",
     "SHIPPING_MODE_SAVED_MESSAGE": "Modul de livrare a fost salvat cu succes.",
     "SHIPPING_MODE_CREATED_MESSAGE": "Modul de livrare '{{name}}' a fost creat cu succes.",
     "DELETE_SHIPPING_MODE": "Ștergere mod de livrare",
@@ -1004,7 +1013,8 @@
     "ESTIMATED_DELIVERY_TIME_DESCRIPTION": "Descrierea timpului estimat de livrare",
     "TRACKING_URL": "URL de urmărire la operator",
     "SET_AS_DEFAULT": "Setat ca implicit",
-    "LANGUAGE_ALREADY_EXISTS": "Descrierea pentru această limbă există deja."
+    "LANGUAGE_ALREADY_EXISTS": "Descrierea pentru această limbă există deja.",
+    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "Combinația Operator-Serviciu selectată există deja."
   },
   "SHIPPING_CODES": {
     "SHIPPING_CODES": "Coduri de livrare",
@@ -1060,7 +1070,6 @@
     "CLEAR": "Golire",
     "ACTIONS": "Acțiuni",
     "NEW_BUTTON": "Nou",
-    "NEW_SHIPPING_CHARGES": "Cod nou pentru taxe",
     "OPTIONAL": "(opțional)",
     "NEXT": "Înainte",
     "CANCEL": "Anulare",
@@ -1073,7 +1082,6 @@
     "REFRESH": "Reîncărcare",
     "DELETE": "Ștergere",
     "NAME": "Nume",
-    "CHARGES_TYPES": "Tipuri de taxe",
     "CHARGES_TYPE": "Tipul de taxe",
     "CHARGES_TYPE_PLACEHOLDER": "Selectați tipul de taxe",
     "UNIT": "Unitate",
@@ -1082,7 +1090,6 @@
     "SHIPPING_CHARGES_FOR": "Taxe de livrare pentru {{shippingCodeName}}",
     "NO_MATCHING_RECORDS_FOUND": "Nu s-a găsit nicio înregistrare similară",
     "UNIT_PLACEHOLDER": "Selectare unitate",
-    "STORE_NOT_SELECTED": "Magazinul nu este selectat.",
     "NEW_SHIPPING_CHARGE": "Taxă nouă de livrare",
     "EDIT_SHIPPING_CHARGE": "Editare taxă de livrare",
     "SHIPPING_CHARGE_DETAILS": "Definire detalii taxă",
@@ -1095,26 +1102,26 @@
     "ALWAYS": "Întotdeauna",
     "SHIPPING_CHARGE_START": "Pornire",
     "SHIPPING_CHARGE_END": "Terminare",
-    "SHIPPING_CHARGE_END_IS_SMALLER": "Data de terminare nu trebuie să fie mai devreme de data de pornire.",
-    "CHARGE_START": "Pornire",
-    "CHARGE_END": "Terminare",
+    "BEFORE_START_DATE": "Data terminării nu poate fi anterioară datei de pornire.",
+    "RANGE": "Interval",
+    "RANGE_START": "Pornire interval",
     "DELETE_SHIPPING_CHARGE": "Ștergere taxă de livrare",
     "DELETE_SHIPPING_CHARGE_CONFIRMATION": "Doriți să ștergeți '{{name}}'?",
     "FULFILLMENT_CENTER": "Centru de procesare",
     "JURISDICTION": "Jurisdicție",
     "SHIPPING_MODE": "Mod de livrare",
     "PRECEDENCE": "Precedență",
-    "NEW_FULFILLMENT_OPTION": "Opțiune nouă de procesare",
-    "EDIT_FULFILLMENT_OPTION": "Editare opțiune de procesare",
+    "FULFILLMENT_OPTION": "Opțiune de procesare",
     "INVALID_PRECEDENCE": "Precedența trebuie să fie un număr.",
     "CREATE_FULFILLMENT_OPTION_MESSAGE": "Creați o opțiune de procesare prin asocierea unui centru de procesare cu o jurisdicție și mod de livrare.",
-    "DUPLICATE_FULFILLMENT_OPTION_ERROR": "Există deja opțiunea de procesare cu aceleași selecții pentru centru de procesare, jurisdicție și mod de livrare.",
+    "DUPLICATE_FULFILLMENT_OPTION_ERROR": "Există deja o opțiune de procesare cu aceleași selecții pentru centru de procesare, jurisdicție și mod de livrare.",
     "MORE": "Mai mult",
     "FULFILLMENT_CENTER_ERROR": "Centru de procesare nevalid",
     "JURISDICTION_ERROR": "Jurisdicție nevalidă",
     "SHIPPING_MODE_ERROR": "Mod de livrare nevalid",
-    "SEARCH_BY_NAME_DESCRIPTION": "După nume",
+    "SEARCH_BY_NAME": "După nume",
     "SHIPPING_CHARGE_DELETED_MESSAGE": "Taxele de livrare au fost șterse cu succes.",
+    "SHIPPING_CHARGE_SAVED_MESSAGE": "Taxele de livrare au fost salvate cu succes.",
     "INVALID_DATE": "Dată nevalidă.",
     "BY_QUANTITY": "În funcție de cantitate",
     "BY_WEIGHT": "În funcție de greutate",
@@ -1122,9 +1129,14 @@
     "CHARGE": "Taxă",
     "CURRENCY": "Valută",
     "UNIT_OF_MEASURE": "Unitate de măsură",
-    "RANGE_IS_OUT_OF_RANGE": "Pornirea este în afara intervalului",
     "DUPLICATE_RANGE": "Intervalul există deja",
-    "DUPLICATE_NAME_ERROR": "Numele codului de securitate există deja"
+    "DUPLICATE_NAME_ERROR": "Numele taxei de livrare există deja",
+    "INVALID_RANGE_START": "Valoare nevalidă pentru Pornire interval",
+    "INVALID_CHARGE": "Taxă nevalidă",
+    "FROM_START_TO_END": "De la {{start}} la {{end}}",
+    "FROM_START_AND_UP": "De la {{start}} și în continuare",
+    "SHIPPING_CHARGE_CREATED_MESSAGE": "Taxa de livrare '{{name}}' a fost creată cu succes.",
+    "NO_RANGES_ERROR": "Trebuie să definiți cel puțin un interval pentru taxă."
   },
   "TRANSPORTS": {
     "TRANSPORTS": "Transporturi",
@@ -1176,7 +1188,8 @@
     "DELETE_MESSAGE_TYPE": "Ștergere tip de mesaj",
     "DELETE": "Ștergere",
     "MESSAGE_TYPES_DELETED_MESSAGE": "Tipul de mesaj a fost șters cu succes.",
-    "NOT_COMPLETE_ERROR": "Informațiile de pe această pagină nu sunt complete. Continuați cu pasul următor."
+    "NOT_COMPLETE_ERROR": "Informațiile de pe această pagină nu sunt complete. Continuați cu pasul următor.",
+    "REFRESH": "Reîncărcare"
   },
   "SECURITY_POLICIES": {
     "SECURITY_POLICIES": "Politici de securitate",
@@ -1216,12 +1229,13 @@
     "NO_OF_PASSWORDS_KEPT_PASSWORD_HISTORY": "Numărul de parole păstrate în istoricul parolelor",
     "DEFINE_CRITERIA": "Definiți criteriul pentru o politică a parolelor.",
     "ALLOW_USER_ID_PASSWORD_MATCH": "Permiteți ID utilizator și parolă identice.",
-    "DO_NOT_ALLOW": "Nu permiteți",
+    "DO_NOT_ALLOW": "Nu permiteți ID utilizator și parolă identice.",
     "ACCOUNT_LOCKOUT_THRESHOLD": "Pragul pentru blocarea contului",
     "WAIT_TIME": "Timpul de așteptare",
     "INVALID_VALUE_FOR_NUMERIC_FIELD": "Valoare nevalidă. Valoarea trebuie să fie un număr. ",
     "DELETE_SECURITY_POLICY": "Ștergere politică de securitate.",
-    "DELETE_SECURITY_POLICY_CONFIRMATION": "Doriți să ștergeți '{{name}}'?"
+    "DELETE_SECURITY_POLICY_CONFIRMATION": "Doriți să ștergeți '{{name}}'?",
+    "SECURITY_POLICY_DELETE_NOT_ALLOWED": "Politica de securitate nu poate fi ștearsă. Aceasta este atribuită la unul sau mai mulți utilizatori."
   },
   "TAX_CODES": {
     "TAX_CODES": "Coduri de impozitare",
@@ -1238,6 +1252,7 @@
     "CANCEL": "Anulare",
     "BACK": "Înapoi",
     "SAVE": "Salvare",
+    "FINISH": "Finalizare",
     "INPUT_ERROR": "Există erori în pagină.",
     "DESCRIPTION": "Descriere",
     "SHOW_FILTERS": "Afișare filtre",
@@ -1254,10 +1269,14 @@
     "NAME": "Nume",
     "TYPE": "Tip",
     "STORE": "Magazin",
+    "DEFAULT": "Implicit",
     "TYPE_FILTER": "Tip",
     "SELECT_TYPE_PLACEHOLDER": "Selectare tip",
     "TAX_TYPE_SALES": "Impozit pe vânzări",
-    "TAX_TYPE_SHIPPING": "Taxă de livrare"
+    "TAX_TYPE_SHIPPING": "Taxă de livrare",
+    "IS_DEFAULT": "Da",
+    "SET_AS_DEFAULT": "Setat ca implicit",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "Codul de impozitare implicit a fost actualizat cu succes."
   },
   "TAX_CATEGORIES": {
     "TAX_CATEGORIES": "Categorii de taxe",
@@ -1281,7 +1300,7 @@
     "FINISH": "Finalizare",
     "EDIT_TAX_CATEGORY": "Editare categorie de taxe",
     "TAX_CATEGORY_SAVED_MESSAGE": "Categoria de taxe a fost salvată cu succes.",
-    "TAX_CATEGORY_CREATED_MESSAGE": "Categoria de taxe a fost creată cu succes.",
+    "TAX_CATEGORY_CREATED_MESSAGE": "Categoria de impozitare '{{name}}' a fost creată cu succes.",
     "DELETE_TAX_CATEGORY": "Ștergere categorie de taxe",
     "DELETE_TAX_CATEGORY_CONFIRMATION": "Doriți să ștergeți '{{name}}'?",
     "DELETE": "Ștergere",
@@ -1290,7 +1309,6 @@
     "NAME": "Nume",
     "STORE": "Magazin",
     "SELECT_STORE_PLACEHOLDER": "Selectare magazin",
-    "INVALID_STORE": "Magazin nevalid",
     "TYPE": "Tip de taxă",
     "INCLUDE_IN_DISPLAY_PRICE": "Includere în prețul afișat",
     "TYPE_FILTER": "Tip de taxă",
@@ -1298,7 +1316,7 @@
     "TAX_TYPE_SALES": "Impozit pe vânzări",
     "TAX_TYPE_SHIPPING": "Taxă de livrare",
     "TAX_RATES": "Definire cotă de impunere",
-    "TAX_CATEGORY_ASSIGNMENT": "Definire coduri de impozitare",
+    "TAX_CATEGORY_CODES": "Definire coduri de impozitare",
     "DISPLAY_NAME": "Nume afișat",
     "DISPLAY_NAMES": "Nume afișate",
     "LANGUAGE": "Limbă",
@@ -1306,9 +1324,14 @@
     "ADD_DISPLAY_NAME": "Adăugare nume afișat",
     "NO_DEFINED_DISPLAY_NAMES": "Nu a fost definit niciun nume afișat",
     "FULFILLMENT_CENTER": "Centru de procesare",
-    "DEFINE_RATES_PER_JURISDICTION": "Pentru fiecare jurisdicție la care se aplică această categorie de taxe, definiți cota de impunere.",
+    "INVALID_FULFILLMENT_CENTER": "Centru de procesare nevalid",
+    "SELECT_FULFILLMENT_CENTER": "Selectați centrul de procesare",
+    "DEFINE_RATES_PER_JURISDICTION": "Definiți cota de impunere pentru o jurisdicție și un centru de procesare.",
     "JURISDICTION": "Jurisdicție",
-    "TAX_RATE": "Cotă de impunere (%)",
+    "SELECT_JURISDICTION": "Selectare jurisdicție",
+    "INVALID_JURISDICTION": "Jurisdicție nevalidă",
+    "TAX_RATE": "Cotă de impunere",
+    "INVALID_TAX_RATE": "Cotă de impunere nevalidă",
     "SELECTED_RATES": "Cote de impunere definite",
     "ADD_TAX_RATE": "Adăugare cotă de impunere",
     "NO_DEFINED_TAX_RATES": "Nu a fost definită nicio cotă de impunere",
@@ -1316,12 +1339,16 @@
     "TAX_CODE": "Cod de impozitare",
     "ADD_TAX_CODE": "Adăugare cod de impozitare",
     "SELECTED_TAX_CODES": "Coduri de impozitare definite",
-    "NO_DEFINED_TAX_CODES": "Nu a fost selectat niciun cod de impozitare"
+    "NO_DEFINED_TAX_CODES": "Nu a fost selectat niciun cod de impozitare",
+    "DUPLICATE_NAME_ERROR": "Numele categoriei de impozitare există deja",
+    "DUPLICATE_TAX_RATE": "Există deja o cotă de impunere pentru jurisdicția și centrul de procesare specificate.",
+    "NO_TAX_CODES_ERROR": "Trebuie să definiți cel puțin un cod de impozitare.",
+    "NO_TAX_RATES_ERROR": "Trebuie să definiți cel puțin o cotă de impunere."
   },
   "TAX_JURISDICTIONS": {
     "TAX_JURISDICTIONS": "Jurisdicții fiscale",
     "SEARCH": "Căutare",
-    "SEARCH_BY_NAME": "După nume",
+    "SEARCH_BY_NAME": "După jurisdicție",
     "STATE_FILTER": "Filtrare stare",
     "COUNTRY_FILTER": "Filtru de țară",
     "STORE_FILTER": "Filtru magazin",
@@ -1358,6 +1385,7 @@
     "DELETE": "Ștergere",
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "Jurisdicția fiscală a fost ștearsă cu succes.",
     "NOT_COMPLETE_ERROR": "Informațiile din această pagină nu sunt complete. Continuați cu pasul următor.",
-    "DUPLICATE_NAME_ERROR": "Numele jurisdicției fiscale există deja"
+    "DUPLICATE_NAME_ERROR": "Numele jurisdicției fiscale există deja",
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "Jurisdicția '{{jurisdictionName}}' nu poate fi ștearsă, aceasta fiind folosită într-o categorie de impozitare."
   }
 }

@@ -137,7 +137,7 @@ export class MemberGroupMainService {
 					this.currentMemberGroupId = id;
 				}
 				this.memberGroupsService.getMemberGroup({
-					id: id
+					id
 				}).subscribe(
 					body => {
 						this.currentMemberGroup = body;
@@ -173,18 +173,15 @@ export class MemberGroupMainService {
 				}
 				this.memberGroupsService.getMemberGroupConditionElements({
 					id
-				}).subscribe(
-					body => {
-						this.loadMembersGroupDefinitionFromResponse(body);
-						observer.next(undefined);
-						observer.complete();
-					},
-					error => {
-						console.log(error);
-						observer.next(error);
-						observer.complete();
-					}
-				);
+				}).subscribe(body => {
+					this.loadMembersGroupDefinitionFromResponse(body);
+					observer.next(undefined);
+					observer.complete();
+				},
+				error => {
+					observer.next(error);
+					observer.complete();
+				});
 			}
 		});
 	}
@@ -201,25 +198,22 @@ export class MemberGroupMainService {
 				}
 				this.memberGroupMembershipsService.getMemberGroupMemberships({
 					memberGroupId: id
-				}).subscribe(
-					body => {
-						this.currentMembers = body.items;
-						this.assignedMembers = [];
-						this.currentMembers.forEach(member => {
-							this.assignedMembers.push({
-								memberId: member.memberId,
-								exclude: member.exclude
-							});
+				}).subscribe(body => {
+					this.currentMembers = body.items;
+					this.assignedMembers = [];
+					this.currentMembers.forEach(member => {
+						this.assignedMembers.push({
+							memberId: member.memberId,
+							exclude: member.exclude
 						});
-						observer.next(undefined);
-						observer.complete();
-					},
-					error => {
-						console.log(error);
-						observer.next(error);
-						observer.complete();
-					}
-				);
+					});
+					observer.next(undefined);
+					observer.complete();
+				},
+				error => {
+					observer.next(error);
+					observer.complete();
+				});
 			}
 		});
 	}
@@ -282,7 +276,7 @@ export class MemberGroupMainService {
 				requests.push(requestArray);
 				conditionElementArray.forEach(conditionElement => {
 					requestArray.push(this.memberGroupsService.createMemberGroupConditionElementResponse({
-						id: id,
+						id,
 						body: conditionElement
 					}));
 				});
@@ -293,7 +287,7 @@ export class MemberGroupMainService {
 			const requestArray = [];
 			requests.push(requestArray);
 			requestArray.push(this.memberGroupsService.activateMemberGroupResponse({
-				id: id
+				id
 			}));
 		}
 

@@ -268,4 +268,3 @@ export class DefinePasswordPolicyComponent implements OnInit, AfterViewInit {
 		});
 	}
 }
-

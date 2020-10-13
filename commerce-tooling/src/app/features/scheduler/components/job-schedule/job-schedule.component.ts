@@ -52,8 +52,6 @@ export class JobScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
 		}
 	];
 
-	private onLangChangeSubscription: Subscription = null;
-
 	constructor(private translateService: TranslateService,
 			private jobMainService: JobMainService,
 			private alertService: AlertService) { }
@@ -130,9 +128,6 @@ export class JobScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		if (this.onLangChangeSubscription) {
-			this.onLangChangeSubscription.unsubscribe();
-		}
 	}
 
 	next() {

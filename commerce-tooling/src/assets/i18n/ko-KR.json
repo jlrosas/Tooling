@@ -42,10 +42,10 @@
     "STATE_PROVINCE_REGION": "주/도/지역",
     "ZIP_POSTAL_CODE": "우편번호",
     "BACK": "뒤로",
-    "SELECT_AN_ORGANIZATION": "조직을 선택하고 사용 가능한 역할 목록에서 사용자의 역할을 선택하십시오. 한 사용자가 두 개 이상의 조직에서 역할을 가질 수 있습니다.",
+    "SELECT_AN_ORGANIZATION": "조직을 선택하고 사용 가능한 역할에서 선택하십시오.",
     "NO_ORGANIZATION_SELECTED": "조직을 선택하십시오.",
     "ORGANIZATION": "조직",
-    "AVAILABLE_ROLES": "사용 가능한 역할",
+    "AVAILABLE_ROLES": "사용 가능한 역할에서 선택",
     "SELECT_ROLE_PLACEHOLDER": "역할 선택",
     "SELECTED_ROLES": "선택한 역할",
     "INCLUDE": "포함",
@@ -57,7 +57,7 @@
     "FINISH": "완료",
     "SAVE": "저장",
     "EDIT_USER": "사용자 편집",
-    "USER_CREATED_MESSAGE": "사용자가 작성되었습니다.",
+    "USER_CREATED_MESSAGE": "사용자 '{{name}}'이(가) 성공적으로 작성되었습니다.",
     "USER_SAVED_MESSAGE": "사용자가 저장되었습니다.",
     "INVALID_COUNTRY": "국가가 올바르지 않습니다.",
     "INVALID_STATE": "주, 도 또는 지역이 올바르지 않습니다.",
@@ -69,7 +69,8 @@
     "DISABLED": "사용 안함",
     "USER_ENABLED_MESSAGE": "사용자가 사용하도록 설정되었습니다.",
     "USER_DISABLED_MESSAGE": "사용자가 사용하지 않도록 설정되었습니다.",
-    "MORE": "더 보기"
+    "MORE": "더 보기",
+    "REFRESH": "새로 고침"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "조직",
@@ -133,7 +134,8 @@
     "PARENT_ORGANIZATION_ERROR": "상위 조직이 올바르지 않습니다.",
     "INVALID_COUNTRY": "국가가 올바르지 않습니다.",
     "INVALID_STATE": "주, 도 또는 지역이 올바르지 않습니다.",
-    "DUPLICATE_ORGANIZATION": "조직이 이미 존재합니다."
+    "DUPLICATE_ORGANIZATION": "조직이 이미 존재합니다.",
+    "REFRESH": "새로 고침"
   },
   "APPROVALS": {
     "APPROVALS": "승인",
@@ -259,7 +261,7 @@
     "TOTAL": "총계"
   },
   "MEMBER_GROUPS": {
-    "GROUPS": "그룹",
+    "GROUPS": "구성원 그룹",
     "NEW_BUTTON": "새 항목",
     "NAME": "이름",
     "SEARCH": "검색",
@@ -293,7 +295,7 @@
     "ROLES_IN_ORGANIZATIONS": "지정된 조직의 사용자 역할",
     "IGNORE_ROLES_IN_ORGANIZATIONS": "지정된 조직의 사용자 역할 무시",
     "CHECK_ROLES_IN_ORGANIZATIONS": "사용자는 지정된 조직에서 일치하는 역할이 있어야 합니다.",
-    "SELECT_AN_ORGANIZATION": "조직을 선택하고 사용 가능한 역할 목록에서 사용자의 역할을 선택하십시오. 한 사용자가 둘 이상의 조직에서 역할을 가질 수 있습니다.",
+    "SELECT_AN_ORGANIZATION": "조직을 선택하고 사용 가능한 역할에서 선택하십시오.",
     "NO_ORGANIZATION_SELECTED": "조직을 선택하십시오.",
     "REGISTRATION_STATUS": "등록 상태",
     "IGNORE_REGISTRATION_STATUS": "사용자 등록 상태 무시",
@@ -327,10 +329,11 @@
     "MEMBER_GROUP_DELETED_MESSAGE": "구성원 그룹이 삭제되었습니다.",
     "DELETE_MEMBER_GROUP": "구성원 그룹 삭제",
     "DELETE_MEMBER_GROUP_CONFIRMATION": "'{{name}}'을(를) 삭제하시겠습니까?",
-    "DELETE": "삭제"
+    "DELETE": "삭제",
+    "REFRESH": "새로 고침"
   },
   "EXTENDED_SITES": {
-    "STORES": "스토어",
+    "STORES": "확장된 사이트 스토어",
     "NEW_STORE": "새 스토어",
     "STORE_DETAILS": "스토어 상세 정보",
     "SETUP": "설정",
@@ -387,7 +390,9 @@
     "DUPLICATE_EXTENDED_SITE": "스토어가 이미 존재합니다.",
     "SHARED_OWNER_CHECKBOX": "다른 스토어의 사용자가 동일한 소유 조직을 지정하여 이 스토어에 액세스할 수 있도록 허용합니다",
     "SHARED_OWNER_ORGANIZATION": "공유 스토어 조직",
-    "MORE": "더 보기"
+    "MORE": "더 보기",
+    "INVALID_XML_FILE": "올바른 XML 파일(.xml)을 선택하십시오.",
+    "REFRESH": "새로 고침"
   },
   "STORE_PREVIEW": {
     "STORE_PREVIEW": "스토어 미리보기",
@@ -498,7 +503,8 @@
     "DESCRIPTION_NOT_UNIQUE": "설명이 이미 존재합니다.",
     "CHECKING_ACCOUNT_NUMBER": "계정 번호를 확인하는 중",
     "CHECK_ROUTING_NUMBER": "은행 식별 번호를 확인하는 중",
-    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "구매 주문 번호가 이미 존재합니다."
+    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "구매 주문 번호가 이미 존재합니다.",
+    "REFRESH": "새로 고침"
   },
   "SCHEDULER": {
     "SCHEDULER": "스케줄러",
@@ -773,7 +779,8 @@
     "INVALID_MINIMUM_AMOUNT": "최소 금액이 올바르지 않습니다.",
     "CONTRACT_IMPORTED_MESSAGE": "장기 구매 계약을 가져왔습니다.",
     "DUPLICATE_CONTRACT": "장기 구매 계약을 작성할 수 없습니다. 이 이름을 가진 장기 구매 계약이 이미 존재하거나 최근에 삭제되었습니다. 이 이름을 가진 장기 구매 계약이 삭제를 위해 표시된 경우 먼저 데이터베이스 정리 유틸리티를 실행해야 해당 장기 구매 계약 이름을 다시 사용할 수 있습니다. 이 작업은 사이트 운영자가 수행할 수 있습니다.",
-    "ACCOUNT": "계정"
+    "ACCOUNT": "계정",
+    "INVALID_XML_FILE": "올바른 XML 파일(.xml)을 선택하십시오."
   },
   "MESSAGES": {
     "MESSAGES": "메시지",
@@ -915,9 +922,10 @@
   "SHIPPING_JURISDICTIONS": {
     "SHIPPING_JURISDICTIONS": "운송 관할 지역",
     "SEARCH": "검색",
-    "SEARCH_BY_NAME": "이름으로 검색",
+    "SEARCH_BY_NAME": "관할 지역별",
     "STATE_FILTER": "상태 필터",
     "COUNTRY_FILTER": "국가 필터",
+    "CITY_FILTER": "도시 필터",
     "STORE_FILTER": "스토어 필터",
     "SELECTED_STORE": "선택한 스토어",
     "CLEAR": "지우기",
@@ -933,6 +941,7 @@
     "BACK": "뒤로",
     "SAVE": "저장",
     "INPUT_ERROR": "페이지에 오류가 있습니다.",
+    "SELECT_CITY_PLACEHOLDER": "도시 선택",
     "SELECT_STATE_PLACEHOLDER": "상태 선택",
     "SELECT_COUNTRY_PLACEHOLDER": "국가 선택",
     "JURISDICTION": "관할 지역",
@@ -991,7 +1000,7 @@
     "LANGUAGE": "언어",
     "ESTIMATED_DELIVERY_TIME": "예상 배송 시간",
     "EDIT_SHIPPING_MODE": "운송 모드 편집",
-    "DEFAULT_SET_SUCCESS_MESSAGE": "운송 모드가 성공적으로 업데이트되었습니다.",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "기본 운송 모드가 성공적으로 업데이트되었습니다.",
     "SHIPPING_MODE_SAVED_MESSAGE": "운송 모드가 성공적으로 저장되었습니다.",
     "SHIPPING_MODE_CREATED_MESSAGE": "운송 모드 '{{name}}'이(가) 성공적으로 작성되었습니다.",
     "DELETE_SHIPPING_MODE": "운송 모드 삭제",
@@ -1004,7 +1013,8 @@
     "ESTIMATED_DELIVERY_TIME_DESCRIPTION": "예상 배송 시간 설명",
     "TRACKING_URL": "운송업체 추적 URL",
     "SET_AS_DEFAULT": "기본값으로 설정",
-    "LANGUAGE_ALREADY_EXISTS": "이 언어에 대한 설명이 이미 존재합니다."
+    "LANGUAGE_ALREADY_EXISTS": "이 언어에 대한 설명이 이미 존재합니다.",
+    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "선택한 운송업체-서비스 조합이 이미 존재합니다."
   },
   "SHIPPING_CODES": {
     "SHIPPING_CODES": "운송 코드",
@@ -1060,7 +1070,6 @@
     "CLEAR": "지우기",
     "ACTIONS": "조치",
     "NEW_BUTTON": "새 항목",
-    "NEW_SHIPPING_CHARGES": "새 청구 코드",
     "OPTIONAL": "(선택사항)",
     "NEXT": "다음",
     "CANCEL": "취소",
@@ -1073,7 +1082,6 @@
     "REFRESH": "새로 고침",
     "DELETE": "삭제",
     "NAME": "이름",
-    "CHARGES_TYPES": "청구 유형",
     "CHARGES_TYPE": "청구 유형",
     "CHARGES_TYPE_PLACEHOLDER": "청구 유형 선택",
     "UNIT": "단위",
@@ -1082,7 +1090,6 @@
     "SHIPPING_CHARGES_FOR": "{{shippingCodeName}}의 운송료",
     "NO_MATCHING_RECORDS_FOUND": "일치하는 레코드를 찾을 수 없음",
     "UNIT_PLACEHOLDER": "단위 선택",
-    "STORE_NOT_SELECTED": "스토어가 선택되지 않았습니다.",
     "NEW_SHIPPING_CHARGE": "새 운송료",
     "EDIT_SHIPPING_CHARGE": "운송료 편집",
     "SHIPPING_CHARGE_DETAILS": "청구 정보 정의",
@@ -1095,17 +1102,16 @@
     "ALWAYS": "항상",
     "SHIPPING_CHARGE_START": "시작",
     "SHIPPING_CHARGE_END": "종료",
-    "SHIPPING_CHARGE_END_IS_SMALLER": "종료 날짜는 시작 날짜보다 이를 수 없습니다.",
-    "CHARGE_START": "시작",
-    "CHARGE_END": "종료",
+    "BEFORE_START_DATE": "종료 날짜는 시작 날짜보다 이를 수 없습니다.",
+    "RANGE": "범위",
+    "RANGE_START": "범위 시작",
     "DELETE_SHIPPING_CHARGE": "운송료 삭제",
     "DELETE_SHIPPING_CHARGE_CONFIRMATION": "'{{name}}'을(를) 삭제하시겠습니까?",
     "FULFILLMENT_CENTER": "처리 센터",
     "JURISDICTION": "관할 지역",
     "SHIPPING_MODE": "운송 모드",
     "PRECEDENCE": "우선권",
-    "NEW_FULFILLMENT_OPTION": "새 처리 옵션",
-    "EDIT_FULFILLMENT_OPTION": "처리 옵션 편집",
+    "FULFILLMENT_OPTION": "처리 옵션",
     "INVALID_PRECEDENCE": "우선권은 숫자여야 합니다.",
     "CREATE_FULFILLMENT_OPTION_MESSAGE": "처리 센터에 관할 지역과 운송 모드를 연결하여 처리 옵션을 작성합니다.",
     "DUPLICATE_FULFILLMENT_OPTION_ERROR": "처리 센터, 관할 지역 및 운송 모드가 동일한 처리 옵션이 이미 존재합니다.",
@@ -1113,8 +1119,9 @@
     "FULFILLMENT_CENTER_ERROR": "올바르지 않은 처리 센터",
     "JURISDICTION_ERROR": "올바르지 않은 관할 지역",
     "SHIPPING_MODE_ERROR": "올바르지 않은 운송 모드",
-    "SEARCH_BY_NAME_DESCRIPTION": "이름으로 검색",
+    "SEARCH_BY_NAME": "이름별",
     "SHIPPING_CHARGE_DELETED_MESSAGE": "운송료가 성공적으로 삭제되었습니다.",
+    "SHIPPING_CHARGE_SAVED_MESSAGE": "운송료가 성공적으로 저장되었습니다.",
     "INVALID_DATE": "날짜가 올바르지 않습니다.",
     "BY_QUANTITY": "수량 기준",
     "BY_WEIGHT": "중량 기준",
@@ -1122,9 +1129,14 @@
     "CHARGE": "청구",
     "CURRENCY": "통화",
     "UNIT_OF_MEASURE": "측정 단위",
-    "RANGE_IS_OUT_OF_RANGE": "시작이 범위를 벗어났습니다",
     "DUPLICATE_RANGE": "범위가 이미 존재합니다.",
-    "DUPLICATE_NAME_ERROR": "보안 코드 이름이 이미 존재합니다"
+    "DUPLICATE_NAME_ERROR": "운송료 이름이 이미 존재합니다.",
+    "INVALID_RANGE_START": "올바르지 않은 범위 시작",
+    "INVALID_CHARGE": "올바르지 않은 요금",
+    "FROM_START_TO_END": "{{start}}~{{end}}",
+    "FROM_START_AND_UP": "{{start}} 이후",
+    "SHIPPING_CHARGE_CREATED_MESSAGE": "운송료 '{{name}}'이(가) 성공적으로 작성되었습니다.",
+    "NO_RANGES_ERROR": "하나 이상의 요금 범위를 정의해야 합니다."
   },
   "TRANSPORTS": {
     "TRANSPORTS": "전송",
@@ -1176,7 +1188,8 @@
     "DELETE_MESSAGE_TYPE": "메시지 유형 삭제",
     "DELETE": "삭제",
     "MESSAGE_TYPES_DELETED_MESSAGE": "메시지 유형이 성공적으로 삭제되었습니다.",
-    "NOT_COMPLETE_ERROR": "이 페이지의 정보가 완전하지 않습니다. 다음 단계로 계속하십시오."
+    "NOT_COMPLETE_ERROR": "이 페이지의 정보가 완전하지 않습니다. 다음 단계로 계속하십시오.",
+    "REFRESH": "새로 고침"
   },
   "SECURITY_POLICIES": {
     "SECURITY_POLICIES": "보안 정책",
@@ -1216,12 +1229,13 @@
     "NO_OF_PASSWORDS_KEPT_PASSWORD_HISTORY": "암호 히스토리에 유지할 암호 개수",
     "DEFINE_CRITERIA": "암호 정책의 기준을 정의합니다.",
     "ALLOW_USER_ID_PASSWORD_MATCH": "사용자 ID와 암호가 일치하는 것을 허용합니다.",
-    "DO_NOT_ALLOW": "허용하지 않음",
+    "DO_NOT_ALLOW": "사용자 ID와 암호가 일치하는 것을 허용하지 않습니다.",
     "ACCOUNT_LOCKOUT_THRESHOLD": "계정 잠금 임계값",
     "WAIT_TIME": "대기 시간",
     "INVALID_VALUE_FOR_NUMERIC_FIELD": "값이 올바르지 않습니다. 값은 숫자여야 합니다. ",
     "DELETE_SECURITY_POLICY": "보안 정책 삭제",
-    "DELETE_SECURITY_POLICY_CONFIRMATION": "'{{name}}'을(를) 삭제하시겠습니까?"
+    "DELETE_SECURITY_POLICY_CONFIRMATION": "'{{name}}'을(를) 삭제하시겠습니까?",
+    "SECURITY_POLICY_DELETE_NOT_ALLOWED": "보안 정책이 하나 이상의 사용자에게 지정되어 있으므로 삭제할 수 없습니다."
   },
   "TAX_CODES": {
     "TAX_CODES": "세금 코드",
@@ -1238,6 +1252,7 @@
     "CANCEL": "취소",
     "BACK": "뒤로",
     "SAVE": "저장",
+    "FINISH": "완료",
     "INPUT_ERROR": "페이지에 오류가 있습니다.",
     "DESCRIPTION": "설명",
     "SHOW_FILTERS": "필터 표시",
@@ -1254,10 +1269,14 @@
     "NAME": "이름",
     "TYPE": "유형",
     "STORE": "스토어",
+    "DEFAULT": "기본값",
     "TYPE_FILTER": "유형",
     "SELECT_TYPE_PLACEHOLDER": "유형 선택",
     "TAX_TYPE_SALES": "판매세",
-    "TAX_TYPE_SHIPPING": "운송세"
+    "TAX_TYPE_SHIPPING": "운송세",
+    "IS_DEFAULT": "예",
+    "SET_AS_DEFAULT": "기본값으로 설정",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "기본 세금 코드가 성공적으로 업데이트되었습니다."
   },
   "TAX_CATEGORIES": {
     "TAX_CATEGORIES": "세금 카테고리",
@@ -1281,7 +1300,7 @@
     "FINISH": "완료",
     "EDIT_TAX_CATEGORY": "세금 카테고리 편집",
     "TAX_CATEGORY_SAVED_MESSAGE": "세금 카테고리가 성공적으로 저장되었습니다.",
-    "TAX_CATEGORY_CREATED_MESSAGE": "세금 카테고리가 성공적으로 작성되었습니다.",
+    "TAX_CATEGORY_CREATED_MESSAGE": "세금 카테고리 '{{name}}'이(가) 성공적으로 작성되었습니다.",
     "DELETE_TAX_CATEGORY": "세금 카테고리 삭제",
     "DELETE_TAX_CATEGORY_CONFIRMATION": "'{{name}}'을(를) 삭제하시겠습니까?",
     "DELETE": "삭제",
@@ -1290,7 +1309,6 @@
     "NAME": "이름",
     "STORE": "스토어",
     "SELECT_STORE_PLACEHOLDER": "스토어 선택",
-    "INVALID_STORE": "스토어가 올바르지 않습니다",
     "TYPE": "세금 유형",
     "INCLUDE_IN_DISPLAY_PRICE": "표시 가격에 포함",
     "TYPE_FILTER": "세금 유형",
@@ -1298,7 +1316,7 @@
     "TAX_TYPE_SALES": "판매세",
     "TAX_TYPE_SHIPPING": "운송세",
     "TAX_RATES": "세율 정의",
-    "TAX_CATEGORY_ASSIGNMENT": "세금 코드 정의",
+    "TAX_CATEGORY_CODES": "세금 코드 정의",
     "DISPLAY_NAME": "표시 이름",
     "DISPLAY_NAMES": "표시 이름",
     "LANGUAGE": "언어",
@@ -1306,9 +1324,14 @@
     "ADD_DISPLAY_NAME": "표시 이름 추가",
     "NO_DEFINED_DISPLAY_NAMES": "정의된 표시 이름이 없습니다",
     "FULFILLMENT_CENTER": "처리 센터",
-    "DEFINE_RATES_PER_JURISDICTION": "이 세금 카테고리가 적용되는 각 관할 지역에 대해 세율을 정의하십시오.",
+    "INVALID_FULFILLMENT_CENTER": "올바르지 않은 처리 센터",
+    "SELECT_FULFILLMENT_CENTER": "처리 센터 선택",
+    "DEFINE_RATES_PER_JURISDICTION": "관할 지역 및 처리 센터에 대한 세율을 정의하십시오.",
     "JURISDICTION": "관할 지역",
-    "TAX_RATE": "세율(%)",
+    "SELECT_JURISDICTION": "관할 지역 선택",
+    "INVALID_JURISDICTION": "올바르지 않은 관할 지역",
+    "TAX_RATE": "세율",
+    "INVALID_TAX_RATE": "올바르지 않은 세율",
     "SELECTED_RATES": "정의된 세율",
     "ADD_TAX_RATE": "세율 추가",
     "NO_DEFINED_TAX_RATES": "정의된 세율이 없습니다",
@@ -1316,12 +1339,16 @@
     "TAX_CODE": "세금 코드",
     "ADD_TAX_CODE": "세금 코드 추가",
     "SELECTED_TAX_CODES": "정의된 세금 코드",
-    "NO_DEFINED_TAX_CODES": "선택한 세금 코드가 없습니다"
+    "NO_DEFINED_TAX_CODES": "선택한 세금 코드가 없습니다",
+    "DUPLICATE_NAME_ERROR": "세금 카테고리 이름이 이미 존재합니다",
+    "DUPLICATE_TAX_RATE": "지정된 관할 지역 및 처리 센터에 대한 세율이 이미 존재합니다.",
+    "NO_TAX_CODES_ERROR": "세금 코드를 하나 이상 정의해야 합니다.",
+    "NO_TAX_RATES_ERROR": "세율을 하나 이상 정의해야 합니다."
   },
   "TAX_JURISDICTIONS": {
     "TAX_JURISDICTIONS": "세금 관할 지역",
     "SEARCH": "검색",
-    "SEARCH_BY_NAME": "이름으로 검색",
+    "SEARCH_BY_NAME": "관할 지역별",
     "STATE_FILTER": "상태 필터",
     "COUNTRY_FILTER": "국가 필터",
     "STORE_FILTER": "스토어 필터",
@@ -1358,6 +1385,7 @@
     "DELETE": "삭제",
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "세금 관할 지역이 성공적으로 삭제되었습니다.",
     "NOT_COMPLETE_ERROR": "이 페이지의 정보가 완전하지 않습니다. 다음 단계로 계속하십시오.",
-    "DUPLICATE_NAME_ERROR": "세금 관할 지역 이름이 이미 존재합니다."
+    "DUPLICATE_NAME_ERROR": "세금 관할 지역 이름이 이미 존재합니다.",
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "관할 지역 '{{jurisdictionName}}'이(가) 세금 카테고리에서 사용되고 있으므로 삭제할 수 없습니다."
   }
 }

@@ -119,6 +119,7 @@ export class UserRolesComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.organization.setValue(org.organizationName);
 		this.selectedOrganization = org;
 		this.organizationList = [];
+		this.availableRoles.enable();
 		this.loadAssignableRoles();
 	}
 
@@ -150,7 +151,7 @@ export class UserRolesComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	private createFormControls() {
 		this.organization = new FormControl("");
-		this.availableRoles = new FormControl("");
+		this.availableRoles = new FormControl({value: "", disabled: true});
 	}
 
 	private createForm() {
@@ -166,34 +167,32 @@ export class UserRolesComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.getOrganizationsSubscription = null;
 		}
 		this.selectedOrganization = null;
+		this.availableRoles.disable();
 		this.availableRoleList = [];
 		this.getOrganizationsSubscription = this.organizationsService.OrganizationGetManageableOrganizations({
 			organizationName: searchString,
 			taskName: TASK_NAME_ASSIGN_ROLE_TO_USER,
 			limit: 10
-		}).subscribe(
-			response => {
-				if (response.items.length === 1 && response.items[0].organizationName === searchString) {
-					this.selectOrganization(response.items[0]);
-				} else {
-					response.items.sort((org1, org2) => {
-						let result = 0;
-						if (org1.organizationName < org2.organizationName) {
-							result = -1;
-						} else if (org1.organizationName > org2.organizationName) {
-							result = 1;
-						}
-						return result;
-					});
-					this.organizationList = response.items;
-				}
-				this.getOrganizationsSubscription = null;
-			},
-			error => {
-				this.getOrganizationsSubscription = null;
-				console.log(error);
+		}).subscribe(response => {
+			if (response.items.length === 1 && response.items[0].organizationName === searchString) {
+				this.selectOrganization(response.items[0]);
+			} else {
+				response.items.sort((org1, org2) => {
+					let result = 0;
+					if (org1.organizationName < org2.organizationName) {
+						result = -1;
+					} else if (org1.organizationName > org2.organizationName) {
+						result = 1;
+					}
+					return result;
+				});
+				this.organizationList = response.items;
 			}
-		);
+			this.getOrganizationsSubscription = null;
+		},
+		error => {
+			this.getOrganizationsSubscription = null;
+		});
 	}
 
 	private loadRoleNames() {

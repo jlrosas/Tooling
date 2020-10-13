@@ -55,6 +55,10 @@ class OnlineStoresService extends __BaseService {
    *
    * - `limit`: The maximum number of records to return.
    *
+   * - `searchString`: Limits search results to only include stores with an identifier that matches the value of this parameter.
+   *
+   * - `ownerId`: Limits search results to only include stores with a matching ownerId.
+   *
    * @return The operation is successful.
    */
   getOnlineStoresResponse(params: OnlineStoresService.GetOnlineStoresParams): __Observable<__StrictHttpResponse<{count?: number, items?: Array<{catalogOverrideEnabled?: string, externalContentEnablementMode?: string, externalContentHostName?: string, externalContentPickerUrl?: string, externalContentTenantId?: string, externalContentUiContextRoot?: string, id?: number, identifier?: string, ownerId?: string, state?: string, type?: string, unregisterMarketingEvent?: string}>}>> {
@@ -64,6 +68,8 @@ class OnlineStoresService extends __BaseService {
     if (params.usage != null) __params = __params.set('usage', params.usage.toString());
     if (params.offset != null) __params = __params.set('offset', params.offset.toString());
     if (params.limit != null) __params = __params.set('limit', params.limit.toString());
+    if (params.searchString != null) __params = __params.set('searchString', params.searchString.toString());
+    (params.ownerId || []).forEach(val => {if (val != null) __params = __params.append('ownerId', val.toString())});
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/rest/admin/v2/online-stores`,
@@ -90,6 +96,10 @@ class OnlineStoresService extends __BaseService {
    * - `offset`: The position within the resulting dataset where the query begins returning item records. If the offset is "5", the records that returned begin with the sixth record that matches the query parameters. If the offset is "0", the records that are returned begin with the first record that matches the query parameters.
    *
    * - `limit`: The maximum number of records to return.
+   *
+   * - `searchString`: Limits search results to only include stores with an identifier that matches the value of this parameter.
+   *
+   * - `ownerId`: Limits search results to only include stores with a matching ownerId.
    *
    * @return The operation is successful.
    */
@@ -1264,6 +1274,16 @@ module OnlineStoresService {
      * The maximum number of records to return.
      */
     limit?: number;
+
+    /**
+     * Limits search results to only include stores with an identifier that matches the value of this parameter.
+     */
+    searchString?: string;
+
+    /**
+     * Limits search results to only include stores with a matching ownerId.
+     */
+    ownerId?: Array<string>;
   }
 
   /**

@@ -181,8 +181,6 @@ export class ContractShippingComponent implements OnInit, OnDestroy, AfterViewIn
 						};
 					});
 					this.searchShippingAddresses(this.shippingAddressSearch.value);
-				}, error => {
-					console.log(error);
 				});
 			}
 		});

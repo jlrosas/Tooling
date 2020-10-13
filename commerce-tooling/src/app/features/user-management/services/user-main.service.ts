@@ -9,7 +9,7 @@
  *-------------------------------------------------------------------
  */
 
-import { Injectable } from "@angular/core";
+import { Injectable, EventEmitter } from "@angular/core";
 import { Observable, Observer } from "rxjs";
 import { UsersService } from "../../../rest/services/users.service";
 import { RoleAssignmentsService } from "../../../rest/services/role-assignments.service";
@@ -26,6 +26,8 @@ export class UserMainService {
 	assignedMemberGroups: Array<any> = null;
 	currentUserId: string = null;
 	processing = false;
+	readonly onIsRegisteredCustomerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
 	private currentUser: any = null;
 	private currentRoles: Array<any> = null;
 	private currentMemberGroupMemberships: Array<any> = null;
@@ -52,13 +54,19 @@ export class UserMainService {
 	createUser(): Observable<string> {
 		this.processing = true;
 		return new Observable<string>((observer: Observer<string>) => {
-			this.usersService.UsersCreateUserResponse(this.buildCreateUserBody()).subscribe(
+			const args: UsersService.UsersCreateUserParams = {
+				body: this.buildCreateUserBody()
+			};
+			if (this.userData.isRegisteredCustomer && this.userData.selectedStore) {
+				args.storeId = this.userData.selectedStore.id;
+			}
+			this.usersService.UsersCreateUserResponse(args).subscribe(
 				response => {
 					const paths: Array<string> = response.headers.get("location").split("/");
 					const id: string = paths[paths.length - 1];
 					this.currentUserId = id;
 					this.activeServicesCount = 0;
-					if (this.assignedRoles) {
+					if (this.assignedRoles && !this.userData.isRegisteredCustomer) {
 						this.activeServicesCount += this.assignedRoles.length;
 					}
 					if (this.assignedMemberGroups) {
@@ -69,7 +77,9 @@ export class UserMainService {
 						observer.complete();
 						this.processing = false;
 					} else {
-						this.createRoleAssignments(id, observer);
+						if (!this.userData.isRegisteredCustomer) {
+							this.createRoleAssignments(id, observer);
+						}
 						this.createMemberGroupMemberships(id, observer);
 					}
 				},
@@ -115,6 +125,9 @@ export class UserMainService {
 		if (address.zipCode) {
 			newAddress.zipCode = address.zipCode;
 		}
+		if (address.phone1) {
+			newAddress.phone1 = address.phone1;
+		}
 		const user = this.userData;
 		const newUser: any = {
 			address: newAddress
@@ -131,6 +144,24 @@ export class UserMainService {
 		}
 		if (user.userAccountPolicyId) {
 			newUser.userAccountPolicyId = user.userAccountPolicyId;
+		}
+		if (user.preferredCurrency) {
+			newUser.preferredCurrency = user.preferredCurrency;
+		}
+		if (user.preferredLanguageId) {
+			newUser.preferredLanguageId = user.preferredLanguageId;
+		}
+		if (user.preferredCommunication) {
+			newUser.preferredCommunication = user.preferredCommunication;
+		}
+		if (user.challengeQuestion) {
+			newUser.challengeQuestion = user.challengeQuestion;
+		}
+		if (user.challengeAnswer) {
+			newUser.challengeAnswer = user.challengeAnswer;
+		}
+		if (user.profileType) {
+			newUser.profileType = user.profileType;
 		}
 		return newUser;
 	}
@@ -404,6 +435,9 @@ export class UserMainService {
 		if (address.zipCode !== currentAddress.zipCode) {
 			changedAddress.zipCode = address.zipCode;
 		}
+		if (address.phone1 !== currentAddress.phone1) {
+			changedAddress.phone1 = address.phone1;
+		}
 		const user = this.userData;
 		const changedUser: any = {
 			address: changedAddress
@@ -414,6 +448,21 @@ export class UserMainService {
 		}
 		if (user.userAccountPolicyId !== this.currentUser.userAccountPolicyId) {
 			changedUser.userAccountPolicyId = user.userAccountPolicyId;
+		}
+		if (user.preferredCurrency !== this.currentUser.preferredCurrency) {
+			changedUser.preferredCurrency = user.preferredCurrency;
+		}
+		if (user.preferredLanguageId !== this.currentUser.preferredLanguageId) {
+			changedUser.preferredLanguageId = user.preferredLanguageId;
+		}
+		if (user.preferredCommunication !== this.currentUser.preferredCommunication) {
+			changedUser.preferredCommunication = user.preferredCommunication;
+		}
+		if (user.challengeQuestion !== this.currentUser.challengeQuestion) {
+			changedUser.challengeQuestion = user.challengeQuestion;
+		}
+		if (user.challengeAnswer !== this.currentUser.challengeAnswer) {
+			changedUser.challengeAnswer = user.challengeAnswer;
 		}
 		return changedUser;
 	}
@@ -440,6 +489,7 @@ export class UserMainService {
 								city: address.city,
 								country: address.country,
 								email1: address.email1,
+								phone1: address.phone1,
 								firstName: address.firstName,
 								lastName: address.lastName,
 								personTitle: address.personTitle,
@@ -451,7 +501,12 @@ export class UserMainService {
 							parentOrganizationName: body.parentOrganizationName,
 							password: body.password,
 							passwordVerify: body.password,
-							userAccountPolicyId: body.userAccountPolicyId
+							userAccountPolicyId: body.userAccountPolicyId,
+							challengeQuestion: body.challengeQuestion,
+							challengeAnswer: body.challengeAnswer,
+							preferredCommunication: body.preferredCommunication,
+							preferredLanguageId: body.preferredLanguageId,
+							preferredCurrency: body.preferredCurrency
 						};
 						observer.next(undefined);
 						observer.complete();
@@ -477,30 +532,27 @@ export class UserMainService {
 				}
 				this.roleAssignmentsService.getRoleAssignments({
 					memberId: id
-				}).subscribe(
-					body => {
-						this.currentRoles = body.items;
-						this.assignedRoles = [];
-						const uniqueOrganizationIds: Array<string> = [];
-						this.currentRoles.forEach(roleAssignment => {
-							this.assignedRoles.push({
-								organizationId: roleAssignment.organizationId,
-								roleId: roleAssignment.roleId
-							});
-							if (uniqueOrganizationIds.indexOf(roleAssignment.organizationId) < 0) {
-								uniqueOrganizationIds.push(roleAssignment.organizationId);
-							}
+				}).subscribe(body => {
+					this.currentRoles = body.items;
+					this.assignedRoles = [];
+					const uniqueOrganizationIds: Array<string> = [];
+					this.currentRoles.forEach(roleAssignment => {
+						this.assignedRoles.push({
+							organizationId: roleAssignment.organizationId,
+							roleId: roleAssignment.roleId
 						});
-						this.loadOrganizationNames(uniqueOrganizationIds);
-						observer.next(undefined);
-						observer.complete();
-					},
-					error => {
-						console.log(error);
-						observer.next(error);
-						observer.complete();
-					}
-				);
+						if (uniqueOrganizationIds.indexOf(roleAssignment.organizationId) < 0) {
+							uniqueOrganizationIds.push(roleAssignment.organizationId);
+						}
+					});
+					this.loadOrganizationNames(uniqueOrganizationIds);
+					observer.next(undefined);
+					observer.complete();
+				},
+				error => {
+					observer.next(error);
+					observer.complete();
+				});
 			}
 		});
 	}
@@ -531,51 +583,45 @@ export class UserMainService {
 				}
 				this.memberGroupMembershipsService.getMemberGroupMemberships({
 					memberId: id
-				}).subscribe(
-					body => {
-						this.currentMemberGroupMemberships = body.items;
-						this.assignedMemberGroups = [];
-						let count = body.items.length;
-						if (count > 0) {
-							body.items.forEach(memberGroupMembership => {
-								const memberGroupId = memberGroupMembership.memberGroupId;
-								this.memberGroupsService.getMemberGroup({
-									id: memberGroupId
-								}).subscribe(
-									memberGroup => {
-										count--;
-										this.assignedMemberGroups.push({
-											memberGroupId: memberGroupId,
-											organizationId: memberGroup.ownerId,
-											memberGroupName: memberGroup.name,
-											exclude: memberGroupMembership.exclude
-										});
-										if (count === 0) {
-											observer.next(undefined);
-											observer.complete();
-										}
-									},
-									error => {
-										count--;
-										console.log(error);
-										if (count === 0) {
-											observer.next(error);
-											observer.complete();
-										}
-									}
-								);
+				}).subscribe(body => {
+					this.currentMemberGroupMemberships = body.items;
+					this.assignedMemberGroups = [];
+					let count = body.items.length;
+					if (count > 0) {
+						body.items.forEach(memberGroupMembership => {
+							const memberGroupId = memberGroupMembership.memberGroupId;
+							this.memberGroupsService.getMemberGroup({
+								id: memberGroupId
+							}).subscribe(memberGroup => {
+								count--;
+								this.assignedMemberGroups.push({
+									memberGroupId,
+									organizationId: memberGroup.ownerId,
+									memberGroupName: memberGroup.name,
+									exclude: memberGroupMembership.exclude
+								});
+								if (count === 0) {
+									observer.next(undefined);
+									observer.complete();
+								}
+							},
+							error => {
+								count--;
+								if (count === 0) {
+									observer.next(error);
+									observer.complete();
+								}
 							});
-						} else {
-							observer.next(undefined);
-							observer.complete();
-						}
-					},
-					error => {
-						console.log(error);
-						observer.next(error);
+						});
+					} else {
+						observer.next(undefined);
 						observer.complete();
 					}
-				);
+				},
+				error => {
+					observer.next(error);
+					observer.complete();
+				});
 			}
 		});
 	}

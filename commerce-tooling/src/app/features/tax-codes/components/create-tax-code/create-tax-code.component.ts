@@ -66,18 +66,9 @@ export class CreateTaxCodeComponent {
 						this.taxCodeMainService.clearData();
 						this.router.navigate(["tax-codes", "tax-code-list", {storeId: this.route.snapshot.params.storeId}]);
 						name = name.replace(/[\<]/g, "&lt").replace(/[\>]/g, "&gt");
-						this.translateService.get("TAX_CODES.TAX_CODE_CREATED_MESSAGE", { name: name }).subscribe((message: string) => {
+						this.translateService.get("TAX_CODES.TAX_CODE_CREATED_MESSAGE", { name }).subscribe((message: string) => {
 							this.alertService.success({message});
 						});
-					},
-					errorResponse => {
-						if (errorResponse.error && errorResponse.error.errors) {
-							errorResponse.error.errors.forEach((error: { message: any; }) => {
-								this.alertService.error({message: error.message});
-							});
-						} else {
-							console.log(errorResponse);
-						}
 					});
 				} else if (!valid) {
 					this.translateService.get("TAX_CODES.INPUT_ERROR").subscribe((message: string) => {

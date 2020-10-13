@@ -57,7 +57,7 @@ export class JobMainService {
 	newVersionJob(id: string): Observable<Array<any>> {
 		this.processing = true;
 		const args: JobsService.JobCreateNewVersionJobParams = {
-			id: id,
+			id,
 			body: this.buildNewVersionJobBody()
 		};
 		return new Observable<Array<any>>((observer: Observer<Array<any>>) => {
@@ -87,14 +87,14 @@ export class JobMainService {
 					this.currentJobId = id;
 				}
 				const args: JobsService.JobGetByIdParams = {
-					id: id
+					id
 				};
 
 				this.jobsService.JobGetById(args).subscribe(
 					body => {
 						this.currentJob = body;
 						this.jobData = {
-							id:	id,
+							id,
 							activeState: body.activeState,
 							command: body.command,
 							checkCommandInterface: body.interfaceName,

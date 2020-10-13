@@ -5,7 +5,6 @@
  * HCL Commerce
  *
  * (C) Copyright HCL Technologies Limited 1996, 2020
-
  *-------------------------------------------------------------------
  */
 
@@ -60,6 +59,7 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 	preferenceToken: string;
 	activeColumn = "calculationCode";
 	sortDirection = "asc";
+	pageIndex = 0;
 	private statusTextKeys = {
 		1: "SHIPPING_CODES.ACTIVATED",
 		0: "SHIPPING_CODES.DEACTIVATED"
@@ -93,9 +93,8 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 		this.createFormControls();
 		this.createForm();
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
 			this.currentSearchString = searchString;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getShippingCodes();
 		});
 		this.storeSearchString.pipe(debounceTime(250)).subscribe(searchString => {
@@ -139,8 +138,7 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 			});
 		}
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getShippingCodes();
 		});
 	}
@@ -152,15 +150,14 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 
 	handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getShippingCodes();
 	}
 
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getShippingCodes();
 	}
 
@@ -191,7 +188,6 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 		},
 		error => {
 			this.getStoresSubscription = null;
-			console.log(error);
 		});
 	}
 
@@ -205,7 +201,9 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 		this.selectedStore = store;
 		this.store.setValue(store.identifier);
 		if (currentStoreId !== store.id) {
-			this.paginator.pageIndex = 0;
+			if (currentStoreId !== null) {
+				this.pageIndex = 0;
+			}
 			this.getShippingCodes();
 			this.storeList = [];
 			this.searchStores("");
@@ -235,9 +233,8 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 
 	selectStatus(statusIndex: any) {
 		if (this.statusFilter !== statusIndex) {
-			this.preferenceService.saveFilter(this.preferenceToken,	{ statusFilter: statusIndex });
 			this.statusFilter = statusIndex;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getShippingCodes();
 		}
 	}
@@ -245,8 +242,7 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 	clearStatus($event) {
 		this.statusFilter = null;
 		this.statusSelect.setValue(null);
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { statusFilter: null });
+		this.pageIndex = 0;
 		this.getShippingCodes();
 		$event.stopPropagation();
 	}
@@ -271,6 +267,14 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 		});
 	}
 
+	gotoShippingCharges(row: any) {
+		this.router.navigate(["/shipping-charges/shipping-charge-list", {
+			shippingCodeId: row.id,
+			storeId: this.selectedStore.id,
+			storeOwnerId: this.selectedStore.ownerId
+		}]);
+	}
+
 	setShippingCodeStatus(id: number, status: number) {
 		this.calculationCodesService.updateCalculationCodeById({
 			id,
@@ -284,15 +288,6 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 				this.alertService.success({message});
 			});
 			this.getShippingCodes();
-		},
-		errorResponse => {
-			if (errorResponse.error && errorResponse.error.errors) {
-				errorResponse.error.errors.forEach((error: { message: string; }) => {
-					this.alertService.error({message: error.message});
-				});
-			} else {
-				console.log(errorResponse);
-			}
 		});
 	}
 
@@ -314,8 +309,17 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 
 	private getShippingCodes() {
 		if (this.selectedStore) {
+			this.preferenceService.save(this.preferenceToken, {
+				searchString: this.currentSearchString,
+				sort: this.sort,
+				pageIndex: this.pageIndex,
+				pageSize: this.pageSize,
+				filter: {
+					statusFilter: this.statusFilter
+				}
+			});
 			const args: CalculationCodesService.GetCalculationCodesParams = {
-				offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+				offset: this.pageIndex * this.paginator.pageSize,
 				limit: this.paginator.pageSize,
 				calculationUsageId: [-2],
 				storeId: this.selectedStore.id
@@ -366,7 +370,8 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 				sort,
 				searchString,
 				showFilters,
-				filter
+				filter,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -385,6 +390,9 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 			if (filter) {
 				const {statusFilter} = filter;
 				this.statusFilter = statusFilter;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}

@@ -1,0 +1,44 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'SHIPPING_CHARGES.SHIPPING_CHARGES' | translate}}
+	</h1>
+	<div class="hc-stepper-section hc-paper">
+		<div class="hc-stepper-actions">
+			<h2 class="hc-type-h2">
+				{{'SHIPPING_CHARGES.NEW_SHIPPING_CHARGE' | translate}}
+			</h2>
+			<div>
+				<button class="mat-flat-button" type="button" (click)="cancel()">{{'SHIPPING_CHARGES.CANCEL' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="submit()">{{'SHIPPING_CHARGES.FINISH' | translate}}</button>
+			</div>
+		</div>
+		<mat-vertical-stepper [linear]="true" #stepper>
+			<ng-template matStepperIcon="edit">
+				<mat-icon>check</mat-icon>
+			</ng-template>
+			<mat-step #detailsStep label="{{'SHIPPING_CHARGES.SHIPPING_CHARGE_DETAILS' | translate}}">
+				<hc-shipping-charge-details [stepper]="stepper" [step]="detailsStep" mode="create">
+				</hc-shipping-charge-details>
+			</mat-step>
+			<mat-step #fulfillmentOptionsStep label="{{'SHIPPING_CHARGES.FULFILLMENT_OPTIONS' | translate}} {{'SHIPPING_CHARGES.OPTIONAL' | translate}}" [optional]="true">
+				<hc-shipping-charge-fulfillment-options *ngIf="stepper.selected === fulfillmentOptionsStep" [step]="fulfillmentOptionsStep" mode="create">
+				</hc-shipping-charge-fulfillment-options>
+			</mat-step>
+			<mat-step #chargeTypeStep label="{{'SHIPPING_CHARGES.DEFINE_CHARGE_TYPE' | translate}}">
+				<hc-shipping-charge-define-type *ngIf="stepper.selected === chargeTypeStep" [step]="chargeTypeStep" mode="create" (save)="submit()">
+				</hc-shipping-charge-define-type>
+			</mat-step>
+		</mat-vertical-stepper>
+	</div>
+</div>

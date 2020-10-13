@@ -481,25 +481,22 @@ export class OrganizationMainService {
 				}
 				this.roleAssignmentsService.getRoleAssignments({
 					memberId: id
-				}).subscribe(
-					body => {
-						this.currentRoles = body.items;
-						this.assignedRoles = [];
-						this.currentRoles.forEach(roleAssignment => {
-							this.assignedRoles.push({
-								roleId: roleAssignment.roleId,
-								roleName: ""
-							});
+				}).subscribe(body => {
+					this.currentRoles = body.items;
+					this.assignedRoles = [];
+					this.currentRoles.forEach(roleAssignment => {
+						this.assignedRoles.push({
+							roleId: roleAssignment.roleId,
+							roleName: ""
 						});
-						observer.next(undefined);
-						observer.complete();
-					},
-					error => {
-						console.log(error);
-						observer.next(error);
-						observer.complete();
-					}
-				);
+					});
+					observer.next(undefined);
+					observer.complete();
+				},
+				error => {
+					observer.next(error);
+					observer.complete();
+				});
 			}
 		});
 	}
@@ -516,28 +513,25 @@ export class OrganizationMainService {
 				}
 				this.approvalTypesService.getApprovalTypeAssignments({
 					organizationId: id
-				}).subscribe(
-					body => {
-						this.currentApprovalTypes = [];
-						this.assignedApprovalTypes = [];
-						body.items.forEach((approval: { approvalTypeId: string; approvalName: string }) => {
-							this.assignedApprovalTypes.push({
-								id: approval.approvalTypeId,
-								approvalName: approval.approvalName
-							});
-							this.currentApprovalTypes.push({
-								id: approval.approvalTypeId
-							});
+				}).subscribe(body => {
+					this.currentApprovalTypes = [];
+					this.assignedApprovalTypes = [];
+					body.items.forEach((approval: { approvalTypeId: string; approvalName: string }) => {
+						this.assignedApprovalTypes.push({
+							id: approval.approvalTypeId,
+							approvalName: approval.approvalName
 						});
-						observer.next(undefined);
-						observer.complete();
-					},
-					error => {
-						console.log(error);
-						observer.next(error);
-						observer.complete();
-					}
-				);
+						this.currentApprovalTypes.push({
+							id: approval.approvalTypeId
+						});
+					});
+					observer.next(undefined);
+					observer.complete();
+				},
+				error => {
+					observer.next(error);
+					observer.complete();
+				});
 			}
 		});
 	}
@@ -554,51 +548,45 @@ export class OrganizationMainService {
 				}
 				this.memberGroupMembershipsService.getMemberGroupMemberships({
 					memberId: id
-				}).subscribe(
-					body => {
-						this.currentMemberGroupMemberships = body.items;
-						this.assignedMemberGroups = [];
-						let count = body.items.length;
-						if (count > 0) {
-							body.items.forEach(memberGroupMembership => {
-								const memberGroupId = memberGroupMembership.memberGroupId;
-								this.memberGroupsService.getMemberGroup({
-									id: memberGroupId
-								}).subscribe(
-									memberGroup => {
-										count--;
-										this.assignedMemberGroups.push({
-											memberGroupId: memberGroupId,
-											organizationId: memberGroup.ownerId,
-											memberGroupName: memberGroup.name,
-											exclude: memberGroupMembership.exclude
-										});
-										if (count === 0) {
-											observer.next(undefined);
-											observer.complete();
-										}
-									},
-									error => {
-										count--;
-										console.log(error);
-										if (count === 0) {
-											observer.next(error);
-											observer.complete();
-										}
-									}
-								);
+				}).subscribe(body => {
+					this.currentMemberGroupMemberships = body.items;
+					this.assignedMemberGroups = [];
+					let count = body.items.length;
+					if (count > 0) {
+						body.items.forEach(memberGroupMembership => {
+							const memberGroupId = memberGroupMembership.memberGroupId;
+							this.memberGroupsService.getMemberGroup({
+								id: memberGroupId
+							}).subscribe(memberGroup => {
+								count--;
+								this.assignedMemberGroups.push({
+									memberGroupId,
+									organizationId: memberGroup.ownerId,
+									memberGroupName: memberGroup.name,
+									exclude: memberGroupMembership.exclude
+								});
+								if (count === 0) {
+									observer.next(undefined);
+									observer.complete();
+								}
+							},
+							error => {
+								count--;
+								if (count === 0) {
+									observer.next(error);
+									observer.complete();
+								}
 							});
-						} else {
-							observer.next(undefined);
-							observer.complete();
-						}
-					},
-					error => {
-						console.log(error);
-						observer.next(error);
+						});
+					} else {
+						observer.next(undefined);
 						observer.complete();
 					}
-				);
+				},
+				error => {
+					observer.next(error);
+					observer.complete();
+				});
 			}
 		});
 	}

@@ -18,8 +18,6 @@ export class StorePreviewOptionsService {
 	static storePreviewOptions = null;
 	readonly onStorePreviewOptionsChange: EventEmitter<any> = new EventEmitter<any>();
 
-	constructor() { }
-
 	setStorePreviewOptions(storePreviewOptions: any) {
 		StorePreviewOptionsService.storePreviewOptions = storePreviewOptions;
 		this.onStorePreviewOptionsChange.emit(storePreviewOptions);

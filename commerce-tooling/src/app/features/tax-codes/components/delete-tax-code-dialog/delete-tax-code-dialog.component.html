@@ -12,6 +12,10 @@
 <h4 mat-dialog-title>{{'TAX_CODES.DELETE_TAX_CODE' | translate}}</h4>
 
 <form [formGroup]="deleteTaxCodeForm" autocomplete="off">
+	<div>
+		<mat-label *ngIf="isDefaultSalesTaxCode" class="alert">{{'TAX_CODES.DELETE_DEFAULT_SALES_TAX_CODE_ALERT'| translate }}</mat-label>
+		<mat-label *ngIf="isDefaultShippingTaxCode" class="alert">{{'TAX_CODES.DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT'| translate }}</mat-label>
+	</div>
 	<mat-label>{{'TAX_CODES.DELETE_TAX_CONFIRMATION'| translate: {taxCodeName: taxCodeName} }}</mat-label>
 </form>
 

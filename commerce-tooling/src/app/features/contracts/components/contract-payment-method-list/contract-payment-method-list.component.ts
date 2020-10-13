@@ -189,8 +189,6 @@ export class ContractPaymentMethodListComponent implements AfterViewInit, OnDest
 					});
 					this.populateAddresses();
 					this.model.setData(this.contractMainService.paymentMethods);
-				}, error => {
-					console.log(error);
 				});
 			}
 		});

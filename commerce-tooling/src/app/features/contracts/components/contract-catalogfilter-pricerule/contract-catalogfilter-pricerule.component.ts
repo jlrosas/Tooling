@@ -129,7 +129,6 @@ export class ContractFilterPriceComponent implements OnInit, OnDestroy, AfterVie
 		},
 		error => {
 			this.getCatalogFiltersSubscription = null;
-			console.log(error);
 		});
 	}
 
@@ -174,7 +173,6 @@ export class ContractFilterPriceComponent implements OnInit, OnDestroy, AfterVie
 		},
 		error => {
 			this.getPriceRulesSubscription = null;
-			console.log(error);
 		});
 	}
 
@@ -213,7 +211,10 @@ export class ContractFilterPriceComponent implements OnInit, OnDestroy, AfterVie
 			if (contractData.priceRuleName && contractData.priceRuleStoreName) {
 				this.priceRule.setValue(contractData.priceRuleName + " - " + contractData.priceRuleStoreName);
 			} else if (contractData.priceRuleId) {
-				this.priceRulesService.getPriceRuleById(contractData.priceRuleId).subscribe(response => {
+				this.priceRulesService.getPriceRuleById({
+					id: contractData.priceRuleId,
+					storeId: this.route.snapshot.params.storeId
+				}).subscribe(response => {
 					contractData.priceRuleName = response.name;
 					this.storeNameService.getStoreName(response.storeId.toString()).subscribe(storeName => {
 						contractData.priceRuleStoreName = storeName;

@@ -42,10 +42,10 @@
     "STATE_PROVINCE_REGION": "州/省/区域",
     "ZIP_POSTAL_CODE": "邮政编码/邮编",
     "BACK": "返回",
-    "SELECT_AN_ORGANIZATION": "选择一个组织，然后从可用角色列表中选择用户的角色。一个用户可以在多个组织中担任角色。",
+    "SELECT_AN_ORGANIZATION": "选择一个组织，然后从可用角色中选择。",
     "NO_ORGANIZATION_SELECTED": "选择一个组织。",
     "ORGANIZATION": "组织",
-    "AVAILABLE_ROLES": "可用的角色",
+    "AVAILABLE_ROLES": "从可用的角色中选择",
     "SELECT_ROLE_PLACEHOLDER": "选择角色",
     "SELECTED_ROLES": "选定的角色",
     "INCLUDE": "包括",
@@ -57,7 +57,7 @@
     "FINISH": "完成",
     "SAVE": "保存",
     "EDIT_USER": "编辑用户",
-    "USER_CREATED_MESSAGE": "已成功创建用户。",
+    "USER_CREATED_MESSAGE": "已成功创建用户 '{{name}}'。",
     "USER_SAVED_MESSAGE": "已成功保存用户。",
     "INVALID_COUNTRY": "国家/地区无效。",
     "INVALID_STATE": "州、省或区域无效。",
@@ -69,7 +69,8 @@
     "DISABLED": "已禁用",
     "USER_ENABLED_MESSAGE": "已成功启用用户。",
     "USER_DISABLED_MESSAGE": "已成功禁用用户。",
-    "MORE": "更多"
+    "MORE": "更多",
+    "REFRESH": "刷新"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "组织",
@@ -133,7 +134,8 @@
     "PARENT_ORGANIZATION_ERROR": "父组织无效。",
     "INVALID_COUNTRY": "国家/地区无效。",
     "INVALID_STATE": "州、省或区域无效。",
-    "DUPLICATE_ORGANIZATION": "组织已存在。"
+    "DUPLICATE_ORGANIZATION": "组织已存在。",
+    "REFRESH": "刷新"
   },
   "APPROVALS": {
     "APPROVALS": "批准",
@@ -259,7 +261,7 @@
     "TOTAL": "总计"
   },
   "MEMBER_GROUPS": {
-    "GROUPS": "组",
+    "GROUPS": "成员组",
     "NEW_BUTTON": "新建",
     "NAME": "名称",
     "SEARCH": "搜索",
@@ -293,7 +295,7 @@
     "ROLES_IN_ORGANIZATIONS": "所指定组织中的用户角色",
     "IGNORE_ROLES_IN_ORGANIZATIONS": "忽略所指定组织中的用户角色",
     "CHECK_ROLES_IN_ORGANIZATIONS": "用户应拥有所指定组织中的匹配角色。",
-    "SELECT_AN_ORGANIZATION": "选择一个组织，然后从可用角色列表中选择用户的角色。一个用户可以在多个组织中担任角色。",
+    "SELECT_AN_ORGANIZATION": "选择一个组织，然后从可用角色中选择。",
     "NO_ORGANIZATION_SELECTED": "选择一个组织。",
     "REGISTRATION_STATUS": "注册状态",
     "IGNORE_REGISTRATION_STATUS": "忽略用户注册状态",
@@ -327,10 +329,11 @@
     "MEMBER_GROUP_DELETED_MESSAGE": "已成功删除成员组。",
     "DELETE_MEMBER_GROUP": "删除成员组",
     "DELETE_MEMBER_GROUP_CONFIRMATION": "是否要删除“{{name}}”？",
-    "DELETE": "删除"
+    "DELETE": "删除",
+    "REFRESH": "刷新"
   },
   "EXTENDED_SITES": {
-    "STORES": "商店",
+    "STORES": "扩展站点商店",
     "NEW_STORE": "新商店",
     "STORE_DETAILS": "商店详细信息",
     "SETUP": "设置",
@@ -387,7 +390,9 @@
     "DUPLICATE_EXTENDED_SITE": "商店已存在。",
     "SHARED_OWNER_CHECKBOX": "通过指定相同的拥有组织，允许其他商店的用户访问该商店",
     "SHARED_OWNER_ORGANIZATION": "共享商店组织",
-    "MORE": "更多"
+    "MORE": "更多",
+    "INVALID_XML_FILE": "请选择有效的 XML 文件 (.xml)。",
+    "REFRESH": "刷新"
   },
   "STORE_PREVIEW": {
     "STORE_PREVIEW": "商店预览",
@@ -498,7 +503,8 @@
     "DESCRIPTION_NOT_UNIQUE": "描述已存在。",
     "CHECKING_ACCOUNT_NUMBER": "正在检查账号",
     "CHECK_ROUTING_NUMBER": "检查银行代号",
-    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "采购订单号已存在。"
+    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "采购订单号已存在。",
+    "REFRESH": "刷新"
   },
   "SCHEDULER": {
     "SCHEDULER": "调度员",
@@ -773,7 +779,8 @@
     "INVALID_MINIMUM_AMOUNT": "最低金额无效。",
     "CONTRACT_IMPORTED_MESSAGE": "已成功导入合同。",
     "DUPLICATE_CONTRACT": "无法创建合同。具有该名称的合同已经存在或最近被删除。如果具有该名称的合同已标记为删除，则应先运行数据库清理实用程序，然后才能重新使用该合同名称。此操作可由站点管理员来完成。",
-    "ACCOUNT": "帐户"
+    "ACCOUNT": "帐户",
+    "INVALID_XML_FILE": "请选择有效的 XML 文件 (.xml)。"
   },
   "MESSAGES": {
     "MESSAGES": "消息",
@@ -915,9 +922,10 @@
   "SHIPPING_JURISDICTIONS": {
     "SHIPPING_JURISDICTIONS": "配送管辖区域",
     "SEARCH": "搜索",
-    "SEARCH_BY_NAME": "按名称",
+    "SEARCH_BY_NAME": "按管辖区域",
     "STATE_FILTER": "状态过滤器",
     "COUNTRY_FILTER": "国家/地区过滤器",
+    "CITY_FILTER": "城市筛选器",
     "STORE_FILTER": "商店过滤器",
     "SELECTED_STORE": "选定商店",
     "CLEAR": "清除",
@@ -933,6 +941,7 @@
     "BACK": "返回",
     "SAVE": "保存",
     "INPUT_ERROR": "页面上有错误。",
+    "SELECT_CITY_PLACEHOLDER": "选择城市",
     "SELECT_STATE_PLACEHOLDER": "选择州/省",
     "SELECT_COUNTRY_PLACEHOLDER": "选择国家/地区",
     "JURISDICTION": "管辖区域",
@@ -991,7 +1000,7 @@
     "LANGUAGE": "语言",
     "ESTIMATED_DELIVERY_TIME": "预计交货时间",
     "EDIT_SHIPPING_MODE": "编辑配送方式",
-    "DEFAULT_SET_SUCCESS_MESSAGE": "已成功更新配送方式。",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "已成功更新缺省配送方式。",
     "SHIPPING_MODE_SAVED_MESSAGE": "已成功保存配送方式。",
     "SHIPPING_MODE_CREATED_MESSAGE": "已成功创建配送方式“{{name}}”。",
     "DELETE_SHIPPING_MODE": "删除配送方式",
@@ -1004,7 +1013,8 @@
     "ESTIMATED_DELIVERY_TIME_DESCRIPTION": "预计交货时间描述",
     "TRACKING_URL": "承运人跟踪 URL",
     "SET_AS_DEFAULT": "设置为缺省值",
-    "LANGUAGE_ALREADY_EXISTS": "此语言的描述已存在。"
+    "LANGUAGE_ALREADY_EXISTS": "此语言的描述已存在。",
+    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "所选的承运人-服务组合已存在。"
   },
   "SHIPPING_CODES": {
     "SHIPPING_CODES": "配送码",
@@ -1060,7 +1070,6 @@
     "CLEAR": "清除",
     "ACTIONS": "操作",
     "NEW_BUTTON": "新建",
-    "NEW_SHIPPING_CHARGES": "新建费用码",
     "OPTIONAL": "（可选）",
     "NEXT": "下一步",
     "CANCEL": "取消",
@@ -1073,7 +1082,6 @@
     "REFRESH": "刷新",
     "DELETE": "删除",
     "NAME": "名称",
-    "CHARGES_TYPES": "费用类型",
     "CHARGES_TYPE": "费用类型",
     "CHARGES_TYPE_PLACEHOLDER": "选择费用类型",
     "UNIT": "单位",
@@ -1082,7 +1090,6 @@
     "SHIPPING_CHARGES_FOR": "{{shippingCodeName}} 的配送费",
     "NO_MATCHING_RECORDS_FOUND": "找不到匹配记录",
     "UNIT_PLACEHOLDER": "选择单位",
-    "STORE_NOT_SELECTED": "未选择商店。",
     "NEW_SHIPPING_CHARGE": "新建配送费",
     "EDIT_SHIPPING_CHARGE": "编辑配送费",
     "SHIPPING_CHARGE_DETAILS": "定义费用明细",
@@ -1095,17 +1102,16 @@
     "ALWAYS": "始终",
     "SHIPPING_CHARGE_START": "开始",
     "SHIPPING_CHARGE_END": "结束",
-    "SHIPPING_CHARGE_END_IS_SMALLER": "结束日期不能早于开始日期。",
-    "CHARGE_START": "开始",
-    "CHARGE_END": "结束",
+    "BEFORE_START_DATE": "结束日期不能早于开始日期。",
+    "RANGE": "范围",
+    "RANGE_START": "范围开始值",
     "DELETE_SHIPPING_CHARGE": "删除配送费",
     "DELETE_SHIPPING_CHARGE_CONFIRMATION": "是否要删除“{{name}}”？",
     "FULFILLMENT_CENTER": "供货中心",
     "JURISDICTION": "管辖区域",
     "SHIPPING_MODE": "配送方式",
     "PRECEDENCE": "优先级",
-    "NEW_FULFILLMENT_OPTION": "新建供货中心选项",
-    "EDIT_FULFILLMENT_OPTION": "编辑供货中心选项",
+    "FULFILLMENT_OPTION": "供货中心选项",
     "INVALID_PRECEDENCE": "优先级必须为数字。",
     "CREATE_FULFILLMENT_OPTION_MESSAGE": "通过将供货中心与管辖区域和配送方式相关联来创建供货中心选项。",
     "DUPLICATE_FULFILLMENT_OPTION_ERROR": "具有相同供货中心、管辖区域和配送方式的供货中心选项已存在。",
@@ -1113,8 +1119,9 @@
     "FULFILLMENT_CENTER_ERROR": "供货中心无效",
     "JURISDICTION_ERROR": "管辖区域无效",
     "SHIPPING_MODE_ERROR": "配送方式无效",
-    "SEARCH_BY_NAME_DESCRIPTION": "按名称",
+    "SEARCH_BY_NAME": "按名称",
     "SHIPPING_CHARGE_DELETED_MESSAGE": "已成功删除配送费。",
+    "SHIPPING_CHARGE_SAVED_MESSAGE": "已成功保存配送费。",
     "INVALID_DATE": "日期无效。",
     "BY_QUANTITY": "按数量",
     "BY_WEIGHT": "按重量",
@@ -1122,9 +1129,14 @@
     "CHARGE": "费用",
     "CURRENCY": "货币",
     "UNIT_OF_MEASURE": "计量单位",
-    "RANGE_IS_OUT_OF_RANGE": "开始日期超出范围",
     "DUPLICATE_RANGE": "范围已存在",
-    "DUPLICATE_NAME_ERROR": "安全码名称已存在"
+    "DUPLICATE_NAME_ERROR": "配送费名称已存在",
+    "INVALID_RANGE_START": "范围开始值无效",
+    "INVALID_CHARGE": "费用无效",
+    "FROM_START_TO_END": "从 {{start}} 到 {{end}}",
+    "FROM_START_AND_UP": "从 {{start}} 起",
+    "SHIPPING_CHARGE_CREATED_MESSAGE": "配送费 '{{name}}' 已成功创建。",
+    "NO_RANGES_ERROR": "您必须定义至少一个费用范围。"
   },
   "TRANSPORTS": {
     "TRANSPORTS": "传输方式",
@@ -1176,7 +1188,8 @@
     "DELETE_MESSAGE_TYPE": "删除消息类型",
     "DELETE": "删除",
     "MESSAGE_TYPES_DELETED_MESSAGE": "已成功删除消息类型。",
-    "NOT_COMPLETE_ERROR": "此页面上的信息不完整。继续下一步操作。"
+    "NOT_COMPLETE_ERROR": "此页面上的信息不完整。继续下一步操作。",
+    "REFRESH": "刷新"
   },
   "SECURITY_POLICIES": {
     "SECURITY_POLICIES": "安全策略",
@@ -1216,12 +1229,13 @@
     "NO_OF_PASSWORDS_KEPT_PASSWORD_HISTORY": "密码历史记录中保存的密码数",
     "DEFINE_CRITERIA": "定义密码策略的条件。",
     "ALLOW_USER_ID_PASSWORD_MATCH": "允许用户标识和密码匹配。",
-    "DO_NOT_ALLOW": "不允许",
+    "DO_NOT_ALLOW": "不允许用户标识和密码匹配。",
     "ACCOUNT_LOCKOUT_THRESHOLD": "帐户锁定阈值",
     "WAIT_TIME": "等待时间",
     "INVALID_VALUE_FOR_NUMERIC_FIELD": "值无效。该值必须是数字。",
     "DELETE_SECURITY_POLICY": "删除安全策略",
-    "DELETE_SECURITY_POLICY_CONFIRMATION": "是否要删除“{{name}}”？"
+    "DELETE_SECURITY_POLICY_CONFIRMATION": "是否要删除“{{name}}”？",
+    "SECURITY_POLICY_DELETE_NOT_ALLOWED": "此安全策略已分配给一个或多个用户，无法删除。"
   },
   "TAX_CODES": {
     "TAX_CODES": "税码",
@@ -1238,6 +1252,7 @@
     "CANCEL": "取消",
     "BACK": "返回",
     "SAVE": "保存",
+    "FINISH": "完成",
     "INPUT_ERROR": "页面上有错误。",
     "DESCRIPTION": "描述",
     "SHOW_FILTERS": "显示过滤器",
@@ -1254,10 +1269,14 @@
     "NAME": "名称",
     "TYPE": "类型",
     "STORE": "商店",
+    "DEFAULT": "缺省值",
     "TYPE_FILTER": "类型",
     "SELECT_TYPE_PLACEHOLDER": "选择类型",
     "TAX_TYPE_SALES": "销售税",
-    "TAX_TYPE_SHIPPING": "航运税"
+    "TAX_TYPE_SHIPPING": "航运税",
+    "IS_DEFAULT": "是",
+    "SET_AS_DEFAULT": "设置为缺省值",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "缺省税码已成功更新。"
   },
   "TAX_CATEGORIES": {
     "TAX_CATEGORIES": "税种",
@@ -1281,7 +1300,7 @@
     "FINISH": "完成",
     "EDIT_TAX_CATEGORY": "编辑税种",
     "TAX_CATEGORY_SAVED_MESSAGE": "已成功保存税种。",
-    "TAX_CATEGORY_CREATED_MESSAGE": "已成功创建税种。",
+    "TAX_CATEGORY_CREATED_MESSAGE": "已成功创建税种“{{name}}”。",
     "DELETE_TAX_CATEGORY": "删除税种",
     "DELETE_TAX_CATEGORY_CONFIRMATION": "是否要删除“{{name}}”？",
     "DELETE": "删除",
@@ -1290,7 +1309,6 @@
     "NAME": "名称",
     "STORE": "商店",
     "SELECT_STORE_PLACEHOLDER": "选择商店",
-    "INVALID_STORE": "商店无效",
     "TYPE": "税费类型",
     "INCLUDE_IN_DISPLAY_PRICE": "包含在显示价格中",
     "TYPE_FILTER": "税费类型",
@@ -1298,7 +1316,7 @@
     "TAX_TYPE_SALES": "销售税",
     "TAX_TYPE_SHIPPING": "航运税",
     "TAX_RATES": "定义税率",
-    "TAX_CATEGORY_ASSIGNMENT": "定义税码",
+    "TAX_CATEGORY_CODES": "定义税码",
     "DISPLAY_NAME": "显示名称",
     "DISPLAY_NAMES": "显示名称",
     "LANGUAGE": "语言",
@@ -1306,9 +1324,14 @@
     "ADD_DISPLAY_NAME": "添加显示名称",
     "NO_DEFINED_DISPLAY_NAMES": "未定义显示名称",
     "FULFILLMENT_CENTER": "供货中心",
-    "DEFINE_RATES_PER_JURISDICTION": "对于该税种适用的每个管辖区域，请定义税率。",
+    "INVALID_FULFILLMENT_CENTER": "供货中心无效",
+    "SELECT_FULFILLMENT_CENTER": "选择供货中心",
+    "DEFINE_RATES_PER_JURISDICTION": "定义管辖区域和供货中心的税率。",
     "JURISDICTION": "管辖区域",
-    "TAX_RATE": "税率 (%)",
+    "SELECT_JURISDICTION": "选择管辖区域",
+    "INVALID_JURISDICTION": "管辖区域无效",
+    "TAX_RATE": "税率",
+    "INVALID_TAX_RATE": "税率无效",
     "SELECTED_RATES": "定义税率",
     "ADD_TAX_RATE": "添加税率",
     "NO_DEFINED_TAX_RATES": "未定义税率",
@@ -1316,12 +1339,16 @@
     "TAX_CODE": "税码",
     "ADD_TAX_CODE": "添加税码",
     "SELECTED_TAX_CODES": "已定义税码",
-    "NO_DEFINED_TAX_CODES": "未选择税码"
+    "NO_DEFINED_TAX_CODES": "未选择税码",
+    "DUPLICATE_NAME_ERROR": "税种名称已存在",
+    "DUPLICATE_TAX_RATE": "指定管辖区域和供货中心的税率已存在。",
+    "NO_TAX_CODES_ERROR": "您必须定义至少一个税码。",
+    "NO_TAX_RATES_ERROR": "您必须定义至少一个税率。"
   },
   "TAX_JURISDICTIONS": {
     "TAX_JURISDICTIONS": "税收管辖区域",
     "SEARCH": "搜索",
-    "SEARCH_BY_NAME": "按名称",
+    "SEARCH_BY_NAME": "按管辖区域",
     "STATE_FILTER": "状态过滤器",
     "COUNTRY_FILTER": "国家/地区过滤器",
     "STORE_FILTER": "商店过滤器",
@@ -1358,6 +1385,7 @@
     "DELETE": "删除",
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "已成功删除税收管辖区域。",
     "NOT_COMPLETE_ERROR": "此页面上的信息不完整。继续下一步操作。",
-    "DUPLICATE_NAME_ERROR": "税收管辖区域名称已存在"
+    "DUPLICATE_NAME_ERROR": "税收管辖区域名称已存在",
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "管辖区域 '{{jurisdictionName}}' 正用于税种中，无法删除。"
   }
 }

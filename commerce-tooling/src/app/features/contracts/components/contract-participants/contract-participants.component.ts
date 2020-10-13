@@ -233,7 +233,6 @@ export class ContractParticipantsComponent implements OnInit, OnDestroy, AfterVi
 			},
 			error => {
 				this.getOrganizationsSubscription = null;
-				console.log(error);
 			});
 		}
 	}
@@ -253,7 +252,7 @@ export class ContractParticipantsComponent implements OnInit, OnDestroy, AfterVi
 			this.getMemberGroupsSubscription = null;
 		}
 		this.getMemberGroupsSubscription = this.memberGroupsService.getMemberGroups({
-			searchString: searchString,
+			searchString,
 			usage: ["UserGroup", "CustomerPrice"],
 			limit: 5
 		}).subscribe(
@@ -269,7 +268,6 @@ export class ContractParticipantsComponent implements OnInit, OnDestroy, AfterVi
 			},
 			error => {
 				this.getMemberGroupsSubscription = null;
-				console.log(error);
 			}
 		);
 	}

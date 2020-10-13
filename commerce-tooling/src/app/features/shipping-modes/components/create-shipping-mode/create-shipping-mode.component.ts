@@ -65,18 +65,9 @@ export class CreateShippingModeComponent {
 					this.shippingModeMainService.createShippingMode().subscribe(name => {
 						this.shippingModeMainService.clearData();
 						this.router.navigate(["shipping-modes", "shipping-mode-list", {storeId: this.route.snapshot.params.storeId}]);
-						this.translateService.get("SHIPPING_MODES.SHIPPING_MODE_CREATED_MESSAGE", {name: name}).subscribe((message: string) => {
+						this.translateService.get("SHIPPING_MODES.SHIPPING_MODE_CREATED_MESSAGE", {name}).subscribe((message: string) => {
 							this.alertService.success({message});
 						});
-					},
-					errorResponse => {
-						if (errorResponse.error && errorResponse.error.errors) {
-							errorResponse.error.errors.forEach((error: { message: any; }) => {
-								this.alertService.error({message: error.message});
-							});
-						} else {
-							console.log(errorResponse);
-						}
 					});
 				} else if (!valid) {
 					this.translateService.get("SHIPPING_MODES.INPUT_ERROR").subscribe((message: string) => {

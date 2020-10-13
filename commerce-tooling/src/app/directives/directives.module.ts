@@ -13,18 +13,24 @@ import { NgModule } from "@angular/core";
 import { RoleDirective } from "./role.directive";
 import { NotRoleDirective } from "./not-role.directive";
 import { ResponsiveGridDirective } from "./responsive-grid.directive";
+import { NavigationEnabledDirective } from "./navigation-enabled.directive";
+import { NavigationDisabledDirective } from "./navigation-disabled.directive";
 
 @NgModule({
 	imports: [],
 	declarations: [
 		RoleDirective,
 		NotRoleDirective,
-		ResponsiveGridDirective
+		ResponsiveGridDirective,
+		NavigationEnabledDirective,
+		NavigationDisabledDirective
 	],
 	exports: [
 		RoleDirective,
 		NotRoleDirective,
-		ResponsiveGridDirective
+		ResponsiveGridDirective,
+		NavigationEnabledDirective,
+		NavigationDisabledDirective
 	]
 })
 export class DirectivesModule { }

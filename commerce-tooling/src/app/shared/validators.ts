@@ -11,7 +11,6 @@
 import { Injectable } from "@angular/core";
 import { FormControl } from "@angular/forms";
 
-
 @Injectable()
 export class HcValidators {
 	static required(control: FormControl) {

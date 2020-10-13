@@ -15,6 +15,7 @@ import { ExtendedSiteMainService } from "../../services/extended-site-main.servi
 import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
 import { MatStepper } from "@angular/material/stepper";
+import { ApiErrorService } from "../../../../services/api-error.service";
 
 @Component({
 	templateUrl: "./create-extended-site.component.html",
@@ -27,6 +28,7 @@ export class CreateExtendedSiteComponent {
 			private route: ActivatedRoute,
 			private extendedSiteMainService: ExtendedSiteMainService,
 			private alertService: AlertService,
+			private apiErrorService: ApiErrorService,
 			private translateService: TranslateService) { }
 
 	cancel() {
@@ -61,20 +63,22 @@ export class CreateExtendedSiteComponent {
 						this.alertService.success({message});
 					});
 				},
-				errorResponse => {
-					if (errorResponse.error && errorResponse.error.errors) {
-						errorResponse.error.errors.forEach(error => {
-							if (error.errorKey === "_ERR_CONTRACT_SYS_GENERIC") {
-								this.translateService.get("EXTENDED_SITES.DUPLICATE_EXTENDED_SITE").subscribe((message: string) => {
-									this.alertService.error({message});
-								});
-							} else {
-								this.alertService.error({message: error.errorMessage});
-							}
-						});
-					} else {
-						console.log(errorResponse);
-					}
+				createErrorResponse => {
+					this.apiErrorService.handleError(createErrorResponse, errorResponse => {
+						if (errorResponse.error && errorResponse.error.errors) {
+							errorResponse.error.errors.forEach(error => {
+								if (error.errorKey === "_ERR_CONTRACT_SYS_GENERIC") {
+									this.translateService.get("EXTENDED_SITES.DUPLICATE_EXTENDED_SITE").subscribe((message: string) => {
+										this.alertService.error({message});
+									});
+								} else {
+									this.alertService.error({message: error.errorMessage});
+								}
+							});
+						} else {
+							console.log(errorResponse);
+						}
+					});
 				});
 			} else if (!valid) {
 				this.translateService.get("EXTENDED_SITES.INPUT_ERROR").subscribe((message: string) => {

@@ -63,6 +63,8 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 	defaultShipModeId = -1;
 	carrierList: Array<any> = [];
 	serviceList: Array<any> = [];
+	carriersLoading = false;
+	servicesLoading = false;
 
 	@ViewChild(MatPaginator, {static: false})
 	paginator: MatPaginator;
@@ -74,6 +76,7 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 	preferenceToken: string;
 	activeColumn = "carrier";
 	sortDirection = "asc";
+	pageIndex = 0;
 
 	private onLanguageChangeSubscription: Subscription = null;
 	private getShippingModesSubscription: Subscription = null;
@@ -113,19 +116,26 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 		this.createFormControls();
 		this.createForm();
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
 			this.currentSearchString = searchString;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getShippingModes();
 		});
 		this.storeSearchString.pipe(debounceTime(250)).subscribe(searchString => {
 			this.getStores(searchString);
 		});
 		this.carrierSearchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.getCarriers(searchString);
+			if (this.carrier.value === searchString) {
+				this.getCarriers(searchString);
+			} else {
+				this.carriersLoading = false;
+			}
 		});
 		this.serviceSearchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.getServices(searchString);
+			if (this.service.value === searchString) {
+				this.getServices(searchString);
+			} else {
+				this.servicesLoading = false;
+			}
 		});
 	}
 
@@ -165,8 +175,7 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 			});
 		}
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getShippingModes();
 		});
 		this.onLanguageChangeSubscription = this.languageService.onLanguageChange.subscribe(() => {
@@ -186,32 +195,33 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 
 	handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getShippingModes();
 	}
 
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getShippingModes();
 	}
 
 	clearCarrierFilter() {
-		this.selectedCarrier = null;
-		this.carrier.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { carrier: "" });
-		this.getShippingModes();
+		if (this.selectedCarrier) {
+			this.selectedCarrier = null;
+			this.carrier.setValue("");
+			this.pageIndex = 0;
+			this.getShippingModes();
+		}
 	}
 
 	clearServiceFilter() {
-		this.selectedService = null;
-		this.service.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { service: "" });
-		this.getShippingModes();
+		if (this.selectedService) {
+			this.selectedService = null;
+			this.service.setValue("");
+			this.pageIndex = 0;
+			this.getShippingModes();
+		}
 	}
 
 	refresh() {
@@ -258,7 +268,6 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 		},
 		error => {
 			this.getStoresSubscription = null;
-			console.log(error);
 		});
 	}
 
@@ -272,7 +281,9 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 		this.selectedStore = store;
 		this.store.setValue(store.identifier);
 		if (currentStoreId !== store.id) {
-			this.paginator.pageIndex = 0;
+			if (currentStoreId !== null) {
+				this.pageIndex = 0;
+			}
 			this.getShippingModes();
 			this.searchCarriers(this.carrier.value);
 			this.searchServices(this.service.value);
@@ -289,6 +300,7 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 
 	getCarriers(searchString: string) {
 		if (this.selectedStore) {
+			this.carriersLoading = true;
 			if (this.getCarriersSubscription !== null) {
 				this.getCarriersSubscription.unsubscribe();
 				this.getCarriersSubscription = null;
@@ -302,11 +314,12 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 			}
 			this.getCarriersSubscription = this.shippingModeCarriersService.getShippingModeCarriers(args).subscribe(response => {
 				this.carrierList = response.items;
+				this.carriersLoading = false;
 				this.getCarriersSubscription = null;
 			},
 			error => {
 				this.getCarriersSubscription = null;
-				console.log(error);
+				this.carriersLoading = false;
 			});
 		}
 	}
@@ -315,19 +328,32 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 		if (value === "") {
 			this.clearCarrierFilter();
 		}
+		this.carriersLoading = true;
 		this.carrierSearchString.next(value);
 	}
 
+	resetCarrierFilter() {
+		if (this.selectedCarrier) {
+			this.carrier.setValue(this.selectedCarrier);
+		} else if (this.carrier.value !== "") {
+			this.carrier.setValue("");
+			this.searchCarriers("");
+		}
+	}
+
 	selectCarrier(carrier: string) {
-		this.selectedCarrier = carrier;
-		this.preferenceService.saveFilter(this.preferenceToken,	{ carrier: carrier });
-		this.carrier.setValue(carrier);
-		this.paginator.pageIndex = 0;
-		this.getShippingModes();
+		if (carrier) {
+			this.selectedCarrier = carrier;
+			this.pageIndex = 0;
+			this.carrier.setValue(carrier);
+			this.carrierList = [];
+			this.getShippingModes();
+		}
 	}
 
 	getServices(searchString: string) {
 		if (this.selectedStore) {
+			this.servicesLoading = true;
 			if (this.getServicesSubscription !== null) {
 				this.getServicesSubscription.unsubscribe();
 				this.getServicesSubscription = null;
@@ -341,11 +367,12 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 			}
 			this.getServicesSubscription = this.shippingModeCodesService.getShippingModeCodes(args).subscribe(response => {
 				this.serviceList = response.items;
+				this.servicesLoading = false;
 				this.getServicesSubscription = null;
 			},
 			error => {
 				this.getServicesSubscription = null;
-				console.log(error);
+				this.servicesLoading = false;
 			});
 		}
 	}
@@ -354,15 +381,27 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 		if (value === "") {
 			this.clearServiceFilter();
 		}
+		this.carriersLoading = true;
 		this.serviceSearchString.next(value);
 	}
 
+	resetServiceFilter() {
+		if (this.selectedService) {
+			this.service.setValue(this.selectedService);
+		} else if (this.service.value !== "") {
+			this.service.setValue("");
+			this.searchServices("");
+		}
+	}
+
 	selectService(service: any) {
-		this.selectedService = service;
-		this.preferenceService.saveFilter(this.preferenceToken,	{ service: service });
-		this.service.setValue(service);
-		this.paginator.pageIndex = 0;
-		this.getShippingModes();
+		if (service) {
+			this.selectedService = service;
+			this.pageIndex = 0;
+			this.service.setValue(service);
+			this.serviceList = [];
+			this.getShippingModes();
+		}
 	}
 
 	deleteShippingMode(shippingMode: any) {
@@ -389,7 +428,7 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 		const args: StoreDefaultsService.UpdateStoreDefaultByIdParams = {
 			id:  this.selectedStore.id,
 			StoreDefault: {
-				shipModeId: shipModeId
+				shipModeId
 			}
 		};
 		this.storeDefaultsService.updateStoreDefaultByIdResponse(args).subscribe(response => {
@@ -397,15 +436,6 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 				this.alertService.success({message});
 			});
 			this.getShippingModes();
-		},
-		errorResponse => {
-			if (errorResponse.error = errorResponse.error.errors) {
-				errorResponse.error.errors.forEach(error => {
-					this.alertService.error({message: error.errorMessage});
-				});
-			} else {
-				console.log(errorResponse);
-			}
 		});
 	}
 
@@ -443,6 +473,16 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 
 	private getShippingModes() {
 		if (this.selectedStore) {
+			this.preferenceService.save(this.preferenceToken, {
+				searchString: this.currentSearchString,
+				sort: this.sort,
+				pageIndex: this.pageIndex,
+				pageSize: this.pageSize,
+				filter: {
+					carrier: this.selectedCarrier,
+					service: this.selectedService
+				}
+			});
 			this.defaultShipModeId = -1;
 			this.storeDefaultsService.getStoreDefaultById({
 				id: this.selectedStore.id
@@ -451,11 +491,11 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 			});
 			const args: ShippingModesService.GetShippingModesParams = {
 				storeId:  this.selectedStore.id,
-				offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+				offset: this.pageIndex * this.paginator.pageSize,
 				limit: this.paginator.pageSize
 			};
 			if (this.currentSearchString) {
-			 	args.searchString = this.currentSearchString;
+				args.searchString = this.currentSearchString;
 			}
 			let sort = this.sort.active;
 			if (this.sort.direction === "asc") {
@@ -536,7 +576,8 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 				sort,
 				searchString,
 				filter,
-				showFilters
+				showFilters,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -560,6 +601,9 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 			}
 			if (showFilters) {
 				this.showFilters = showFilters;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}

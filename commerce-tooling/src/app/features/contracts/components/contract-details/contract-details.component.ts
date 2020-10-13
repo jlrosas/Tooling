@@ -181,7 +181,7 @@ export class ContractDetailsComponent implements OnInit, OnDestroy, AfterViewIni
 		this.contractMainService.contractData.baseContractId = null;
 		this.contractMainService.contractData.baseContractName = null;
 		this.getBaseContractsSubscription = this.contractsService.getContracts({
-			searchString: searchString,
+			searchString,
 			accountId: this.route.snapshot.params.accountId,
 			baseContracts: true,
 			status: "active",
@@ -198,7 +198,6 @@ export class ContractDetailsComponent implements OnInit, OnDestroy, AfterViewIni
 			},
 			error => {
 				this.getBaseContractsSubscription = null;
-				console.log(error);
 			}
 		);
 	}

@@ -34,7 +34,7 @@
 			<mat-step #descriptionsStep label="{{'SHIPPING_MODES.SHIPPING_MODE_DESCRIPTION' | translate}}">
 				<hc-shipping-mode-description-list *ngIf="stepper.selected === descriptionsStep" [step]="descriptionsStep" mode="edit" (save)="save()">
 				</hc-shipping-mode-description-list>
-			</mat-step>	
+			</mat-step>
 		</mat-vertical-stepper>
 	</div>
 </div>

@@ -11,7 +11,7 @@
 
 
 <div>
-	<h1 class="hc-type-h1">
+	<h1 class="hc-type-h1" *hcNavigationEnabled>
 		{{'USER_MANAGEMENT.USERS' | translate}}
 	</h1>
 	<div class="hc-table-section hc-paper">
@@ -30,11 +30,13 @@
 					</span>
 				</mat-form-field>
 			</form>
-			<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'USER_MANAGEMENT.SHOW_FILTERS' | translate}}</mat-slide-toggle>
-			<button class="mat-flat-button mat-primary" (click)="createUser()">{{'USER_MANAGEMENT.NEW_BUTTON' | translate}}</button>
-			<button class="mat-icon-button-label" matTooltip="{{'USER_MANAGEMENT.REFRESH' | translate}}" mat-icon-button (click)="refreshUsers()">
-				<mat-icon color="primary">refresh</mat-icon>
-			</button>
+			<div class="hc-table-buttons">
+				<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'USER_MANAGEMENT.SHOW_FILTERS' | translate}}</mat-slide-toggle>
+				<button class="mat-flat-button mat-primary" (click)="createUser()">{{'USER_MANAGEMENT.NEW_BUTTON' | translate}}</button>
+				<button class="mat-icon-button-label" matTooltip="{{'USER_MANAGEMENT.REFRESH' | translate}}" mat-icon-button (click)="refreshUsers()">
+					<mat-icon color="primary">refresh</mat-icon>
+				</button>
+			</div>
 		</div>
 		<div *ngIf="showFilters">
 			<div class="hc-table-filters">
@@ -42,17 +44,18 @@
 					<mat-form-field appearance="outline" class="icon-suffix">
 						<mat-label>{{'USER_MANAGEMENT.PARENT_ORGANIZATION_FILTER'| translate}}</mat-label>
 						<input matInput id="parentOrganization" placeholder="{{'USER_MANAGEMENT.SELECT_PARENT_ORGANIZATION_PLACEHOLDER'| translate}}"
-								formControlName="parentOrganization" (input)="searchParentOrganizations($event.target.value)" [matAutocomplete]="auto">
+								formControlName="parentOrganization" (input)="searchParentOrganizations($event.target.value)" [matAutocomplete]="auto"
+								(blur)="resetParentOrganizationFilter()">
 						<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectParentOrganization($event.option.value)">
 							<mat-option *ngFor="let org of organizationList" [value]="org">
 								{{org.organizationName}}
 							</mat-option>
-							<mat-option *ngIf="!organizationsLoading && organizationList && organizationList.length == 0" [value]="null">
+							<mat-option *ngIf="!organizationsLoading && organizationList.length == 0 && (!parentOrganizationFilter || parentOrganizationFilter.organizationName !== parentOrganization.value)" [value]="null">
 								{{'USER_MANAGEMENT.NO_MATCHING_RECORDS_FOUND' | translate }}
 							</mat-option>
 						</mat-autocomplete>
 						<mat-icon matSuffix>filter_list</mat-icon>
-						<span class="filter-clear" *ngIf="parentOrganizationId != null" (click)="clearParentOrganization()">
+						<span class="filter-clear" *ngIf="parentOrganizationFilter != null" (click)="clearParentOrganization()">
 							<mat-icon>clear</mat-icon>
 							<span class="clear-margin">{{'USER_MANAGEMENT.CLEAR' | translate}}</span>
 						</span>
@@ -72,6 +75,21 @@
 							</mat-option>
 						</mat-select>
 					</mat-form-field>
+
+					<mat-form-field appearance="outline" *hcRole="[-1,-3,-4,-12,-14]">
+						<mat-label>{{'USER_MANAGEMENT.STORE'| translate}}</mat-label>
+						<input matInput id="store" (input)="searchStores($event.target.value)" placeholder="{{'USER_MANAGEMENT.SELECT_STORE_PLACEHOLDER'| translate}}"
+								formControlName="storeDropdown" [matAutocomplete]="storeAutocomplete">
+						<mat-autocomplete #storeAutocomplete="matAutocomplete" (optionSelected)="selectStore($event.option.value)">
+							<mat-option *ngFor="let store of storeList" [value]="store">
+								{{store.identifier}}
+							</mat-option>
+						</mat-autocomplete>
+						<span class="filter-clear" *ngIf="storeFilter != null" (click)="clearStore()">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'USER_MANAGEMENT.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
 				</form>
 			</div>
 		</div>
@@ -79,14 +97,14 @@
 		<!-- TABLE PART (START) -->
 		<div class="hc-table-wrapper">
 			<table mat-table [dataSource]="model" class="" matSort matSortActive="{{activeColumn}}" matSortDirection="{{sortDirection}}">
-	
+
 				<ng-container matColumnDef="loginId" sticky>
 					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{'USER_MANAGEMENT.LOGIN_ID' | translate}}</th>
 					<td mat-cell *matCellDef="let row">
 						<a [routerLink]="['/users/edit-user', row.id]">{{row.loginId}}</a>
 					</td>
 				</ng-container>
-	
+
 				<ng-container matColumnDef="firstName">
 					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{'USER_MANAGEMENT.FIRST_NAME' | translate}}</th>
 					<td mat-cell *matCellDef="let row">{{row.firstName}}</td>
@@ -95,12 +113,12 @@
 					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{'USER_MANAGEMENT.LAST_NAME' | translate}}</th>
 					<td mat-cell *matCellDef="let row">{{row.lastName}}</td>
 				</ng-container>
-	
+
 				<ng-container matColumnDef="parentOrganizationName">
 					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{'USER_MANAGEMENT.PARENT_ORGANIZATION' | translate}}</th>
 					<td mat-cell *matCellDef="let row">{{row.parentOrganizationName}}</td>
 				</ng-container>
-	
+
 				<ng-container matColumnDef="role">
 					<th mat-header-cell *matHeaderCellDef>{{'USER_MANAGEMENT.ROLE' | translate}}</th>
 					<td mat-cell *matCellDef="let row">{{userRolesMap[row.id]}}</td>
@@ -118,30 +136,31 @@
 				<ng-container matColumnDef="actions" stickyEnd>
 					<th mat-header-cell *matHeaderCellDef>{{'USER_MANAGEMENT.ACTIONS' | translate}}</th>
 					<td mat-cell *matCellDef="let row">
-						<div *ngIf="row.status === 0">
-							<button mat-icon-button 
-									matTooltip="{{'USER_MANAGEMENT.SET_ENABLED' | translate}}" matTooltipPosition="below"
-									(click)="setUserStatus(row.id, 1)">
-								<mat-icon class="green-icon">check_circle</mat-icon>
-							</button>
-						</div>
-						<div *ngIf="row.status === 1">	
-							<button mat-icon-button
-									matTooltip="{{'USER_MANAGEMENT.SET_DISABLED' | translate}}" matTooltipPosition="below"
-									(click)="setUserStatus(row.id, 0)">
-								<mat-icon class="red-icon">highlight_off</mat-icon>
-							</button>
-						</div>
+						<button *ngIf="row.status === 0" mat-icon-button
+								matTooltip="{{'USER_MANAGEMENT.SET_ENABLED' | translate}}" matTooltipPosition="below"
+								(click)="setUserStatus(row.id, 1)">
+							<mat-icon class="green-icon">check_circle</mat-icon>
+						</button>
+						<button *ngIf="row.status === 1" mat-icon-button
+								matTooltip="{{'USER_MANAGEMENT.SET_DISABLED' | translate}}" matTooltipPosition="below"
+								(click)="setUserStatus(row.id, 0)">
+							<mat-icon class="red-icon">highlight_off</mat-icon>
+						</button>
+						<button *ngIf="registeredCustomerMap[row.id] && row.status === 1"
+								mat-icon-button matTooltip="{{'USER_MANAGEMENT.RESET_PASSWORD' | translate}}" matTooltipPosition="below"
+								(click)="resetPassword(row.id, row.loginId)">
+							<mat-icon class="red-icon">autorenew</mat-icon>
+						</button>
 					</td>
 				</ng-container>
-	
+
 				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 			</table>
 		</div>
 		<!-- TABLE PART (END) -->
 
-		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+		<mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
 				(page)="handlePage($event)">
 		</mat-paginator>
 	</div>

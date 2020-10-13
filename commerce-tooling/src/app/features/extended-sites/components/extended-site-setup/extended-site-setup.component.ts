@@ -145,22 +145,19 @@ export class ExtendedSiteSetupComponent implements OnInit, AfterViewInit, OnDest
 			sort: "organizationName",
 			limit: 10,
 			offset: this.organizationList.length
-		}).subscribe(
-			response => {
-				if (this.organizationList.length === 0 && response.items.length === 1 &&
-						response.items[0].organizationName === this.organization.value) {
-					this.selectOrganization(response.items[0]);
-				} else {
-					this.organizationList = [ ...this.organizationList, ...response.items];
-				}
-				this.getOrganizationsSubscription = null;
-				this.organizationCount = response.count;
-			},
-			error => {
-				this.getOrganizationsSubscription = null;
-				console.log(error);
+		}).subscribe(response => {
+			if (this.organizationList.length === 0 && response.items.length === 1 &&
+					response.items[0].organizationName === this.organization.value) {
+				this.selectOrganization(response.items[0]);
+			} else {
+				this.organizationList = [ ...this.organizationList, ...response.items];
 			}
-		);
+			this.getOrganizationsSubscription = null;
+			this.organizationCount = response.count;
+		},
+		error => {
+			this.getOrganizationsSubscription = null;
+		});
 	}
 
 	searchOrganizations(value) {
@@ -188,29 +185,26 @@ export class ExtendedSiteSetupComponent implements OnInit, AfterViewInit, OnDest
 			identifier: "*" + searchString + "*",
 			usage: "HCL_ESiteToolStorefrontAssetStores",
 			limit: 10
-		}).subscribe(
-			response => {
-				if (response.items.length === 1 && response.items[0].identifier === this.storefrontAssetStore.value) {
-					this.selectStorefrontAssetStore(response.items[0]);
-				} else {
-					response.items.sort((store1, store2) => {
-						let result = 0;
-						if (store1.identifier < store2.identifier) {
-							result = -1;
-						} else if (store1.identifier > store2.identifier) {
-							result = 1;
-						}
-						return result;
-					});
-					this.storefrontAssetStoreList = response.items;
-				}
-				this.getStorefrontAssetStoresSubscription = null;
-			},
-			error => {
-				this.getStorefrontAssetStoresSubscription = null;
-				console.log(error);
+		}).subscribe(response => {
+			if (response.items.length === 1 && response.items[0].identifier === this.storefrontAssetStore.value) {
+				this.selectStorefrontAssetStore(response.items[0]);
+			} else {
+				response.items.sort((store1, store2) => {
+					let result = 0;
+					if (store1.identifier < store2.identifier) {
+						result = -1;
+					} else if (store1.identifier > store2.identifier) {
+						result = 1;
+					}
+					return result;
+				});
+				this.storefrontAssetStoreList = response.items;
 			}
-		);
+			this.getStorefrontAssetStoresSubscription = null;
+		},
+		error => {
+			this.getStorefrontAssetStoresSubscription = null;
+		});
 	}
 
 	searchStorefrontAssetStores(value) {
@@ -234,29 +228,26 @@ export class ExtendedSiteSetupComponent implements OnInit, AfterViewInit, OnDest
 			identifier: "*" + searchString + "*",
 			usage: "HCL_ESiteToolCatalogAssetStores",
 			limit: 10
-		}).subscribe(
-			response => {
-				if (response.items.length === 1 && response.items[0].identifier === this.catalogAssetStore.value) {
-					this.selectCatalogAssetStore(response.items[0]);
-				} else {
-					response.items.sort((store1, store2) => {
-						let result = 0;
-						if (store1.identifier < store2.identifier) {
-							result = -1;
-						} else if (store1.identifier > store2.identifier) {
-							result = 1;
-						}
-						return result;
-					});
-					this.catalogAssetStoreList = response.items;
-				}
-				this.getCatalogAssetStoresSubscription = null;
-			},
-			error => {
-				this.getCatalogAssetStoresSubscription = null;
-				console.log(error);
+		}).subscribe(response => {
+			if (response.items.length === 1 && response.items[0].identifier === this.catalogAssetStore.value) {
+				this.selectCatalogAssetStore(response.items[0]);
+			} else {
+				response.items.sort((store1, store2) => {
+					let result = 0;
+					if (store1.identifier < store2.identifier) {
+						result = -1;
+					} else if (store1.identifier > store2.identifier) {
+						result = 1;
+					}
+					return result;
+				});
+				this.catalogAssetStoreList = response.items;
 			}
-		);
+			this.getCatalogAssetStoresSubscription = null;
+		},
+		error => {
+			this.getCatalogAssetStoresSubscription = null;
+		});
 	}
 
 	searchCatalogAssetStores(value) {
@@ -320,7 +311,6 @@ export class ExtendedSiteSetupComponent implements OnInit, AfterViewInit, OnDest
 			},
 			error => {
 				this.getSharedOwnerOrganizationsSubscription = null;
-				console.log(error);
 			});
 		}
 	}
@@ -419,17 +409,14 @@ export class ExtendedSiteSetupComponent implements OnInit, AfterViewInit, OnDest
 		this.getOrganizationsSubscription = this.organizationsService.OrganizationGetManageableOrganizations({
 			organizationName: defaultOrganizationName,
 			limit: 1
-		}).subscribe(
-			response => {
-				if (response.items.length > 0 && response.items[0].organizationName === defaultOrganizationName) {
-					this.selectOrganization(response.items[0]);
-				}
-				this.getOrganizationsSubscription = null;
-			},
-			error => {
-				this.getOrganizationsSubscription = null;
-				console.log(error);
+		}).subscribe(response => {
+			if (response.items.length > 0 && response.items[0].organizationName === defaultOrganizationName) {
+				this.selectOrganization(response.items[0]);
 			}
-		);
+			this.getOrganizationsSubscription = null;
+		},
+		error => {
+			this.getOrganizationsSubscription = null;
+		});
 	}
 }

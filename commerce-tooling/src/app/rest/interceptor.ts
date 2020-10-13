@@ -34,9 +34,8 @@ export class JwtInterceptor implements HttpInterceptor {
 					});
 				}
 			});
-		} else {
-			return nextHttpHandler.handle(request);
 		}
+		return nextHttpHandler.handle(request);
 	}
 
 	sendAuthenticatedRequest(request: HttpRequest<any>, nextHttpHandler: HttpHandler, observer: Observer<HttpEvent<any>>,
@@ -49,7 +48,7 @@ export class JwtInterceptor implements HttpInterceptor {
 				locale: LanguageService.locale
 			}
 		});
-		window.top.postMessage({"action": "START_PROGRESS_INDICATOR"}, "*");
+		window.parent.postMessage({"action": "START_PROGRESS_INDICATOR"}, "*");
 		nextHttpHandler.handle(jwtRequest).subscribe(
 			response => {
 				if (isTokenValidSubscription) {
@@ -58,7 +57,7 @@ export class JwtInterceptor implements HttpInterceptor {
 				observer.next(response);
 			},
 			err => {
-				window.top.postMessage({"action": "STOP_PROGRESS_INDICATOR"}, "*");
+				window.parent.postMessage({"action": "STOP_PROGRESS_INDICATOR"}, "*");
 				if (err.status === 401) {
 					this.authService.setJwt(null);
 					if (!isTokenValidSubscription) {
@@ -76,7 +75,7 @@ export class JwtInterceptor implements HttpInterceptor {
 				}
 			},
 			() => {
-				window.top.postMessage({"action": "STOP_PROGRESS_INDICATOR"}, "*");
+				window.parent.postMessage({"action": "STOP_PROGRESS_INDICATOR"}, "*");
 				observer.complete();
 			}
 		);

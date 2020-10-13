@@ -116,7 +116,7 @@ export class MemberGroupMembersComponent implements OnInit, AfterViewInit, OnDes
 				this.assignedMembers.push({
 					memberId: member.id,
 					memberName: member.name,
-					exclude: exclude
+					exclude
 				});
 			}
 		} else {
@@ -181,36 +181,30 @@ export class MemberGroupMembersComponent implements OnInit, AfterViewInit, OnDes
 				taskName: "ManageExcludingAD",
 				organizationName: searchString,
 				limit: 10
-			}).subscribe(
-				response => {
-					this.includeMemberList = response.items;
-					this.getIncludeMembersSubscription = null;
-					this.includeMemberList.forEach(member => {
-						member.name = member.organizationName;
-					});
-				},
-				error => {
-					this.getIncludeMembersSubscription = null;
-					console.log(error);
-				}
-			);
+			}).subscribe(response => {
+				this.includeMemberList = response.items;
+				this.getIncludeMembersSubscription = null;
+				this.includeMemberList.forEach(member => {
+					member.name = member.organizationName;
+				});
+			},
+			error => {
+				this.getIncludeMembersSubscription = null;
+			});
 		} else {
 			this.getIncludeMembersSubscription = this.usersService.UsersGetManageableUsers({
-				searchString: searchString,
+				searchString,
 				limit: 10
-			}).subscribe(
-				response => {
-					this.includeMemberList = response.items;
-					this.getIncludeMembersSubscription = null;
-					this.includeMemberList.forEach(member => {
-						member.name = this.getUserDisplayName(member);
-					});
-				},
-				error => {
-					this.getIncludeMembersSubscription = null;
-					console.log(error);
-				}
-			);
+			}).subscribe(response => {
+				this.includeMemberList = response.items;
+				this.getIncludeMembersSubscription = null;
+				this.includeMemberList.forEach(member => {
+					member.name = this.getUserDisplayName(member);
+				});
+			},
+			error => {
+				this.getIncludeMembersSubscription = null;
+			});
 		}
 	}
 
@@ -224,36 +218,30 @@ export class MemberGroupMembersComponent implements OnInit, AfterViewInit, OnDes
 				taskName: "ManageExcludingAD",
 				organizationName: searchString,
 				limit: 10
-			}).subscribe(
-				response => {
-					this.excludeMemberList = response.items;
-					this.getExcludeMembersSubscription = null;
-					this.excludeMemberList.forEach(member => {
-						member.name = member.organizationName;
-					});
-				},
-				error => {
-					this.getExcludeMembersSubscription = null;
-					console.log(error);
-				}
-			);
+			}).subscribe(response => {
+				this.excludeMemberList = response.items;
+				this.getExcludeMembersSubscription = null;
+				this.excludeMemberList.forEach(member => {
+					member.name = member.organizationName;
+				});
+			},
+			error => {
+				this.getExcludeMembersSubscription = null;
+			});
 		} else {
 			this.getExcludeMembersSubscription = this.usersService.UsersGetManageableUsers({
-				searchString: searchString,
+				searchString,
 				limit: 10
-			}).subscribe(
-				response => {
-					this.excludeMemberList = response.items;
-					this.getExcludeMembersSubscription = null;
-					this.excludeMemberList.forEach(member => {
-						member.name = this.getUserDisplayName(member);
-					});
-				},
-				error => {
-					this.getExcludeMembersSubscription = null;
-					console.log(error);
-				}
-			);
+			}).subscribe(response => {
+				this.excludeMemberList = response.items;
+				this.getExcludeMembersSubscription = null;
+				this.excludeMemberList.forEach(member => {
+					member.name = this.getUserDisplayName(member);
+				});
+			},
+			error => {
+				this.getExcludeMembersSubscription = null;
+			});
 		}
 	}
 

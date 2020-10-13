@@ -159,8 +159,8 @@ export class MessageConfigurationComponent implements OnInit {
 			for (const name of Object.keys(connectionSpecifications)) {
 				const label = this.fieldTextKeys[name] ? this.fieldTextKeys[name] : name;
 				this.fields.push({
-					name: name,
-					label: label,
+					name,
+					label,
 					encrypted: this.encryptedFields.has(name),
 					connectionSpecification: true
 				});
@@ -171,8 +171,8 @@ export class MessageConfigurationComponent implements OnInit {
 			for (const name of Object.keys(interactionSpecifications)) {
 				const label = this.fieldTextKeys[name] ? this.fieldTextKeys[name] : name;
 				this.fields.push({
-					name: name,
-					label: label,
+					name,
+					label,
 					encrypted: this.encryptedFields.has(name),
 					interactionSpecification: true
 				});
@@ -189,4 +189,3 @@ export class MessageConfigurationComponent implements OnInit {
 		}, 250);
 	}
 }
-

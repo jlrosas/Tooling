@@ -42,7 +42,6 @@ import { EditTaxCodeComponent } from "./components/edit-tax-code/edit-tax-code.c
 import { CurrencyService } from "../../services/currency.service";
 import { DeleteTaxCodeDialogComponent } from "./components/delete-tax-code-dialog/delete-tax-code-dialog.component";
 
-
 @NgModule({
 	imports: [
 		CommonModule,

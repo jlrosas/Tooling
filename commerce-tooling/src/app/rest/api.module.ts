@@ -59,11 +59,14 @@ import { CalculationRangesService } from './services/calculation-ranges.service'
 import { CalculationRangeDetailsService } from './services/calculation-range-details.service';
 import { CalculationCodesService } from './services/calculation-codes.service';
 import { CalculationCodeDescriptionsService } from './services/calculation-code-descriptions.service';
+import { QuantityUnitsService } from './services/quantity-units.service';
 import { TaxJurisdictionCalculationRulesService } from './services/tax-jurisdiction-calculation-rules.service';
 import { ShippingModesService } from './services/shipping-modes.service';
+import { QuantityUnitDescriptionsService } from './services/quantity-unit-descriptions.service';
 import { ShippingModeDescriptionsService } from './services/shipping-mode-descriptions.service';
 import { ShippingModeCarriersService } from './services/shipping-mode-carriers.service';
 import { ShippingModeCodesService } from './services/shipping-mode-codes.service';
+import { ShippingJurisdictionCalculationRulesService } from './services/shipping-jurisdiction-calculation-rules.service';
 import { ShippingArrangementsService } from './services/shipping-arrangements.service';
 import { StoreEntityCalculationUsagesService } from './services/store-entity-calculation-usages.service';
 import { StoreDefaultsService } from './services/store-defaults.service';
@@ -137,11 +140,14 @@ import { StoreDefaultsService } from './services/store-defaults.service';
     CalculationRangeDetailsService,
     CalculationCodesService,
     CalculationCodeDescriptionsService,
+    QuantityUnitsService,
     TaxJurisdictionCalculationRulesService,
     ShippingModesService,
+    QuantityUnitDescriptionsService,
     ShippingModeDescriptionsService,
     ShippingModeCarriersService,
     ShippingModeCodesService,
+    ShippingJurisdictionCalculationRulesService,
     ShippingArrangementsService,
     StoreEntityCalculationUsagesService,
     StoreDefaultsService

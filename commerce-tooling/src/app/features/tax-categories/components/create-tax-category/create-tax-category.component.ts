@@ -78,15 +78,6 @@ export class CreateTaxCategoryComponent {
 							this.translateService.get("TAX_CATEGORIES.TAX_CATEGORY_CREATED_MESSAGE", {name}).subscribe((message: string) => {
 								this.alertService.success({message});
 							});
-						},
-						errorResponse => {
-							if (errorResponse.error && errorResponse.error.errors) {
-								errorResponse.error.errors.forEach((error: { message: any; }) => {
-									this.alertService.error({message: error.message});
-								});
-							} else {
-								console.log(errorResponse);
-							}
 						});
 					}
 				} else if (!valid) {

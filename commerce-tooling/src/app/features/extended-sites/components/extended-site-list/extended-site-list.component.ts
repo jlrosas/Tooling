@@ -9,7 +9,7 @@
  *-------------------------------------------------------------------
  */
 
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from "@angular/core";
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, OnDestroy } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { Router } from "@angular/router";
@@ -24,8 +24,10 @@ import { ExtendedSiteMainService } from "../../services/extended-site-main.servi
 import { ExtendedSitesService } from "../../../../rest/services/extended-sites.service";
 import { OnlineStoresService } from "../../../../rest/services/online-stores.service";
 import { AlertService } from "../../../../services/alert.service";
+import { LanguageService } from "../../../../services/language.service";
+import { ApiErrorService } from "../../../../services/api-error.service";
 import { CurrentUserService } from "../../../../services/current-user.service";
-import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from "../../../../shared/constants";
+import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS, DATE_FORMAT_OPTIONS } from "../../../../shared/constants";
 import { PreferenceService } from "../../../../services/preference.service";
 import { DeleteExtendedSiteDialogComponent } from "../delete-extended-site-dialog/delete-extended-site-dialog.component";
 
@@ -33,7 +35,7 @@ import { DeleteExtendedSiteDialogComponent } from "../delete-extended-site-dialo
 	templateUrl: "./extended-site-list.component.html",
 	styleUrls: ["./extended-site-list.component.scss"]
 })
-export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
+export class ExtendedSiteListComponent implements OnInit, OnDestroy, AfterViewInit {
 	listFilterForm: FormGroup;
 	hubStore: FormControl;
 	statusSelect: FormControl;
@@ -61,6 +63,7 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 	preferenceToken: string;
 	activeColumn = "identifier";
 	sortDirection = "asc";
+	pageIndex = 0;
 
 	@ViewChild("importFileInput", {static: false}) importFileInput: ElementRef<HTMLInputElement>;
 
@@ -68,6 +71,7 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 	private hubStoreSearchString: Subject<string> = new Subject<string>();
 	private getHubStoresSubscription: Subscription = null;
 	private getExtendedSitesSubscription: Subscription = null;
+	private onLangChangeSubscription: Subscription = null;
 
 	private statusTextKeys = {
 		"open": "EXTENDED_SITES.OPEN",
@@ -92,6 +96,8 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 			private extendedSiteMainService: ExtendedSiteMainService,
 			private onlineStoresService: OnlineStoresService,
 			private alertService: AlertService,
+			private languageService: LanguageService,
+			private apiErrorService: ApiErrorService,
 			private currentUserService: CurrentUserService,
 			private preferenceService: PreferenceService,
 			private dialog: MatDialog) { }
@@ -101,13 +107,15 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 		this.createFormControls();
 		this.createForm();
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.currentSearchString = searchString;
 			this.getExtendedSites();
 		});
 		this.hubStoreSearchString.pipe(debounceTime(250)).subscribe(searchString => {
 			this.getHubStores(searchString);
+		});
+		this.onLangChangeSubscription = this.languageService.onLanguageChange.subscribe(() => {
+			this.getExtendedSites();
 		});
 	}
 
@@ -136,10 +144,15 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 			}
 		});
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getExtendedSites();
 		});
+	}
+
+	ngOnDestroy() {
+		if (this.onLangChangeSubscription) {
+			this.onLangChangeSubscription.unsubscribe();
+		}
 	}
 
 	toggleShowFilters(e: any) {
@@ -153,15 +166,14 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 
 	public handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getExtendedSites();
 	}
 
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getExtendedSites();
 	}
 
@@ -171,8 +183,17 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 
 	getExtendedSites() {
 		if (this.selectedHubStore != null) {
+			this.preferenceService.save(this.preferenceToken, {
+				searchString: this.currentSearchString,
+				sort: this.sort,
+				pageIndex: this.pageIndex,
+				pageSize: this.pageSize,
+				filter: {
+					statusFilter: this.selectedStatus
+				}
+			});
 			const args: ExtendedSitesService.GetExtendedSitesParams = {
-				offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+				offset: this.pageIndex * this.paginator.pageSize,
 				limit: this.paginator.pageSize,
 				storeId: this.selectedHubStore.id
 			};
@@ -206,9 +227,9 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 						id: item.id,
 						identifier: item.identifier,
 						name: item.name,
-						createDate: (new Date(item.createDate)).toLocaleString(),
+						createDate: new Intl.DateTimeFormat(LanguageService.language, DATE_FORMAT_OPTIONS).format((new Date(item.createDate))),
 						status: item.status,
-						statusTextKey: statusTextKey
+						statusTextKey
 					};
 					data.push(extendedSite);
 				}
@@ -236,18 +257,19 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 						this.extendedSitesService.importExtendedSiteResponse({
 							storeId: this.selectedHubStore.id,
 							body: text
-						}).subscribe(
-							response => {
-								this.translateService.get("EXTENDED_SITES.STORE_IMPORTED_MESSAGE").subscribe((message: string) => {
-									this.alertService.success({message});
-								});
-								this.getExtendedSites();
-							},
-							errorResponse => {
+						}).subscribe(response => {
+							this.translateService.get("EXTENDED_SITES.STORE_IMPORTED_MESSAGE").subscribe((message: string) => {
+								this.alertService.success({message});
+							});
+							this.getExtendedSites();
+						},
+						importErrorResponse => {
+							this.apiErrorService.handleError(importErrorResponse, errorResponse => {
 								if (errorResponse.error && errorResponse.error.errors) {
 									errorResponse.error.errors.forEach(error => {
 										if (error.errorKey === "_ERR_CONTRACT_UNIQUE_KEY_ALREADY_EXISTS") {
-											this.translateService.get("EXTENDED_SITES.DUPLICATE_EXTENDED_SITE").subscribe((message: string) => {
+											this.translateService.get("EXTENDED_SITES.DUPLICATE_EXTENDED_SITE")
+													.subscribe((message: string) => {
 												this.alertService.error({message});
 											});
 										} else {
@@ -258,8 +280,8 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 								} else {
 									console.log(errorResponse);
 								}
-							}
-						);
+							});
+						});
 					});
 				} else  {
 					this.translateService.get("EXTENDED_SITES.INVALID_XML_FILE").subscribe((message: string) => {
@@ -289,28 +311,15 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 
 	exportExtendedSite(id: string) {
 		this.alertService.clear();
-		this.extendedSitesService.exportExtendedSiteResponse(id).subscribe(
-			response => {
-				saveAs(response.body, "storeexport_" + id + ".xml");
-			},
-			errorResponse => {
-				if (errorResponse.error = errorResponse.error.errors) {
-					errorResponse.error.errors.forEach(error => {
-						this.alertService.error({message: error.errorMessage});
-					});
-				} else {
-					console.log(errorResponse);
-				}
-			}
-		);
+		this.extendedSitesService.exportExtendedSiteResponse(id).subscribe(response => {
+			saveAs(response.body, "storeexport_" + id + ".xml");
+		});
 	}
 
 	selectStatus(status: string) {
 		if (this.selectedStatus !== status) {
-			this.preferenceService.saveFilter(this.preferenceToken,
-				{statusFilter: status});
 			this.selectedStatus = status;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getExtendedSites();
 		}
 	}
@@ -318,8 +327,7 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 	clearStatus($event) {
 		this.selectedStatus = null;
 		this.statusSelect.setValue(null);
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { statusFilter: null });
+		this.pageIndex = 0;
 		this.getExtendedSites();
 		$event.stopPropagation();
 	}
@@ -333,29 +341,26 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 			usage: "HCL_ESiteTool",
 			identifier: "*" + searchString + "*",
 			limit: 10
-		}).subscribe(
-			response => {
-				this.getHubStoresSubscription = null;
-				if (response.items.length === 1 && response.items[0].identifier === this.hubStore.value) {
-					this.selectHubStore(response.items[0]);
-				} else {
-					response.items.sort((store1, store2) => {
-						let result = 0;
-						if (store1.identifier < store2.identifier) {
-							result = -1;
-						} else if (store1.identifier > store2.identifier) {
-							result = 1;
-						}
-						return result;
-					});
-					this.hubStoreList = response.items;
-				}
-			},
-			error => {
-				this.getHubStoresSubscription = null;
-				console.log(error);
+		}).subscribe(response => {
+			this.getHubStoresSubscription = null;
+			if (response.items.length === 1 && response.items[0].identifier === this.hubStore.value) {
+				this.selectHubStore(response.items[0]);
+			} else {
+				response.items.sort((store1, store2) => {
+					let result = 0;
+					if (store1.identifier < store2.identifier) {
+						result = -1;
+					} else if (store1.identifier > store2.identifier) {
+						result = 1;
+					}
+					return result;
+				});
+				this.hubStoreList = response.items;
 			}
-		);
+		},
+		error => {
+			this.getHubStoresSubscription = null;
+		});
 	}
 
 	searchHubStores(searchString: string) {
@@ -363,10 +368,13 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 	}
 
 	selectHubStore(store: any) {
+		const currentStoreId = this.selectedHubStore ? this.selectedHubStore.id : null;
 		this.currentUserService.setPreferredStore(store.identifier);
 		this.selectedHubStore = store;
 		this.hubStore.setValue(store.identifier);
-		this.paginator.pageIndex = 0;
+		if (currentStoreId !== null) {
+			this.pageIndex = 0;
+		}
 		this.getExtendedSites();
 	}
 
@@ -413,7 +421,8 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 				sort,
 				searchString,
 				filter,
-				showFilters
+				showFilters,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -432,6 +441,9 @@ export class ExtendedSiteListComponent implements OnInit, AfterViewInit {
 			}
 			if (showFilters) {
 				this.showFilters = showFilters;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}

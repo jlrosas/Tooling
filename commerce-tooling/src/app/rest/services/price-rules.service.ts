@@ -397,17 +397,23 @@ class PriceRulesService extends __BaseService {
   }
 
   /**
-   * @param id The unique numeric ID for identifying the price rule.
+   * @param params The `PriceRulesService.GetPriceRuleByIdParams` containing the following parameters:
+   *
+   * - `id`: The unique numeric ID for identifying the price rule.
+   *
+   * - `storeId`: The unique numeric ID for identifying the store.
+   *
    * @return The operation is successful.
    */
-  getPriceRuleByIdResponse(id: string): __Observable<__StrictHttpResponse<{createdDate?: string, dependent?: boolean, description?: string, elements?: Array<{attributes?: Array<{name?: string, value?: string}>, name?: string, parentElementName?: string, sequence?: number, templateGroup?: string, templateId?: string, templateName?: string}>, format?: string, id?: string, name?: string, state?: string, storeId?: number, updatedDate?: string, version?: number}>> {
+  getPriceRuleByIdResponse(params: PriceRulesService.GetPriceRuleByIdParams): __Observable<__StrictHttpResponse<{createdDate?: string, dependent?: boolean, description?: string, elements?: Array<{attributes?: Array<{name?: string, value?: string}>, name?: string, parentElementName?: string, sequence?: number, templateGroup?: string, templateId?: string, templateName?: string}>, format?: string, id?: string, name?: string, state?: string, storeId?: number, updatedDate?: string, version?: number}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    if (params.storeId != null) __params = __params.set('storeId', params.storeId.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/rest/admin/v2/price-rules/${id}`,
+      this.rootUrl + `/rest/admin/v2/price-rules/${params.id}`,
       __body,
       {
         headers: __headers,
@@ -424,11 +430,16 @@ class PriceRulesService extends __BaseService {
   }
 
   /**
-   * @param id The unique numeric ID for identifying the price rule.
+   * @param params The `PriceRulesService.GetPriceRuleByIdParams` containing the following parameters:
+   *
+   * - `id`: The unique numeric ID for identifying the price rule.
+   *
+   * - `storeId`: The unique numeric ID for identifying the store.
+   *
    * @return The operation is successful.
    */
-  getPriceRuleById(id: string): __Observable<{createdDate?: string, dependent?: boolean, description?: string, elements?: Array<{attributes?: Array<{name?: string, value?: string}>, name?: string, parentElementName?: string, sequence?: number, templateGroup?: string, templateId?: string, templateName?: string}>, format?: string, id?: string, name?: string, state?: string, storeId?: number, updatedDate?: string, version?: number}> {
-    return this.getPriceRuleByIdResponse(id).pipe(
+  getPriceRuleById(params: PriceRulesService.GetPriceRuleByIdParams): __Observable<{createdDate?: string, dependent?: boolean, description?: string, elements?: Array<{attributes?: Array<{name?: string, value?: string}>, name?: string, parentElementName?: string, sequence?: number, templateGroup?: string, templateId?: string, templateName?: string}>, format?: string, id?: string, name?: string, state?: string, storeId?: number, updatedDate?: string, version?: number}> {
+    return this.getPriceRuleByIdResponse(params).pipe(
       __map(_r => _r.body as {createdDate?: string, dependent?: boolean, description?: string, elements?: Array<{attributes?: Array<{name?: string, value?: string}>, name?: string, parentElementName?: string, sequence?: number, templateGroup?: string, templateId?: string, templateName?: string}>, format?: string, id?: string, name?: string, state?: string, storeId?: number, updatedDate?: string, version?: number})
     );
   }
@@ -791,6 +802,22 @@ module PriceRulesService {
      * The maximum number of records to return.
      */
     limit?: number;
+  }
+
+  /**
+   * Parameters for getPriceRuleById
+   */
+  export interface GetPriceRuleByIdParams {
+
+    /**
+     * The unique numeric ID for identifying the price rule.
+     */
+    id: string;
+
+    /**
+     * The unique numeric ID for identifying the store.
+     */
+    storeId?: number;
   }
 
   /**

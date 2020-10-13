@@ -193,7 +193,7 @@ export class TaxJurisdictionDetailsComponent implements OnInit, OnDestroy, After
 						observer.next(errors);
 						observer.complete();
 					});
-					this.searchString.next(this.name.value);
+					this.searchString.next(control.value);
 				}
 			});
 		});
@@ -220,7 +220,7 @@ export class TaxJurisdictionDetailsComponent implements OnInit, OnDestroy, After
 				return errors;
 			}
 		]);
-		this.state = new FormControl("", [
+		this.state = new FormControl("",
 			state => {
 				let errors = null;
 				const value = state.value;
@@ -241,7 +241,7 @@ export class TaxJurisdictionDetailsComponent implements OnInit, OnDestroy, After
 				}
 				return errors;
 			}
-		]);
+		);
 	}
 
 	private createForm() {
@@ -272,28 +272,24 @@ export class TaxJurisdictionDetailsComponent implements OnInit, OnDestroy, After
 
 	private initCountryList() {
 		this.countriesService.getCountries({
-			languageId: LanguageService.languageId
-		}).subscribe(
-			response => {
-				this.countryList = response.items;
-				const countryCode = this.taxJurisdictionMainService.taxJurisdictionData.countryAbbreviation;
-				if (countryCode) {
-					for (let i = 0; i < this.countryList.length; i++) {
-						const country = this.countryList[i];
-						if (country.countryAbbr === countryCode) {
-							this.taxJurisdictionMainService.taxJurisdictionData.country = country.name;
-							this.country.setValue(country.name);
-							break;
-						}
+			languageId: LanguageService.languageId,
+			sort: "name"
+		}).subscribe(response => {
+			this.countryList = response.items ? response.items.sort((a, b) => a.name.localeCompare(b.name)) : [];
+			const countryCode = this.taxJurisdictionMainService.taxJurisdictionData.countryAbbreviation;
+			if (countryCode) {
+				for (let i = 0; i < this.countryList.length; i++) {
+					const country = this.countryList[i];
+					if (country.countryAbbr === countryCode) {
+						this.taxJurisdictionMainService.taxJurisdictionData.country = country.name;
+						this.country.setValue(country.name);
+						break;
 					}
-				} else {
-					this.filteredCountryList = this.countryList;
 				}
-			},
-			error => {
-				console.log(error);
+			} else {
+				this.filteredCountryList = this.countryList;
 			}
-		);
+		});
 	}
 
 	private initStateList() {
@@ -324,9 +320,6 @@ export class TaxJurisdictionDetailsComponent implements OnInit, OnDestroy, After
 						this.filteredStateList = this.stateList;
 					}
 				}
-			},
-			error => {
-				console.log(error);
 			});
 		}
 	}

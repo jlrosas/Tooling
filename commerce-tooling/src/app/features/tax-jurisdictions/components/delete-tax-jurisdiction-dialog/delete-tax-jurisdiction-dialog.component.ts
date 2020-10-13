@@ -62,15 +62,20 @@ export class DeleteTaxJurisdictionDialogComponent implements OnInit {
 						const groupId = response.items[0].jurisdictionGroupId;
 						this.jurisdictionGroupsService.deleteJurisdictionGroupByIdResponse(groupId).subscribe(deleteResponse2 => {
 							this.handleDeleteSuccess();
-						}, this.handleDeleteError);
+						},
+						error => {
+							this.processing = false;
+						});
 					} else {
 						this.handleDeleteSuccess();
 					}
-				}, this.handleDeleteError);
+				},
+				error => {
+					this.processing = false;
+				});
 			},
 			error => {
 				this.processing = false;
-				console.log(error);
 			});
 		}
 	}
@@ -81,16 +86,5 @@ export class DeleteTaxJurisdictionDialogComponent implements OnInit {
 		});
 		this.processing = false;
 		this.dialogRef.close({ jurisdictionDeleted: true });
-	}
-
-	private handleDeleteError(errorResponse) {
-		this.processing = false;
-		if (errorResponse.error && errorResponse.error.errors) {
-			errorResponse.error.errors.forEach(error => {
-				this.alertService.error({message: error.message});
-			});
-		} else {
-			console.log(errorResponse);
-		}
 	}
 }

@@ -10,7 +10,7 @@
 -->
 
 <div>
-	<h1 class="hc-type-h1">
+	<h1 class="hc-type-h1" *hcNavigationEnabled>
 		{{'USER_MANAGEMENT.USERS' | translate}}
 	</h1>
 	<div class="hc-stepper-section hc-paper">
@@ -32,10 +32,10 @@
 				</hc-user-account>
 			</mat-step>
 			<mat-step #contactStep label="{{'USER_MANAGEMENT.CONTACT_INFORMATION' | translate}}">
-				<hc-user-contact *ngIf="stepper.selected === contactStep" [stepper]="stepper" [step]="contactStep" mode="create">
+				<hc-user-contact *ngIf="stepper.selected === contactStep" [stepper]="stepper" [step]="contactStep" mode="create" (save)="submit()">
 				</hc-user-contact>
 			</mat-step>
-			<mat-step #rolesStep label="{{'USER_MANAGEMENT.ROLES' | translate}} {{'USER_MANAGEMENT.OPTIONAL' | translate}}">
+			<mat-step #rolesStep label="{{'USER_MANAGEMENT.ROLES' | translate}} {{'USER_MANAGEMENT.OPTIONAL' | translate}}" *ngIf="!isRegisteredCustomer">
 				<hc-user-roles *ngIf="stepper.selected === rolesStep" [step]="rolesStep" mode="create" (save)="submit()">
 				</hc-user-roles>
 			</mat-step>

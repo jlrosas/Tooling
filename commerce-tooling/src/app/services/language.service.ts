@@ -57,7 +57,7 @@ export class LanguageService {
 		this.onLanguageChange.emit({
 			locale: activeLocale,
 			language: locale,
-			languageId: languageId
+			languageId
 		});
 	}
 }

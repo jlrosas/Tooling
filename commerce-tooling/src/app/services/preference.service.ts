@@ -53,4 +53,5 @@ interface Preference {
 	searchString?: string;
 	filter?: any;
 	showFilters?: boolean;
+	pageIndex?: number;
 }

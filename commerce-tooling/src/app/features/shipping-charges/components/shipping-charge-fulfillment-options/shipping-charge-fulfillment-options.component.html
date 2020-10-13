@@ -1,0 +1,70 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="fulfillmentForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<div class="hc-table-section hc-paper-section hc-paper">
+				<button class="mat-flat-button mat-primary" type="button" (click)="createFulfillmentOption()">{{'SHIPPING_CHARGES.NEW_BUTTON' | translate}}</button>
+				<!-- TABLE PART (START) -->
+				<div class="hc-table-wrapper">
+					<table mat-table [dataSource]="model">
+						<ng-container matColumnDef="fulfillmentCenter" sticky>
+							<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CHARGES.FULFILLMENT_CENTER' | translate}}</th>
+							<td mat-cell *matCellDef="let row">
+								{{row.fulfillmentCenterName}}
+							</td>
+						</ng-container>
+			
+						<ng-container matColumnDef="jurisdiction">
+							<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CHARGES.JURISDICTION' | translate}}</th>
+							<td mat-cell *matCellDef="let row">
+								<a class="hc-table-item-action" (click)="editFulfillmentOption(row)">{{row.jurisdictionGroupCode}}</a>
+							</td>
+						</ng-container>
+			
+						<ng-container matColumnDef="shippingMode">
+							<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CHARGES.SHIPPING_MODE' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.shippingModeCarrier}} - {{row.shippingModeService}}</td>
+						</ng-container>
+			
+						<ng-container matColumnDef="precedence">
+							<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CHARGES.PRECEDENCE' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{row.precedence}}</td>
+						</ng-container>
+			
+						<ng-container matColumnDef="actions" stickyEnd>
+							<th mat-header-cell *matHeaderCellDef> {{'SHIPPING_CHARGES.ACTIONS' | translate}} </th>
+							<td mat-cell *matCellDef="let row; let i = index">
+								<button matTooltip="{{'SHIPPING_CHARGES.DELETE' | translate}}" mat-icon-button aria-label="delete" (click)="deleteFulfillmentOption(i)">
+									<mat-icon color="primary">delete</mat-icon>
+								</button>
+							</td>
+						</ng-container>
+			
+						<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+						<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+					</table>
+				</div>
+				<!-- TABLE PART (END) -->
+			</div>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" type="button" matStepperPrevious *ngIf="mode === 'create'">{{'SHIPPING_CHARGES.BACK'| translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" matStepperNext *ngIf="mode === 'create'">{{'SHIPPING_CHARGES.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'edit'">{{'SHIPPING_CHARGES.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

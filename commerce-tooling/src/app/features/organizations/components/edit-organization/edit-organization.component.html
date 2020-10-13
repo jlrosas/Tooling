@@ -10,7 +10,7 @@
 -->
 
 <div>
-	<h1 class="hc-type-h1">
+	<h1 class="hc-type-h1" *hcNavigationEnabled>
 		{{'ORGANIZATIONS.ORGANIZATIONS' | translate}}
 	</h1>
 	<div class="hc-stepper-section hc-paper">
@@ -38,12 +38,12 @@
 			<mat-step #rolesStep label="{{'ORGANIZATIONS.ROLES' | translate}}">
 				<hc-organization-roles *ngIf="stepper.selected === rolesStep" [step]="rolesStep" mode="edit" (save)="save()">
 				</hc-organization-roles>
-	        </mat-step>
-	        <mat-step #approvalsStep label="{{'ORGANIZATIONS.APPROVALS' | translate}}">
+			</mat-step>
+			<mat-step #approvalsStep label="{{'ORGANIZATIONS.APPROVALS' | translate}}">
 				<hc-organization-approvals *ngIf="stepper.selected === approvalsStep" [step]="approvalsStep" mode="edit" (save)="save()">
 				</hc-organization-approvals>
-	        </mat-step>
-	        <mat-step *hcRole="[-1]" #groupsStep label="{{'ORGANIZATIONS.GROUPS' | translate}}">
+			</mat-step>
+			<mat-step *hcRole="[-1]" #groupsStep label="{{'ORGANIZATIONS.GROUPS' | translate}}">
 				<hc-organization-groups *ngIf="stepper.selected === groupsStep" [step]="groupsStep" mode="edit" (save)="save()">
 				</hc-organization-groups>
 			</mat-step>

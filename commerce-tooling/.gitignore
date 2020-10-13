@@ -26,6 +26,8 @@
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+# VSCode local history plugin
+.history/
 
 # misc
 /.sass-cache

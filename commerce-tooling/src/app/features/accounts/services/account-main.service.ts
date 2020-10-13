@@ -216,7 +216,6 @@ export class AccountMainService {
 						observer.complete();
 					},
 					error => {
-						console.log(error);
 						observer.next(error);
 						observer.complete();
 					}
@@ -250,7 +249,6 @@ export class AccountMainService {
 						observer.complete();
 					},
 					error => {
-						console.log(error);
 						observer.next(error);
 						observer.complete();
 					}
@@ -284,7 +282,6 @@ export class AccountMainService {
 						observer.complete();
 					},
 					error => {
-						console.log(error);
 						observer.next(error);
 						observer.complete();
 					}
@@ -304,7 +301,7 @@ export class AccountMainService {
 					this.currentAccountId = id;
 				}
 				this.paymentMethodsService.getPaymentMethods({
-					storeId: storeId,
+					storeId,
 					name: "LineOfCredit"
 				}).subscribe(result => {
 					let lineOfCreditId = null;
@@ -344,13 +341,11 @@ export class AccountMainService {
 						observer.complete();
 					},
 					error => {
-						console.log(error);
 						observer.next(error);
 						observer.complete();
 					});
 				},
 				error => {
-					console.log(error);
 					observer.next(error);
 					observer.complete();
 				});
@@ -386,7 +381,6 @@ export class AccountMainService {
 						observer.complete();
 					},
 					error => {
-						console.log(error);
 						observer.next(error);
 						observer.complete();
 					}
@@ -536,7 +530,7 @@ export class AccountMainService {
 			}
 			requests.push(this.accountsService.createAccountPaymentMethodResponse({
 				accountId: id,
-				body: body
+				body
 			}));
 		});
 		return requests;
@@ -557,7 +551,7 @@ export class AccountMainService {
 				}
 				requests.push(this.accountsService.createAccountPurchaseOrderResponse({
 					accountId: id,
-					body: body
+					body
 				}));
 			});
 		}
@@ -626,7 +620,7 @@ export class AccountMainService {
 			}
 			request = this.accountsService.updateAccountResponse({
 				id: this.currentAccountId,
-				body: body
+				body
 			});
 		}
 		return request;
@@ -863,7 +857,7 @@ export class AccountMainService {
 								requests.push(this.accountsService.updateAccountPaymentMethodResponse({
 									accountId: this.currentAccountId,
 									id: paymentMethod.id,
-									body: body
+									body
 								}));
 							}
 						}
@@ -897,7 +891,7 @@ export class AccountMainService {
 					}
 					requests.push(this.accountsService.createAccountPaymentMethodResponse({
 						accountId: this.currentAccountId,
-						body: body
+						body
 					}));
 				}
 			});
@@ -953,7 +947,7 @@ export class AccountMainService {
 								requests.push(this.accountsService.updateAccountPurchaseOrderResponse({
 									accountId: this.currentAccountId,
 									id: purchaseOrder.id,
-									body: body
+									body
 								}));
 							}
 						}
@@ -969,7 +963,7 @@ export class AccountMainService {
 					}
 					requests.push(this.accountsService.createAccountPurchaseOrderResponse({
 						accountId: this.currentAccountId,
-						body: body
+						body
 					}));
 				}
 			});

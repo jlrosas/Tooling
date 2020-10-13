@@ -24,7 +24,6 @@ import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatNativeDateModule } from "@angular/material/core";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatCheckboxModule } from "@angular/material/checkbox";
@@ -59,7 +58,6 @@ import { RegistryListComponent } from "./components/registry-list/registry-list.
 		MatCheckboxModule,
 		MatListModule,
 		MatDatepickerModule,
-		MatNativeDateModule,
 		MatBadgeModule,
 		MatDividerModule,
 		MatSelectModule,

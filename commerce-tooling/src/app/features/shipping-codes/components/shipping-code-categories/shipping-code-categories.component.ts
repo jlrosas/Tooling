@@ -57,7 +57,6 @@ export class ShippingCodeCategoriesComponent implements OnInit, OnDestroy, After
 		// unsubscribe any subscription
 	}
 
-
 	triggerSave() {
 		this.categoriesForm.markAllAsTouched();
 		this.save.emit(null);

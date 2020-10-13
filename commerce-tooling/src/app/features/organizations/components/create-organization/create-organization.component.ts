@@ -13,6 +13,7 @@ import { Component, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { OrganizationMainService } from "../../services/organization-main.service";
 import { AlertService } from "../../../../services/alert.service";
+import { ApiErrorService } from "../../../../services/api-error.service";
 import { TranslateService } from "@ngx-translate/core";
 import { MatStepper } from "@angular/material/stepper";
 
@@ -26,6 +27,7 @@ export class CreateOrganizationComponent {
 	constructor(private router: Router,
 			private organizationMainService: OrganizationMainService,
 			private alertService: AlertService,
+			private apiErrorService: ApiErrorService,
 			private translateService: TranslateService) { }
 
 	cancel() {
@@ -59,20 +61,22 @@ export class CreateOrganizationComponent {
 						this.alertService.success({message});
 					});
 				},
-				errorResponse => {
-					if (errorResponse.error && errorResponse.error.errors) {
-						errorResponse.error.errors.forEach((error: { errorMessage: any; errorKey: any; }) => {
-							if (error.errorKey === "_ERR_RDN_ALREADY_EXIST") {
-								this.translateService.get("ORGANIZATIONS.DUPLICATE_ORGANIZATION").subscribe((message: string) => {
-									this.alertService.error({message});
-								});
-							} else {
-								this.alertService.error({message: error.errorMessage});
-							}
-						});
-					} else {
-						console.log(errorResponse);
-					}
+				createErrorResponse => {
+					this.apiErrorService.handleError(createErrorResponse, errorResponse => {
+						if (errorResponse.error && errorResponse.error.errors) {
+							errorResponse.error.errors.forEach((error: { errorMessage: any; errorKey: any; }) => {
+								if (error.errorKey === "_ERR_RDN_ALREADY_EXIST") {
+									this.translateService.get("ORGANIZATIONS.DUPLICATE_ORGANIZATION").subscribe((message: string) => {
+										this.alertService.error({message});
+									});
+								} else {
+									this.alertService.error({message: error.errorMessage});
+								}
+							});
+						} else {
+							console.log(errorResponse);
+						}
+					});
 				});
 			} else if (!valid) {
 				this.translateService.get("ORGANIZATIONS.INPUT_ERROR").subscribe((message: string) => {

@@ -1,0 +1,26 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+<div class={{className}}>
+	<ul>
+		<li *ngFor="let message of messages" class="mat-simple-snackbar ng-star-inserted">
+			<div>
+				<span *ngIf="message.type === 'success'"><mat-icon>check_circle_outline</mat-icon></span>
+				<span *ngIf="message.type === 'error'" class="mat-icon-state-error"><mat-icon>error_circle</mat-icon></span>
+				{{message.message}}
+			</div>
+			<div class="mat-simple-snackbar-action ng-star-inserted" *ngIf="message.showDismiss">
+				<button class="mat-button mat-button-base" (click)="removeMessage(message)">
+					<span class="mat-button-wrapper">{{'GENERAL.DISMISS' | translate}}</span>
+				</button>
+			</div>
+		</li>
+	</ul>
+</div>

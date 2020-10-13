@@ -36,7 +36,24 @@
 				<input matInput type="text" id="password" formControlName="password" (input)="validatePassword()" [required]="mode==='create'" autocomplete="off">
 				<mat-icon matSuffix (click)="passwordVisible = !passwordVisible" class="action-icon">{{passwordVisible ? 'visibility' : 'visibility_off'}}</mat-icon>
 			</mat-form-field>
-			<mat-form-field appearance="outline"*ngIf="mode === 'create'">
+			<mat-checkbox *ngIf="mode === 'create' && hasRolePickerRole && hasStoreSelectRole" formControlName="registeredCustomer"
+					(change)="validateRegisteredCustomer($event)" [checked]="isRegisteredCustomer">
+				{{'USER_MANAGEMENT.IS_THIS_A_REGISTERED_CUSTOMER' | translate}}
+			</mat-checkbox>
+			<mat-form-field *ngIf="isRegisteredCustomer && mode === 'create'" appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.STORE'| translate}}</mat-label>
+				<input matInput id="store" (input)="searchStores($event.target.value)" placeholder="{{'USER_MANAGEMENT.SELECT_STORE_PLACEHOLDER'| translate}}"
+						formControlName="storeDropdown" [matAutocomplete]="storeAutocomplete" required>
+				<mat-autocomplete #storeAutocomplete="matAutocomplete" (optionSelected)="selectStore($event.option.value)">
+					<mat-option *ngFor="let store of storeList" [value]="store">
+						{{store.identifier}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="storeDropdown.errors && storeDropdown.errors.invalidStore">
+					{{'USER_MANAGEMENT.STORE_ERROR' | translate }}
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field appearance="outline" *ngIf="!isRegisteredCustomer && mode === 'create'">
 				<mat-label>{{'USER_MANAGEMENT.PARENT_ORGANIZATION'| translate}}</mat-label>
 				<input matInput id="parentOrganization"
 						formControlName="parentOrganization"
@@ -57,11 +74,11 @@
 					</mat-option>
 				</mat-autocomplete>
 				<mat-error *ngIf="parentOrganization.errors && parentOrganization.errors.invalidParentOrganization">
-					{{'ORGANIZATIONS.PARENT_ORGANIZATION_ERROR' | translate }}
+					{{'USER_MANAGEMENT.PARENT_ORGANIZATION_ERROR' | translate }}
 				</mat-error>
 			</mat-form-field>
 			<mat-form-field appearance="outline" *ngIf="mode === 'edit'">
-				<mat-label>{{'ORGANIZATIONS.PARENT_ORGANIZATION'| translate}}</mat-label>
+				<mat-label>{{'USER_MANAGEMENT.PARENT_ORGANIZATION'| translate}}</mat-label>
 				<input matInput id="parentOrganization" formControlName="parentOrganization">
 			</mat-form-field>
 			<mat-form-field appearance="outline">
@@ -71,10 +88,55 @@
 						formControlName="policy"
 						(selectionChange)="selectAccountPolicy($event.value)"
 						required>
-					<mat-option *ngFor="let accountPolicy of accountPolicyList" [value]="accountPolicy">
+					<mat-option *ngFor="let accountPolicy of accountPolicyList" [value]="accountPolicy.userAccountPolicyId">
 						{{accountPolicy.content}}
 					</mat-option>
 				</mat-select>
+			</mat-form-field>
+			<mat-form-field appearance="outline" id="phoneNumber">
+				<mat-label>{{'USER_MANAGEMENT.PHONE_NUMBER'| translate}} {{'USER_MANAGEMENT.OPTIONAL' | translate}}</mat-label>
+				<input #phoneNumberInput matInput id="phoneNumber" formControlName="phoneNumber" (input)="validatePhoneNumber()" autocomplete="off">
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.PREFERRED_CURRENCY'| translate}} {{'USER_MANAGEMENT.OPTIONAL' | translate}}</mat-label>
+				<mat-select	id="preferredCurrency"
+						placeholder="{{'USER_MANAGEMENT.SELECT_PREFERRED_CURRENCY' | translate}}"
+						formControlName="preferredCurrency"
+						(selectionChange)="selectPreferredCurrency($event.value)">
+					<mat-option *ngFor="let currency of currencyList" [value]="currency.code">
+						{{currency.displayName}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.PREFERRED_LANGUAGE'| translate}} {{'USER_MANAGEMENT.OPTIONAL' | translate}}</mat-label>
+				<mat-select	id="preferredLanguage"
+						placeholder="{{'USER_MANAGEMENT.SELECT_PREFERRED_LANGUAGE' | translate}}"
+						formControlName="preferredLanguage"
+						(selectionChange)="selectPreferredLanguage($event.value)">
+					<mat-option *ngFor="let language of languageList" [value]="language.id">
+						{{language.displayName}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.PREFERRED_METHOD_OF_COMMUNICATION'| translate}} {{'USER_MANAGEMENT.OPTIONAL' | translate}}</mat-label>
+				<mat-select	id="preferredCommunicationMethod"
+						placeholder="{{'USER_MANAGEMENT.SELECT_PREFERRED_METHOD_OF_COMMUNICATION'| translate}}"
+						formControlName="preferredCommunicationMethod"
+						(selectionChange)="selectPreferredCommunicationMethod($event.value)">
+					<mat-option *ngFor="let communicationMethod of communicationMethodList" [value]="communicationMethod.value">
+						{{communicationMethod.name | translate}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field appearance="outline" id="challengeQuestion">
+				<mat-label>{{'USER_MANAGEMENT.CHALLENGE_QUESTION'| translate}} {{'USER_MANAGEMENT.OPTIONAL' | translate}}</mat-label>
+				<input #challengeQuestionInput matInput id="challengeQuestion" formControlName="challengeQuestion" (input)="validateChallengeQuestion()" autocomplete="off">
+			</mat-form-field>
+			<mat-form-field appearance="outline" id="challengeAnswer">
+				<mat-label>{{'USER_MANAGEMENT.CHALLENGE_ANSWER'| translate}} {{'USER_MANAGEMENT.OPTIONAL' | translate}}</mat-label>
+				<input #challengeAnswerInput matInput id="challengeAnswer" formControlName="challengeAnswer" (input)="validateChallengeAnswer()" autocomplete="off">
 			</mat-form-field>
 		</div>
 	</div>

@@ -51,7 +51,7 @@ class ShippingModesService extends __BaseService {
    *
    * - `trackingInquiryType`: Reserved for HCL Internal use.
    *
-   * - `markForDelete`: Indicates that the shipping mode has been deleted. 0 = No. 1 = Yes.
+   * - `markForDelete`: Limits search results to include only codes that are marked for delete (1) or not marked for delete (0) or both (0 and 1). If no value is specified, codes that are not marked for delete are returned.
    *
    * - `storeId`: The unique numeric ID for identifying the store.
    *
@@ -74,7 +74,7 @@ class ShippingModesService extends __BaseService {
     let __headers = new HttpHeaders();
     let __body: any = null;
     if (params.searchString != null) __params = __params.set('searchString', params.searchString.toString());
-    if (params.id != null) __params = __params.set('id', params.id.toString());
+    (params.id || []).forEach(val => {if (val != null) __params = __params.append('id', val.toString())});
     if (params.carrier != null) __params = __params.set('carrier', params.carrier.toString());
     if (params.field1 != null) __params = __params.set('field1', params.field1.toString());
     if (params.field2 != null) __params = __params.set('field2', params.field2.toString());
@@ -84,7 +84,7 @@ class ShippingModesService extends __BaseService {
     if (params.trackingSocksPort != null) __params = __params.set('trackingSocksPort', params.trackingSocksPort.toString());
     if (params.trackingIcon != null) __params = __params.set('trackingIcon', params.trackingIcon.toString());
     if (params.trackingInquiryType != null) __params = __params.set('trackingInquiryType', params.trackingInquiryType.toString());
-    if (params.markForDelete != null) __params = __params.set('markForDelete', params.markForDelete.toString());
+    (params.markForDelete || []).forEach(val => {if (val != null) __params = __params.append('markForDelete', val.toString())});
     if (params.storeId != null) __params = __params.set('storeId', params.storeId.toString());
     if (params.shippingCode != null) __params = __params.set('shippingCode', params.shippingCode.toString());
     if (params.offset != null) __params = __params.set('offset', params.offset.toString());
@@ -136,7 +136,7 @@ class ShippingModesService extends __BaseService {
    *
    * - `trackingInquiryType`: Reserved for HCL Internal use.
    *
-   * - `markForDelete`: Indicates that the shipping mode has been deleted. 0 = No. 1 = Yes.
+   * - `markForDelete`: Limits search results to include only codes that are marked for delete (1) or not marked for delete (0) or both (0 and 1). If no value is specified, codes that are not marked for delete are returned.
    *
    * - `storeId`: The unique numeric ID for identifying the store.
    *
@@ -424,7 +424,7 @@ module ShippingModesService {
     /**
      * The Shipping Mode ID.
      */
-    id?: number;
+    id?: Array<number>;
 
     /**
      * A shipping carrier identifier. The company that provides shipping services from a fulfillment center to a customer.
@@ -472,9 +472,9 @@ module ShippingModesService {
     trackingInquiryType?: string;
 
     /**
-     * Indicates that the shipping mode has been deleted. 0 = No. 1 = Yes.
+     * Limits search results to include only codes that are marked for delete (1) or not marked for delete (0) or both (0 and 1). If no value is specified, codes that are not marked for delete are returned.
      */
-    markForDelete?: number;
+    markForDelete?: Array<number>;
 
     /**
      * The unique numeric ID for identifying the store.

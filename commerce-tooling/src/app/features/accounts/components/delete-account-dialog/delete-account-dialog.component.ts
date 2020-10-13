@@ -15,6 +15,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
 import { AccountsService } from "../../../../rest/services/accounts.service";
+import { ApiErrorService } from "../../../../services/api-error.service";
 
 @Component({
 	templateUrl: "./delete-account-dialog.component.html",
@@ -29,6 +30,7 @@ export class DeleteAccountDialogComponent implements OnInit {
 	constructor(private alertService: AlertService,
 			private translateService: TranslateService,
 			private accountsService: AccountsService,
+			private apiErrorService: ApiErrorService,
 			private fb: FormBuilder,
 			private dialogRef: MatDialogRef<DeleteAccountDialogComponent>,
 			@Inject(MAT_DIALOG_DATA) data) {
@@ -57,15 +59,23 @@ export class DeleteAccountDialogComponent implements OnInit {
 			this.processing = false;
 			this.dialogRef.close({ accountDeleted: true });
 		},
-		errorResponse => {
+		deleteErrorResponse => {
 			this.processing = false;
-			if (errorResponse.error && errorResponse.error.errors) {
-				errorResponse.error.errors.forEach(error => {
-					this.alertService.error({message: error.errorMessage});
-				});
-			} else {
-				console.log(errorResponse);
-			}
+			this.apiErrorService.handleError(deleteErrorResponse, errorResponse => {
+				if (errorResponse.error && errorResponse.error.errors) {
+					errorResponse.error.errors.forEach((error: { errorMessage: any; errorKey: any; }) => {
+						if (error.errorKey === "_ERR_ACCOUNT_CMD_EXEC") {
+							this.translateService.get("ACCOUNTS.ACTIVE_CONTRACTS_ERROR").subscribe((message: string) => {
+								this.alertService.error({message});
+							});
+						} else {
+							this.alertService.error({message: error.errorMessage});
+						}
+					});
+				} else {
+					console.log(errorResponse);
+				}
+			});
 		});
 	}
 }

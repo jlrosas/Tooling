@@ -10,9 +10,11 @@
  */
 
 import { Component, ViewChild } from "@angular/core";
+import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatStepper } from "@angular/material/stepper";
 import { TranslateService } from "@ngx-translate/core";
+import { JurisdictionsService } from "../../../../rest/services/jurisdictions.service";
 import { TaxJurisdictionMainService } from "../../services/tax-jurisdiction-main.service";
 import { AlertService } from "../../../../services/alert.service";
 
@@ -23,8 +25,11 @@ import { AlertService } from "../../../../services/alert.service";
 export class CreateTaxJurisdictionComponent {
 	@ViewChild("stepper", {static: false}) stepper: MatStepper;
 
+	private getTaxJurisdictionsSubscription: Subscription = null;
+
 	constructor(private router: Router,
 			private route: ActivatedRoute,
+			private jurisdictionsService: JurisdictionsService,
 			private taxJurisdictionMainService: TaxJurisdictionMainService,
 			private alertService: AlertService,
 			private translateService: TranslateService) { }
@@ -62,21 +67,48 @@ export class CreateTaxJurisdictionComponent {
 			});
 			if (!pending) {
 				if (valid && completedMandatorySteps >= 0) {
-					this.taxJurisdictionMainService.createTaxJurisdiction().subscribe(name => {
-						this.taxJurisdictionMainService.clearData();
-						this.router.navigate(["tax-jurisdictions", "tax-jurisdiction-list", {storeId: this.route.snapshot.params.storeId}]);
-						this.translateService.get("TAX_JURISDICTIONS.TAX_JURISDICTION_CREATED_MESSAGE", {name}).
-								subscribe((message: string) => {
-							this.alertService.success({message});
-						});
-					},
-					errorResponse => {
-						if (errorResponse.error && errorResponse.error.errors) {
-							errorResponse.error.errors.forEach((error: { message: any; }) => {
-								this.alertService.error({message: error.message});
+					if (this.getTaxJurisdictionsSubscription != null) {
+						this.getTaxJurisdictionsSubscription.unsubscribe();
+						this.getTaxJurisdictionsSubscription = null;
+					}
+					const args: JurisdictionsService.GetJurisdictionsParams = {
+						storeId: Number(this.route.snapshot.params.storeId),
+						subclass: 2
+					};
+					const taxJurisdictionData = this.taxJurisdictionMainService.taxJurisdictionData;
+					if (taxJurisdictionData.countryAbbreviation) {
+						args.countryAbbreviation = taxJurisdictionData.countryAbbreviation;
+					}
+					if (taxJurisdictionData.stateAbbreviation) {
+						args.stateAbbreviation = taxJurisdictionData.stateAbbreviation;
+					} else if (taxJurisdictionData.state) {
+						args.state = taxJurisdictionData.state;
+					}
+					this.getTaxJurisdictionsSubscription = this.jurisdictionsService.getJurisdictions(args).subscribe(body => {
+						let duplicate = false;
+						for (let i = 0; i < body.items.length; i++) {
+							const jurisdiction = body.items[i];
+							if (taxJurisdictionData.countryAbbreviation === jurisdiction.countryAbbreviation &&
+									(taxJurisdictionData.stateAbbreviation === jurisdiction.stateAbbreviation ||
+									jurisdiction.stateAbbreviation == null && (taxJurisdictionData.state === jurisdiction.state))) {
+								duplicate = true;
+								break;
+							}
+						}
+						if (duplicate) {
+							this.translateService.get("TAX_JURISDICTIONS.DUPLICATE_COUNTRY_STATE_COMBINATION")
+									.subscribe((message: string) => {
+								this.alertService.error({message, clear: true});
 							});
 						} else {
-							console.log(errorResponse);
+							this.taxJurisdictionMainService.createTaxJurisdiction().subscribe(name => {
+								this.taxJurisdictionMainService.clearData();
+								this.router.navigate(["tax-jurisdictions", "tax-jurisdiction-list", {storeId: this.route.snapshot.params.storeId}]);
+								this.translateService.get("TAX_JURISDICTIONS.TAX_JURISDICTION_CREATED_MESSAGE", {name}).
+										subscribe((message: string) => {
+									this.alertService.success({message});
+								});
+							});
 						}
 					});
 				} else if (!valid) {

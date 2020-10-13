@@ -24,8 +24,9 @@ import { DataSource } from "@angular/cdk/table";
 import { ApprovalDialogComponent } from "../approval-dialog/approval-dialog.component";
 import { AlertService } from "../../../../services/alert.service";
 import { CurrentUserService } from "../../../../services/current-user.service";
-import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from "../../../../shared/constants";
+import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS, DATE_FORMAT_OPTIONS } from "../../../../shared/constants";
 import { PreferenceService } from "../../../../services/preference.service";
+import { LanguageService } from "../../../../services/language.service";
 
 @Component({
 	templateUrl: "./approval-list.component.html",
@@ -43,7 +44,7 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 	showFilters = false;
 	currentSearchString = null;
 	approverList: Array<any> = [];
-	approverId = null;
+	approverFilter = null;
 	statusFilter = null;
 	processFilter = null;
 	submitStartFilter = null;
@@ -64,13 +65,17 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 	preferenceToken: string;
 	activeColumn = "status";
 	sortDirection = "asc";
+	pageIndex = 0;
+	approversLoading = false;
+	siteAdmin = null;
+	userId = null;
 
 	private approverSearchString: Subject<string> = new Subject<string>();
 	private getApproversSubscription: Subscription = null;
 
 	private searchString: Subject<string> = new Subject<string>();
 	private getApprovalStatusesSubscription: Subscription = null;
-
+	private onLangChangeSubscription: Subscription = null;
 	private processTextKeys = {
 		"10002": "APPROVALS.ORDER_PROCESSING",
 		"10003": "APPROVALS.CONTRACT_SUBMIT",
@@ -85,13 +90,13 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 		2: "APPROVALS.REJECTED"
 	};
 	private statusTextIndices = Object.keys(this.statusTextKeys);
-	private approverFilter = {label: "", value: ""};
 
 	constructor(private router: Router,
 			private translateService: TranslateService,
 			private approvalStatusService: ApprovalStatusService,
 			private usersService: UsersService,
 			private alertService: AlertService,
+			private languageService: LanguageService,
 			private dialog: MatDialog,
 			private currentUserService: CurrentUserService,
 			private preferenceService: PreferenceService) { }
@@ -100,37 +105,49 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.getPreferenceData();
 		this.createFormControls();
 		this.createForm();
-		this.currentUserService.getRoles().subscribe((currentUserRoles: Array<number>) => {
-			for (let index = 0; index < currentUserRoles.length; index++) {
-				if (currentUserRoles[index] === -1) {
-					this.displayedColumns = ["requestor", "entityId", "approver", "process", "status", "lastUpdate", "actions"];
-					break;
-				}
-			}
-		});
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
 			this.currentSearchString = searchString;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getApprovalStatuses();
 		});
-		this.approverSearchString.pipe(debounceTime(250)).subscribe(approverSearchString => {
-			this.getApprovers(approverSearchString);
+		this.onLangChangeSubscription = this.languageService.onLanguageChange.subscribe(() => {
+			this.getApprovalStatuses();
 		});
 	}
 
 	ngAfterViewInit() {
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getApprovalStatuses();
 		});
-		this.getApprovalStatuses();
+		this.currentUserService.hasMatchingRole([-1]).subscribe(hasRole => {
+			this.siteAdmin = hasRole;
+			if (this.siteAdmin) {
+				this.displayedColumns = ["requestor", "entityId", "approver", "process", "status", "lastUpdate", "actions"];
+				this.approverSearchString.pipe(debounceTime(250)).subscribe(searchString => {
+					if (this.approver.value === searchString) {
+						this.getApprovers(searchString);
+					} else {
+						this.approversLoading = false;
+					}
+				});
+				this.searchApprovers("");
+				this.getApprovalStatuses();
+			} else {
+				this.currentUserService.getUserId().subscribe(userId => {
+					this.userId = userId;
+					this.getApprovalStatuses();
+				});
+			}
+		});
 	}
 
 	ngOnDestroy() {
 		this.searchString.unsubscribe();
 		this.approverSearchString.unsubscribe();
+		if (this.onLangChangeSubscription) {
+			this.onLangChangeSubscription.unsubscribe();
+		}
 	}
 
 	toggleShowFilters(e: any) {
@@ -144,7 +161,7 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	public handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getApprovalStatuses();
 	}
 
@@ -156,8 +173,8 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 		dialogConfig.data = {
 			id: approvalStatusId,
-			action: action,
-			flowTypeId: flowTypeId
+			action,
+			flowTypeId
 		};
 		const dialogRef = this.dialog.open(ApprovalDialogComponent, dialogConfig);
 
@@ -217,8 +234,7 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getApprovalStatuses();
 	}
 
@@ -232,34 +248,46 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	searchApprovers(searchString: string) {
+		this.approversLoading = true;
 		this.approverSearchString.next(searchString);
 	}
 
+	resetApproverFilter() {
+		if (this.approverFilter) {
+			this.approver.setValue(this.approverFilter.logonId);
+		} else if (this.approver.value !== "") {
+			this.approver.setValue("");
+			this.searchApprovers("");
+		}
+	}
+
 	selectApprover(approver: any) {
-		this.approver.setValue(approver.logonId);
-		if (this.approverId !== approver.id) {
-			this.preferenceService.saveFilter(this.preferenceToken,
-				{approverFilter: {label: approver.logonId, value: approver.id}});
-			this.approverId = approver.id;
-			this.paginator.pageIndex = 0;
-			this.getApprovalStatuses();
+		if (approver) {
+			this.approver.setValue(approver.logonId);
+			this.approverList = [];
+			if (this.approverFilter === null || this.approverFilter.id !== approver.id) {
+				this.approverFilter = {
+					logonId: approver.logonId,
+					id: approver.id
+				};
+				this.pageIndex = 0;
+				this.getApprovalStatuses();
+			}
 		}
 	}
 
 	clearApprover() {
-		this.approverId = null;
+		this.approverFilter = null;
 		this.approver.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { approverFilter: null });
+		this.pageIndex = 0;
 		this.getApprovalStatuses();
+		this.searchApprovers("");
 	}
 
 	selectStatus(statusIndex: any) {
 		if (this.statusFilter !== statusIndex) {
-			this.preferenceService.saveFilter(this.preferenceToken,
-				{statusFilter: statusIndex});
 			this.statusFilter = statusIndex;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getApprovalStatuses();
 		}
 	}
@@ -267,18 +295,15 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 	clearStatus($event) {
 		this.statusFilter = null;
 		this.statusSelect.setValue(null);
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { statusFilter: null });
+		this.pageIndex = 0;
 		this.getApprovalStatuses();
 		$event.stopPropagation();
 	}
 
 	selectProcess(processIndex: any) {
 		if (this.processFilter !== processIndex) {
-			this.preferenceService.saveFilter(this.preferenceToken,
-				{processFilter: processIndex});
 			this.processFilter = processIndex;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getApprovalStatuses();
 		}
 	}
@@ -286,17 +311,14 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 	clearSubmitStart() {
 		this.submitStartFilter = null;
 		this.submitStartText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { submitStartFilter: null });
+		this.pageIndex = 0;
 		this.getApprovalStatuses();
 	}
 
 	selectSubmitStart(submitStart: any) {
 		if (this.submitStartFilter !== submitStart) {
-			this.preferenceService.saveFilter(this.preferenceToken,
-				{submitStartFilter: submitStart});
 			this.submitStartFilter = submitStart;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getApprovalStatuses();
 		}
 	}
@@ -304,17 +326,14 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 	clearSubmitEnd() {
 		this.submitEndFilter = null;
 		this.submitEndText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { submitEndFilter: null });
+		this.pageIndex = 0;
 		this.getApprovalStatuses();
 	}
 
 	selectSubmitEnd(submitEnd: any) {
 		if (this.submitEndFilter !== submitEnd) {
-			this.preferenceService.saveFilter(this.preferenceToken,
-				{submitEndFilter: submitEnd});
 			this.submitEndFilter = submitEnd;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getApprovalStatuses();
 		}
 	}
@@ -322,14 +341,13 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 	clearProcess($event) {
 		this.processFilter = null;
 		this.processSelect.setValue(null);
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { processFilter: null });
+		this.pageIndex = 0;
 		this.getApprovalStatuses();
 		$event.stopPropagation();
 	}
 
 	private createFormControls() {
-		this.approver = new FormControl(this.approverFilter.label);
+		this.approver = new FormControl(this.approverFilter ? this.approverFilter.logonId : "");
 		this.searchText = new FormControl(this.currentSearchString);
 		this.statusSelect = new FormControl(this.statusFilter);
 		this.processSelect = new FormControl(this.processFilter);
@@ -351,6 +369,7 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	private getApprovers(approverSearchString: string) {
+		this.approversLoading = true;
 		if (this.getApproversSubscription != null) {
 			this.getApproversSubscription.unsubscribe();
 			this.getApproversSubscription = null;
@@ -361,34 +380,52 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 			limit: 10
 		}).subscribe(
 			response => {
-				if (response.items.length === 1 && response.items[0].logonId === this.approver.value) {
+				if (response.items && response.items.length === 1 && response.items[0].logonId === this.approver.value) {
 					this.selectApprover(response.items[0]);
-					this.approverList = null;
+					this.approverList = [];
 				} else {
-					response.items.forEach(user => {
-						user.displayName = this.formatName(user.logonId, user.address.firstName, user.address.lastName);
-					});
-					this.approverList = response.items;
+					if (response.items) {
+						response.items.forEach(user => {
+							user.displayName = this.formatName(user.logonId, user.address.firstName, user.address.lastName);
+						});
+					}
+					this.approverList = response.items ? response.items : [];
 				}
 				this.getApproversSubscription = null;
+				this.approversLoading = false;
 			},
 			error => {
 				this.getApproversSubscription = null;
-				console.log(error);
+				this.approversLoading = false;
 			}
 		);
 	}
 
 	private getApprovalStatuses() {
+		this.preferenceService.save(this.preferenceToken, {
+			searchString: this.currentSearchString,
+			sort: this.sort,
+			pageIndex: this.pageIndex,
+			pageSize: this.pageSize,
+			filter: {
+				approverFilter: this.approverFilter,
+				statusFilter: this.statusFilter,
+				processFilter: this.processFilter,
+				submitStartFilter: this.submitStartFilter,
+				submitEndFilter: this.submitEndFilter
+			}
+		});
 		const args: ApprovalStatusService.GetApprovalStatusesParams = {
-			offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+			offset: this.pageIndex * this.paginator.pageSize,
 			limit: this.paginator.pageSize
 		};
 		if (this.currentSearchString) {
 			args.searchString = this.currentSearchString;
 		}
-		if (this.approverId != null) {
-			args.approverId = this.approverId;
+		if (!this.siteAdmin && this.userId !== null) {
+			args.approverId = this.userId;
+		} else if (this.approverFilter != null) {
+			args.approverId = this.approverFilter.id;
 		}
 		if (this.statusFilter != null) {
 			args.status = this.statusFilter;
@@ -433,7 +470,7 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 					approver: this.formatName(item.approverLogonId, item.approverFirstName, item.approverLastName),
 					processTextKey: processTextKey ? processTextKey : item.flowTypeId,
 					statusTextKey: statusTextKey ? statusTextKey : item.status,
-					lastUpdate: (new Date(item.lastUpdate)).toLocaleString(),
+					lastUpdate: new Intl.DateTimeFormat(LanguageService.language, DATE_FORMAT_OPTIONS).format((new Date(item.lastUpdate))),
 					status: item.status,
 					entityId: item.entityId
 				};
@@ -464,7 +501,8 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 				sort,
 				searchString,
 				filter,
-				showFilters
+				showFilters,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -479,10 +517,7 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 			if (filter) {
 				const {approverFilter, statusFilter, processFilter, submitStartFilter, submitEndFilter} = filter;
-				if (approverFilter) {
-					this.approverFilter = approverFilter;
-					this.approverId = approverFilter.value;
-				}
+				this.approverFilter = approverFilter;
 				this.statusFilter = statusFilter;
 				this.processFilter = processFilter;
 				this.submitStartFilter = submitStartFilter;
@@ -490,6 +525,9 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 			if (showFilters) {
 				this.showFilters = showFilters;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}
@@ -524,4 +562,3 @@ class ApprovalListDataSource extends DataSource<ApprovalStatus> {
 
 	disconnect() {}
 }
-

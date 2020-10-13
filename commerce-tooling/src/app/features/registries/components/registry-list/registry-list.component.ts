@@ -55,6 +55,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, AfterViewInit {
 	preferenceToken: string;
 	activeColumn = "registry";
 	sortDirection = "asc";
+	pageIndex = 0;
 
 	private statusTextKeys = {
 		"C": "REGISTRIES.STATUS_COMPLETE",
@@ -77,8 +78,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.createForm();
 
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.currentSearchString = searchString;
 			this.getRegistryList();
 		});
@@ -86,8 +86,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	ngAfterViewInit() {
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getRegistryList();
 		});
 		this.getRegistryList();
@@ -108,14 +107,12 @@ export class RegistryListComponent implements OnInit, OnDestroy, AfterViewInit {
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getRegistryList();
 	}
 
 	refresh() {
 		this.alertService.clear();
-		this.paginator.pageIndex = 0;
 		this.getRegistryList();
 	}
 
@@ -127,13 +124,19 @@ export class RegistryListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	public handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getRegistryList();
 	}
 
 	getRegistryList() {
+		this.preferenceService.save(this.preferenceToken, {
+			searchString: this.currentSearchString,
+			sort: this.sort,
+			pageIndex: this.pageIndex,
+			pageSize: this.pageSize
+		});
 		const args: RegistriesService.GetRegistriesParams = {
-			offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+			offset: this.pageIndex * this.paginator.pageSize,
 			limit: this.paginator.pageSize
 		};
 		if (this.currentSearchString) {
@@ -186,15 +189,6 @@ export class RegistryListComponent implements OnInit, OnDestroy, AfterViewInit {
 			registryEntry.status = this.statusTextKeys["R"];
 			this.model.refresh();
 			this.delayedRefresh();
-		},
-		errorResponse => {
-			if (errorResponse.error && errorResponse.error.errors) {
-				errorResponse.error.errors.forEach(error => {
-					this.alertService.error({message: error.message});
-				});
-			} else {
-				console.log(errorResponse);
-			}
 		});
 	}
 
@@ -209,15 +203,6 @@ export class RegistryListComponent implements OnInit, OnDestroy, AfterViewInit {
 			});
 			this.model.refresh();
 			this.delayedRefresh();
-		},
-		errorResponse => {
-			if (errorResponse.error && errorResponse.error.errors) {
-				errorResponse.error.errors.forEach(error => {
-					this.alertService.error({message: error.message});
-				});
-			} else {
-				console.log(errorResponse);
-			}
 		});
 	}
 
@@ -238,7 +223,8 @@ export class RegistryListComponent implements OnInit, OnDestroy, AfterViewInit {
 			const {
 				pageSize,
 				sort,
-				searchString
+				searchString,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -250,6 +236,9 @@ export class RegistryListComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 			if (searchString) {
 				this.currentSearchString = searchString;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}

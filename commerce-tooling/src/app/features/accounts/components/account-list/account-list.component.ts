@@ -51,6 +51,7 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 	preferenceToken: string;
 	activeColumn = "name";
 	sortDirection = "asc";
+	pageIndex = 0;
 
 	private getAccountsSubscription: Subscription = null;
 	private searchString: Subject<string> = new Subject<string>();
@@ -78,9 +79,8 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.createFormControls();
 		this.createForm();
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
 			this.currentSearchString = searchString;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getAccounts();
 		});
 		this.storeSearchString.pipe(debounceTime(250)).subscribe(searchString => {
@@ -124,8 +124,7 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 			});
 		}
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getAccounts();
 		});
 	}
@@ -137,15 +136,14 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getAccounts();
 	}
 
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getAccounts();
 	}
 
@@ -177,7 +175,6 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 			},
 			error => {
 				this.getStoresSubscription = null;
-				console.log(error);
 			}
 		);
 	}
@@ -192,7 +189,9 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.selectedStore = store;
 		this.store.setValue(store.identifier);
 		if (currentStoreId !== store.id) {
-			this.paginator.pageIndex = 0;
+			if (currentStoreId !== null) {
+				this.pageIndex = 0;
+			}
 			this.getAccounts();
 			this.storeList = [];
 			this.searchStores("");
@@ -212,7 +211,7 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	gotoContracts(accountId: any) {
-		this.router.navigate(["/contracts/contract-list", {accountId: accountId, storeId: this.selectedStore.id}]);
+		this.router.navigate(["/contracts/contract-list", {accountId, storeId: this.selectedStore.id}]);
 	}
 
 	onResponsiveColsChange(cols: number) {
@@ -253,9 +252,15 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	private getAccounts() {
 		if (this.selectedStore) {
+			this.preferenceService.save(this.preferenceToken, {
+				searchString: this.currentSearchString,
+				sort: this.sort,
+				pageIndex: this.pageIndex,
+				pageSize: this.pageSize
+			});
 			const args: AccountsService.GetAccountsParams = {
 				storeId: this.selectedStore.id,
-				offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+				offset: this.pageIndex * this.paginator.pageSize,
 				limit: this.paginator.pageSize
 			};
 			if (this.currentSearchString) {
@@ -315,7 +320,8 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 			const {
 				pageSize,
 				sort,
-				searchString
+				searchString,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -327,6 +333,9 @@ export class AccountListComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 			if (searchString) {
 				this.currentSearchString = searchString;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}

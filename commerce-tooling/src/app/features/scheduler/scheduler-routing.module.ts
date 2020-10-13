@@ -16,7 +16,6 @@ import { ScheduledJobListComponent } from "./components/scheduled-job-list/sched
 import { CreateJobComponent } from "./components/create-job/create-job.component";
 import { EditJobComponent } from "./components/edit-job/edit-job.component";
 
-
 const routes: Routes = [
 	{
 		path: "scheduled-job-list", component: ScheduledJobListComponent

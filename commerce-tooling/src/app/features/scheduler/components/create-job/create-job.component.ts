@@ -78,15 +78,6 @@ export class CreateJobComponent implements OnInit, OnDestroy {
 					this.translateService.get("SCHEDULER.JOB_CREATED_MESSAGE").subscribe((message: string) => {
 						this.alertService.success({message});
 					});
-				},
-				errorResponse => {
-					if (errorResponse.error && errorResponse.error.errors) {
-						errorResponse.error.errors.forEach(error => {
-							this.alertService.error({message: error.errorMessage});
-						});
-					} else {
-						console.log(errorResponse);
-					}
 				});
 			} else if (!valid) {
 				this.translateService.get("SCHEDULER.INPUT_ERROR").subscribe((message: string) => {

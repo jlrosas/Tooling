@@ -1,0 +1,21 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'SHIPPING_CHARGES.DELETE_SHIPPING_CHARGE' | translate}}</h4>
+
+<form [formGroup]="deleteShippingChargeForm" autocomplete="off">
+	<mat-label>{{'SHIPPING_CHARGES.DELETE_SHIPPING_CHARGE_CONFIRMATION'| translate: {name: name} }}</mat-label>
+</form>
+
+<mat-dialog-actions>
+	<button class="mat-flat-button" type="button" (click)="cancel()">{{'SHIPPING_CHARGES.CANCEL' | translate}}</button>
+	<button class="mat-flat-button mat-primary" (click)="deleteShippingCharge()">{{'SHIPPING_CHARGES.DELETE' | translate}}</button>
+</mat-dialog-actions>

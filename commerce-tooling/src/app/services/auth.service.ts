@@ -22,7 +22,7 @@ export class AuthService {
 			AuthService.jwt = token;
 			if (!token) {
 				this.isTokenValid.next(false);
-				window.top.postMessage({"action": "JWT_FETCH_REQUEST"}, "*");
+				window.parent.postMessage({"action": "JWT_FETCH_REQUEST"}, "*");
 			} else {
 				this.isTokenValid.next(true);
 			}

@@ -52,8 +52,6 @@ export class TaxCategoryMainService {
 	private currentCalculationRules: Array<any> = null;
 	private currentCalculationRuleScales: Array<any> = null;
 	private currentTaxJurisdictionCalculationRules: Array<any> = null;
-	private currentCalculationRanges: Array<any> = null;
-	private currentCalculationRangeDetails: Array<any> = null;
 
 	constructor(
 			private taxCategoriesService: TaxCategoriesService,
@@ -78,8 +76,6 @@ export class TaxCategoryMainService {
 		this.currentCalculationRules = null;
 		this.currentCalculationRuleScales = null;
 		this.currentTaxJurisdictionCalculationRules = null;
-		this.currentCalculationRanges = null;
-		this.currentCalculationRangeDetails = null;
 	}
 
 	createTaxCategory(): Observable<string> {
@@ -560,7 +556,7 @@ export class TaxCategoryMainService {
 							sequence: 0,
 							flags: 1,
 							taxCategoryId: this.currentTaxCategoryId,
-							calculationCodeId: calculationCodeId,
+							calculationCodeId,
 							calculationMethodId: this.taxCategoryData.taxTypeId === -3 ? -47 : -67,
 							calculationRuleQualifyMethodId: this.taxCategoryData.taxTypeId === -3 ? -46 : -66
 						}));
@@ -622,10 +618,10 @@ export class TaxCategoryMainService {
 				calculationRuleIds.forEach(calculationRuleId => {
 					sources.push(taxRate);
 					requests.push(this.taxJurisdictionCalculationRulesService.createTaxJurisdictionCalculationRuleResponse({
-						precedence: precedence,
-						calculationRuleId: calculationRuleId,
-						jurisdictionGroupId: jurisdictionGroupId,
-						fulfillmentCenterId: fulfillmentCenterId
+						precedence,
+						calculationRuleId,
+						jurisdictionGroupId,
+						fulfillmentCenterId
 					}));
 				});
 			});
@@ -645,7 +641,7 @@ export class TaxCategoryMainService {
 							cumulative: 0,
 							rangeStart: 0,
 							calculationMethodId: this.taxCategoryData.taxTypeId === -3 ? -59 : -77,
-							calculationScaleId: calculationScaleId
+							calculationScaleId
 						}));
 					});
 				}
@@ -663,7 +659,7 @@ export class TaxCategoryMainService {
 					taxRate.calculationRangeIds.forEach(calculationRangeId => {
 						sources.push(taxRate);
 						requests.push(this.calculationRangeDetailsService.createCalculationRangeDetailResponse({
-							calculationRangeId: calculationRangeId,
+							calculationRangeId,
 							value: taxRate.rate
 						}));
 					});

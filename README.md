@@ -5,7 +5,7 @@ HCL Commerce Tooling code assets
 
 1. You must have access to a version 9.1 commerce transaction server. This can be either a toolkit or a runtime environment. The default configuration for the proxy expects this server to be running on localhost. Modify commerce-tooling/proxy.conf.json if your server is not running on localhost.
 2. Your commerce transaction server must be started.
-3. You must be able to log onto Management Center. The default user ID and password for the internal toolkit is wcsadmin/wcs1admin.
+3. You must be able to log onto Management Center. The default user ID and password for the toolkit is wcsadmin/wcs1admin.
 4. You must have node js installed (http://nodejs.org)
 
 ## Development Install

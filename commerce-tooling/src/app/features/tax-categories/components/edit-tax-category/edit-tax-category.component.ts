@@ -84,15 +84,6 @@ export class EditTaxCategoryComponent {
 							this.translateService.get("TAX_CATEGORIES.TAX_CATEGORY_SAVED_MESSAGE").subscribe((message: string) => {
 								this.alertService.success({message});
 							});
-						},
-						errorResponse => {
-							if (errorResponse.error && errorResponse.error.errors) {
-								errorResponse.error.errors.forEach((error: { message: string; }) => {
-									this.alertService.error({message: error.message});
-								});
-							} else {
-								console.log(errorResponse);
-							}
 						});
 					}
 				} else {

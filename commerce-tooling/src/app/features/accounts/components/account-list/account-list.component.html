@@ -40,10 +40,12 @@
 					<mat-icon matSuffix>filter_list</mat-icon>
 				</mat-form-field>
 			</form>
-			<button *hcRole="[-1,-18,-4]" class="mat-flat-button mat-primary" (click)="createAccount()">{{'ACCOUNTS.NEW_BUTTON' | translate}}</button>
-			<button class="mat-icon-button-label" matTooltip="{{'ACCOUNTS.REFRESH' | translate}}" mat-icon-button (click)="refreshAccounts()">
-				<mat-icon color="primary">refresh</mat-icon>
-			</button>
+			<div class="hc-table-buttons">
+				<button *hcRole="[-1,-18,-4]" class="mat-flat-button mat-primary" (click)="createAccount()">{{'ACCOUNTS.NEW_BUTTON' | translate}}</button>
+				<button class="mat-icon-button-label" matTooltip="{{'ACCOUNTS.REFRESH' | translate}}" mat-icon-button (click)="refreshAccounts()">
+					<mat-icon color="primary">refresh</mat-icon>
+				</button>
+			</div>
 		</div>
 		<!-- Search,Filter part(end) -->
 
@@ -80,7 +82,7 @@
 			</table>
 			<!-- TABLE PART (END) -->
 		</div>
-		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+		<mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
 				(page)="handlePage($event)">
 		</mat-paginator>
 	</div>

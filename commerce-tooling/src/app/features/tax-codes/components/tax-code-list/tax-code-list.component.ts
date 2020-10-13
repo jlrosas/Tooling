@@ -25,6 +25,7 @@ import { OnlineStoresService } from "../../../../rest/services/online-stores.ser
 import { CurrentUserService } from "../../../../services/current-user.service";
 import { DeleteTaxCodeDialogComponent } from "../delete-tax-code-dialog/delete-tax-code-dialog.component";
 import { StoreEntityCalculationUsagesService } from "../../../../rest/services/store-entity-calculation-usages.service";
+import { CalculationRulesService } from "../../../../rest/services/calculation-rules.service";
 import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
 
@@ -69,6 +70,7 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 		"-4": "TAX_CODES.TAX_TYPE_SHIPPING"
 	};
 	taxTypeTextIndicies = Object.keys(this.taxTypeTextKeys);
+	pageIndex: number = null;
 
 	private getTaxCodesSubscription: Subscription = null;
 	private deleteDefaultTaxCodesSubscription: Subscription = null;
@@ -93,6 +95,7 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 			private onlineStoresService: OnlineStoresService,
 			private currentUserService: CurrentUserService,
 			private storeEntityCalculationUsagesService: StoreEntityCalculationUsagesService,
+			private calculationRulesService: CalculationRulesService,
 			private alertService: AlertService,
 			private translateService: TranslateService) { }
 
@@ -101,9 +104,8 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.createFormControls();
 		this.createForm();
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
 			this.currentSearchString = searchString;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getTaxCodes();
 		});
 		this.storeSearchString.pipe(debounceTime(250)).subscribe(searchString => {
@@ -147,8 +149,7 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 			});
 		}
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getTaxCodes();
 		});
 	}
@@ -160,15 +161,14 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getTaxCodes();
 	}
 
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getTaxCodes();
 	}
 
@@ -189,17 +189,16 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 			usage: "HCL_TaxTool",
 			identifier: "*" + searchString + "*",
 			limit: 10
-	 	}).subscribe(response => {
-	 		this.getStoresSubscription = null;
-	 		if (response.items.length === 1 && response.items[0].identifier === this.store.value) {
-	 			this.selectStore(response.items[0]);
-	 		} else {
-	 			this.storeList = response.items;
-	 		}
+		}).subscribe(response => {
+			this.getStoresSubscription = null;
+			if (response.items.length === 1 && response.items[0].identifier === this.store.value) {
+				this.selectStore(response.items[0]);
+			} else {
+				this.storeList = response.items;
+			}
 		},
 		error => {
 			this.getStoresSubscription = null;
-			console.log(error);
 		});
 	}
 
@@ -213,7 +212,9 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.selectedStore = store;
 		this.store.setValue(store.identifier);
 		if (currentStoreId !== store.id) {
-			this.paginator.pageIndex = 0;
+			if (currentStoreId !== null) {
+				this.pageIndex = 0;
+			}
 			this.getTaxCodes();
 			this.storeList = [];
 			this.searchStores("");
@@ -243,16 +244,14 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	selectTaxType(taxType: string) {
 		this.selectedTaxType = taxType;
-		this.preferenceService.saveFilter(this.preferenceToken, { taxTypeFilter: taxType });
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getTaxCodes();
 	}
 
 	clearTaxType($event) {
 		this.selectedTaxType = null;
 		this.taxType.setValue(null);
-		this.preferenceService.saveFilter(this.preferenceToken, { taxTypeFilter: null });
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getTaxCodes();
 		$event.stopPropagation();
 	}
@@ -262,17 +261,20 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	deleteTaxCode(taxCode: any) {
-		const { id, name } = taxCode;
-		const dialogRef = this.dialog.open(DeleteTaxCodeDialogComponent, {
-			...this.dialogConfig,
-			data: {
-				id,
-				name
-			}
-		});
-		dialogRef.afterClosed().subscribe(data => {
-			if (data && data.taxCodeDeleted) {
-				this.getTaxCodes();
+		this.alertService.clear();
+		const args: CalculationRulesService.GetCalculationRulesParams = {
+			calculationCodeId: taxCode.id
+		};
+		this.calculationRulesService.getCalculationRules(args).subscribe((body: any) => {
+			const taxRules = body.items;
+			if (taxRules.length > 0) {
+				const taxCodeName = taxCode.name;
+				this.translateService.get("TAX_CODES.CODE_BEING_USED_IN_TAX_CATEGORY", {taxCodeName})
+						.subscribe((message: string) => {
+					this.alertService.error({message, clear: true});
+				});
+			} else {
+				this.doDelete(taxCode);
 			}
 		});
 	}
@@ -294,15 +296,6 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 						this.alertService.success({message});
 					});
 					this.getTaxCodes();
-				},
-				errorResponse => {
-					if (errorResponse.error = errorResponse.error.errors) {
-						errorResponse.error.errors.forEach(error => {
-							this.alertService.error({message: error.errorMessage});
-						});
-					} else {
-						console.log(errorResponse);
-					}
 				});
 			} else {
 				const args: any = {
@@ -332,16 +325,27 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 						this.alertService.success({message});
 					});
 					this.getTaxCodes();
-				},
-				errorResponse => {
-					if (errorResponse.error = errorResponse.error.errors) {
-						errorResponse.error.errors.forEach(error => {
-							this.alertService.error({message: error.errorMessage});
-						});
-					} else {
-						console.log(errorResponse);
-					}
 				});
+			}
+		});
+	}
+
+	private doDelete(taxCode: any) {
+		const isDefaultSalesTaxCode = taxCode.id === this.defaultSalesTaxCodeId;
+		const isDefaultShippingTaxCode = taxCode.id === this.defaultShippingTaxCodeId;
+		const { id, name } = taxCode;
+		const dialogRef = this.dialog.open(DeleteTaxCodeDialogComponent, {
+			...this.dialogConfig,
+			data: {
+				id,
+				name,
+				isDefaultSalesTaxCode,
+				isDefaultShippingTaxCode
+			}
+		});
+		dialogRef.afterClosed().subscribe(data => {
+			if (data && data.taxCodeDeleted) {
+				this.getTaxCodes();
 			}
 		});
 	}
@@ -364,6 +368,15 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	private getTaxCodes() {
 		if (this.selectedStore) {
+			this.preferenceService.save(this.preferenceToken, {
+				searchString: this.currentSearchString,
+				sort: this.sort,
+				pageIndex: this.pageIndex,
+				pageSize: this.pageSize,
+				filter: {
+					taxTypeFilter: this.selectedTaxType
+				}
+			});
 			this.storeEntityCalculationUsagesService.getStoreEntityCalculationUsages({
 				storeId: this.selectedStore.id,
 				calculationUsageId: [-3, -4]
@@ -377,7 +390,7 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 				});
 			});
 			const args: CalculationCodesService.GetCalculationCodesParams = {
-				offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+				offset: this.pageIndex * this.paginator.pageSize,
 				limit: this.paginator.pageSize,
 				calculationUsageId: [-3, -4],
 				storeId: this.selectedStore.id
@@ -429,7 +442,8 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 				sort,
 				searchString,
 				filter,
-				showFilters
+				showFilters,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -450,6 +464,9 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 			if (showFilters) {
 				this.showFilters = showFilters;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}

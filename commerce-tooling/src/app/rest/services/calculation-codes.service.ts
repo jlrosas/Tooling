@@ -33,6 +33,8 @@ class CalculationCodesService extends __BaseService {
    *
    * - `id`: The unique numeric ID for identifying the calculation Code.
    *
+   * - `excludeId`: The unique numeric ID for identifying calculation codes to be excluded from the result set.
+   *
    * - `calculationCode`: The external identifier or name for identifying the calculation code, given a particular calculation usage and store ID.
    *
    * - `combination`: Specify the bit flag to determine how this calculation rule can be combined with other calculation rules, 0 = The rule can be combined with any other rule. 1 = The rule can only be combined with rules that have the combination type 0 rules. 2 = The rule cannot be combined with rules that have the combination type 1.
@@ -89,6 +91,7 @@ class CalculationCodesService extends __BaseService {
     let __body: any = null;
     if (params.searchString != null) __params = __params.set('searchString', params.searchString.toString());
     (params.id || []).forEach(val => {if (val != null) __params = __params.append('id', val.toString())});
+    (params.excludeId || []).forEach(val => {if (val != null) __params = __params.append('excludeId', val.toString())});
     if (params.calculationCode != null) __params = __params.set('calculationCode', params.calculationCode.toString());
     if (params.combination != null) __params = __params.set('combination', params.combination.toString());
     if (params.groupBy != null) __params = __params.set('groupBy', params.groupBy.toString());
@@ -138,6 +141,8 @@ class CalculationCodesService extends __BaseService {
    * - `searchString`: Limits search results to only include calculation codes with a calculationCode that matches the value of this parameter. Searches are case-insensitive.
    *
    * - `id`: The unique numeric ID for identifying the calculation Code.
+   *
+   * - `excludeId`: The unique numeric ID for identifying calculation codes to be excluded from the result set.
    *
    * - `calculationCode`: The external identifier or name for identifying the calculation code, given a particular calculation usage and store ID.
    *
@@ -460,6 +465,11 @@ module CalculationCodesService {
      * The unique numeric ID for identifying the calculation Code.
      */
     id?: Array<number>;
+
+    /**
+     * The unique numeric ID for identifying calculation codes to be excluded from the result set.
+     */
+    excludeId?: Array<number>;
 
     /**
      * The external identifier or name for identifying the calculation code, given a particular calculation usage and store ID.

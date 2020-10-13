@@ -60,7 +60,6 @@ export class TaxCodeMainService {
 				this.processing = false;
 			},
 			error => {
-				console.log(error);
 				observer.error(error);
 				observer.complete();
 				this.processing = false;
@@ -108,7 +107,7 @@ export class TaxCodeMainService {
 					this.currentTaxCodeId = id;
 				}
 				const args: CalculationCodesService.GetCalculationCodeByIdParams = {
-					id: id
+					id
 				};
 				this.calculationCodeServices.getCalculationCodeById(args).subscribe((body: any) => {
 					this.currentTaxCode = body;

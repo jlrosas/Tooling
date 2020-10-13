@@ -57,7 +57,7 @@ export class CurrentUserService {
 	setPreferredStore(storeName: string) {
 		if (storeName !== null && storeName !== this.storeName) {
 			this.storeName = storeName;
-			window.top.postMessage({
+			window.parent.postMessage({
 				"action": "SET_PREFERRED_STORE",
 				"data": {
 					"store": storeName
@@ -81,6 +81,22 @@ export class CurrentUserService {
 		});
 	}
 
+	hasMatchingRole(testRoles: Array<number>): Observable<boolean> {
+		return new Observable((observer) => {
+			if (this.roles != null) {
+				observer.next(this.checkForRoles(testRoles));
+				observer.complete();
+			} else {
+				this.loadRoles();
+				const rolesSetSubscription = this.rolesSet.subscribe(roles => {
+					observer.next(this.checkForRoles(testRoles));
+					observer.complete();
+					rolesSetSubscription.unsubscribe();
+				});
+			}
+		});
+	}
+
 	getRoles(): Observable<Array<number>> {
 		return new Observable((observer) => {
 			if (this.roles != null) {
@@ -95,6 +111,26 @@ export class CurrentUserService {
 				});
 			}
 		});
+	}
+
+	private checkForRoles(testRoles: Array<number>): boolean {
+		let hasRole = false;
+		if (this.roles != null) {
+			for (let i = 0; i < testRoles.length; i++) {
+				const testRole = testRoles[i];
+				for (let j = 0; j < this.roles.length; j++) {
+					const role = this.roles[j];
+					if (testRole === role) {
+						hasRole = true;
+						break;
+					}
+				}
+				if (hasRole) {
+					break;
+				}
+			}
+		}
+		return hasRole;
 	}
 
 	private loadRoles() {

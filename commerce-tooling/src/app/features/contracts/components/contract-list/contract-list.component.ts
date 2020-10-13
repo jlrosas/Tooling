@@ -22,9 +22,10 @@ import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { DataSource } from "@angular/cdk/table";
 import { saveAs } from "file-saver";
 import { AlertService } from "../../../../services/alert.service";
+import { LanguageService } from "../../../../services/language.service";
 import { AccountsService } from "../../../../rest/services/accounts.service";
 import { ContractMainService } from "../../../contracts/services/contract-main.service";
-import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from "../../../../shared/constants";
+import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS, DATE_FORMAT_OPTIONS } from "../../../../shared/constants";
 import { PreferenceService } from "../../../../services/preference.service";
 import { DeleteContractDialogComponent } from "../delete-contract-dialog/delete-contract-dialog.component";
 import { CopyContractDialogComponent } from "../copy-contract-dialog/copy-contract-dialog.component";
@@ -63,11 +64,13 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 	sortDirection = "asc";
 
 	accountName: any;
+	pageIndex = 0;
 
 	@ViewChild("importFileInput", {static: false}) importFileInput: ElementRef<HTMLInputElement>;
 
 	private searchString: Subject<string> = new Subject<string>();
 	private getContractsSubscription: Subscription = null;
+	private onLangChangeSubscription: Subscription = null;
 	private dialogConfig = {
 		maxWidth: "80%",
 		maxHeight: "100vh",
@@ -97,6 +100,7 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 			private accountsService: AccountsService,
 			private contractMainService: ContractMainService,
 			private alertService: AlertService,
+			private languageService: LanguageService,
 			private dialog: MatDialog,
 			private preferenceService: PreferenceService,
 			private currentUserService: CurrentUserService) { }
@@ -113,9 +117,11 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 		);
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
 			this.currentSearchString = searchString;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
+			this.getContracts();
+		});
+		this.onLangChangeSubscription = this.languageService.onLanguageChange.subscribe(() => {
 			this.getContracts();
 		});
 	}
@@ -131,14 +137,16 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.getContracts();
 		});
 		this.sort.sortChange.subscribe(sort => {
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getContracts();
 		});
 	}
 
 	ngOnDestroy() {
 		this.searchString.unsubscribe();
+		if (this.onLangChangeSubscription) {
+			this.onLangChangeSubscription.unsubscribe();
+		}
 	}
 
 	toggleShowFilters(e: any) {
@@ -152,7 +160,7 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	public handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getContracts();
 	}
 
@@ -172,16 +180,7 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.translateService.get("CONTRACTS.CONTRACT_RESUMED_MESSAGE").subscribe((message: string) => {
 				this.alertService.success({message});
 			});
-		},
-	 	errorResponse => {
-	 		if (errorResponse.error && errorResponse.error.errors) {
-	 			errorResponse.error.errors.forEach(error => {
-	 				this.alertService.error({message: error.errorMessage});
-	 			});
-	 		} else {
-	 			console.log(errorResponse);
-	 		}
-	 	});
+		});
 	}
 
 	suspendContract(contractId: any) {
@@ -190,16 +189,7 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.translateService.get("CONTRACTS.CONTRACT_SUSPENDED_MESSAGE").subscribe((message: string) => {
 				this.alertService.success({message});
 			});
-		},
-	 	errorResponse => {
-	 		if (errorResponse.error && errorResponse.error.errors) {
-	 			errorResponse.error.errors.forEach(error => {
-	 				this.alertService.error({message: error.errorMessage});
-	 			});
-	 		} else {
-	 			console.log(errorResponse);
-	 		}
-	 	});
+		});
 	}
 
 	deleteContract(contract: any) {
@@ -224,16 +214,7 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.translateService.get("CONTRACTS.CONTRACT_CANCELED_MESSAGE").subscribe((message: string) => {
 				this.alertService.success({message});
 			});
-		},
-	 	errorResponse => {
-	 		if (errorResponse.error && errorResponse.error.errors) {
-	 			errorResponse.error.errors.forEach(error => {
-	 				this.alertService.error({message: error.errorMessage});
-	 			});
-	 		} else {
-	 			console.log(errorResponse);
-	 		}
-	 	});
+		});
 	}
 
 	copyContract(contractId: any) {
@@ -256,16 +237,7 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.translateService.get("CONTRACTS.CONTRACT_VERSIONED_MESSAGE").subscribe((message: string) => {
 				this.alertService.success({message});
 			});
-		},
-	 	errorResponse => {
-	 		if (errorResponse.error && errorResponse.error.errors) {
-	 			errorResponse.error.errors.forEach(error => {
-	 				this.alertService.error({message: error.errorMessage});
-	 			});
-	 		} else {
-	 			console.log(errorResponse);
-	 		}
-	 	});
+		});
 	}
 
 	deployContract(contractId: any) {
@@ -274,16 +246,7 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.translateService.get("CONTRACTS.CONTRACT_DEPLOYED_MESSAGE").subscribe((message: string) => {
 				this.alertService.success({message});
 			});
-		},
-	 	errorResponse => {
-	 		if (errorResponse.error && errorResponse.error.errors) {
-	 			errorResponse.error.errors.forEach(error => {
-	 				this.alertService.error({message: error.errorMessage});
-	 			});
-	 		} else {
-	 			console.log(errorResponse);
-	 		}
-	 	});
+		});
 	}
 
 	submitContract(contractId: any) {
@@ -292,23 +255,13 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.translateService.get("CONTRACTS.CONTRACT_SUBMITTED_MESSAGE").subscribe((message: string) => {
 				this.alertService.success({message});
 			});
-		},
-	 	errorResponse => {
-	 		if (errorResponse.error && errorResponse.error.errors) {
-	 			errorResponse.error.errors.forEach(error => {
-	 				this.alertService.error({message: error.errorMessage});
-	 			});
-	 		} else {
-	 			console.log(errorResponse);
-	 		}
-	 	});
+		});
 	}
 
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getContracts();
 	}
 
@@ -318,10 +271,8 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	selectStatus(statusIndex: any) {
 		if (this.statusFilter !== statusIndex) {
-			this.preferenceService.saveFilter(this.preferenceToken,
-				{statusFilter: statusIndex});
 			this.statusFilter = statusIndex;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getContracts();
 		}
 	}
@@ -329,9 +280,7 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 	clearStatus($event) {
 		this.statusFilter = null;
 		this.statusSelect.setValue(null);
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken,
-			{statusFilter: null});
+		this.pageIndex = 0;
 		this.getContracts();
 		$event.stopPropagation();
 	}
@@ -358,15 +307,6 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 					 			 this.alertService.success({message});
 					 		 });
 					 		 this.getContracts();
-					 	 },
-					 	 errorResponse => {
-					 		 if (errorResponse.error && errorResponse.error.errors) {
-					 			 errorResponse.error.errors.forEach(error => {
-					 				 this.alertService.error({message: error.errorMessage});
-					 			 });
-					 		 } else {
-					 			 console.log(errorResponse);
-					 		 }
 					 	 }
 					 );
 				});
@@ -380,23 +320,12 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	exportContract(contractId: string) {
 		this.alertService.clear();
-		this.contractsService.exportContractResponse(contractId).subscribe(
-			response => {
-				saveAs(response.body, "contractexport_" + contractId + ".xml");
-				this.translateService.get("CONTRACTS.CONTRACT_EXPORTED_MESSAGE").subscribe((message: string) => {
-					this.alertService.success({message});
-				});
-			},
-			errorResponse => {
-				if (errorResponse.error = errorResponse.error.errors) {
-					errorResponse.error.errors.forEach(error => {
-						this.alertService.error({message: error.errorMessage});
-					});
-				} else {
-					console.log(errorResponse);
-				}
-			}
-		);
+		this.contractsService.exportContractResponse(contractId).subscribe(response => {
+			saveAs(response.body, "contractexport_" + contractId + ".xml");
+			this.translateService.get("CONTRACTS.CONTRACT_EXPORTED_MESSAGE").subscribe((message: string) => {
+				this.alertService.success({message});
+			});
+		});
 	}
 
 	private createFormControls() {
@@ -414,9 +343,18 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	private getContracts() {
+		this.preferenceService.save(this.preferenceToken, {
+			searchString: this.currentSearchString,
+			sort: this.sort,
+			pageIndex: this.pageIndex,
+			pageSize: this.pageSize,
+			filter: {
+				statusFilter: this.statusFilter
+			}
+		});
 		const args: ContractsService.GetContractsParams = {
 			accountId: this.accountId,
-			offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+			offset: this.pageIndex * this.paginator.pageSize,
 			limit: this.paginator.pageSize
 		};
 		if (this.currentSearchString) {
@@ -447,7 +385,7 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 					id: item.id,
 					name: item.name,
 					description: item.description,
-					createDate: (new Date(item.createDate)).toLocaleString(),
+					createDate: new Intl.DateTimeFormat(LanguageService.language, DATE_FORMAT_OPTIONS).format((new Date(item.createDate))),
 					status: item.status,
 					statusTextKey: this.statusTextKeys[item.status] ? this.statusTextKeys[item.status] : item.status
 				};
@@ -466,7 +404,8 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 				sort,
 				searchString,
 				filter,
-				showFilters
+				showFilters,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -485,6 +424,9 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 			if (showFilters) {
 				this.showFilters = showFilters;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}
@@ -516,4 +458,3 @@ class ContractListDataSource extends DataSource<Contract> {
 
 	disconnect() {}
 }
-

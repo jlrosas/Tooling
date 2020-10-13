@@ -24,6 +24,8 @@ export class DeleteTaxCodeDialogComponent implements OnInit {
 	deleteTaxCodeForm: FormGroup;
 	taxCodeName: string;
 	taxCodeId: number;
+	isDefaultSalesTaxCode: boolean;
+	isDefaultShippingTaxCode: boolean;
 	processing = false;
 
 	constructor(private alertService: AlertService,
@@ -34,6 +36,8 @@ export class DeleteTaxCodeDialogComponent implements OnInit {
 			@Inject(MAT_DIALOG_DATA) data) {
 		this.taxCodeName = data.name;
 		this.taxCodeId = data.id;
+		this.isDefaultSalesTaxCode = data.isDefaultSalesTaxCode;
+		this.isDefaultShippingTaxCode = data.isDefaultShippingTaxCode;
 	}
 
 	ngOnInit() {
@@ -56,16 +60,6 @@ export class DeleteTaxCodeDialogComponent implements OnInit {
 			});
 			this.processing = false;
 			this.dialogRef.close({ taxCodeDeleted: true });
-		},
-		errorResponse => {
-			this.processing = false;
-			if (errorResponse.error && errorResponse.error.errors) {
-				errorResponse.error.errors.forEach(error => {
-					this.alertService.error({message: error.message});
-				});
-			} else {
-				console.log(errorResponse);
-			}
 		});
 	}
 }

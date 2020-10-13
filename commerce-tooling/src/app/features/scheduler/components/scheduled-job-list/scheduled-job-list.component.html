@@ -28,16 +28,18 @@
 					</span>
 				</mat-form-field>
 			</form>
-			<mat-slide-toggle [checked]="showFilters" color="primary" (change)="toggleShowFilters($event)">
-				{{'SCHEDULER.SHOW_FILTERS' | translate}}
-			</mat-slide-toggle>
-			<button class="mat-flat-button mat-primary" (click)="createJob()">{{'SCHEDULER.NEW' | translate}}</button>
-			<button matTooltip="{{'SCHEDULER.CLEAR_ALL_JOBS' | translate}}" mat-icon-button (click)="clearAllPreviousStatus()">
-				<mat-icon color="primary">highlight_off</mat-icon>
-			</button>
-			<button matTooltip="{{'SCHEDULER.REFRESH' | translate}}" mat-icon-button (click)="refresh()">
-				<mat-icon color="primary">refresh</mat-icon>
-			</button>
+			<div class="hc-table-buttons">
+				<mat-slide-toggle [checked]="showFilters" color="primary" (change)="toggleShowFilters($event)">
+					{{'SCHEDULER.SHOW_FILTERS' | translate}}
+				</mat-slide-toggle>
+				<button class="mat-flat-button mat-primary" (click)="createJob()">{{'SCHEDULER.NEW' | translate}}</button>
+				<button matTooltip="{{'SCHEDULER.CLEAR_ALL_JOBS' | translate}}" mat-icon-button (click)="clearAllPreviousStatus()">
+					<mat-icon color="primary">highlight_off</mat-icon>
+				</button>
+				<button matTooltip="{{'SCHEDULER.REFRESH' | translate}}" mat-icon-button (click)="refresh()">
+					<mat-icon color="primary">refresh</mat-icon>
+				</button>
+			</div>
 		</div>
 		<div *ngIf="showFilters">
 			<div class="hc-table-filters">
@@ -51,7 +53,7 @@
 								{{store.identifier}}
 							</mat-option>
 						</mat-autocomplete>
-						<span class="filter-clear" *ngIf="selectedStore != null" (click)="clearStore()">
+						<span class="filter-clear" *ngIf="storeFilter != null" (click)="clearStore()">
 							<mat-icon>clear</mat-icon>
 							<span class="clear-margin">{{'SCHEDULER.CLEAR' | translate}}</span>
 						</span>
@@ -216,7 +218,7 @@
 		</div>
 		<!-- TABLE PART (END) -->
 	
-		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)">
+		<mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)">
 		</mat-paginator>
 	</div>
 </div>

@@ -49,6 +49,8 @@ import { UserListComponent } from "./components/user-list/user-list.component";
 import { DirectivesModule } from "../../directives/directives.module";
 import { CreateUserComponent } from "./components/create-user/create-user.component";
 import { EditUserComponent } from "./components/edit-user/edit-user.component";
+import { PasswordResetDialogComponent } from "./components/password-reset-dialog/password-reset-dialog.component";
+import { OrganizationNameService } from "../../services/organization-name.service";
 
 @NgModule({
 	imports: [
@@ -91,11 +93,14 @@ import { EditUserComponent } from "./components/edit-user/edit-user.component";
 		UserContactComponent,
 		UserListComponent,
 		CreateUserComponent,
-		EditUserComponent
+		EditUserComponent,
+		PasswordResetDialogComponent
 	],
 	providers: [
+		OrganizationNameService
 	],
 	entryComponents: [
+		PasswordResetDialogComponent
 	]
 })
 export class UserManagementModule { }

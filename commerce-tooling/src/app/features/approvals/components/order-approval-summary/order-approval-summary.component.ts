@@ -121,7 +121,6 @@ export class OrderApprovalSummaryComponent implements OnInit, OnDestroy, OnChang
 					orderItemRequests.push(this.orderItemsService.getOrderItemById(item.id));
 				}
 				forkJoin(orderItemRequests).subscribe(response => {
-					const uniqueAddressIds = new Set();
 					const data: Item[] = [];
 					for (let index = 0; index < response.length; index++) {
 						const element: any = response[index];
@@ -138,24 +137,11 @@ export class OrderApprovalSummaryComponent implements OnInit, OnDestroy, OnChang
 							shipMethod: element.shippingModeDescription,
 							trackingId: element.shipmentTrackingIds.join(", "),
 							addressId: element.addressId,
-							address: ""
+							address: this.constructAddress(element.address)
 						};
 						data.push(item);
-						if (element.addressId) {
-							uniqueAddressIds.add(element.addressId);
-						}
 					}
 					this.model.setData(data);
-					uniqueAddressIds.forEach((addressId: string) => {
-						this.addressesService.AddressesFindByAddressId({id: addressId}).subscribe(address => {
-							const addressString = this.constructAddress(address);
-							data.forEach(item => {
-								if (item.addressId === addressId) {
-									item.address = addressString;
-								}
-							});
-						});
-					});
 				});
 			});
 		});
@@ -247,4 +233,3 @@ class ItemDataSource extends DataSource<Item> {
 
 	disconnect() {}
 }
-

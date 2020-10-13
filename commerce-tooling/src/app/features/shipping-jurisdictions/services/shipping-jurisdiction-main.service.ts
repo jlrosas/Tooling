@@ -84,8 +84,8 @@ export class ShippingJurisdictionMainService {
 				const jurisdictionGroupPaths: Array<string> = responseList[1].headers.get("location").split("/");
 				const jurisdictionGroupId: number = Number(jurisdictionGroupPaths[jurisdictionGroupPaths.length - 1]);
 				this.jurisdictionGroupRelationshipsService.createJurisdictionGroupRelationship({
-					jurisdictionGroupId: jurisdictionGroupId,
-					jurisdictionId: jurisdictionId,
+					jurisdictionGroupId,
+					jurisdictionId,
 					subclass: 1
 				}).subscribe(relationshipResponse => {
 					observer.next(data.code);
@@ -170,7 +170,7 @@ export class ShippingJurisdictionMainService {
 						const jurisdictionGroupPaths: Array<string> = responseList[1].headers.get("location").split("/");
 						const jurisdictionGroupId: number = Number(jurisdictionGroupPaths[jurisdictionGroupPaths.length - 1]);
 						this.jurisdictionGroupRelationshipsService.createJurisdictionGroupRelationship({
-							jurisdictionGroupId: jurisdictionGroupId,
+							jurisdictionGroupId,
 							jurisdictionId: this.currentShippingJurisdictionId,
 							subclass: 1
 						}).subscribe(relationshipResponse => {

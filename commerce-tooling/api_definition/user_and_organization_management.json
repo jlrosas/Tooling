@@ -1189,6 +1189,14 @@
             "in": "query",
             "name": "roleId",
             "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "Qualifies roleId to limit search results to only include users who have a matching role ID in the organization that matches this parameter.",
+            "in": "query",
+            "name": "roleOrganizationId",
+            "required": false,
             "type": "string"
           },
           {
@@ -1418,6 +1426,14 @@
         },
         "parameters": [
           {
+            "required": false,
+            "description": "The unique numeric ID of the store used to create the user.",
+            "type": "integer",
+            "format": "int32",
+            "in": "query",
+            "name": "storeId"
+          },
+          {
             "required": true,
             "in": "body",
             "description": "Request body.",
@@ -1439,6 +1455,68 @@
           "application/json"
         ],
         "operationId": "Users-createUser"
+      }
+    },
+    "/users/{id}/password-reset": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "The requested completed successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Bad request. The request could not be understood by the server due to malformed syntax."
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Not authenticated. The user session is not valid."
+          },
+          "403": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "The user is not authorized to perform the specified request."
+          },
+          "500": {
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            },
+            "description": "Internal server error. For details, see the server log files."
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "description": "The unique numeric ID for identifying the user.",
+            "in": "path",
+            "name": "id"
+          },
+          {
+            "required": true,
+            "description": "The unique numeric ID of the store used to compose the password reset notification message.",
+            "type": "integer",
+            "format": "int32",
+            "in": "query",
+            "name": "storeId"
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Reset a user's password.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Reset a user's password.",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "Users-resetUserPassword"
       }
     },
     "/users/{id}/site-attributes": {
@@ -2982,6 +3060,18 @@
           "type": "integer",
           "format": "int32",
           "description": "The unique numeric ID for identifying registrant's preferred language."
+        },
+        "preferredCommunication": {
+          "type": "string",
+          "description": "The registrant's preferred method of communication."
+        },
+        "challengeQuestion": {
+          "type": "string",
+          "description": "The registrant's challenge question."
+        },
+        "challengeAnswer": {
+          "type": "string",
+          "description": "The registrant's challenge answer."
         },
         "profileType": {
           "default": "B",

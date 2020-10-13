@@ -58,7 +58,6 @@ export class TaxCategoryCodesComponent implements OnInit, OnDestroy, AfterViewIn
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
 			this.getTaxCodes(searchString);
 		});
-		this.getTaxCodes("");
 	}
 
 	ngAfterViewInit() {
@@ -90,22 +89,23 @@ export class TaxCategoryCodesComponent implements OnInit, OnDestroy, AfterViewIn
 			this.getTaxCodesSubscription.unsubscribe();
 			this.getTaxCodesSubscription = null;
 		}
+		const excludeId = this.taxCodes.map(taxCode => taxCode.id);
 		this.getTaxCodesSubscription = this.calculationCodesService.getCalculationCodes({
 			storeId: Number(this.route.snapshot.params.storeId),
-			searchString: searchString,
+			searchString,
+			excludeId,
 			calculationUsageId: [this.taxCategoryMainService.taxCategoryData.taxTypeId],
 			limit: 10
 		}).subscribe(response => {
-	 		this.getTaxCodesSubscription = null;
-	 		if (response.items.length === 1 && searchString === response.items[0].calculationCode) {
-	 			this.selectTaxCode(response.items[0]);
+			this.getTaxCodesSubscription = null;
+			if (response.items.length === 1 && searchString === response.items[0].calculationCode) {
+				this.selectTaxCode(response.items[0]);
 	 		} else {
 	 			this.taxCodeSearchList = response.items;
 	 		}
 		},
 		error => {
 			this.getTaxCodesSubscription = null;
-			console.log(error);
 		});
 	}
 
@@ -113,7 +113,7 @@ export class TaxCategoryCodesComponent implements OnInit, OnDestroy, AfterViewIn
 		this.taxCodeSearch.setValue("");
 		let found = false;
 		for (let i = 0; i < this.taxCodes.length; i++) {
-			if (this.taxCodes[i].calculationCode === taxCode.calculationCode) {
+			if (this.taxCodes[i].id === taxCode.id) {
 				found = true;
 				break;
 			}
@@ -127,6 +127,7 @@ export class TaxCategoryCodesComponent implements OnInit, OnDestroy, AfterViewIn
 	removeTaxCode(taxCode: any) {
 		const pos: number = this.taxCodes.indexOf(taxCode);
 		this.taxCodes.splice(pos, 1);
+		this.searchTaxCodes(this.taxCodeSearch.value);
 	}
 
 	private setValues() {
@@ -134,6 +135,7 @@ export class TaxCategoryCodesComponent implements OnInit, OnDestroy, AfterViewIn
 			this.taxCategoryMainService.taxCodes = [];
 		}
 		this.taxCodes = this.taxCategoryMainService.taxCodes;
+		this.getTaxCodes(this.taxCodeSearch.value);
 	}
 
 	private createFormControls() {

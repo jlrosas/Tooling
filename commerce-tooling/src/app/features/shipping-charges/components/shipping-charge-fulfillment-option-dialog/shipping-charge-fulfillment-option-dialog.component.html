@@ -1,0 +1,108 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'SHIPPING_CHARGES.FULFILLMENT_OPTION' | translate}}</h4>
+<form [formGroup]="fulfillmentOptionForm" autocomplete="off">
+	<div>
+		<div class="hc-type-text">{{'SHIPPING_CHARGES.CREATE_FULFILLMENT_OPTION_MESSAGE'| translate}}</div>
+
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SHIPPING_CHARGES.FULFILLMENT_CENTER'| translate}}</mat-label>
+				<input matInput id="fulfillmentCenter"
+						formControlName="fulfillmentCenter"
+						[matAutocomplete]="fulfillmentCenterAutoComplete"
+						(input)="searchFulfillmentCenters($event.target.value)"
+						#fulfillmentCenterInput
+						required>
+				<mat-autocomplete #fulfillmentCenterAutoComplete="matAutocomplete" (optionSelected)="selectFulfillmentCenter($event.option.value)">
+					<mat-option *ngFor="let fulfillmentCenter of fulfillmentCenters" [value]="fulfillmentCenter">
+						{{fulfillmentCenter.name}}
+					</mat-option>
+					<div class="mat-select-controller" *ngIf="fulfillmentCenterCount > fulfillmentCenters.length">
+						<button matTooltip="{{'SHIPPING_CHARGES.MORE' | translate}}" mat-icon-button (click)="loadMoreFulfillmentCenters()">
+							<mat-icon color="primary">more_horiz</mat-icon>
+						</button>
+					</div>
+					<mat-option *ngIf="!fulfillmentCentersLoading && fulfillmentCenters && fulfillmentCenters.length == 0 && selectedFulfillmentCenterId == null" [value]="null">
+						{{'SHIPPING_CHARGES.NO_MATCHING_RECORDS_FOUND' | translate }}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="fulfillmentCenter.errors && fulfillmentCenter.errors.invalidFulfillmentCenter">
+					{{'SHIPPING_CHARGES.FULFILLMENT_CENTER_ERROR' | translate }}
+				</mat-error>
+			</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>{{'SHIPPING_CHARGES.JURISDICTION'| translate}}</mat-label>
+			<input matInput id="jurisdiction"
+					formControlName="jurisdiction"
+					[matAutocomplete]="jurisdictionAutoComplete"
+					(input)="searchJurisdictions($event.target.value)"
+					#fulfillmentCenterInput
+					required>
+			<mat-autocomplete #jurisdictionAutoComplete="matAutocomplete" (optionSelected)="selectJurisdiction($event.option.value)">
+				<mat-option *ngFor="let jurisdiction of jurisdictions" [value]="jurisdiction">
+					{{jurisdiction.code}}
+				</mat-option>
+				<div class="mat-select-controller" *ngIf="jurisdictionCount > jurisdictions.length">
+					<button matTooltip="{{'SHIPPING_CHARGES.MORE' | translate}}" mat-icon-button (click)="loadMoreJurisdictions()">
+						<mat-icon color="primary">more_horiz</mat-icon>
+					</button>
+				</div>
+				<mat-option *ngIf="!jurisdictionsLoading && jurisdictions && jurisdictions.length == 0 && selectedJurisdictionGroupId == null" [value]="null">
+					{{'SHIPPING_CHARGES.NO_MATCHING_RECORDS_FOUND' | translate }}
+				</mat-option>
+			</mat-autocomplete>
+			<mat-error *ngIf="jurisdiction.errors && jurisdiction.errors.invalidJurisdiction">
+				{{'SHIPPING_CHARGES.JURISDICTION_ERROR' | translate }}
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>{{'SHIPPING_CHARGES.SHIPPING_MODE'| translate}}</mat-label>
+			<input matInput id="shippingMode"
+					formControlName="shippingMode"
+					[matAutocomplete]="shippingModeAutoComplete"
+					(input)="searchShippingModes($event.target.value)"
+					#shippingModeCenterInput
+					required>
+			<mat-autocomplete #shippingModeAutoComplete="matAutocomplete" (optionSelected)="selectShippingMode($event.option.value)">
+				<mat-option *ngFor="let shippingMode of shippingModes" [value]="shippingMode">
+					{{shippingMode.carrier}} - {{shippingMode.shippingCode}}
+				</mat-option>
+				<div class="mat-select-controller" *ngIf="shippingModesCount > shippingModes.length">
+					<button matTooltip="{{'SHIPPING_CHARGES.MORE' | translate}}" mat-icon-button (click)="loadMoreShippingModes()">
+						<mat-icon color="primary">more_horiz</mat-icon>
+					</button>
+				</div>
+				<mat-option *ngIf="!shippingModesLoading && shippingModes && shippingModes.length == 0 && selectedShippingModeId == null" [value]="null">
+					{{'SHIPPING_CHARGES.NO_MATCHING_RECORDS_FOUND' | translate }}
+				</mat-option>
+			</mat-autocomplete>
+			<mat-error *ngIf="shippingMode.errors && shippingMode.errors.invalidShippingMode">
+				{{'SHIPPING_CHARGES.SHIPPING_MODE_ERROR' | translate }}
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>{{'SHIPPING_CHARGES.PRECEDENCE'| translate}}</mat-label>
+			<input matInput id="precedence" formControlName="precedence" required [maxlength]="30">
+			<mat-error *ngIf="precedence.errors && precedence.errors.invalidPrecedence">
+				{{'SHIPPING_CHARGES.INVALID_PRECEDENCE' | translate }}
+			</mat-error>
+		</mat-form-field>
+	</div>
+
+	<mat-dialog-actions>
+		<button class="mat-flat-button" type="button" (click)="cancel()">{{'SHIPPING_CHARGES.CANCEL' | translate}}</button>
+		<button class="mat-flat-button mat-primary" type="button" (click)="save()">{{'SHIPPING_CHARGES.SAVE' | translate}}</button>
+	</mat-dialog-actions>
+</form>

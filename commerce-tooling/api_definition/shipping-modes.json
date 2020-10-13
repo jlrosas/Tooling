@@ -36,8 +36,12 @@
                         "in": "query",
                         "description": "The Shipping Mode ID.",
                         "required": false,
-                        "type": "integer",
-                        "format": "int32"
+                        "type": "array",
+                        "collectionFormat": "multi",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
                     },
                     {
                         "name": "carrier",
@@ -107,10 +111,14 @@
                     {
                         "name": "markForDelete",
                         "in": "query",
-                        "description": "Indicates that the shipping mode has been deleted. 0 = No. 1 = Yes.",
                         "required": false,
-                        "type": "integer",
-                        "format": "int32"
+                        "type": "array",
+                        "collectionFormat": "multi",
+                        "items": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "description": "Limits search results to include only codes that are marked for delete (1) or not marked for delete (0) or both (0 and 1). If no value is specified, codes that are not marked for delete are returned."
                     },
                     {
                         "name": "storeId",

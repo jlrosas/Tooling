@@ -63,6 +63,7 @@ export class TaxCategoryListComponent implements OnInit, OnDestroy, AfterViewIni
 		"-4": "TAX_CATEGORIES.TAX_TYPE_SHIPPING"
 	};
 	taxTypeTextIndicies = Object.keys(this.taxTypeTextKeys);
+	pageIndex = 0;
 
 	private getTaxCategoriesSubscription: Subscription = null;
 	private searchString: Subject<string> = new Subject<string>();
@@ -90,9 +91,8 @@ export class TaxCategoryListComponent implements OnInit, OnDestroy, AfterViewIni
 		this.createFormControls();
 		this.createForm();
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
 			this.currentSearchString = searchString;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getTaxCategories();
 		});
 		this.storeSearchString.pipe(debounceTime(250)).subscribe(searchString => {
@@ -136,8 +136,7 @@ export class TaxCategoryListComponent implements OnInit, OnDestroy, AfterViewIni
 			});
 		}
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getTaxCategories();
 		});
 	}
@@ -149,15 +148,14 @@ export class TaxCategoryListComponent implements OnInit, OnDestroy, AfterViewIni
 
 	handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getTaxCategories();
 	}
 
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getTaxCategories();
 	}
 
@@ -178,17 +176,16 @@ export class TaxCategoryListComponent implements OnInit, OnDestroy, AfterViewIni
 			usage: "HCL_TaxTool",
 			identifier: "*" + searchString + "*",
 			limit: 10
-	 	}).subscribe(response => {
-	 		this.getStoresSubscription = null;
-	 		if (response.items.length === 1 && response.items[0].identifier === this.store.value) {
-	 			this.selectStore(response.items[0]);
-	 		} else {
-	 			this.storeList = response.items;
-	 		}
+		}).subscribe(response => {
+			this.getStoresSubscription = null;
+			if (response.items.length === 1 && response.items[0].identifier === this.store.value) {
+				this.selectStore(response.items[0]);
+			} else {
+				this.storeList = response.items;
+			}
 		},
 		error => {
 			this.getStoresSubscription = null;
-			console.log(error);
 		});
 	}
 
@@ -202,7 +199,9 @@ export class TaxCategoryListComponent implements OnInit, OnDestroy, AfterViewIni
 		this.selectedStore = store;
 		this.store.setValue(store.identifier);
 		if (currentStoreId !== store.id) {
-			this.paginator.pageIndex = 0;
+			if (currentStoreId !== null) {
+				this.pageIndex = 0;
+			}
 			this.getTaxCategories();
 			this.storeList = [];
 			this.searchStores("");
@@ -232,16 +231,14 @@ export class TaxCategoryListComponent implements OnInit, OnDestroy, AfterViewIni
 
 	selectTaxType(taxType: string) {
 		this.selectedTaxType = taxType;
-		this.preferenceService.saveFilter(this.preferenceToken, { taxTypeFilter: taxType });
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getTaxCategories();
 	}
 
 	clearSelectedTaxType($event) {
 		this.selectedTaxType = null;
 		this.taxType.setValue(null);
-		this.preferenceService.saveFilter(this.preferenceToken, { taxTypeFilter: null });
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getTaxCategories();
 		$event.stopPropagation();
 	}
@@ -284,8 +281,17 @@ export class TaxCategoryListComponent implements OnInit, OnDestroy, AfterViewIni
 
 	private getTaxCategories() {
 		if (this.selectedStore) {
+			this.preferenceService.save(this.preferenceToken, {
+				searchString: this.currentSearchString,
+				sort: this.sort,
+				pageIndex: this.pageIndex,
+				pageSize: this.pageSize,
+				filter: {
+					taxTypeFilter: this.selectedTaxType
+				}
+			});
 			const args: TaxCategoriesService.GetTaxCategoriesParams = {
-				offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+				offset: this.pageIndex * this.paginator.pageSize,
 				limit: this.paginator.pageSize,
 				storeId: this.selectedStore.id
 			};
@@ -336,7 +342,8 @@ export class TaxCategoryListComponent implements OnInit, OnDestroy, AfterViewIni
 				sort,
 				searchString,
 				filter,
-				showFilters
+				showFilters,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -357,6 +364,9 @@ export class TaxCategoryListComponent implements OnInit, OnDestroy, AfterViewIni
 			}
 			if (showFilters) {
 				this.showFilters = showFilters;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}

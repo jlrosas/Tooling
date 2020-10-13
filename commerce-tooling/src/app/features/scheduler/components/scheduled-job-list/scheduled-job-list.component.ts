@@ -23,7 +23,8 @@ import { JobsStatusesService } from "../../../../rest/services/jobs-statuses.ser
 import { JobTypesService } from "../../../../rest/services/job-types.service";
 import { OnlineStoresService } from "../../../../rest/services/online-stores.service";
 import { AlertService } from "../../../../services/alert.service";
-import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from "../../../../shared/constants";
+import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS, DATE_FORMAT_OPTIONS } from "../../../../shared/constants";
+import { LanguageService } from "../../../../services/language.service";
 import { PreferenceService } from "../../../../services/preference.service";
 import { CancelJobDialogComponent } from "../cancel-job-dialog/cancel-job-dialog.component";
 import { ClearJobStatusDialogComponent } from "../clear-job-status-dialog/clear-job-status-dialog.component";
@@ -37,7 +38,7 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 	listSearchForm: FormGroup;
 	listFilterForm: FormGroup;
 	searchText: FormControl;
-	storeDropdown:  FormControl;
+	storeDropdown: FormControl;
 	applicationTypeDropdown: FormControl;
 	stateDropdown: FormControl;
 	statusDropdown: FormControl;
@@ -63,7 +64,7 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 		"actions"
 	];
 
-	selectedStore = null;
+	storeFilter = null;
 	storeList: Array<any> = [];
 
 	applicationType = null;
@@ -91,6 +92,7 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 	preferenceToken: string;
 	activeColumn = "startDate";
 	sortDirection = "asc";
+	pageIndex = 0;
 
 	private statusTextKeys = {
 		"S": "SCHEDULER.STATUS_SUCCESS",
@@ -130,16 +132,17 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 	private searchString: Subject<string> = new Subject<string>();
 	private getJobStatusesSubscription: Subscription = null;
 	private getStoresSubscription: Subscription = null;
+	private onLangChangeSubscription: Subscription = null;
 	private storeSearchString: Subject<string> = new Subject<string>();
 	private processingClearAll = false;
 	private processingClear = {};
-	private storeFilter = {label: "", value: ""};
 
 	constructor(private router: Router,
 			private jobsStatusesService: JobsStatusesService,
 			private jobTypesService: JobTypesService,
 			private onlineStoresService: OnlineStoresService,
 			private alertService: AlertService,
+			private languageService: LanguageService,
 			private translateService: TranslateService,
 			private preferenceService: PreferenceService,
 			private dialog: MatDialog) { }
@@ -150,21 +153,22 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 		this.createForm();
 		this.getApplicationTypeList();
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.currentSearchString = searchString;
 			this.getJobStatusList();
 		});
 		this.storeSearchString.pipe(debounceTime(250)).subscribe(searchString => {
 			this.getStores(searchString);
 		});
+		this.onLangChangeSubscription = this.languageService.onLanguageChange.subscribe(() => {
+			this.getJobStatusList();
+		});
 		this.searchStores("");
 	}
 
 	ngAfterViewInit() {
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getJobStatusList();
 		});
 		this.getJobStatusList();
@@ -173,13 +177,15 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 	ngOnDestroy() {
 		this.searchString.unsubscribe();
 		this.storeSearchString.unsubscribe();
+		if (this.onLangChangeSubscription) {
+			this.onLangChangeSubscription.unsubscribe();
+		}
 	}
 
 	selectApplicationType(applicationType: string) {
 		if (this.applicationType !== applicationType) {
 			this.applicationType = applicationType;
-			this.paginator.pageIndex = 0;
-			this.preferenceService.saveFilter(this.preferenceToken, { applicationTypeFilter: applicationType });
+			this.pageIndex = 0;
 			this.getJobStatusList();
 		}
 	}
@@ -187,8 +193,7 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 	clearApplicationTypeSelection($event) {
 		this.applicationType = null;
 		this.applicationTypeDropdown.setValue(null);
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { applicationTypeFilter: null });
+		this.pageIndex = 0;
 		this.getJobStatusList();
 		$event.stopPropagation();
 	}
@@ -196,8 +201,7 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 	clearStatusSelection($event) {
 		this.status = null;
 		this.statusDropdown.setValue(null);
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { statusFilter: null });
+		this.pageIndex = 0;
 		this.getJobStatusList();
 		$event.stopPropagation();
 	}
@@ -205,8 +209,7 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 	selectStatus(status: string) {
 		if (this.status !== status) {
 			this.status = status;
-			this.paginator.pageIndex = 0;
-			this.preferenceService.saveFilter(this.preferenceToken, { statusFilter: status });
+			this.pageIndex = 0;
 			this.getJobStatusList();
 		}
 	}
@@ -214,8 +217,7 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 	clearStateSelection($event) {
 		this.state = null;
 		this.stateDropdown.setValue(null);
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { stateFilter: null });
+		this.pageIndex = 0;
 		this.getJobStatusList();
 		$event.stopPropagation();
 	}
@@ -223,8 +225,7 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 	selectState(state: string) {
 		if (this.state !== state) {
 			this.state = state;
-			this.paginator.pageIndex = 0;
-			this.preferenceService.saveFilter(this.preferenceToken, { stateFilter: state });
+			this.pageIndex = 0;
 			this.getJobStatusList();
 		}
 	}
@@ -232,13 +233,11 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 	selectEndDate(endDate: string) {
 		if (this.endDate !== endDate) {
 			this.endDate = new Date(endDate);
-			this.preferenceService.saveFilter(this.preferenceToken, { endDateFilter: endDate });
 
 			this.endTime = "23:59";
 			this.endTimeFormControl.setValue(this.endTime);
-			this.preferenceService.saveFilter(this.preferenceToken, { endTimeFilter: this.endTime });
 
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getJobStatusList();
 		}
 	}
@@ -248,13 +247,11 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 
 		this.startDate = null;
 		this.startDatePicker.setValue(null);
-		this.preferenceService.saveFilter(this.preferenceToken, { startDateFilter: null });
 
 		this.startTime = null;
 		this.startTimeFormControl.setValue(null);
-		this.preferenceService.saveFilter(this.preferenceToken, { startTimeFilter: null });
 
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getJobStatusList();
 	}
 
@@ -266,9 +263,8 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 			this.startTime = "00:00";
 		}
 		this.startTimeFormControl.setValue(this.startTime);
-		this.preferenceService.saveFilter(this.preferenceToken, { startTimeFilter: this.startTime });
 
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getJobStatusList();
 	}
 
@@ -277,13 +273,11 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 
 		this.endDate = null;
 		this.endDatePicker.setValue(null);
-		this.preferenceService.saveFilter(this.preferenceToken, { endDateFilter: null });
 
 		this.endTime = null;
 		this.endTimeFormControl.setValue(null);
-		this.preferenceService.saveFilter(this.preferenceToken, { endTimeFilter: null });
 
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getJobStatusList();
 	}
 
@@ -295,22 +289,19 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 			this.endTime = "23:59";
 		}
 		this.endTimeFormControl.setValue(this.endTime);
-		this.preferenceService.saveFilter(this.preferenceToken, { endTimeFilter: this.endTime });
 
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getJobStatusList();
 	}
 
 	selectStartDate(startDate: string) {
 		if (this.startDate !== startDate) {
 			this.startDate = new Date(startDate);
-			this.preferenceService.saveFilter(this.preferenceToken, { startDateFilter: startDate });
 
 			this.startTime = "00:00";
 			this.startTimeFormControl.setValue(this.startTime);
-			this.preferenceService.saveFilter(this.preferenceToken, { startTimeFilter: this.startTime });
 
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getJobStatusList();
 		}
 	}
@@ -331,8 +322,7 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getJobStatusList();
 	}
 
@@ -390,7 +380,7 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 
 	public handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getJobStatusList();
 	}
 
@@ -407,8 +397,24 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 	 * and return the data needed to populate the status table.
 	 */
 	getJobStatusList() {
+		this.preferenceService.save(this.preferenceToken, {
+			searchString: this.currentSearchString,
+			sort: this.sort,
+			pageIndex: this.pageIndex,
+			pageSize: this.pageSize,
+			filter: {
+				storeFilter: this.storeFilter,
+				applicationTypeFilter: this.applicationType,
+				stateFilter: this.state,
+				statusFilter: this.status,
+				startDateFilter: this.startDate,
+				endDateFilter: this.endDate,
+				startTimeFilter: this.startTime,
+				endTimeFilter: this.endTime
+			}
+		});
 		const args: JobsStatusesService.GetScheduledJobStatusesParams = {
-			offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+			offset: this.pageIndex * this.paginator.pageSize,
 			limit: this.paginator.pageSize,
 			ContentType: "application/json",
 			maxItems: 15000
@@ -416,8 +422,8 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 		if (this.currentSearchString) {
 			args.searchString = this.currentSearchString;
 		}
-		if (this.selectedStore !== null) {
-			args.storeId = this.selectedStore;
+		if (this.storeFilter !== null) {
+			args.storeId = this.storeFilter.id;
 		} else {
 			args.storeId = 0;
 		}
@@ -520,8 +526,10 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 					statusTextKey: statusTextKey ? statusTextKey : item.status,
 					applicationType: item.applicationType,
 					applicationTypeTextKey: applicationTypeTextKey ? applicationTypeTextKey : item.applicationType,
-					start: (item.start !== null && item.start.length > 0) ? (new Date(item.start)).toLocaleString() : "",
-					end: (item.end !== null && item.end.length > 0) ? (new Date(item.end)).toLocaleString() : ""
+					start: (item.start !== null && item.start.length > 0) ?
+							new Intl.DateTimeFormat(LanguageService.language, DATE_FORMAT_OPTIONS).format(new Date(item.start)) : "",
+					end: (item.end !== null && item.end.length > 0) ?
+							new Intl.DateTimeFormat(LanguageService.language, DATE_FORMAT_OPTIONS).format(new Date(item.end)) : ""
 				};
 				data.push(jobStatus);
 			}
@@ -532,15 +540,13 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 
 	selectStartTime() {
 		this.startTime = this.startTimeFormControl.value;
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { startTimeFilter: this.startTime });
+		this.pageIndex = 0;
 		this.getJobStatusList();
 	}
 
 	selectEndTime() {
 		this.endTime = this.endTimeFormControl.value;
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken, { endTimeFilter: this.endTime });
+		this.pageIndex = 0;
 		this.getJobStatusList();
 	}
 
@@ -557,45 +563,41 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 			usage: "HCL_SiteAdminStoreList",
 			identifier: "*" + searchString + "*",
 			limit: 10
-	 	}).subscribe(
-	 		response => {
-		 		this.getStoresSubscription = null;
-		 		if (response.items.length === 1 && response.items[0].identifier === this.storeDropdown.value) {
-		 			this.selectStore(response.items[0]);
-		 		} else {
-		 			this.storeList = response.items;
-		 		}
-			},
-			error => {
-				this.getStoresSubscription = null;
-				console.log(error);
-			}
-		);
+	 	}).subscribe(response => {
+	 		this.getStoresSubscription = null;
+	 		if (response.items.length === 1 && response.items[0].identifier === this.storeDropdown.value) {
+	 			this.selectStore(response.items[0]);
+	 		} else {
+	 			this.storeList = response.items;
+	 		}
+		},
+		error => {
+			this.getStoresSubscription = null;
+		});
 	}
 
 	selectStore(store: any) {
-		this.selectedStore = store.id;
+		this.storeFilter = {
+			id: store.id,
+			identifier: store.identifier
+		};
 		this.storeDropdown.setValue(store.identifier);
 		this.storeList = [];
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken,
-			{storeFilter: {label: store.identifier, value: store.id}});
+		this.pageIndex = 0;
 		this.getJobStatusList();
 	}
 
 	clearStore() {
-		this.selectedStore = null;
+		this.storeFilter = null;
 		this.storeDropdown.setValue(null);
-		this.paginator.pageIndex = 0;
-		this.preferenceService.saveFilter(this.preferenceToken,
-			{storeFilter: null});
+		this.pageIndex = 0;
 		this.getJobStatusList();
 	}
 
 	private createFormControls() {
 		this.searchText = new FormControl(this.currentSearchString);
-		this.storeDropdown = new FormControl(this.storeFilter.label);
-		this.applicationTypeDropdown = new FormControl(this.applicationType);
+		this.storeDropdown = new FormControl(this.storeFilter ? this.storeFilter.identifier : "");
+		this.applicationTypeDropdown = new FormControl(null);
 		this.stateDropdown = new FormControl(this.state);
 		this.statusDropdown = new FormControl(this.status);
 		this.startDatePicker = new FormControl(this.startDate);
@@ -628,16 +630,23 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 		this.jobTypesService.JobGetJobTypes(args).subscribe((body: any) => {
 			for (let i = 0; i < body.items.length; i++) {
 				const item = body.items[i];
-				this.applicationTypeList.push({
+				const applicationType = {
 					id: item,
 					textKey: this.applicationTypeTextKeys[item] ? this.applicationTypeTextKeys[item] : item
-				});
+				};
+				this.applicationTypeList.push(applicationType);
+				if (applicationType.id === this.applicationType) {
+					this.applicationTypeDropdown.setValue(applicationType);
+				}
 			}
 			// Support no application type filtering
 			const nullValueApplicationType = {
 				id: "NullValue",
 				textKey: "SCHEDULER.APPLICATION_TYPE_NULL_VALUE"
 			};
+			if (nullValueApplicationType.id === this.applicationType) {
+				this.applicationTypeDropdown.setValue(nullValueApplicationType);
+			}
 			this.applicationTypeList.unshift(nullValueApplicationType);
 		});
 
@@ -652,7 +661,8 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 				sort,
 				searchString,
 				filter,
-				showFilters
+				showFilters,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -668,10 +678,7 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 			if (filter) {
 				const { storeFilter = null, applicationTypeFilter = null, stateFilter = null, statusFilter = null,
 					startDateFilter = null, endDateFilter = null, startTimeFilter = null, endTimeFilter = null } = filter;
-				if (storeFilter) {
-					this.selectedStore = storeFilter.value;
-					this.storeFilter = storeFilter;
-				}
+				this.storeFilter = storeFilter;
 				this.applicationType = applicationTypeFilter;
 				this.state = stateFilter;
 				this.status = statusFilter;
@@ -682,6 +689,9 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 			}
 			if (showFilters) {
 				this.showFilters = showFilters;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}

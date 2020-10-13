@@ -42,10 +42,10 @@
     "STATE_PROVINCE_REGION": "州/省/區",
     "ZIP_POSTAL_CODE": "郵遞區號",
     "BACK": "返回",
-    "SELECT_AN_ORGANIZATION": "選取組織，以及從可用角色的清單中選擇使用者的角色。使用者可以在多個組織中擁有角色。",
+    "SELECT_AN_ORGANIZATION": "選取組織，並從可用的角色中選擇。",
     "NO_ORGANIZATION_SELECTED": "選取組織。",
     "ORGANIZATION": "組織",
-    "AVAILABLE_ROLES": "可用的角色",
+    "AVAILABLE_ROLES": "從可用的角色選取",
     "SELECT_ROLE_PLACEHOLDER": "選取角色",
     "SELECTED_ROLES": "已選取的角色",
     "INCLUDE": "包含",
@@ -57,7 +57,7 @@
     "FINISH": "完成",
     "SAVE": "儲存",
     "EDIT_USER": "編輯使用者",
-    "USER_CREATED_MESSAGE": "已順利建立使用者。",
+    "USER_CREATED_MESSAGE": "已順利建立使用者 '{{name}}'。",
     "USER_SAVED_MESSAGE": "已順利儲存使用者。",
     "INVALID_COUNTRY": "無效的國家。",
     "INVALID_STATE": "無效的州、省或區。",
@@ -69,7 +69,8 @@
     "DISABLED": "已停用",
     "USER_ENABLED_MESSAGE": "已順利啟用使用者。",
     "USER_DISABLED_MESSAGE": "已順利停用使用者。",
-    "MORE": "更多"
+    "MORE": "更多",
+    "REFRESH": "重新整理"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "組織",
@@ -133,7 +134,8 @@
     "PARENT_ORGANIZATION_ERROR": "母項組織無效",
     "INVALID_COUNTRY": "無效的國家。",
     "INVALID_STATE": "無效的州、省或區。",
-    "DUPLICATE_ORGANIZATION": "組織已存在。"
+    "DUPLICATE_ORGANIZATION": "組織已存在。",
+    "REFRESH": "重新整理"
   },
   "APPROVALS": {
     "APPROVALS": "核准",
@@ -259,7 +261,7 @@
     "TOTAL": "總計"
   },
   "MEMBER_GROUPS": {
-    "GROUPS": "群組",
+    "GROUPS": "成員群組",
     "NEW_BUTTON": "新增",
     "NAME": "名稱",
     "SEARCH": "搜尋",
@@ -293,7 +295,7 @@
     "ROLES_IN_ORGANIZATIONS": "指定組織中的使用者角色",
     "IGNORE_ROLES_IN_ORGANIZATIONS": "忽略指定組織中的使用者角色",
     "CHECK_ROLES_IN_ORGANIZATIONS": "使用者在指定組織中應擁有相符的角色。",
-    "SELECT_AN_ORGANIZATION": "選取組織，以及從可用角色清單中選擇使用者的角色。使用者可以在多個組織中擁有角色。",
+    "SELECT_AN_ORGANIZATION": "選取組織，並從可用的角色中選擇。",
     "NO_ORGANIZATION_SELECTED": "已選取的組織。",
     "REGISTRATION_STATUS": "註冊完成狀態",
     "IGNORE_REGISTRATION_STATUS": "忽略使用者註冊完成狀態",
@@ -327,10 +329,11 @@
     "MEMBER_GROUP_DELETED_MESSAGE": "已順利完成刪除成員群組。",
     "DELETE_MEMBER_GROUP": "刪除成員群組",
     "DELETE_MEMBER_GROUP_CONFIRMATION": "是否要刪除「{{name}}」？",
-    "DELETE": "刪除"
+    "DELETE": "刪除",
+    "REFRESH": "重新整理"
   },
   "EXTENDED_SITES": {
-    "STORES": "商店",
+    "STORES": "延伸網站商店",
     "NEW_STORE": "新商店",
     "STORE_DETAILS": "商店詳細資料",
     "SETUP": "設定",
@@ -387,7 +390,9 @@
     "DUPLICATE_EXTENDED_SITE": "商店已存在。",
     "SHARED_OWNER_CHECKBOX": "可讓其他商店的使用者透過指定相同的擁有組織來存取此商店",
     "SHARED_OWNER_ORGANIZATION": "分享的商店組織",
-    "MORE": "更多"
+    "MORE": "更多",
+    "INVALID_XML_FILE": "請選取有效的 XML 檔案 (.xml)。",
+    "REFRESH": "重新整理"
   },
   "STORE_PREVIEW": {
     "STORE_PREVIEW": "商店預覽",
@@ -498,7 +503,8 @@
     "DESCRIPTION_NOT_UNIQUE": "說明已存在。",
     "CHECKING_ACCOUNT_NUMBER": "檢查帳號中",
     "CHECK_ROUTING_NUMBER": "檢查路由號碼",
-    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "採購單號碼已存在。"
+    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "採購單號碼已存在。",
+    "REFRESH": "重新整理"
   },
   "SCHEDULER": {
     "SCHEDULER": "排程器",
@@ -773,7 +779,8 @@
     "INVALID_MINIMUM_AMOUNT": "最小金額無效。",
     "CONTRACT_IMPORTED_MESSAGE": "已順利匯入合約。",
     "DUPLICATE_CONTRACT": "無法建立合約。具有此名稱的合約已存在或是在最近遭到刪除，所以如果具有此名稱的合約已標示為待刪除，則必須先執行 Database Cleanup 公用程式，才能重複使用合約名稱。此動作可由網站管理者完成。",
-    "ACCOUNT": "帳戶"
+    "ACCOUNT": "帳戶",
+    "INVALID_XML_FILE": "請選取有效的 XML 檔案 (.xml)。"
   },
   "MESSAGES": {
     "MESSAGES": "訊息",
@@ -915,9 +922,10 @@
   "SHIPPING_JURISDICTIONS": {
     "SHIPPING_JURISDICTIONS": "運送適用範圍",
     "SEARCH": "搜尋",
-    "SEARCH_BY_NAME": "依名稱",
+    "SEARCH_BY_NAME": "依適用範圍",
     "STATE_FILTER": "狀態過濾器",
     "COUNTRY_FILTER": "國家/地區篩選器",
+    "CITY_FILTER": "城市篩選",
     "STORE_FILTER": "商店過濾器",
     "SELECTED_STORE": "選取的商店",
     "CLEAR": "清除",
@@ -933,6 +941,7 @@
     "BACK": "返回",
     "SAVE": "儲存",
     "INPUT_ERROR": "頁面上有錯誤。",
+    "SELECT_CITY_PLACEHOLDER": "選取城市",
     "SELECT_STATE_PLACEHOLDER": "選取狀態",
     "SELECT_COUNTRY_PLACEHOLDER": "選取國家/地區",
     "JURISDICTION": "適用範圍",
@@ -991,7 +1000,7 @@
     "LANGUAGE": "語言",
     "ESTIMATED_DELIVERY_TIME": "預估遞送時間",
     "EDIT_SHIPPING_MODE": "編輯運送模式",
-    "DEFAULT_SET_SUCCESS_MESSAGE": "已順利更新運送模式。",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "已順利更新預設運送模式。",
     "SHIPPING_MODE_SAVED_MESSAGE": "已順利儲存運送模式。",
     "SHIPPING_MODE_CREATED_MESSAGE": "已順利建立運送模式「{{name}}」。",
     "DELETE_SHIPPING_MODE": "刪除運送模式",
@@ -1004,7 +1013,8 @@
     "ESTIMATED_DELIVERY_TIME_DESCRIPTION": "預估遞送時間說明",
     "TRACKING_URL": "承運方追蹤 URL",
     "SET_AS_DEFAULT": "設為預設值",
-    "LANGUAGE_ALREADY_EXISTS": "此語言的說明已存在。"
+    "LANGUAGE_ALREADY_EXISTS": "此語言的說明已存在。",
+    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "選取的承運方服務組合已存在。"
   },
   "SHIPPING_CODES": {
     "SHIPPING_CODES": "運送代碼",
@@ -1060,7 +1070,6 @@
     "CLEAR": "清除",
     "ACTIONS": "動作",
     "NEW_BUTTON": "新增",
-    "NEW_SHIPPING_CHARGES": "新增計費代碼",
     "OPTIONAL": "（選填）",
     "NEXT": "下一頁",
     "CANCEL": "取消",
@@ -1073,7 +1082,6 @@
     "REFRESH": "重新整理",
     "DELETE": "刪除",
     "NAME": "名稱",
-    "CHARGES_TYPES": "計費類型",
     "CHARGES_TYPE": "計費類型",
     "CHARGES_TYPE_PLACEHOLDER": "選取計費類型",
     "UNIT": "單位",
@@ -1082,7 +1090,6 @@
     "SHIPPING_CHARGES_FOR": "{{shippingCodeName}} 的運送收費",
     "NO_MATCHING_RECORDS_FOUND": "找不到相符記錄",
     "UNIT_PLACEHOLDER": "選取單位",
-    "STORE_NOT_SELECTED": "未選取商店。",
     "NEW_SHIPPING_CHARGE": "新增運送收費",
     "EDIT_SHIPPING_CHARGE": "編輯運送收費",
     "SHIPPING_CHARGE_DETAILS": "定義收費詳細資料",
@@ -1095,26 +1102,26 @@
     "ALWAYS": "一律",
     "SHIPPING_CHARGE_START": "開始",
     "SHIPPING_CHARGE_END": "結束",
-    "SHIPPING_CHARGE_END_IS_SMALLER": "結束日期不得早於開始日期。",
-    "CHARGE_START": "開始",
-    "CHARGE_END": "結束",
+    "BEFORE_START_DATE": "結束日期不可在開始日期之前。",
+    "RANGE": "範圍",
+    "RANGE_START": "範圍開始",
     "DELETE_SHIPPING_CHARGE": "刪除運送收費",
     "DELETE_SHIPPING_CHARGE_CONFIRMATION": "是否要刪除「{{name}}」？",
     "FULFILLMENT_CENTER": "履行中心",
     "JURISDICTION": "適用範圍",
     "SHIPPING_MODE": "運送模式",
     "PRECEDENCE": "優先順序",
-    "NEW_FULFILLMENT_OPTION": "新增履行選項",
-    "EDIT_FULFILLMENT_OPTION": "編輯履行選項",
+    "FULFILLMENT_OPTION": "履行選項",
     "INVALID_PRECEDENCE": "優先順序必須為數字。",
     "CREATE_FULFILLMENT_OPTION_MESSAGE": "使履行中心與適用範圍和運送模式產生關聯，藉此建立履行選項。",
-    "DUPLICATE_FULFILLMENT_OPTION_ERROR": "履行選項包含相同的履行中心，適用範圍和運送模式已存在。",
+    "DUPLICATE_FULFILLMENT_OPTION_ERROR": "包含相同履行中心、適用範圍和運送模式的履行選項已存在。",
     "MORE": "更多",
     "FULFILLMENT_CENTER_ERROR": "無效的履行中心",
     "JURISDICTION_ERROR": "無效的適用範圍",
     "SHIPPING_MODE_ERROR": "無效的運送模式",
-    "SEARCH_BY_NAME_DESCRIPTION": "依名稱",
+    "SEARCH_BY_NAME": "依名稱",
     "SHIPPING_CHARGE_DELETED_MESSAGE": "已順利刪除運送收費。",
+    "SHIPPING_CHARGE_SAVED_MESSAGE": "已順利儲存運送收費。",
     "INVALID_DATE": "日期無效。",
     "BY_QUANTITY": "依數量",
     "BY_WEIGHT": "依重量",
@@ -1122,9 +1129,14 @@
     "CHARGE": "收費",
     "CURRENCY": "貨幣",
     "UNIT_OF_MEASURE": "度量單位",
-    "RANGE_IS_OUT_OF_RANGE": "開始超出範圍",
     "DUPLICATE_RANGE": "範圍已存在",
-    "DUPLICATE_NAME_ERROR": "安全碼名稱已存在"
+    "DUPLICATE_NAME_ERROR": "運送收費名稱已存在",
+    "INVALID_RANGE_START": "無效範圍開始",
+    "INVALID_CHARGE": "無效收費",
+    "FROM_START_TO_END": "從 {{start}} 至 {{end}}",
+    "FROM_START_AND_UP": "從 {{start}} 起",
+    "SHIPPING_CHARGE_CREATED_MESSAGE": "已順利建立運送收費 '{{name}}'。",
+    "NO_RANGES_ERROR": "您必須至少定義一個收費範圍。"
   },
   "TRANSPORTS": {
     "TRANSPORTS": "傳輸",
@@ -1176,7 +1188,8 @@
     "DELETE_MESSAGE_TYPE": "刪除訊息類型",
     "DELETE": "刪除",
     "MESSAGE_TYPES_DELETED_MESSAGE": "已順利刪除訊息類型。",
-    "NOT_COMPLETE_ERROR": "此頁面上的資訊未完成。請繼續進行下一步。"
+    "NOT_COMPLETE_ERROR": "此頁面上的資訊未完成。請繼續進行下一步。",
+    "REFRESH": "重新整理"
   },
   "SECURITY_POLICIES": {
     "SECURITY_POLICIES": "安全原則",
@@ -1216,12 +1229,13 @@
     "NO_OF_PASSWORDS_KEPT_PASSWORD_HISTORY": "保留在密碼歷程中的密碼數目",
     "DEFINE_CRITERIA": "定義密碼原則的準則。",
     "ALLOW_USER_ID_PASSWORD_MATCH": "容許使用者 ID 和密碼相符。",
-    "DO_NOT_ALLOW": "不容許",
+    "DO_NOT_ALLOW": "不容許使用者 ID 和密碼相符。",
     "ACCOUNT_LOCKOUT_THRESHOLD": "帳戶鎖定臨界值",
     "WAIT_TIME": "等待時間",
     "INVALID_VALUE_FOR_NUMERIC_FIELD": "無效的值。值必須為數字。",
     "DELETE_SECURITY_POLICY": "刪除安全原則",
-    "DELETE_SECURITY_POLICY_CONFIRMATION": "是否要刪除「{{name}}」？"
+    "DELETE_SECURITY_POLICY_CONFIRMATION": "是否要刪除「{{name}}」？",
+    "SECURITY_POLICY_DELETE_NOT_ALLOWED": "無法刪除安全政策。系統將其指派給一或多個使用者。"
   },
   "TAX_CODES": {
     "TAX_CODES": "稅籍代碼",
@@ -1238,6 +1252,7 @@
     "CANCEL": "取消",
     "BACK": "返回",
     "SAVE": "儲存",
+    "FINISH": "完成",
     "INPUT_ERROR": "頁面上有錯誤。",
     "DESCRIPTION": "說明",
     "SHOW_FILTERS": "顯示過濾器",
@@ -1254,10 +1269,14 @@
     "NAME": "名稱",
     "TYPE": "類型",
     "STORE": "商店",
+    "DEFAULT": "預設",
     "TYPE_FILTER": "類型",
     "SELECT_TYPE_PLACEHOLDER": "選取類型",
     "TAX_TYPE_SALES": "營業稅",
-    "TAX_TYPE_SHIPPING": "運輸稅"
+    "TAX_TYPE_SHIPPING": "運輸稅",
+    "IS_DEFAULT": "是",
+    "SET_AS_DEFAULT": "設為預設值",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "已順利更新預設稅籍代碼。"
   },
   "TAX_CATEGORIES": {
     "TAX_CATEGORIES": "稅金種類",
@@ -1281,7 +1300,7 @@
     "FINISH": "完成",
     "EDIT_TAX_CATEGORY": "編輯稅金種類",
     "TAX_CATEGORY_SAVED_MESSAGE": "已順利儲存稅金種類。",
-    "TAX_CATEGORY_CREATED_MESSAGE": "已順利建立稅金種類。",
+    "TAX_CATEGORY_CREATED_MESSAGE": "已順利建立稅金種類 '{{name}}'。",
     "DELETE_TAX_CATEGORY": "刪除稅金種類",
     "DELETE_TAX_CATEGORY_CONFIRMATION": "是否要刪除「{{name}}」？",
     "DELETE": "刪除",
@@ -1290,7 +1309,6 @@
     "NAME": "名稱",
     "STORE": "商店",
     "SELECT_STORE_PLACEHOLDER": "選取商店",
-    "INVALID_STORE": "商店無效",
     "TYPE": "稅金類型",
     "INCLUDE_IN_DISPLAY_PRICE": "包含在顯示價格中",
     "TYPE_FILTER": "稅金類型",
@@ -1298,7 +1316,7 @@
     "TAX_TYPE_SALES": "營業稅",
     "TAX_TYPE_SHIPPING": "運輸稅",
     "TAX_RATES": "定義稅率",
-    "TAX_CATEGORY_ASSIGNMENT": "定義稅籍代碼",
+    "TAX_CATEGORY_CODES": "定義稅籍代碼",
     "DISPLAY_NAME": "顯示名稱",
     "DISPLAY_NAMES": "顯示名稱",
     "LANGUAGE": "語言",
@@ -1306,9 +1324,14 @@
     "ADD_DISPLAY_NAME": "新增顯示名稱",
     "NO_DEFINED_DISPLAY_NAMES": "尚未定義任何顯示名稱",
     "FULFILLMENT_CENTER": "履行中心",
-    "DEFINE_RATES_PER_JURISDICTION": "請為此稅金種類適用的每個適用範圍定義稅率。",
+    "INVALID_FULFILLMENT_CENTER": "無效的履行中心",
+    "SELECT_FULFILLMENT_CENTER": "選取履行中心",
+    "DEFINE_RATES_PER_JURISDICTION": "請為適用範圍和履行中心定義稅率。",
     "JURISDICTION": "適用範圍",
-    "TAX_RATE": "稅率 (%)",
+    "SELECT_JURISDICTION": "選取適用範圍",
+    "INVALID_JURISDICTION": "無效的適用範圍",
+    "TAX_RATE": "稅率",
+    "INVALID_TAX_RATE": "有效的稅率",
     "SELECTED_RATES": "定義稅率",
     "ADD_TAX_RATE": "新增稅率",
     "NO_DEFINED_TAX_RATES": "尚未定義任何稅率",
@@ -1316,12 +1339,16 @@
     "TAX_CODE": "稅籍代碼",
     "ADD_TAX_CODE": "新增稅籍代碼",
     "SELECTED_TAX_CODES": "已定義的稅籍代碼",
-    "NO_DEFINED_TAX_CODES": "尚未選取任何稅籍代碼"
+    "NO_DEFINED_TAX_CODES": "尚未選取任何稅籍代碼",
+    "DUPLICATE_NAME_ERROR": "稅金種類名稱已存在",
+    "DUPLICATE_TAX_RATE": "指定適用範圍和履行中心的稅率已存在。",
+    "NO_TAX_CODES_ERROR": "您必須至少定義一個稅籍代碼。",
+    "NO_TAX_RATES_ERROR": "您必須至少指定一個稅率。"
   },
   "TAX_JURISDICTIONS": {
     "TAX_JURISDICTIONS": "稅金適用範圍",
     "SEARCH": "搜尋",
-    "SEARCH_BY_NAME": "依名稱",
+    "SEARCH_BY_NAME": "依適用範圍",
     "STATE_FILTER": "狀態過濾器",
     "COUNTRY_FILTER": "國家/地區篩選器",
     "STORE_FILTER": "商店過濾器",
@@ -1358,6 +1385,7 @@
     "DELETE": "刪除",
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "已順利刪除稅金適用範圍。",
     "NOT_COMPLETE_ERROR": "此頁面上的資訊未完成。請繼續進行下一步。",
-    "DUPLICATE_NAME_ERROR": "稅金適用範圍名稱已存在"
+    "DUPLICATE_NAME_ERROR": "稅金適用範圍名稱已存在",
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "此適用範圍 '{{jurisdictionName}}' 無法刪除，已用於稅金種類。"
   }
 }

@@ -66,6 +66,7 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 	preferenceToken: string;
 	activeColumn = "id";
 	sortDirection = "asc";
+	pageIndex = 0;
 
 	private transportTextKeys = {
 		"EMailSender": "MESSAGES.TRANSPORT_EMAIL",
@@ -124,8 +125,8 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.createForm();
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
 			this.currentSearchString = searchString;
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, { searchString });
+			this.pageIndex = 0;
+			this.preferenceService.save(this.preferenceToken, { searchString, pageIndex: this.pageIndex });
 			this.getMessages();
 		});
 		this.storeSearchString.pipe(debounceTime(250)).subscribe(storeSearchString => {
@@ -140,8 +141,8 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	ngAfterViewInit() {
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
+			this.preferenceService.save(this.preferenceToken, {sort: this.sort, pageIndex: this.pageIndex});
 			this.getMessages();
 		});
 	}
@@ -165,15 +166,16 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
+		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize, pageIndex: this.pageIndex});
 		this.getMessages();
 	}
 
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
+		this.preferenceService.save(this.preferenceToken, { searchString: "", pageIndex: this.pageIndex});
 		this.getMessages();
 	}
 
@@ -188,8 +190,9 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	toggleArchived(e: any) {
 		this.archived = e.checked;
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.preferenceService.saveFilter(this.preferenceToken, { archivedFilter: e.checked });
+		this.preferenceService.save(this.preferenceToken, { pageIndex: this.pageIndex });
 		this.getMessages();
 	}
 
@@ -216,7 +219,6 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 		},
 		error => {
 			this.getStoresSubscription = null;
-			console.log(error);
 		});
 	}
 
@@ -224,9 +226,10 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.currentUserService.setPreferredStore(store.identifier);
 		this.selectedStore = store;
 		this.store.setValue(store.identifier);
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.preferenceService.saveFilter(this.preferenceToken,
 			{storeFilter: store});
+		this.preferenceService.save(this.preferenceToken, { pageIndex: this.pageIndex });
 		this.getMessages();
 	}
 
@@ -255,8 +258,9 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 		if (this.selectedTransport !== transport) {
 			this.selectedTransport = transport;
 			this.transport.setValue(transport.content);
+			this.pageIndex = 0;
 			this.preferenceService.saveFilter(this.preferenceToken, { transportFilter: transport });
-			this.paginator.pageIndex = 0;
+			this.preferenceService.save(this.preferenceToken, { pageIndex: this.pageIndex });
 			this.getMessages();
 		}
 	}
@@ -264,8 +268,9 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 	clearTransport($event) {
 		this.selectedTransport = null;
 		this.transport.setValue("");
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.preferenceService.saveFilter(this.preferenceToken, { transportFilter: null });
+		this.preferenceService.save(this.preferenceToken, { pageIndex: this.pageIndex });
 		this.getMessages();
 		$event.stopPropagation();
 	}
@@ -273,8 +278,9 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 	selectStatus(status: any) {
 		if (this.statusFilter !== status) {
 			this.statusFilter = status;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.preferenceService.saveFilter(this.preferenceToken, { statusFilter: status });
+			this.preferenceService.save(this.preferenceToken, { pageIndex: this.pageIndex });
 			this.getMessages();
 		}
 	}
@@ -282,8 +288,9 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 	clearStatus($event) {
 		this.statusFilter = null;
 		this.statusSelect.setValue(null);
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.preferenceService.saveFilter(this.preferenceToken, { statusFilter: null });
+		this.preferenceService.save(this.preferenceToken, { pageIndex: this.pageIndex });
 		this.getMessages();
 		$event.stopPropagation();
 	}
@@ -402,7 +409,7 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	private getPendingMessages() {
 		const args: PendingMessagesService.GetPendingMessagesParams = {
-			offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+			offset: this.pageIndex * this.paginator.pageSize,
 			limit: this.paginator.pageSize
 		};
 		if (this.selectedStore) {
@@ -451,7 +458,7 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	private getArchivedMessages() {
 		const args: ArchivedMessagesService.GetArchivedMessagesParams = {
-			offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+			offset: this.pageIndex * this.paginator.pageSize,
 			limit: this.paginator.pageSize
 		};
 		if (this.selectedStore) {
@@ -503,7 +510,8 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 				sort,
 				searchString,
 				filter,
-				showFilters
+				showFilters,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -527,6 +535,9 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 			if (showFilters) {
 				this.showFilters = showFilters;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}

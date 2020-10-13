@@ -42,10 +42,10 @@
     "STATE_PROVINCE_REGION": "Estado/Distrito/Região",
     "ZIP_POSTAL_CODE": "Código postal",
     "BACK": "Retroceder",
-    "SELECT_AN_ORGANIZATION": "Selecione uma organização e escolha as funções do utilizador na lista de funções disponíveis. Um utilizador pode ter funções em mais do que uma organização.",
+    "SELECT_AN_ORGANIZATION": "Selecione uma organização e escolha a partir da lista de funções disponíveis.",
     "NO_ORGANIZATION_SELECTED": "Selecione uma organização.",
     "ORGANIZATION": "Organização",
-    "AVAILABLE_ROLES": "Funções disponíveis",
+    "AVAILABLE_ROLES": "Selecionar a partir das funções disponíveis",
     "SELECT_ROLE_PLACEHOLDER": "Selecionar função",
     "SELECTED_ROLES": "Funções selecionadas",
     "INCLUDE": "Incluir",
@@ -57,7 +57,7 @@
     "FINISH": "Terminar",
     "SAVE": "Guardar",
     "EDIT_USER": "Editar utilizador",
-    "USER_CREATED_MESSAGE": "Utilizador criado com êxito.",
+    "USER_CREATED_MESSAGE": "Utilizador \"{{name}}\" criado com êxito.",
     "USER_SAVED_MESSAGE": "Utilizador guardado com êxito.",
     "INVALID_COUNTRY": "O país não é válido.",
     "INVALID_STATE": "O estado, distrito ou região não é válido.",
@@ -69,7 +69,8 @@
     "DISABLED": "Desativado",
     "USER_ENABLED_MESSAGE": "Utilizador ativado com êxito.",
     "USER_DISABLED_MESSAGE": "Utilizador desativado com êxito.",
-    "MORE": "Mais"
+    "MORE": "Mais",
+    "REFRESH": "Atualizar"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Organizações",
@@ -133,7 +134,8 @@
     "PARENT_ORGANIZATION_ERROR": "A organização principal não é válida.",
     "INVALID_COUNTRY": "O país não é válido.",
     "INVALID_STATE": "O estado, distrito ou região não é válido.",
-    "DUPLICATE_ORGANIZATION": "A organização já existe."
+    "DUPLICATE_ORGANIZATION": "A organização já existe.",
+    "REFRESH": "Atualizar"
   },
   "APPROVALS": {
     "APPROVALS": "Aprovações",
@@ -259,7 +261,7 @@
     "TOTAL": "Total"
   },
   "MEMBER_GROUPS": {
-    "GROUPS": "Grupos",
+    "GROUPS": "Grupos de membros",
     "NEW_BUTTON": "Novo",
     "NAME": "Nome",
     "SEARCH": "Procurar",
@@ -293,7 +295,7 @@
     "ROLES_IN_ORGANIZATIONS": "Funções do utilizador nas organizações especificadas",
     "IGNORE_ROLES_IN_ORGANIZATIONS": "Ignorar funções do utilizador nas organizações especificadas",
     "CHECK_ROLES_IN_ORGANIZATIONS": "O utilizador deve ter uma função correspondente na organização especificada.",
-    "SELECT_AN_ORGANIZATION": "Selecione uma organização e escolha uma função de utilizador na lista de funções disponíveis. Um utilizador pode ter funções em mais do que uma organização.",
+    "SELECT_AN_ORGANIZATION": "Selecione uma organização e escolha a partir da lista de funções disponíveis.",
     "NO_ORGANIZATION_SELECTED": "Selecione uma organização.",
     "REGISTRATION_STATUS": "Estado do registo",
     "IGNORE_REGISTRATION_STATUS": "Ignorar estado do registo do utilizador",
@@ -327,10 +329,11 @@
     "MEMBER_GROUP_DELETED_MESSAGE": "Grupo de membros eliminado com êxito.",
     "DELETE_MEMBER_GROUP": "Eliminar grupo de membros",
     "DELETE_MEMBER_GROUP_CONFIRMATION": "Pretende eliminar '{{name}}'?",
-    "DELETE": "Eliminar"
+    "DELETE": "Eliminar",
+    "REFRESH": "Atualizar"
   },
   "EXTENDED_SITES": {
-    "STORES": "Lojas",
+    "STORES": "Lojas com sites alargados",
     "NEW_STORE": "Nova loja",
     "STORE_DETAILS": "Detalhes da loja",
     "SETUP": "Configuração",
@@ -387,7 +390,9 @@
     "DUPLICATE_EXTENDED_SITE": "A loja já existe.",
     "SHARED_OWNER_CHECKBOX": "Permitir que os utilizadores de outros sites acedam a esta loja ao especificar a mesma organização proprietária",
     "SHARED_OWNER_ORGANIZATION": "Organização de loja partilhada",
-    "MORE": "Mais"
+    "MORE": "Mais",
+    "INVALID_XML_FILE": "Selecione um ficheiro XML válido (.xml).",
+    "REFRESH": "Atualizar"
   },
   "STORE_PREVIEW": {
     "STORE_PREVIEW": "Pré-visualização de loja",
@@ -498,7 +503,8 @@
     "DESCRIPTION_NOT_UNIQUE": "A descrição já existe.",
     "CHECKING_ACCOUNT_NUMBER": "A verificar número da conta",
     "CHECK_ROUTING_NUMBER": "Verificar número de encaminhamento",
-    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "O número da ordem de compra já existe."
+    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "O número da ordem de compra já existe.",
+    "REFRESH": "Atualizar"
   },
   "SCHEDULER": {
     "SCHEDULER": "Agendador",
@@ -773,7 +779,8 @@
     "INVALID_MINIMUM_AMOUNT": "Montante mínimo não válido.",
     "CONTRACT_IMPORTED_MESSAGE": "Contrato importado com êxito.",
     "DUPLICATE_CONTRACT": "Não é possível criar o contrato porque já existe um contrato com este nome ou foi eliminado recentemente. Se um contrato com este nome estiver assinalado para eliminação, o utilitário Limpeza da base de dados tem de ser executado antes de reutilizar o nome do contrato. Isto pode ser feito pelo Administrador do site.",
-    "ACCOUNT": "Conta"
+    "ACCOUNT": "Conta",
+    "INVALID_XML_FILE": "Selecione um ficheiro XML válido (.xml)."
   },
   "MESSAGES": {
     "MESSAGES": "Mensagens",
@@ -915,9 +922,10 @@
   "SHIPPING_JURISDICTIONS": {
     "SHIPPING_JURISDICTIONS": "Jurisdições de envio",
     "SEARCH": "Procurar",
-    "SEARCH_BY_NAME": "Por nome",
+    "SEARCH_BY_NAME": "Por jurisdição",
     "STATE_FILTER": "Filtro de estado",
     "COUNTRY_FILTER": "Filtro de país",
+    "CITY_FILTER": "Filtro de cidade",
     "STORE_FILTER": "Filtro de loja",
     "SELECTED_STORE": "Loja selecionada",
     "CLEAR": "Limpar",
@@ -933,6 +941,7 @@
     "BACK": "Retroceder",
     "SAVE": "Guardar",
     "INPUT_ERROR": "Existem erros na página.",
+    "SELECT_CITY_PLACEHOLDER": "Selecionar cidade",
     "SELECT_STATE_PLACEHOLDER": "Selecionar estado",
     "SELECT_COUNTRY_PLACEHOLDER": "Selecionar país",
     "JURISDICTION": "Jurisdição",
@@ -991,7 +1000,7 @@
     "LANGUAGE": "Idioma",
     "ESTIMATED_DELIVERY_TIME": "Hora de entrega prevista",
     "EDIT_SHIPPING_MODE": "Editar modo de envio",
-    "DEFAULT_SET_SUCCESS_MESSAGE": "Modo de envio atualizado com êxito.",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "Modo de envio predefinido atualizado com êxito.",
     "SHIPPING_MODE_SAVED_MESSAGE": "Modo de envio guardado com êxito.",
     "SHIPPING_MODE_CREATED_MESSAGE": "Modo de envio \"{{name}}\" criado com êxito.",
     "DELETE_SHIPPING_MODE": "Eliminar modo de envio",
@@ -1004,7 +1013,8 @@
     "ESTIMATED_DELIVERY_TIME_DESCRIPTION": "Descrição de hora de entrega prevista",
     "TRACKING_URL": "URL de controlo da transportadora",
     "SET_AS_DEFAULT": "Definir como predefinição",
-    "LANGUAGE_ALREADY_EXISTS": "A descrição deste idioma já existe."
+    "LANGUAGE_ALREADY_EXISTS": "A descrição deste idioma já existe.",
+    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "A combinação de Serviço de Transporte já existe."
   },
   "SHIPPING_CODES": {
     "SHIPPING_CODES": "Códigos de envio",
@@ -1060,7 +1070,6 @@
     "CLEAR": "Limpar",
     "ACTIONS": "Ações",
     "NEW_BUTTON": "Novo",
-    "NEW_SHIPPING_CHARGES": "Novo Código de cobranças",
     "OPTIONAL": "(opcional)",
     "NEXT": "Seguinte",
     "CANCEL": "Cancelar",
@@ -1073,7 +1082,6 @@
     "REFRESH": "Atualizar",
     "DELETE": "Eliminar",
     "NAME": "Nome",
-    "CHARGES_TYPES": "Tipos de cobrança",
     "CHARGES_TYPE": "Tipo de cobrança",
     "CHARGES_TYPE_PLACEHOLDER": "Selecionar Tipo de cobranças",
     "UNIT": "Unidade",
@@ -1082,7 +1090,6 @@
     "SHIPPING_CHARGES_FOR": "Custos de envio para {{shippingCodeName}}",
     "NO_MATCHING_RECORDS_FOUND": "Nenhum registo correspondente encontrado",
     "UNIT_PLACEHOLDER": "Selecionar unidade",
-    "STORE_NOT_SELECTED": "A loja não está selecionada.",
     "NEW_SHIPPING_CHARGE": "Nova Cobrança de envio",
     "EDIT_SHIPPING_CHARGE": "Editar Cobrança de envio",
     "SHIPPING_CHARGE_DETAILS": "Definir Detalhes a Cobrança",
@@ -1095,26 +1102,26 @@
     "ALWAYS": "Sempre",
     "SHIPPING_CHARGE_START": "Início",
     "SHIPPING_CHARGE_END": "Fim",
-    "SHIPPING_CHARGE_END_IS_SMALLER": "A data de fim não deve ser anterior à data de início.",
-    "CHARGE_START": "Início",
-    "CHARGE_END": "Fim",
+    "BEFORE_START_DATE": "A data de fim não pode ser anterior à data de início.",
+    "RANGE": "Intervalo",
+    "RANGE_START": "Início do intervalo",
     "DELETE_SHIPPING_CHARGE": "Eliminar Cobrança de envio",
     "DELETE_SHIPPING_CHARGE_CONFIRMATION": "Pretende eliminar \"{{name}}\"?",
     "FULFILLMENT_CENTER": "Centro de processamento",
     "JURISDICTION": "Jurisdição",
     "SHIPPING_MODE": "Modo de envio",
     "PRECEDENCE": "Precedência",
-    "NEW_FULFILLMENT_OPTION": "Nova Opção de processamento",
-    "EDIT_FULFILLMENT_OPTION": "Editar Opção de processamento",
+    "FULFILLMENT_OPTION": "Opção de processamento",
     "INVALID_PRECEDENCE": "A precedência tem de ser um número.",
     "CREATE_FULFILLMENT_OPTION_MESSAGE": "Crie uma opção de processamento ao associar um centro de processamento a uma jurisdição e um modo de envio.",
-    "DUPLICATE_FULFILLMENT_OPTION_ERROR": "Opção de processamento com o mesmo centro de processamento, já existe jurisdição e modo de envio.",
+    "DUPLICATE_FULFILLMENT_OPTION_ERROR": "A opção de processamento com o mesmo centro de processamento, jurisdição e modo de envio já existe.",
     "MORE": "Mais",
-    "FULFILLMENT_CENTER_ERROR": "Centro de processamento não válido",
-    "JURISDICTION_ERROR": "Jurisdição não válida",
-    "SHIPPING_MODE_ERROR": "Modo de envio não válido",
-    "SEARCH_BY_NAME_DESCRIPTION": "Por nome",
+    "FULFILLMENT_CENTER_ERROR": "Centro de processamento inválido",
+    "JURISDICTION_ERROR": "Jurisdição inválida",
+    "SHIPPING_MODE_ERROR": "Modo de envio inválido",
+    "SEARCH_BY_NAME": "Por nome",
     "SHIPPING_CHARGE_DELETED_MESSAGE": "Cobranças de envio eliminadas com êxito.",
+    "SHIPPING_CHARGE_SAVED_MESSAGE": "Cobranças de envio guardadas com êxito.",
     "INVALID_DATE": "Data não válida.",
     "BY_QUANTITY": "Por quantidade",
     "BY_WEIGHT": "Por peso",
@@ -1122,9 +1129,14 @@
     "CHARGE": "Cobrança",
     "CURRENCY": "Moeda",
     "UNIT_OF_MEASURE": "Unidade de medida",
-    "RANGE_IS_OUT_OF_RANGE": "O início está fora do intervalo",
     "DUPLICATE_RANGE": "O intervalo já existe",
-    "DUPLICATE_NAME_ERROR": "O nome do código de segurança já existe"
+    "DUPLICATE_NAME_ERROR": "O nome da cobrança de envio já existe",
+    "INVALID_RANGE_START": "Início do intervalo inválido",
+    "INVALID_CHARGE": "Cobrança inválida",
+    "FROM_START_TO_END": "De {{start}} a {{end}}",
+    "FROM_START_AND_UP": "A partir de {{start}}",
+    "SHIPPING_CHARGE_CREATED_MESSAGE": "Cobrança de envio \"{{name}}\" criada com êxito.",
+    "NO_RANGES_ERROR": "Tem de definir, pelo menos, um intervalo de cobrança."
   },
   "TRANSPORTS": {
     "TRANSPORTS": "Transportes",
@@ -1176,7 +1188,8 @@
     "DELETE_MESSAGE_TYPE": "Eliminar tipo de mensagem",
     "DELETE": "Eliminar",
     "MESSAGE_TYPES_DELETED_MESSAGE": "Tipo de mensagem eliminado com êxito.",
-    "NOT_COMPLETE_ERROR": "A informação nesta página não está completa. Avance para o passo seguinte."
+    "NOT_COMPLETE_ERROR": "A informação nesta página não está completa. Avance para o passo seguinte.",
+    "REFRESH": "Atualizar"
   },
   "SECURITY_POLICIES": {
     "SECURITY_POLICIES": "Políticas de segurança",
@@ -1216,15 +1229,16 @@
     "NO_OF_PASSWORDS_KEPT_PASSWORD_HISTORY": "Número de palavras-passe mantidas no histórico",
     "DEFINE_CRITERIA": "Defina os critérios de uma política de palavras-passe.",
     "ALLOW_USER_ID_PASSWORD_MATCH": "Permita a correspondência de ID de utilizador e palavra-passe.",
-    "DO_NOT_ALLOW": "Não permitir",
+    "DO_NOT_ALLOW": "Não permitir que a ID de utilizador e palavra-passe correspondam.",
     "ACCOUNT_LOCKOUT_THRESHOLD": "Limiar de bloqueio de acesso a conta",
     "WAIT_TIME": "Tempo de espera",
     "INVALID_VALUE_FOR_NUMERIC_FIELD": "Valor não válido. O valor tem de ser um número. ",
     "DELETE_SECURITY_POLICY": "Eliminar política de segurança",
-    "DELETE_SECURITY_POLICY_CONFIRMATION": "Pretende eliminar \"{{name}}\"?"
+    "DELETE_SECURITY_POLICY_CONFIRMATION": "Pretende eliminar \"{{name}}\"?",
+    "SECURITY_POLICY_DELETE_NOT_ALLOWED": "A política de segurança não pode ser eliminada. A mesma está atribuída a um ou mais utilizadores."
   },
   "TAX_CODES": {
-    "TAX_CODES": "Códigos de imposto",
+    "TAX_CODES": "Códigos de impostos",
     "SEARCH": "Procurar",
     "SEARCH_BY_NAME": "Por nome",
     "CLEAR": "Limpar",
@@ -1238,6 +1252,7 @@
     "CANCEL": "Cancelar",
     "BACK": "Retroceder",
     "SAVE": "Guardar",
+    "FINISH": "Terminar",
     "INPUT_ERROR": "Existem erros na página.",
     "DESCRIPTION": "Descrição",
     "SHOW_FILTERS": "Mostrar filtros",
@@ -1254,10 +1269,14 @@
     "NAME": "Nome",
     "TYPE": "Tipo",
     "STORE": "Loja",
+    "DEFAULT": "Predefinido",
     "TYPE_FILTER": "Tipo",
     "SELECT_TYPE_PLACEHOLDER": "Selecionar tipo",
     "TAX_TYPE_SALES": "Imposto sobre vendas",
-    "TAX_TYPE_SHIPPING": "Taxa de envio"
+    "TAX_TYPE_SHIPPING": "Taxa de envio",
+    "IS_DEFAULT": "Sim",
+    "SET_AS_DEFAULT": "Definir como predefinição",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "Código de imposto predefinido atualizado com êxito."
   },
   "TAX_CATEGORIES": {
     "TAX_CATEGORIES": "Categorias de impostos",
@@ -1281,7 +1300,7 @@
     "FINISH": "Terminar",
     "EDIT_TAX_CATEGORY": "Editar categoria de imposto",
     "TAX_CATEGORY_SAVED_MESSAGE": "Categoria de imposto guardada com êxito.",
-    "TAX_CATEGORY_CREATED_MESSAGE": "Categoria de imposto criada com êxito.",
+    "TAX_CATEGORY_CREATED_MESSAGE": "Categoria de imposto \"{{name}}\" criada com êxito.",
     "DELETE_TAX_CATEGORY": "Eliminar categoria de imposto",
     "DELETE_TAX_CATEGORY_CONFIRMATION": "Pretende eliminar \"{{name}}\"?",
     "DELETE": "Eliminar",
@@ -1290,7 +1309,6 @@
     "NAME": "Nome",
     "STORE": "Loja",
     "SELECT_STORE_PLACEHOLDER": "Selecionar loja",
-    "INVALID_STORE": "Loja não válida",
     "TYPE": "Tipo de imposto",
     "INCLUDE_IN_DISPLAY_PRICE": "Incluir no preço apresentado",
     "TYPE_FILTER": "Tipo de imposto",
@@ -1298,7 +1316,7 @@
     "TAX_TYPE_SALES": "Imposto sobre vendas",
     "TAX_TYPE_SHIPPING": "Taxa de envio",
     "TAX_RATES": "Definir taxas de imposto",
-    "TAX_CATEGORY_ASSIGNMENT": "Definir códigos de imposto",
+    "TAX_CATEGORY_CODES": "Definir códigos de imposto",
     "DISPLAY_NAME": "Nome a apresentar",
     "DISPLAY_NAMES": "Nomes a apresentar",
     "LANGUAGE": "Idioma",
@@ -1306,9 +1324,14 @@
     "ADD_DISPLAY_NAME": "Adicionar nome a apresentar",
     "NO_DEFINED_DISPLAY_NAMES": "Não foram definidos nomes a apresentar",
     "FULFILLMENT_CENTER": "Centro de processamento",
-    "DEFINE_RATES_PER_JURISDICTION": "Defina a taxa de imposto para cada jurisdição a que esta categoria de imposto se aplique.",
+    "INVALID_FULFILLMENT_CENTER": "Centro de processamento inválido",
+    "SELECT_FULFILLMENT_CENTER": "Selecionar centro de processamento",
+    "DEFINE_RATES_PER_JURISDICTION": "Defina a taxa de imposto para uma jurisdição e centro de processamento.",
     "JURISDICTION": "Jurisdição",
-    "TAX_RATE": "Taxa de imposto (%)",
+    "SELECT_JURISDICTION": "Selecionar jurisdição",
+    "INVALID_JURISDICTION": "Jurisdição inválida",
+    "TAX_RATE": "Taxa de imposto",
+    "INVALID_TAX_RATE": "Taxa de imposto inválida.",
     "SELECTED_RATES": "Taxas de imposto definidas",
     "ADD_TAX_RATE": "Adicionar taxa de imposto",
     "NO_DEFINED_TAX_RATES": "Não foram definidas taxas de imposto",
@@ -1316,12 +1339,16 @@
     "TAX_CODE": "Código de imposto",
     "ADD_TAX_CODE": "Adicionar código de imposto",
     "SELECTED_TAX_CODES": "Códigos de imposto definidos",
-    "NO_DEFINED_TAX_CODES": "Não foram selecionados códigos de imposto"
+    "NO_DEFINED_TAX_CODES": "Não foram selecionados códigos de imposto",
+    "DUPLICATE_NAME_ERROR": "O nome da categoria de imposto já existe",
+    "DUPLICATE_TAX_RATE": "Já existe uma taxa de imposto para a jurisdição e centro de processamento especificados.",
+    "NO_TAX_CODES_ERROR": "Tem de definir, pelo menos, um código de imposto.",
+    "NO_TAX_RATES_ERROR": "Tem de definir, pelo menos, uma taxa de imposto."
   },
   "TAX_JURISDICTIONS": {
-    "TAX_JURISDICTIONS": "Jurisdições de imposto",
+    "TAX_JURISDICTIONS": "Jurisdições de impostos",
     "SEARCH": "Procurar",
-    "SEARCH_BY_NAME": "Por nome",
+    "SEARCH_BY_NAME": "Por jurisdição",
     "STATE_FILTER": "Filtro de estado",
     "COUNTRY_FILTER": "Filtro de país",
     "STORE_FILTER": "Filtro de loja",
@@ -1358,6 +1385,7 @@
     "DELETE": "Eliminar",
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "Jurisdição de imposto eliminada com êxito.",
     "NOT_COMPLETE_ERROR": "A informação nesta página não está completa. Avance para o passo seguinte.",
-    "DUPLICATE_NAME_ERROR": "O nome da jurisdição de imposto já existe"
+    "DUPLICATE_NAME_ERROR": "O nome da jurisdição de imposto já existe",
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "A jurisdição '{{jurisdictionName}}' não pode ser eliminada, pois está a ser utilizada numa categoria de imposto."
   }
 }

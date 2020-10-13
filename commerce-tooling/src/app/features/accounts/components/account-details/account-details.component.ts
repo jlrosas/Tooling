@@ -160,7 +160,6 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 			},
 			error => {
 				this.getOrganizationsSubscription = null;
-				console.log(error);
 			}
 		);
 	}
@@ -186,7 +185,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 			this.accountMainService.accountData.customerUserId = null;
 			this.accountMainService.accountData.customerUserName = null;
 			this.getUsersSubscription = this.usersService.UsersGetManageableUsers({
-				searchString: searchString,
+				searchString,
 				parentOrganizationId: this.accountMainService.accountData.customerOrganizationId,
 				sort: "logonId",
 				limit: 10
@@ -201,7 +200,6 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 				},
 				error => {
 					this.getUsersSubscription = null;
-					console.log(error);
 				}
 			);
 		}
@@ -287,4 +285,3 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 		});
 	}
 }
-

@@ -186,8 +186,6 @@ export class AccountPaymentMethodListComponent implements AfterViewInit, OnDestr
 				});
 				this.populateAddresses();
 				this.model.setData(this.accountMainService.paymentMethods);
-			}, error => {
-				console.log(error);
 			});
 		}
 	}

@@ -11,7 +11,7 @@
 
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subject, Subscription, Observable, forkJoin } from "rxjs";
+import { Subject, Subscription, Observable } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { FormGroup, FormControl } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
@@ -61,6 +61,8 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 	filteredStateList: Array<any> = [];
 	selectedState: any = null;
 	model = new TaxJurisdictionDataSource();
+	countriesLoading = false;
+	statesLoading = false;
 
 	@ViewChild(MatPaginator, {static: false})
 	paginator: MatPaginator;
@@ -72,6 +74,7 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 	preferenceToken: string;
 	activeColumn = "code";
 	sortDirection = "asc";
+	pageIndex: number = null;
 	private countryList: Array<any> = [];
 	private stateList: Array<any> = [];
 
@@ -112,9 +115,8 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 		this.createFormControls();
 		this.createForm();
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
 			this.currentSearchString = searchString;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getTaxJurisdictions();
 		});
 		this.countrySearchString.pipe(debounceTime(250)).subscribe(searchString => {
@@ -132,6 +134,7 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 			} else {
 				this.filteredCountryList = this.countryList;
 			}
+			this.countriesLoading = false;
 		});
 		this.stateSearchString.pipe(debounceTime(250)).subscribe(searchString => {
 			if (this.stateList.length > 0) {
@@ -155,11 +158,10 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 				} else {
 					this.selectedState = null;
 				}
-				this.preferenceService.saveFilter(this.preferenceToken,
-						{stateFilter: this.selectedState});
-				this.paginator.pageIndex = 0;
+				this.pageIndex = 0;
 				this.getTaxJurisdictions();
 			}
+			this.statesLoading = false;
 		});
 		this.storeSearchString.pipe(debounceTime(250)).subscribe(searchString => {
 			this.getStores(searchString);
@@ -202,8 +204,7 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 			});
 		}
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getTaxJurisdictions();
 		});
 		this.initCountryList();
@@ -215,15 +216,14 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 
 	handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getTaxJurisdictions();
 	}
 
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getTaxJurisdictions();
 	}
 
@@ -259,7 +259,7 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 			if (taxJurisdictionGroupRelationships.length > 0) {
 				const jurisdictionGroupId = taxJurisdictionGroupRelationships[0].jurisdictionGroupId;
 				this.taxJurisdictionCalculationRulesService.getTaxJurisdictionCalculationRules({
-					jurisdictionGroupId: jurisdictionGroupId
+					jurisdictionGroupId
 				}).subscribe((taxRuleBody: any) => {
 					const taxJurisdictionRules = taxRuleBody.items;
 					if (taxJurisdictionRules.length > 0) {
@@ -291,20 +291,17 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 			usage: "HCL_TaxTool",
 			identifier: "*" + searchString + "*",
 			limit: 10
-	 	}).subscribe(
-	 		response => {
-		 		this.getStoresSubscription = null;
-		 		if (response.items.length === 1 && response.items[0].identifier === this.store.value) {
-		 			this.selectStore(response.items[0]);
-		 		} else {
-		 			this.storeList = response.items;
-		 		}
-			},
-			error => {
-				this.getStoresSubscription = null;
-				console.log(error);
-			}
-		);
+	 	}).subscribe(response => {
+	 		this.getStoresSubscription = null;
+	 		if (response.items.length === 1 && response.items[0].identifier === this.store.value) {
+	 			this.selectStore(response.items[0]);
+	 		} else {
+	 			this.storeList = response.items;
+	 		}
+		},
+		error => {
+			this.getStoresSubscription = null;
+		});
 	}
 
 	selectStore(store: any) {
@@ -317,7 +314,9 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 		this.selectedStore = store;
 		this.store.setValue(store.identifier);
 		if (currentStoreId !== store.id) {
-			this.paginator.pageIndex = 0;
+			if (currentStoreId !== null) {
+				this.pageIndex = 0;
+			}
 			this.getTaxJurisdictions();
 			this.storeList = [];
 			this.searchStores("");
@@ -330,25 +329,45 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 		}
 	}
 
+	resetCountryFilter() {
+		if (this.selectedCountry) {
+			this.country.setValue(this.selectedCountry.name);
+		} else if (this.country.value !== "") {
+			this.country.setValue("");
+			this.searchCountries("");
+		}
+	}
+
+	resetStateFilter() {
+		if (this.stateList.length > 0) {
+			if (this.selectedState) {
+				this.state.setValue(this.selectedState.name);
+			} else if (this.state.value !== "") {
+				this.state.setValue("");
+				this.searchStates("");
+			}
+		}
+	}
+
 	searchCountries(searchString) {
+		this.countriesLoading = true;
 		this.countrySearchString.next(searchString);
 	}
 
 	selectCountry(country: any) {
-		const countryName = country != null ? country.name : null;
-		const countryCode = country != null ? country.countryAbbr : null;
-		this.country.setValue(countryName);
-		if (!this.selectedCountry || this.selectedCountry.countryAbbr !== country.countryAbbr) {
-			this.selectedCountry = country;
-			this.state.setValue("");
-			this.selectedState = null;
-			this.initStateList(countryCode);
-			this.preferenceService.saveFilter(this.preferenceToken,
-					{countryFilter: country});
-			this.preferenceService.saveFilter(this.preferenceToken,
-					{stateFilter: null});
-			this.paginator.pageIndex = 0;
-			this.getTaxJurisdictions();
+		if (country) {
+			const countryName = country.name;
+			const countryCode = country.countryAbbr;
+			this.country.setValue(countryName);
+			this.filteredCountryList = [];
+			if (!this.selectedCountry || this.selectedCountry.countryAbbr !== countryCode) {
+				this.selectedCountry = country;
+				this.state.setValue("");
+				this.selectedState = null;
+				this.initStateList(countryCode);
+				this.pageIndex = 0;
+				this.getTaxJurisdictions();
+			}
 		}
 	}
 
@@ -358,33 +377,30 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 		this.filteredCountryList = this.countryList;
 		this.stateList = [];
 		this.filteredStateList = [];
-		this.preferenceService.saveFilter(this.preferenceToken,
-				{countryFilter: null});
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getTaxJurisdictions();
 	}
 
 	searchStates(searchString) {
+		this.statesLoading = true;
 		this.stateSearchString.next(searchString);
 	}
 
 	selectState(state: any) {
-		const stateCode = state != null ? state.stateAbbr : null;
-		this.state.setValue(state ? state.name : "");
-		this.selectedState = state;
-		this.preferenceService.saveFilter(this.preferenceToken,
-				{stateFilter: state});
-		this.paginator.pageIndex = 0;
-		this.getTaxJurisdictions();
+		if (state) {
+			this.state.setValue(state.name);
+			this.filteredStateList = [];
+			this.selectedState = state;
+			this.pageIndex = 0;
+			this.getTaxJurisdictions();
+		}
 	}
 
 	clearState() {
 		this.state.setValue("");
 		this.selectedState = null;
 		this.filteredStateList = this.stateList;
-		this.preferenceService.saveFilter(this.preferenceToken,
-				{stateFilter: null});
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getTaxJurisdictions();
 	}
 
@@ -437,14 +453,24 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 	}
 
 	private getTaxJurisdictions() {
+		this.preferenceService.save(this.preferenceToken, {
+			searchString: this.currentSearchString,
+			sort: this.sort,
+			pageIndex: this.pageIndex,
+			pageSize: this.pageSize,
+			filter: {
+				countryFilter: this.selectedCountry,
+				stateFilter: this.selectedState
+			}
+		});
 		const args: JurisdictionsService.GetJurisdictionsParams = {
 			subclass: 2, // 1 for shipping jurisdiction and 2 for tax jurisdiction
 			storeId:  this.selectedStore.id,
-			offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+			offset: (this.pageIndex) * this.paginator.pageSize,
 			limit: this.paginator.pageSize
 		};
 		if (this.currentSearchString) {
-		 	args.searchString = this.currentSearchString;
+			args.searchString = this.currentSearchString;
 		}
 		if (this.selectedCountry) {
 			args.countryAbbreviation = this.selectedCountry.countryAbbr;
@@ -499,7 +525,8 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 				sort,
 				searchString,
 				filter,
-				showFilters
+				showFilters,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -524,21 +551,22 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 			if (showFilters) {
 				this.showFilters = showFilters;
 			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
+			}
 		}
 	}
 
 	private initCountryList() {
+		this.countriesLoading = true;
 		this.countriesService.getCountries({
-			languageId: LanguageService.languageId
-		}).subscribe(
-			response => {
-				this.countryList = response.items;
-				this.searchCountries(this.country.value);
-			},
-			error => {
-				console.log(error);
-			}
-		);
+			languageId: LanguageService.languageId,
+			sort: "name"
+		}).subscribe(response => {
+			this.countryList = response.items ? response.items.sort((a, b) => a.name.localeCompare(b.name)) : [];
+			this.countriesLoading = false;
+			this.searchCountries(this.country.value);
+		});
 	}
 
 	private initStateList(countryCode: any) {
@@ -551,9 +579,6 @@ export class TaxJurisdictionListComponent implements OnInit, OnDestroy, AfterVie
 			}).subscribe(response => {
 				this.stateList = response.items;
 				this.searchStates(this.state.value);
-			},
-			error => {
-				console.log(error);
 			});
 		}
 	}

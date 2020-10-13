@@ -1,0 +1,81 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="detailsForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SHIPPING_CHARGES.NAME'| translate}}</mat-label>
+				<input #nameInput matInput id="name" formControlName="name" required [maxlength]="30"
+						(input)="validateName()"/>
+				<mat-error *ngIf="name.errors && name.errors.duplicateName">
+					{{'SHIPPING_CHARGES.DUPLICATE_NAME_ERROR' | translate }}
+				</mat-error>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline">
+				<mat-label>{{'SHIPPING_CHARGES.DESCRIPTION' | translate}} {{'SHIPPING_CHARGES.OPTIONAL'| translate}}</mat-label>
+				<input matInput id="description" formControlName="description" (input)="validateDescription()" [maxlength]="254">
+			</mat-form-field>
+
+			<div class="mat-form-field">
+				<p>
+					<mat-label>{{'SHIPPING_CHARGES.TIME_PERIOD'| translate}}</mat-label>
+				</p>
+				<p>
+					<mat-label>{{'SHIPPING_CHARGES.CHARGE_IN_EFFECT'| translate}}</mat-label>
+				</p>
+				<mat-radio-group class="select-time-period-group" [(ngModel)]="timePeriod" [ngModelOptions]="{standalone: true}" (change)="validateTimePeriod($event)">
+					<mat-radio-button [value]="'always'">{{'SHIPPING_CHARGES.ALWAYS'| translate}}</mat-radio-button>
+					<mat-radio-button [value]="'specifiedTimePeriod'">{{'SHIPPING_CHARGES.DURING_A_SPECIFIED_PERIOD'| translate}}</mat-radio-button>
+				</mat-radio-group>
+
+				<div *ngIf="timePeriod === 'specifiedTimePeriod'">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'SHIPPING_CHARGES.SHIPPING_CHARGE_START'| translate}}</mat-label>
+						<input matInput [matDatepicker]="dpShippingChargeStart" [formControl]="startDate" [required]="timePeriod === 2" 
+								(dateInput)="validateShippingChargeStart($event.value)" (dateChange)="validateShippingChargeStart($event.value)">
+						<mat-datepicker-toggle matSuffix [for]="dpShippingChargeStart"></mat-datepicker-toggle>
+						<mat-datepicker #dpShippingChargeStart></mat-datepicker>
+						<mat-error *ngIf="startDate.errors && startDate.errors.afterEndDate">
+							{{'SHIPPING_CHARGES.AFTER_END_DATE' | translate }}
+						</mat-error>
+						<mat-error *ngIf="startDate.errors && startDate.errors.matDatepickerParse">
+							{{'SHIPPING_CHARGES.INVALID_DATE' | translate }}
+						</mat-error>
+					</mat-form-field>
+
+					<mat-form-field appearance="outline">
+						<mat-label>{{'SHIPPING_CHARGES.SHIPPING_CHARGE_END'| translate}}</mat-label>
+						<input matInput [matDatepicker]="dpDhippingChargeEnd" [formControl]="endDate" [required]="timePeriod === 2"
+								(dateInput)="validateShippingChargeEnd($event.value)" (dateChange)="validateShippingChargeEnd($event.value)">
+						<mat-datepicker-toggle matSuffix [for]="dpDhippingChargeEnd"></mat-datepicker-toggle>
+						<mat-datepicker #dpDhippingChargeEnd></mat-datepicker>
+						<mat-error *ngIf="endDate.errors && endDate.errors.beforeStartDate">
+							{{'SHIPPING_CHARGES.BEFORE_START_DATE' | translate }}
+						</mat-error>
+						<mat-error *ngIf="endDate.errors && endDate.errors.matDatepickerParse">
+							{{'SHIPPING_CHARGES.INVALID_DATE' | translate }}
+						</mat-error>
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button mat-primary" (click)="next()" *ngIf="mode === 'create'">{{'SHIPPING_CHARGES.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'edit'">{{'SHIPPING_CHARGES.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

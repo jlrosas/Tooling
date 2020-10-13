@@ -19,3 +19,13 @@ export const TASK_NAME_MANAGE_OU = "ManageOU";
 /* Table configuration */
 export const DEFAULT_PAGE_SIZE_OPTIONS: number[] = [5, 10, 25, 100];
 export const DEFAULT_PAGE_SIZE = 10;
+
+/* Date format options */
+export const DATE_FORMAT_OPTIONS = {
+	year: "numeric",
+	month: "numeric",
+	day: "numeric",
+	hour: "numeric",
+	minute: "numeric",
+	second: "numeric"
+};

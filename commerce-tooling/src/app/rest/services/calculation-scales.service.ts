@@ -65,7 +65,7 @@ class CalculationScalesService extends __BaseService {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.id != null) __params = __params.set('id', params.id.toString());
+    (params.id || []).forEach(val => {if (val != null) __params = __params.append('id', val.toString())});
     if (params.scaleCode != null) __params = __params.set('scaleCode', params.scaleCode.toString());
     if (params.unitOfMeasure != null) __params = __params.set('unitOfMeasure', params.unitOfMeasure.toString());
     if (params.currency != null) __params = __params.set('currency', params.currency.toString());
@@ -532,7 +532,7 @@ module CalculationScalesService {
     /**
      * The calculation scale ID.
      */
-    id?: number;
+    id?: Array<number>;
 
     /**
      * A character string that uniquely identifies this Calculation Scale.

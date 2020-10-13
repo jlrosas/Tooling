@@ -42,10 +42,10 @@
     "STATE_PROVINCE_REGION": "Область / республика / регион",
     "ZIP_POSTAL_CODE": "Почтовый индекс",
     "BACK": "Назад",
-    "SELECT_AN_ORGANIZATION": "Выберите организацию и роль пользователя из списка доступных ролей. У пользователя могут быть роли в нескольких организациях.",
+    "SELECT_AN_ORGANIZATION": "Выберите организацию и роль из списка доступных.",
     "NO_ORGANIZATION_SELECTED": "Выберите организацию.",
     "ORGANIZATION": "Организация",
-    "AVAILABLE_ROLES": "Доступные роли",
+    "AVAILABLE_ROLES": "Выберите из доступных ролей",
     "SELECT_ROLE_PLACEHOLDER": "Выбрать роль",
     "SELECTED_ROLES": "Выбранные роли",
     "INCLUDE": "Включить",
@@ -57,7 +57,7 @@
     "FINISH": "Готово",
     "SAVE": "Сохранить",
     "EDIT_USER": "Изменить пользователя",
-    "USER_CREATED_MESSAGE": "Пользователь успешно создан.",
+    "USER_CREATED_MESSAGE": "Пользователь '{{name}}' создан.‏",
     "USER_SAVED_MESSAGE": "Пользователь успешно сохранен.",
     "INVALID_COUNTRY": "Недопустимая страна.",
     "INVALID_STATE": "Недопустимая область, район или регион.",
@@ -69,7 +69,8 @@
     "DISABLED": "Отключено",
     "USER_ENABLED_MESSAGE": "Пользователь включен.",
     "USER_DISABLED_MESSAGE": "Пользователь отключен.",
-    "MORE": "Дополнительно"
+    "MORE": "Дополнительно",
+    "REFRESH": "Обновить"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Организации",
@@ -133,7 +134,8 @@
     "PARENT_ORGANIZATION_ERROR": "Недопустимая родительская организация.",
     "INVALID_COUNTRY": "Недопустимая страна.",
     "INVALID_STATE": "Недопустимая область, район или регион.",
-    "DUPLICATE_ORGANIZATION": "Организация уже существует."
+    "DUPLICATE_ORGANIZATION": "Организация уже существует.",
+    "REFRESH": "Обновить"
   },
   "APPROVALS": {
     "APPROVALS": "Утверждения",
@@ -259,7 +261,7 @@
     "TOTAL": "Итого"
   },
   "MEMBER_GROUPS": {
-    "GROUPS": "Группы",
+    "GROUPS": "Группы участников",
     "NEW_BUTTON": "Создать",
     "NAME": "Имя",
     "SEARCH": "Искать",
@@ -293,7 +295,7 @@
     "ROLES_IN_ORGANIZATIONS": "Роли пользователей в указанных организациях",
     "IGNORE_ROLES_IN_ORGANIZATIONS": "Не учитывать роли пользователей в указанных организациях",
     "CHECK_ROLES_IN_ORGANIZATIONS": "У пользователя должна быть соответствующая роль в указанной организации.",
-    "SELECT_AN_ORGANIZATION": "Выберите организацию и роль пользователя из списка доступных ролей. У пользователя могут быть роли в нескольких организациях.",
+    "SELECT_AN_ORGANIZATION": "Выберите организацию и роль из списка доступных.",
     "NO_ORGANIZATION_SELECTED": "Выберите организацию.",
     "REGISTRATION_STATUS": "Статус регистрации",
     "IGNORE_REGISTRATION_STATUS": "Не учитывать статус регистрации пользователя",
@@ -327,10 +329,11 @@
     "MEMBER_GROUP_DELETED_MESSAGE": "Группа участников удалена.",
     "DELETE_MEMBER_GROUP": "Удалить группу участников",
     "DELETE_MEMBER_GROUP_CONFIRMATION": "Удалить '{{name}}'?",
-    "DELETE": "Удалить"
+    "DELETE": "Удалить",
+    "REFRESH": "Обновить"
   },
   "EXTENDED_SITES": {
-    "STORES": "Магазины",
+    "STORES": "Магазины на расширенном сайте",
     "NEW_STORE": "Создать магазин",
     "STORE_DETAILS": "Сведения о магазине",
     "SETUP": "Настройка",
@@ -387,7 +390,9 @@
     "DUPLICATE_EXTENDED_SITE": "Магазин уже существует.",
     "SHARED_OWNER_CHECKBOX": "Предоставить пользователям других магазинов доступ к этому магазину, указав ту же организацию-владельца",
     "SHARED_OWNER_ORGANIZATION": "Организация совместно используемого магазина",
-    "MORE": "Дополнительно"
+    "MORE": "Дополнительно",
+    "INVALID_XML_FILE": "Выберите действительный XML-файл (.xml).",
+    "REFRESH": "Обновить"
   },
   "STORE_PREVIEW": {
     "STORE_PREVIEW": "Предварительный просмотр магазина",
@@ -498,7 +503,8 @@
     "DESCRIPTION_NOT_UNIQUE": "Описание уже существует.",
     "CHECKING_ACCOUNT_NUMBER": "Проверка номера банковского счета",
     "CHECK_ROUTING_NUMBER": "Проверить код банка",
-    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "Номер заказа на покупку уже существует."
+    "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "Номер заказа на покупку уже существует.",
+    "REFRESH": "Обновить"
   },
   "SCHEDULER": {
     "SCHEDULER": "Планировщик",
@@ -773,7 +779,8 @@
     "INVALID_MINIMUM_AMOUNT": "Недопустимая минимальная сумма.",
     "CONTRACT_IMPORTED_MESSAGE": "Контракт успешно импортирован.",
     "DUPLICATE_CONTRACT": "Не удается создать контракт, поскольку контракт с таким именем уже существует или недавно удален. Если контракт с этим именем помечен для удаления, перед повторным использованием имени следует запустить утилиту Database Cleanup. Это может сделать администратор сайта.",
-    "ACCOUNT": "Учетная запись"
+    "ACCOUNT": "Учетная запись",
+    "INVALID_XML_FILE": "Выберите действительный XML-файл (.xml)."
   },
   "MESSAGES": {
     "MESSAGES": "Сообщения",
@@ -915,9 +922,10 @@
   "SHIPPING_JURISDICTIONS": {
     "SHIPPING_JURISDICTIONS": "Юрисдикции доставки",
     "SEARCH": "Поиск",
-    "SEARCH_BY_NAME": "По имени",
+    "SEARCH_BY_NAME": "По юрисдикции",
     "STATE_FILTER": "Фильтр области",
     "COUNTRY_FILTER": "Фильтр страны",
+    "CITY_FILTER": "Фильтр городов",
     "STORE_FILTER": "Фильтр магазина",
     "SELECTED_STORE": "Выбранный магазин",
     "CLEAR": "Очистить",
@@ -933,6 +941,7 @@
     "BACK": "Назад",
     "SAVE": "Сохранить",
     "INPUT_ERROR": "На этой странице есть ошибки.",
+    "SELECT_CITY_PLACEHOLDER": "Выберите город",
     "SELECT_STATE_PLACEHOLDER": "Выберите область",
     "SELECT_COUNTRY_PLACEHOLDER": "Выберите страну",
     "JURISDICTION": "Юрисдикция",
@@ -991,7 +1000,7 @@
     "LANGUAGE": "Язык",
     "ESTIMATED_DELIVERY_TIME": "Предполагаемое время доставки",
     "EDIT_SHIPPING_MODE": "Изменить режим доставки",
-    "DEFAULT_SET_SUCCESS_MESSAGE": "Режим доставки обновлен.",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "Стандартный режим доставки успешно обновлен.",
     "SHIPPING_MODE_SAVED_MESSAGE": "Режим доставки сохранен.",
     "SHIPPING_MODE_CREATED_MESSAGE": "Режим доставки '{{name}}' создан.",
     "DELETE_SHIPPING_MODE": "Удалить режим доставки",
@@ -1004,7 +1013,8 @@
     "ESTIMATED_DELIVERY_TIME_DESCRIPTION": "Описание предполагаемого времени доставки",
     "TRACKING_URL": "URL страницы отслеживания службы доставки",
     "SET_AS_DEFAULT": "Установить по умолчанию",
-    "LANGUAGE_ALREADY_EXISTS": "Описание для этого языка уже существует."
+    "LANGUAGE_ALREADY_EXISTS": "Описание для этого языка уже существует.",
+    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "Выбранное сочетание службы доставки и услуги уже существует."
   },
   "SHIPPING_CODES": {
     "SHIPPING_CODES": "Коды доставки",
@@ -1060,7 +1070,6 @@
     "CLEAR": "Очистить",
     "ACTIONS": "Действия",
     "NEW_BUTTON": "Создать",
-    "NEW_SHIPPING_CHARGES": "Создать код оплат",
     "OPTIONAL": "(необязательно)",
     "NEXT": "Далее",
     "CANCEL": "Отмена",
@@ -1073,16 +1082,14 @@
     "REFRESH": "Обновить",
     "DELETE": "Удалить",
     "NAME": "Имя",
-    "CHARGES_TYPES": "Типы оплат",
     "CHARGES_TYPE": "Тип оплат",
-    "CHARGES_TYPE_PLACEHOLDER": "Выбрать тип оплаты",
+    "CHARGES_TYPE_PLACEHOLDER": "Выберите тип оплаты",
     "UNIT": "Единица",
     "START_DATE": "Дата начала",
     "END_DATE": "Дата окончания",
-    "SHIPPING_CHARGES_FOR": "Плата за доставку {{shippingCodeName}}",
+    "SHIPPING_CHARGES_FOR": "Платы за доставку для {{shippingCodeName}}",
     "NO_MATCHING_RECORDS_FOUND": "Совпадающие записи не найдены",
     "UNIT_PLACEHOLDER": "Выбрать единицу",
-    "STORE_NOT_SELECTED": "Магазин не выбран.",
     "NEW_SHIPPING_CHARGE": "Создать плату за доставку",
     "EDIT_SHIPPING_CHARGE": "Изменить плату за доставку",
     "SHIPPING_CHARGE_DETAILS": "Определить сведения об оплате",
@@ -1095,26 +1102,26 @@
     "ALWAYS": "Всегда",
     "SHIPPING_CHARGE_START": "Начало",
     "SHIPPING_CHARGE_END": "Окончание",
-    "SHIPPING_CHARGE_END_IS_SMALLER": "Дата окончания не должна предшествовать дате начала.",
-    "CHARGE_START": "Начало",
-    "CHARGE_END": "Окончание",
+    "BEFORE_START_DATE": "Дата окончания не может быть раньше даты начала.",
+    "RANGE": "Диапазон",
+    "RANGE_START": "Начало диапазона",
     "DELETE_SHIPPING_CHARGE": "Удалить плату за доставку",
     "DELETE_SHIPPING_CHARGE_CONFIRMATION": "Удалить '{{name}}'?",
     "FULFILLMENT_CENTER": "Центр выполнения",
     "JURISDICTION": "Юрисдикция",
     "SHIPPING_MODE": "Режим доставки",
     "PRECEDENCE": "Приоритет",
-    "NEW_FULFILLMENT_OPTION": "Создать параметр выполнения",
-    "EDIT_FULFILLMENT_OPTION": "Изменить параметр выполнения",
+    "FULFILLMENT_OPTION": "Вариант выполнения",
     "INVALID_PRECEDENCE": "Приоритет должен быть числом.",
     "CREATE_FULFILLMENT_OPTION_MESSAGE": "Создайте параметр выполнения, связав центр выполнения с юрисдикцией и режимом доставки.",
-    "DUPLICATE_FULFILLMENT_OPTION_ERROR": "Параметр выполнения с этим центром выполнения, юрисдикцией и режимом доставки уже существует.",
+    "DUPLICATE_FULFILLMENT_OPTION_ERROR": "Параметр выполнения с таким центром выполнения, юрисдикцией и режимом доставки уже существует.",
     "MORE": "Дополнительно",
     "FULFILLMENT_CENTER_ERROR": "Недействительный центр выполнения",
     "JURISDICTION_ERROR": "Недействительная юрисдикция",
     "SHIPPING_MODE_ERROR": "Недействительный режим доставки",
-    "SEARCH_BY_NAME_DESCRIPTION": "По имени",
+    "SEARCH_BY_NAME": "По имени",
     "SHIPPING_CHARGE_DELETED_MESSAGE": "Оплаты за доставку удалены.",
+    "SHIPPING_CHARGE_SAVED_MESSAGE": "Платы за доставку сохранены.",
     "INVALID_DATE": "Недопустимая дата.",
     "BY_QUANTITY": "По количеству",
     "BY_WEIGHT": "По весу",
@@ -1122,9 +1129,14 @@
     "CHARGE": "Оплата",
     "CURRENCY": "Валюта",
     "UNIT_OF_MEASURE": "Единица измерения",
-    "RANGE_IS_OUT_OF_RANGE": "Начало за пределами диапазона",
     "DUPLICATE_RANGE": "Диапазон уже существует",
-    "DUPLICATE_NAME_ERROR": "Имя кода безопасности уже существует"
+    "DUPLICATE_NAME_ERROR": "Плата за доставку с таким именем уже существует",
+    "INVALID_RANGE_START": "Недопустимое начало диапазона",
+    "INVALID_CHARGE": "Недопустимая плата",
+    "FROM_START_TO_END": "От {{start}} до {{end}}",
+    "FROM_START_AND_UP": "От {{start}} и выше",
+    "SHIPPING_CHARGE_CREATED_MESSAGE": "Плата за доставку '{{name}}' создана.",
+    "NO_RANGES_ERROR": "Вы должны определить хотя бы один диапазон платы."
   },
   "TRANSPORTS": {
     "TRANSPORTS": "Транспорт",
@@ -1176,7 +1188,8 @@
     "DELETE_MESSAGE_TYPE": "Удалить тип сообщения",
     "DELETE": "Удалить",
     "MESSAGE_TYPES_DELETED_MESSAGE": "Тип сообщения удален.",
-    "NOT_COMPLETE_ERROR": "Страница не заполнена. Перейдите к следующему шагу."
+    "NOT_COMPLETE_ERROR": "Страница не заполнена. Перейдите к следующему шагу.",
+    "REFRESH": "Обновить"
   },
   "SECURITY_POLICIES": {
     "SECURITY_POLICIES": "Политики безопасности",
@@ -1216,12 +1229,13 @@
     "NO_OF_PASSWORDS_KEPT_PASSWORD_HISTORY": "Число паролей, сохраненных в истории паролей",
     "DEFINE_CRITERIA": "Определить критерии политики паролей.",
     "ALLOW_USER_ID_PASSWORD_MATCH": "Разрешить совпадение ИД и пароля пользователя.",
-    "DO_NOT_ALLOW": "Не разрешать",
+    "DO_NOT_ALLOW": "Запрещать совпадение ИД и пароля пользователя.",
     "ACCOUNT_LOCKOUT_THRESHOLD": "Порог блокировки учетной записи",
     "WAIT_TIME": "Время ожидания",
     "INVALID_VALUE_FOR_NUMERIC_FIELD": "Недействительное значение. Значение должно быть числом. ",
     "DELETE_SECURITY_POLICY": "Удалить политику безопасности",
-    "DELETE_SECURITY_POLICY_CONFIRMATION": "Удалить '{{name}}'?"
+    "DELETE_SECURITY_POLICY_CONFIRMATION": "Удалить '{{name}}'?",
+    "SECURITY_POLICY_DELETE_NOT_ALLOWED": "Невозможно удалить политику безопасности. Она назначена одному или нескольким пользователям."
   },
   "TAX_CODES": {
     "TAX_CODES": "Коды налогов",
@@ -1238,6 +1252,7 @@
     "CANCEL": "Отмена",
     "BACK": "Назад",
     "SAVE": "Сохранить",
+    "FINISH": "Готово",
     "INPUT_ERROR": "На этой странице есть ошибки.",
     "DESCRIPTION": "Описание",
     "SHOW_FILTERS": "Показать фильтры",
@@ -1254,10 +1269,14 @@
     "NAME": "Имя",
     "TYPE": "Тип",
     "STORE": "Магазин",
+    "DEFAULT": "По умолчанию",
     "TYPE_FILTER": "Тип",
     "SELECT_TYPE_PLACEHOLDER": "Выберите тип",
     "TAX_TYPE_SALES": "Налог с продаж",
-    "TAX_TYPE_SHIPPING": "Налог на доставку"
+    "TAX_TYPE_SHIPPING": "Налог на доставку",
+    "IS_DEFAULT": "Да",
+    "SET_AS_DEFAULT": "Установить по умолчанию",
+    "DEFAULT_SET_SUCCESS_MESSAGE": "Код налога по умолчанию обновлен."
   },
   "TAX_CATEGORIES": {
     "TAX_CATEGORIES": "Категории налогов",
@@ -1281,7 +1300,7 @@
     "FINISH": "Готово",
     "EDIT_TAX_CATEGORY": "Изменить категорию налога",
     "TAX_CATEGORY_SAVED_MESSAGE": "Категория налога изменена.",
-    "TAX_CATEGORY_CREATED_MESSAGE": "Категория налога создана.",
+    "TAX_CATEGORY_CREATED_MESSAGE": "Категория налога '{{name}}' создана.",
     "DELETE_TAX_CATEGORY": "Удалить категорию налога",
     "DELETE_TAX_CATEGORY_CONFIRMATION": "Удалить '{{name}}'?",
     "DELETE": "Удалить",
@@ -1290,7 +1309,6 @@
     "NAME": "Имя",
     "STORE": "Магазин",
     "SELECT_STORE_PLACEHOLDER": "Выбрать магазин",
-    "INVALID_STORE": "Недопустимый магазин",
     "TYPE": "Тип налога",
     "INCLUDE_IN_DISPLAY_PRICE": "Добавить к отображаемой цене",
     "TYPE_FILTER": "Тип налога",
@@ -1298,7 +1316,7 @@
     "TAX_TYPE_SALES": "Налог с продаж",
     "TAX_TYPE_SHIPPING": "Налог на доставку",
     "TAX_RATES": "Определить ставки налогов",
-    "TAX_CATEGORY_ASSIGNMENT": "Определить коды налогов",
+    "TAX_CATEGORY_CODES": "Определить коды налогов",
     "DISPLAY_NAME": "Отображаемое имя",
     "DISPLAY_NAMES": "Отображаемые имена",
     "LANGUAGE": "Язык",
@@ -1306,9 +1324,14 @@
     "ADD_DISPLAY_NAME": "Добавить отображаемое имя",
     "NO_DEFINED_DISPLAY_NAMES": "Отображаемые имена не определены",
     "FULFILLMENT_CENTER": "Центр выполнения",
-    "DEFINE_RATES_PER_JURISDICTION": "Определите ставку налога для каждой юрисдикции, в которой применяется эта категория налога.",
+    "INVALID_FULFILLMENT_CENTER": "Недействительный центр выполнения",
+    "SELECT_FULFILLMENT_CENTER": "Выберите центр выполнения",
+    "DEFINE_RATES_PER_JURISDICTION": "Определите ставку налога для юрисдикции и центра выполнения.",
     "JURISDICTION": "Юрисдикция",
-    "TAX_RATE": "Ставка налога (%)",
+    "SELECT_JURISDICTION": "Выберите юрисдикцию",
+    "INVALID_JURISDICTION": "Недопустимая юрисдикция",
+    "TAX_RATE": "Ставка налога",
+    "INVALID_TAX_RATE": "Недопустимая ставка налога",
     "SELECTED_RATES": "Определенные ставки налогов",
     "ADD_TAX_RATE": "Добавить ставку налога",
     "NO_DEFINED_TAX_RATES": "Ставки налогов не определены",
@@ -1316,12 +1339,16 @@
     "TAX_CODE": "Код налога",
     "ADD_TAX_CODE": "Добавить код налога",
     "SELECTED_TAX_CODES": "Определенные коды налогов",
-    "NO_DEFINED_TAX_CODES": "Коды налогов не выбраны"
+    "NO_DEFINED_TAX_CODES": "Коды налогов не выбраны",
+    "DUPLICATE_NAME_ERROR": "Имя категории налога уже существует",
+    "DUPLICATE_TAX_RATE": "Ставка налога для указанной юрисдикции и центра выполнения уже существует.",
+    "NO_TAX_CODES_ERROR": "Необходимо определить хотя бы один код налога.",
+    "NO_TAX_RATES_ERROR": "Необходимо определить хотя бы одну ставку налога."
   },
   "TAX_JURISDICTIONS": {
     "TAX_JURISDICTIONS": "Налоговые юрисдикции",
     "SEARCH": "Поиск",
-    "SEARCH_BY_NAME": "По имени",
+    "SEARCH_BY_NAME": "По юрисдикции",
     "STATE_FILTER": "Фильтр области",
     "COUNTRY_FILTER": "Фильтр страны",
     "STORE_FILTER": "Фильтр магазина",
@@ -1358,6 +1385,7 @@
     "DELETE": "Удалить",
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "Налоговая юрисдикция удалена.",
     "NOT_COMPLETE_ERROR": "Страница не заполнена. Перейдите к следующему шагу.",
-    "DUPLICATE_NAME_ERROR": "Имя налоговой юрисдикции уже существует"
+    "DUPLICATE_NAME_ERROR": "Имя налоговой юрисдикции уже существует",
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "Юрисдикцию '{{jurisdictionName}}' невозможно удалить. Она используется в категории налога."
   }
 }

@@ -1,0 +1,36 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'SHIPPING_CHARGES.RANGE' | translate}}</h4>
+<form [formGroup]="rangeForm" autocomplete="off">
+	<mat-form-field appearance="outline">
+		<mat-label>{{'SHIPPING_CHARGES.RANGE_START'| translate}}</mat-label>
+		<input #rangeStartInput matInput id="rangeStart" formControlName="rangeStart" autocomplete="off">
+		<mat-error *ngIf="rangeStart.errors && rangeStart.errors.duplicate">
+			{{'SHIPPING_CHARGES.DUPLICATE_RANGE' | translate }}
+		</mat-error>
+		<mat-error *ngIf="rangeStart.errors && rangeStart.errors.invalidRangeStart">
+			{{'SHIPPING_CHARGES.INVALID_RANGE_START' | translate }}
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field appearance="outline">
+		<mat-label>{{'SHIPPING_CHARGES.CHARGE'| translate}}</mat-label>
+		<input #chargeInput matInput id="charge" formControlName="charge" autocomplete="off">
+		<mat-error *ngIf="charge.errors && charge.errors.invalidCharge">
+			{{'SHIPPING_CHARGES.INVALID_CHARGE' | translate }}
+		</mat-error>
+	</mat-form-field>
+
+	<mat-dialog-actions>
+		<button class="mat-flat-button" type="button" (click)="cancel()">{{'SHIPPING_CHARGES.CANCEL' | translate}}</button>
+		<button class="mat-flat-button mat-primary" type="button" (click)="save()">{{'SHIPPING_CHARGES.SAVE' | translate}}</button>
+	</mat-dialog-actions>
+</form>

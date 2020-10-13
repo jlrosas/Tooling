@@ -62,13 +62,6 @@ export class DeleteMemberGroupDialogComponent implements OnInit {
 			},
 			errorResponse => {
 				this.processing = false;
-				if (errorResponse.error && errorResponse.error.errors) {
-					errorResponse.error.errors.forEach(error => {
-						this.alertService.error({message: error.message});
-					});
-				} else {
-					console.log(errorResponse);
-				}
 			});
 		}
 	}

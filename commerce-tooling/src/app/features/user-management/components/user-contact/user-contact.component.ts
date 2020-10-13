@@ -21,6 +21,7 @@ import { LanguageService } from "../../../../services/language.service";
 import { AlertService } from "../../../../services/alert.service";
 import { HcValidators } from "../../../../shared/validators";
 import { MatStep, MatStepper } from "@angular/material";
+import { CurrentUserService } from "../../../../services/current-user.service";
 
 @Component({
 	templateUrl: "./user-contact.component.html",
@@ -47,6 +48,7 @@ export class UserContactComponent implements OnInit, OnDestroy, AfterViewInit {
 	stateIsOptional = false;
 	filteredCountryList: Array<any> = [];
 	filteredStateList: Array<any> = [];
+	lastStep = false;
 
 	@ViewChild("titleInput", {static: false}) titleInput: ElementRef<HTMLInputElement>;
 
@@ -61,7 +63,8 @@ export class UserContactComponent implements OnInit, OnDestroy, AfterViewInit {
 		private statesService: StatesService,
 		private languageService: LanguageService,
 		private alertService: AlertService,
-		private translateService: TranslateService ) { }
+		private translateService: TranslateService,
+		private currentUserService: CurrentUserService) { }
 
 	ngOnInit() {
 		this.createFormControls();
@@ -91,6 +94,11 @@ export class UserContactComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.onLanguageChangeSubscription = this.languageService.onLanguageChange.subscribe(() => {
 				this.initCountryList();
 			});
+			if (this.userMainService.userData.isRegisteredCustomer) {
+				this.currentUserService.hasMatchingRole([-1, -20, -21, -27]).subscribe(hasRole => {
+					this.lastStep = !hasRole;
+				});
+			}
 		}
 	}
 
@@ -298,28 +306,25 @@ export class UserContactComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	private initCountryList() {
 		this.countriesService.getCountries({
-			languageId: LanguageService.languageId
-		}).subscribe(
-			response => {
-				this.countryList = response.items;
-				const countryCode = this.userMainService.userData.address.country;
-				if (countryCode) {
-					for (let i = 0; i < this.countryList.length; i++) {
-						const country = this.countryList[i];
-						if (country.countryAbbr === countryCode) {
-							this.selectCountry(country);
-							break;
-						} else if (country.name === this.country.value) {
-							this.selectCountry(country);
-							break;
-						}
+			languageId: LanguageService.languageId,
+			sort: "name"
+		}).subscribe(response => {
+			this.countryList = response.items ? response.items.sort((a, b) => a.name.localeCompare(b.name)) : [];
+			const countryCode = this.userMainService.userData.address.country;
+			if (countryCode) {
+				for (let i = 0; i < this.countryList.length; i++) {
+					const country = this.countryList[i];
+					if (country.countryAbbr === countryCode) {
+						this.selectCountry(country);
+						break;
+					}
+					if (country.name === countryCode) {
+						this.selectCountry(country);
+						break;
 					}
 				}
-			},
-			error => {
-				console.log(error);
 			}
-		);
+		});
 	}
 
 	private initStateList() {
@@ -344,16 +349,14 @@ export class UserContactComponent implements OnInit, OnDestroy, AfterViewInit {
 							if (state.stateAbbr === stateCode) {
 								this.selectState(state);
 								break;
-							} else if (state.name === this.state.value) {
+							}
+							if (state.name === stateCode) {
 								this.selectState(state);
 								break;
 							}
 						}
 					}
 				}
-			},
-			error => {
-				console.log(error);
 			});
 		}
 	}

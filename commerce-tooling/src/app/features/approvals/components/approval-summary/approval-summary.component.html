@@ -8,7 +8,7 @@
 
 *-------------------------------------------------------------------
 -->
-<h1 class="hc-type-h1">
+<h1 class="hc-type-h1" *hcNavigationEnabled>
 	<span>{{'APPROVALS.APPROVALS' | translate}}</span>
 	<mat-icon>chevron_right</mat-icon>
 	<span>{{'APPROVALS.APPROVAL_REQUEST_SUMMARY' | translate}}</span>
@@ -16,6 +16,9 @@
 <div class="bx--row content-border">
 	<form class="bx--col-sm-4 bx--col-md-8 bx--col-lg-12" autocomplete="off">
 		<div class="hc-paper">
+			<div class="hc-section-container" *hcNavigationDisabled>
+				<p class="hc-type-h2">{{'APPROVALS.APPROVAL_REQUEST_SUMMARY' | translate}}</p>
+			</div>
 			<hc-order-approval-summary *ngIf="flowTypeId === '10002'" orderId="{{entityId}}"></hc-order-approval-summary>
 			<hc-contract-approval-summary *ngIf="flowTypeId === '10003'" contractId="{{entityId}}"></hc-contract-approval-summary>
 			<hc-user-approval-summary *ngIf="flowTypeId === '10004'" userId="{{entityId}}"></hc-user-approval-summary>
@@ -42,12 +45,12 @@
 					</div>
 					<div class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
 						<div class="hc-column-header">{{'APPROVALS.DATE_SUBMITTED' | translate}}</div>
-						<div class="hc-hc-column-data">{{submitDate | date:'medium'}}</div>
+						<div class="hc-hc-column-data">{{submitDate}}</div>
 					</div>
 					<div *ngIf="status !== 0" class="bx--col-sm-4 bx--col-md-4 bx--col-lg-4 hc-column">
 						<div class="hc-column-header" *ngIf="status === 1">{{'APPROVALS.DATE_APPROVED' | translate}}</div>
 						<div class="hc-column-header" *ngIf="status === 2">{{'APPROVALS.DATE_REJECTED' | translate}}</div>
-						<div class="hc-hc-column-data">{{approveDate | date:'medium'}}</div>
+						<div class="hc-hc-column-data">{{approveDate}}</div>
 					</div>
 				</div>
 			</div>
@@ -57,8 +60,6 @@
 					<textarea matInput [disabled]="status !== 0" [(ngModel)]="comment" rows="4" cols="150" [ngModelOptions]="{standalone: true}"></textarea>
 				</mat-form-field>
 			</div>
-		
-
 
 			<div class="hc-section-container">
 				<div class="inside-footer">

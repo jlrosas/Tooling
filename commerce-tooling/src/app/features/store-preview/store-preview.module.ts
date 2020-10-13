@@ -18,7 +18,6 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatNativeDateModule } from "@angular/material";
 import { MatInputModule } from "@angular/material/input";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { ScrollingModule } from "@angular/cdk/scrolling";
@@ -49,7 +48,6 @@ import { PreviewSettingsDialogComponent } from "./components/preview-settings-di
 		TranslateModule,
 		MatDialogModule,
 		MatDatepickerModule,
-		MatNativeDateModule,
 		MatInputModule,
 		MatSlideToggleModule,
 		ScrollingModule,

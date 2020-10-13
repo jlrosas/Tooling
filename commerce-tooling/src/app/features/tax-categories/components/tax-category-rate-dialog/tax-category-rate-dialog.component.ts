@@ -68,11 +68,11 @@ export class TaxCategoryRateDialogComponent implements OnInit, AfterViewInit {
 			private dialogRef: MatDialogRef<TaxCategoryRateDialogComponent>,
 			@Inject(MAT_DIALOG_DATA) data) {
 		this.data = data;
+		this.mode = this.data.mode;
+		this.storeOwnerId = this.data.storeOwnerId;
 	}
 
 	ngOnInit() {
-		this.mode = this.data.mode;
-		this.storeOwnerId = this.data.storeOwnerId;
 		this.createFormControls();
 		this.createForm();
 		if (this.data.taxRate) {
@@ -183,7 +183,7 @@ export class TaxCategoryRateDialogComponent implements OnInit, AfterViewInit {
 			}
 			this.getFulfillmentCentersSubscription = this.fulfillmentCentersService.getFulfillmentCenters({
 				id: this.fulfillmentCenterIds,
-				searchString: searchString,
+				searchString,
 				memberId: this.storeOwnerId,
 				limit: 10
 			}).subscribe(response => {
@@ -196,7 +196,6 @@ export class TaxCategoryRateDialogComponent implements OnInit, AfterViewInit {
 			},
 			error => {
 				this.getFulfillmentCentersSubscription = null;
-				console.log(error);
 			});
 		}
 	}
@@ -214,7 +213,7 @@ export class TaxCategoryRateDialogComponent implements OnInit, AfterViewInit {
 		this.getJurisdictionsSubscription = this.jurisdictionGroupsService.getJurisdictionGroups({
 			storeId: this.storeId,
 			subclass: 2,
-			searchString: searchString,
+			searchString,
 			limit: 10
 		}).subscribe(response => {
 	 		this.getJurisdictionsSubscription = null;
@@ -226,7 +225,6 @@ export class TaxCategoryRateDialogComponent implements OnInit, AfterViewInit {
 		},
 		error => {
 			this.getJurisdictionsSubscription = null;
-			console.log(error);
 		});
 	}
 

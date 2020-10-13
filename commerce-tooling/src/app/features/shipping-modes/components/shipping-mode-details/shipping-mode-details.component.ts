@@ -178,7 +178,6 @@ export class ShippingModeDetailsComponent implements OnInit, OnDestroy, AfterVie
 		},
 		error => {
 			this.getCarriersSubscription = null;
-			console.log(error);
 		});
 	}
 
@@ -210,7 +209,6 @@ export class ShippingModeDetailsComponent implements OnInit, OnDestroy, AfterVie
 		},
 		error => {
 			this.getServicesSubscription = null;
-			console.log(error);
 		});
 	}
 
@@ -239,7 +237,8 @@ export class ShippingModeDetailsComponent implements OnInit, OnDestroy, AfterVie
 		if (carrier !== "" && service !== "") {
 			const args: ShippingModesService.GetShippingModesParams = {
 				storeId: this.storeId,
-				carrier: carrier,
+				carrier,
+				markForDelete: [0, 1],
 				shippingCode: service
 			};
 			this.getShippingModesSubscription = this.shippingModesService.getShippingModes(args).subscribe((body: any) => {

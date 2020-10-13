@@ -16,7 +16,9 @@ import { LanguageService } from "./services/language.service";
 import { FeatureService } from "./services/feature.service";
 import { CurrentUserService } from "./services/current-user.service";
 import { StorePreviewOptionsService } from "./services/store-preview-options.service";
+import { NavigationDisabledService } from "./services/navigation-disabled.service";
 import { TranslateService } from "@ngx-translate/core";
+import { DateAdapter } from "@angular/material/core";
 
 @Component({
 	selector: "app-root",
@@ -26,17 +28,20 @@ import { TranslateService } from "@ngx-translate/core";
 export class AppComponent {
 
 	constructor(private authService: AuthService,
-				private languageService: LanguageService,
-				private featureService: FeatureService,
-				private translateService: TranslateService,
-				private storePreviewOptionsService: StorePreviewOptionsService,
-				private currentUserService: CurrentUserService) {
+			private languageService: LanguageService,
+			private featureService: FeatureService,
+			private translateService: TranslateService,
+			private dateAdapter: DateAdapter<any>,
+			private storePreviewOptionsService: StorePreviewOptionsService,
+			private currentUserService: CurrentUserService,
+			private navigationDisabled: NavigationDisabledService) {
 		translateService.setDefaultLang("en-US");
+		dateAdapter.setLocale("en-US");
 		languageService.setLocale("en-US");
 		this.addMessageListener();
-		window.top.postMessage({"action": "FETCH_RENDER_VIEW_DATA"}, "*");
-		window.top.postMessage({"action": "DARK_FEATURES_FETCH_REQUEST"}, "*");
-		window.top.postMessage({"action": "STORE_PREVIEW_DATA_FETCH_REQUEST"}, "*");
+		window.parent.postMessage({ action: "FETCH_RENDER_VIEW_DATA" }, "*");
+		window.parent.postMessage({ action: "DARK_FEATURES_FETCH_REQUEST" }, "*");
+		window.parent.postMessage({ action: "STORE_PREVIEW_DATA_FETCH_REQUEST" }, "*");
 	}
 
 	addMessageListener() {
@@ -56,6 +61,7 @@ export class AppComponent {
 					const locale = eventData.data.locale;
 					if (locale) {
 						this.languageService.setLocale(locale);
+						this.dateAdapter.setLocale(LanguageService.language);
 					}
 					const userId = eventData.data.userId;
 					if (userId) {
@@ -63,6 +69,8 @@ export class AppComponent {
 					}
 					const store = eventData.data.store;
 					this.currentUserService.setStoreName(store);
+					const navigationDisabled = eventData.data.navigationDisabled;
+					this.navigationDisabled.setNavigationDisabled(!!navigationDisabled);
 				} else if (eventData.action === "DARK_FEATURES") {
 					const darkFeatures = eventData.data.darkFeatures;
 					if (darkFeatures) {

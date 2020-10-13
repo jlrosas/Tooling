@@ -69,12 +69,10 @@ export class MessageDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 		this.createFormControls();
 		this.createForm();
 		if (this.route.snapshot.params.archived === "true") {
-			console.log("archived");
 			this.messageMainService.loadCurrentArchivedMessage(this.route.snapshot.params.id).subscribe(response => {
 				this.setValues();
 			});
 		} else {
-			console.log("pending");
 			this.messageMainService.loadCurrentPendingMessage(this.route.snapshot.params.id).subscribe(response => {
 				this.setValues();
 			});
@@ -130,4 +128,3 @@ export class MessageDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 		});
 	}
 }
-

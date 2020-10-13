@@ -31,8 +31,7 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 	searchText: FormControl;
 	parentOrganization: FormControl;
 	organizationList: Array<any> = [];
-	getOrganizationsSubscription: Subscription = null;
-	parentOrganizationId = null;
+	parentOrganizationFilter = null;
 	showFilters = false;
 	responsiveCols = 12;
 	organizationsLoading = false;
@@ -51,9 +50,11 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 	preferenceToken: string;
 	activeColumn = "organizationName";
 	sortDirection = "asc";
-
 	currentSearchString = null;
+	pageIndex = 0;
 
+	private organizationSearchString: Subject<string> = new Subject<string>();
+	private getOrganizationsSubscription: Subscription = null;
 	private searchString: Subject<string> = new Subject<string>();
 	private getManageableOrganizationsSubscription: Subscription = null;
 	private typeTextKeys = {
@@ -63,7 +64,6 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 	private typeTextIndices = Object.keys(this.typeTextKeys);
 
 	private onLangChangeSubscription: Subscription = null;
-	private parentOrganizationFilter = {label: "", value: ""};
 
 	constructor(private router: Router,
 			private organizationsService: OrganizationsService,
@@ -74,19 +74,24 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 		this.getPreferenceData();
 		this.createFormControls();
 		this.createForm();
-		this.searchParentOrganizations("");
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.currentSearchString = searchString;
 			this.getManageableOrganizations();
 		});
+		this.organizationSearchString.pipe(debounceTime(250)).subscribe(searchString => {
+			if (this.parentOrganization.value === searchString) {
+				this.getParentOrganizations(searchString);
+			} else {
+				this.organizationsLoading = false;
+			}
+		});
+		this.searchParentOrganizations("");
 	}
 
 	ngAfterViewInit() {
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getManageableOrganizations();
 		});
 		this.getManageableOrganizations();
@@ -94,6 +99,7 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 
 	ngOnDestroy() {
 		this.searchString.unsubscribe();
+		this.organizationSearchString.unsubscribe();
 		if (this.onLangChangeSubscription) {
 			this.onLangChangeSubscription.unsubscribe();
 		}
@@ -110,15 +116,14 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 
 	public handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getManageableOrganizations();
 	}
 
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getManageableOrganizations();
 	}
 
@@ -127,15 +132,24 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	getManageableOrganizations() {
+		this.preferenceService.save(this.preferenceToken, {
+			searchString: this.currentSearchString,
+			sort: this.sort,
+			pageIndex: this.pageIndex,
+			pageSize: this.pageSize,
+			filter: {
+				parentOrganizationFilter: this.parentOrganizationFilter
+			}
+		});
 		const args: OrganizationsService.OrganizationGetManageableOrganizationsParams = {
-			offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+			offset: this.pageIndex * this.paginator.pageSize,
 			limit: this.paginator.pageSize
 		};
 		if (this.currentSearchString) {
 			args.organizationName = this.currentSearchString;
 		}
-		if (this.parentOrganizationId != null) {
-			args.parentOrganizationId = this.parentOrganizationId;
+		if (this.parentOrganizationFilter != null) {
+			args.parentOrganizationId = this.parentOrganizationFilter.id;
 		}
 		let sort = this.sort.active;
 		if (this.sort.direction === "asc") {
@@ -162,7 +176,7 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 					id: item.id,
 					name: item.organizationName,
 					parentOrganizationName: item.parentOrganizationName,
-					typeTextKey: typeTextKey
+					typeTextKey
 				};
 				data.push(org);
 			}
@@ -175,14 +189,18 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 		this.router.navigate(["organizations/create-organization"]);
 	}
 
-	searchParentOrganizations(searchString) {
+	searchParentOrganizations(searchString: string) {
 		this.organizationsLoading = true;
+		this.organizationSearchString.next(searchString);
+	}
+
+	getParentOrganizations(searchString) {
 		if (this.getOrganizationsSubscription != null) {
 			this.getOrganizationsSubscription.unsubscribe();
 			this.getOrganizationsSubscription = null;
 		}
 		this.getOrganizationsSubscription = this.organizationsService.OrganizationGetManageableOrganizations({
-			organizationName: this.parentOrganization.value,
+			organizationName: searchString,
 			limit: 10
 		}).subscribe(response => {
 			if (response.items.length === 1 && response.items[0].organizationName === this.parentOrganization.value) {
@@ -205,30 +223,37 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 		error => {
 			this.getOrganizationsSubscription = null;
 			this.organizationsLoading = false;
-			console.log(error);
 		});
+	}
+
+	resetParentOrganizationFilter() {
+		if (this.parentOrganizationFilter) {
+			this.parentOrganization.setValue(this.parentOrganizationFilter.organizationName);
+		} else if (this.parentOrganization.value !== "") {
+			this.parentOrganization.setValue("");
+			this.searchParentOrganizations("");
+		}
 	}
 
 	selectParentOrganization(org: any) {
 		if (org) {
 			this.parentOrganization.setValue(org.organizationName);
-			if (this.parentOrganizationId !== org.id) {
-				this.preferenceService.saveFilter(this.preferenceToken,
-						{parentOrganizationFilter: {label: org.organizationName, value: org.id}});
-				this.parentOrganizationId = org.id;
-				this.paginator.pageIndex = 0;
+			this.organizationList = [];
+			if (this.parentOrganizationFilter === null || this.parentOrganizationFilter.id !== org.id) {
+				this.parentOrganizationFilter = {
+					id: org.id,
+					organizationName: org.organizationName
+				};
+				this.pageIndex = 0;
 				this.getManageableOrganizations();
 			}
-		} else {
-			this.clearParentOrganization();
 		}
 	}
 
 	clearParentOrganization() {
-		this.parentOrganizationId = null;
+		this.parentOrganizationFilter = null;
 		this.parentOrganization.setValue("");
-		this.preferenceService.saveFilter(this.preferenceToken, { parentOrganizationFilter: null });
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getManageableOrganizations();
 		this.searchParentOrganizations("");
 	}
@@ -238,7 +263,7 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	private createFormControls() {
-		this.parentOrganization = new FormControl(this.parentOrganizationFilter.label);
+		this.parentOrganization = new FormControl(this.parentOrganizationFilter ? this.parentOrganizationFilter.organizationName : "");
 		this.searchText = new FormControl(this.currentSearchString);
 	}
 
@@ -260,7 +285,8 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 				sort,
 				searchString,
 				filter,
-				showFilters
+				showFilters,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -275,13 +301,13 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 			}
 			if (filter) {
 				const {parentOrganizationFilter} = filter;
-				if (parentOrganizationFilter) {
-					this.parentOrganizationFilter = parentOrganizationFilter;
-					this.parentOrganizationId = parentOrganizationFilter.value;
-				}
+				this.parentOrganizationFilter = parentOrganizationFilter;
 			}
 			if (showFilters) {
 				this.showFilters = showFilters;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}

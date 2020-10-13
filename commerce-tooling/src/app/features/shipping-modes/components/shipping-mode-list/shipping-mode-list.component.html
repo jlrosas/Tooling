@@ -40,11 +40,13 @@
 					<mat-icon matSuffix>filter_list</mat-icon>
 				</mat-form-field>
 			</form>
-			<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'SHIPPING_MODES.SHOW_FILTERS' | translate}}</mat-slide-toggle>
-			<button class="mat-flat-button mat-primary" (click)="createShippingMode()">{{'SHIPPING_MODES.NEW_BUTTON' | translate}}</button>
-			<button matTooltip="{{'SHIPPING_MODES.REFRESH' | translate}}" mat-icon-button (click)="refresh()">
-				<mat-icon color="primary">refresh</mat-icon>
-			</button>
+			<div class="hc-table-buttons">
+				<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'SHIPPING_MODES.SHOW_FILTERS' | translate}}</mat-slide-toggle>
+				<button class="mat-flat-button mat-primary" (click)="createShippingMode()">{{'SHIPPING_MODES.NEW_BUTTON' | translate}}</button>
+				<button matTooltip="{{'SHIPPING_MODES.REFRESH' | translate}}" mat-icon-button (click)="refresh()">
+					<mat-icon color="primary">refresh</mat-icon>
+				</button>
+			</div>
 		</div>
 		<div *ngIf="showFilters">
 			<div class="hc-table-filters">
@@ -52,10 +54,13 @@
 					<mat-form-field appearance="outline" class="icon-suffix">
 						<mat-label>{{'SHIPPING_MODES.CARRIER_FILTER'| translate}}</mat-label>
 						<input matInput id="carrier" (input)="searchCarriers($event.target.value)" placeholder="{{'SHIPPING_MODES.SELECT_CARRIER_PLACEHOLDER'| translate}}"
-								formControlName="carrier" [matAutocomplete]="carrierAutocomplete">
+								formControlName="carrier" [matAutocomplete]="carrierAutocomplete" (blur)="resetCarrierFilter()">
 						<mat-autocomplete #carrierAutocomplete="matAutocomplete" (optionSelected)="selectCarrier($event.option.value)">
 							<mat-option *ngFor="let carrier of carrierList" [value]="carrier">
 								{{carrier}}
+							</mat-option>
+							<mat-option *ngIf="!carriersLoading && carrierList.length == 0 && (!selectedCarrier || selectedCarrier !== carrier.value)" [value]="null">
+								{{'SHIPPING_MODES.NO_MATCHING_RECORDS_FOUND' | translate }}
 							</mat-option>
 						</mat-autocomplete>
 						<mat-icon matSuffix>filter_list</mat-icon>
@@ -67,10 +72,13 @@
 					<mat-form-field appearance="outline" class="icon-suffix">
 						<mat-label>{{'SHIPPING_MODES.SERVICE_FILTER'| translate}}</mat-label>
 						<input matInput id="service" (input)="searchServices($event.target.value)" placeholder="{{'SHIPPING_MODES.SELECT_SERVICE_PLACEHOLDER'| translate}}"
-								formControlName="service" [matAutocomplete]="serviceAutocomplete">
+								formControlName="service" [matAutocomplete]="serviceAutocomplete" (blur)="resetServiceFilter()">
 						<mat-autocomplete #serviceAutocomplete="matAutocomplete" (optionSelected)="selectService($event.option.value)">
 							<mat-option *ngFor="let service of serviceList" [value]="service">
 								{{service}}
+							</mat-option>
+							<mat-option *ngIf="!servicesLoading && serviceList.length == 0 && (!selectedService || selectedService !== service.value)" [value]="null">
+								{{'SHIPPING_MODES.NO_MATCHING_RECORDS_FOUND' | translate }}
 							</mat-option>
 						</mat-autocomplete>
 						<mat-icon matSuffix>filter_list</mat-icon>
@@ -141,7 +149,7 @@
 			</table>
 			<!-- TABLE PART (END) -->
 		</div>
-		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+		<mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
 				(page)="handlePage($event)">
 		</mat-paginator>
 	</div>

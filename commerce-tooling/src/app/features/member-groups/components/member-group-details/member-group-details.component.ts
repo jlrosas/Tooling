@@ -143,31 +143,28 @@ export class MemberGroupDetailsComponent implements OnInit, AfterViewInit, OnDes
 		this.getOrganizationsSubscription = this.organizationsService.OrganizationGetManageableOrganizations({
 			organizationName: orgString,
 			limit: 10
-		}).subscribe(
-			response => {
-				if (response.items.length === 1 && response.items[0].organizationName === this.parentOrganization.value) {
-					this.selectParentOrganization(response.items[0]);
-				} else {
-					response.items.sort((org1, org2) => {
-						let result = 0;
-						if (org1.organizationName < org2.organizationName) {
-							result = -1;
-						} else if (org1.organizationName > org2.organizationName) {
-							result = 1;
-						}
-						return result;
-					});
-					this.organizationList = response.items;
-				}
-				this.getOrganizationsSubscription = null;
-				this.organizationsLoading = false;
-			},
-			error => {
-				this.getOrganizationsSubscription = null;
-				this.organizationsLoading = false;
-				console.log(error);
+		}).subscribe(response => {
+			if (response.items.length === 1 && response.items[0].organizationName === this.parentOrganization.value) {
+				this.selectParentOrganization(response.items[0]);
+			} else {
+				response.items.sort((org1, org2) => {
+					let result = 0;
+					if (org1.organizationName < org2.organizationName) {
+						result = -1;
+					} else if (org1.organizationName > org2.organizationName) {
+						result = 1;
+					}
+					return result;
+				});
+				this.organizationList = response.items;
 			}
-		);
+			this.getOrganizationsSubscription = null;
+			this.organizationsLoading = false;
+		},
+		error => {
+			this.getOrganizationsSubscription = null;
+			this.organizationsLoading = false;
+		});
 	}
 
 	searchParentOrganization(value) {

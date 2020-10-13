@@ -297,28 +297,24 @@ export class ShippingJurisdictionDetailsComponent implements OnInit, OnDestroy, 
 
 	private initCountryList() {
 		this.countriesService.getCountries({
-			languageId: LanguageService.languageId
-		}).subscribe(
-			response => {
-				this.countryList = response.items;
-				const countryCode = this.shippingJurisdictionMainService.shippingJurisdictionData.countryAbbreviation;
-				if (countryCode) {
-					for (let i = 0; i < this.countryList.length; i++) {
-						const country = this.countryList[i];
-						if (country.countryAbbr === countryCode) {
-							this.shippingJurisdictionMainService.shippingJurisdictionData.country = country.name;
-							this.country.setValue(country.name);
-							break;
-						}
+			languageId: LanguageService.languageId,
+			sort: "name"
+		}).subscribe(response => {
+			this.countryList = response.items ? response.items.sort((a, b) => a.name.localeCompare(b.name)) : [];
+			const countryCode = this.shippingJurisdictionMainService.shippingJurisdictionData.countryAbbreviation;
+			if (countryCode) {
+				for (let i = 0; i < this.countryList.length; i++) {
+					const country = this.countryList[i];
+					if (country.countryAbbr === countryCode) {
+						this.shippingJurisdictionMainService.shippingJurisdictionData.country = country.name;
+						this.country.setValue(country.name);
+						break;
 					}
-				} else {
-					this.filteredCountryList = this.countryList;
 				}
-			},
-			error => {
-				console.log(error);
+			} else {
+				this.filteredCountryList = this.countryList;
 			}
-		);
+		});
 	}
 
 	private initStateList() {
@@ -349,9 +345,6 @@ export class ShippingJurisdictionDetailsComponent implements OnInit, OnDestroy, 
 						this.filteredStateList = this.stateList;
 					}
 				}
-			},
-			error => {
-				console.log(error);
 			});
 		}
 	}

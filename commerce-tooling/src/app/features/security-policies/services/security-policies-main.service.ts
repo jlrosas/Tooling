@@ -66,8 +66,8 @@ export class SecurityPoliciesMainService {
 				const userAccountLockoutPolicyPaths: Array<string> = responseList[1].headers.get("location").split("/");
 				const userAccountLockoutPolicyId: string = userAccountLockoutPolicyPaths[userAccountLockoutPolicyPaths.length - 1];
 				this.userAccountPoliciesService.createUserAccountPolicyResponse({
-					passwordPolicyId: passwordPolicyId,
-					userAccountLockoutPolicyId: userAccountLockoutPolicyId
+					passwordPolicyId,
+					userAccountLockoutPolicyId
 				}).subscribe(response => {
 					const paths: Array<string> = response.headers.get("location").split("/");
 					const id: number = Number(paths[paths.length - 1]);
@@ -323,7 +323,7 @@ export class SecurityPoliciesMainService {
 
 	private getCreateUserAccountPolicyDescriptionRequest(userAccountPolicyId: number): Observable<any> {
 		const body: any = {
-			userAccountPolicyId: userAccountPolicyId,
+			userAccountPolicyId,
 			languageId: -1
 		};
 		const data = this.userAccountPolicyData;
@@ -337,7 +337,7 @@ export class SecurityPoliciesMainService {
 
 	private getCreatePasswordPolicyDescriptionRequest(passwordPolicyId: string): Observable<any> {
 		const body: any = {
-			passwordPolicyId: passwordPolicyId,
+			passwordPolicyId,
 			languageId: -1
 		};
 		const data = this.userAccountPolicyData;
@@ -351,7 +351,7 @@ export class SecurityPoliciesMainService {
 
 	private getCreateUserAccountLockoutPolicyDescriptionRequest(userAccountLockoutPolicyId: string): Observable<any> {
 		const body: any = {
-			userAccountLockoutPolicyId: userAccountLockoutPolicyId,
+			userAccountLockoutPolicyId,
 			languageId: -1
 		};
 		const data = this.userAccountPolicyData;

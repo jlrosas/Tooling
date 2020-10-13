@@ -618,6 +618,18 @@
       }
     },
     {
+      "url": "./api_definition/quantity-units.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
       "url": "./api_definition/tax-jurisdiction-calculation-rules.json",
       "paths": {
         "rename": [
@@ -631,6 +643,18 @@
     },
     {
       "url": "./api_definition/shipping-modes.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/quantity-unit-descriptions.json",
       "paths": {
         "rename": [
           {
@@ -667,6 +691,18 @@
     },
     {
       "url": "./api_definition/shipping-mode-codes.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/shipping-jurisdiction-calculation-rules.json",
       "paths": {
         "rename": [
           {

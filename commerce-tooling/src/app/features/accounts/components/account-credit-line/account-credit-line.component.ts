@@ -122,7 +122,7 @@ export class AccountCreditLineComponent implements OnInit, AfterViewInit {
 		}
 	}
 
-	validateDescription () {
+	validateDescription() {
 		if (this.accountMainService.creditLinePaymentMethod) {
 			this.accountMainService.creditLinePaymentMethod.description = this.description.value;
 		}
@@ -203,8 +203,6 @@ export class AccountCreditLineComponent implements OnInit, AfterViewInit {
 					return addressOption;
 				});
 				this.setSelectedAddress();
-			}, error => {
-				console.log(error);
 			});
 		}
 	}

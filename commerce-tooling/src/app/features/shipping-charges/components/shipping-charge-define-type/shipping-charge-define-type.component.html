@@ -1,0 +1,105 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="chargeTypeForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<mat-radio-group class="select-type-group" [(ngModel)]="chargeType" [ngModelOptions]="{standalone: true}" (change)="validateChargeType($event)">
+				<mat-radio-button value="byQuantity">{{'SHIPPING_CHARGES.BY_QUANTITY'| translate}}</mat-radio-button>
+				<mat-radio-button value="byWeight">{{'SHIPPING_CHARGES.BY_WEIGHT'| translate}}</mat-radio-button>
+				<mat-radio-button value="fixed">{{'SHIPPING_CHARGES.FIXED'| translate}}</mat-radio-button>
+			</mat-radio-group>
+
+			<div *ngIf="chargeType === 'byWeight'" class="hc-split-section">
+				<div class="hc-split-section-half">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'SHIPPING_CHARGES.CURRENCY'| translate}}</mat-label>
+						<mat-select	id="currency" formControlName="currency" (selectionChange)="validateShippingChargeCurrency($event.value)"
+							required>
+							<mat-option *ngFor="let currency of currencies" [value]="currency">
+								{{currency}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div class="hc-split-section-half unitOfMeasure">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'SHIPPING_CHARGES.UNIT_OF_MEASURE'| translate}}</mat-label>
+						<mat-select	id="unitOfMeasure" formControlName="unitOfMeasure" (selectionChange)="validateShippingChargeUnit($event.value)">
+							<mat-option *ngFor="let unit of unitsOfMeasure" [value]="unit.id">
+								{{unitOfMeasureDescriptions[unit.id]}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div *ngIf="chargeType === 'byQuantity' || chargeType === 'fixed'" class="hc-split-section">
+				<div class="hc-split-section-half">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'SHIPPING_CHARGES.CURRENCY'| translate}}</mat-label>
+						<mat-select	id="currency" formControlName="currency" (selectionChange)="validateShippingChargeCurrency($event.value)"
+								required>
+							<mat-option *ngFor="let currency of currencies" [value]="currency">
+								{{currency}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div *ngIf="chargeType === 'fixed'" class="hc-split-section-half">
+					<mat-form-field appearance="outline">
+						<mat-label>{{'SHIPPING_CHARGES.AMOUNT'| translate}}</mat-label>
+						<input matInput id="fixedCharge" formControlName="fixedCharge" (input)="validateFixedCharge()"/>
+						<mat-error *ngIf="fixedCharge.errors && fixedCharge.errors.invalidCharge">
+							{{'SHIPPING_CHARGES.INVALID_CHARGE' | translate }}
+						</mat-error>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="hc-table-section hc-paper-section hc-paper" *ngIf="chargeType === 'byQuantity' || chargeType === 'byWeight'">
+				<button class="mat-flat-button mat-primary" type="button" (click)="createRange()">{{'SHIPPING_CHARGES.NEW_BUTTON' | translate}}</button>
+				<!-- TABLE PART (START) -->
+				<div class="hc-table-wrapper">
+					<table mat-table [dataSource]="model" class="">
+						<ng-container matColumnDef="range">
+							<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CHARGES.RANGE' | translate}}</th>
+							<td mat-cell *matCellDef="let row; let last = last; let i = index">
+								<a class="hc-table-item-action" (click)="editRange(row)">
+									<span *ngIf="!last">{{ 'SHIPPING_CHARGES.FROM_START_TO_END' | translate: {start: row.rangeStart, end: getRangeEnd(i)} }}</span>
+									<span *ngIf="last">{{ 'SHIPPING_CHARGES.FROM_START_AND_UP' | translate: {start: row.rangeStart} }}</span>
+								</a>
+							</td>
+						</ng-container>
+						<ng-container matColumnDef="charge">
+							<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CHARGES.CHARGE' | translate}}</th>
+							<td mat-cell *matCellDef="let row">{{getFormattedValue(row)}}</td>
+						</ng-container>
+						<ng-container matColumnDef="actions" stickyEnd>
+							<th mat-header-cell *matHeaderCellDef> {{'SHIPPING_CHARGES.ACTIONS' | translate}} </th>
+							<td mat-cell *matCellDef="let row; let first = first">
+								<button *ngIf="!first" matTooltip="{{'SHIPPING_CHARGES.DELETE' | translate}}" mat-icon-button aria-label="delete" (click)="deleteRange(row)">
+									<mat-icon color="primary">delete</mat-icon>
+								</button>
+							</td>
+						</ng-container>
+						<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+						<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+					</table>
+				</div>
+				<!-- TABLE PART (END) -->
+			</div>
+		</div>
+	</div>
+	<div>
+		<button class="mat-flat-button" type="button" matStepperPrevious *ngIf="mode === 'create'">{{'SHIPPING_CHARGES.BACK'| translate}}</button>
+		<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'create'">{{'SHIPPING_CHARGES.FINISH' | translate}}</button>
+		<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'edit'">{{'SHIPPING_CHARGES.SAVE' | translate}}</button>
+	</div>
+</form>

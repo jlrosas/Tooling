@@ -98,7 +98,6 @@ export class ContractMainService {
 					}
 				},
 				error => {
-					console.log(error);
 					observer.error(error);
 					observer.complete();
 					this.processing = false;
@@ -210,7 +209,6 @@ export class ContractMainService {
 						observer.complete();
 					},
 					error => {
-						console.log(error);
 						observer.next(error);
 						observer.complete();
 					}
@@ -245,7 +243,6 @@ export class ContractMainService {
 						observer.complete();
 					},
 					error => {
-						console.log(error);
 						observer.next(error);
 						observer.complete();
 					}
@@ -279,7 +276,6 @@ export class ContractMainService {
 						observer.complete();
 					},
 					error => {
-						console.log(error);
 						observer.next(error);
 						observer.complete();
 					}
@@ -313,7 +309,6 @@ export class ContractMainService {
 						observer.complete();
 					},
 					error => {
-						console.log(error);
 						observer.next(error);
 						observer.complete();
 					}
@@ -356,7 +351,6 @@ export class ContractMainService {
 					observer.complete();
 				},
 				error => {
-					console.log(error);
 					observer.next(error);
 					observer.complete();
 				});
@@ -525,7 +519,7 @@ export class ContractMainService {
 				}
 				requests.push(this.contractsService.createContractPaymentMethodResponse({
 					contractId: id,
-					body: body
+					body
 				}));
 			});
 		}
@@ -614,7 +608,7 @@ export class ContractMainService {
 			}
 			request = this.contractsService.updateContractResponse({
 				id: this.currentContractId,
-				body: body
+				body
 			});
 		}
 		return request;
@@ -888,7 +882,7 @@ export class ContractMainService {
 								requests.push(this.contractsService.updateContractPaymentMethodResponse({
 									contractId: this.currentContractId,
 									id: paymentMethod.id,
-									body: body
+									body
 								}));
 							}
 						}
@@ -922,7 +916,7 @@ export class ContractMainService {
 					}
 					requests.push(this.contractsService.createContractPaymentMethodResponse({
 						contractId: this.currentContractId,
-						body: body
+						body
 					}));
 				}
 			});

@@ -25,7 +25,6 @@ import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatNativeDateModule } from "@angular/material/core";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatStepperModule } from "@angular/material/stepper";
 import { CdkStepperModule } from "@angular/cdk/stepper";
@@ -76,7 +75,6 @@ import { ClearAllJobStatusDialogComponent } from "./components/clear-all-job-sta
 		MatCheckboxModule,
 		MatListModule,
 		MatDatepickerModule,
-		MatNativeDateModule,
 		MatBadgeModule,
 		MatDividerModule,
 		MatSelectModule,

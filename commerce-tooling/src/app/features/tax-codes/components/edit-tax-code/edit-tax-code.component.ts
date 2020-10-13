@@ -75,15 +75,6 @@ export class EditTaxCodeComponent {
 						this.translateService.get("TAX_CODES.TAX_CODE_SAVED_MESSAGE").subscribe((message: string) => {
 							this.alertService.success({message});
 						});
-					},
-					errorResponse => {
-						if (errorResponse.error && errorResponse.error.errors) {
-							errorResponse.error.errors.forEach((error: { message: string; }) => {
-								this.alertService.error({message: error.message});
-							});
-						} else {
-							console.log(errorResponse);
-						}
 					});
 				} else {
 					this.translateService.get("TAX_CODES.INPUT_ERROR").subscribe((message: string) => {

@@ -14,6 +14,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApprovalStatusService } from "../../../../rest/services/approval-status.service";
 import { AlertService } from "../../../../services/alert.service";
+import { DATE_FORMAT_OPTIONS } from "../../../../shared/constants";
+import { LanguageService } from "../../../../services/language.service";
 
 @Component({
 	templateUrl: "./approval-summary.component.html",
@@ -53,24 +55,22 @@ export class ApprovalSummaryComponent implements OnInit {
 			private alertService: AlertService) { }
 
 	ngOnInit() {
-		this.approvalStatusService.findByApprovalStatusId(this.route.snapshot.params.id).subscribe(
-			approvalStatus => {
-				this.requestor = approvalStatus.requestor;
-				this.approver = approvalStatus.approver;
-				this.status = approvalStatus.status;
-				this.statusTextKey = this.statusTextKeys[approvalStatus.status];
-				this.comment = approvalStatus.comment;
-				this.submitDate = approvalStatus.submitDate === null ? null : (new Date(approvalStatus.submitDate)).toLocaleString();
-				this.approveDate = approvalStatus.approveDate === null ? null : (new Date(approvalStatus.approveDate)).toLocaleString();
-				this.requestor = this.formatName(approvalStatus.submitterLogonId, approvalStatus.submitterFirstName, approvalStatus.submitterLastName);
-				this.approver = this.formatName(approvalStatus.approverLogonId, approvalStatus.approverFirstName, approvalStatus.approverLastName);
-				this.entityId = approvalStatus.entityId;
-				this.flowTypeId = approvalStatus.flowTypeId;
-				this.processTextKey = this.processTextKeys[approvalStatus.flowTypeId];
-			}, error => {
-				console.log(error);
-			}
-		);
+		this.approvalStatusService.findByApprovalStatusId(this.route.snapshot.params.id).subscribe(approvalStatus => {
+			this.requestor = approvalStatus.requestor;
+			this.approver = approvalStatus.approver;
+			this.status = approvalStatus.status;
+			this.statusTextKey = this.statusTextKeys[approvalStatus.status];
+			this.comment = approvalStatus.comment;
+			this.submitDate = approvalStatus.submitDate === null ? null :
+					new Intl.DateTimeFormat(LanguageService.language, DATE_FORMAT_OPTIONS).format((new Date(approvalStatus.submitDate)));
+			this.approveDate = approvalStatus.approveDate === null ? null :
+					new Intl.DateTimeFormat(LanguageService.language, DATE_FORMAT_OPTIONS).format((new Date(approvalStatus.approveDate)));
+			this.requestor = this.formatName(approvalStatus.submitterLogonId, approvalStatus.submitterFirstName, approvalStatus.submitterLastName);
+			this.approver = this.formatName(approvalStatus.approverLogonId, approvalStatus.approverFirstName, approvalStatus.approverLastName);
+			this.entityId = approvalStatus.entityId;
+			this.flowTypeId = approvalStatus.flowTypeId;
+			this.processTextKey = this.processTextKeys[approvalStatus.flowTypeId];
+		});
 	}
 
 	approve() {
@@ -93,7 +93,7 @@ export class ApprovalSummaryComponent implements OnInit {
 			this.approvalStatusService.updateApprovalStatus({
 				id: this.route.snapshot.params.id,
 				body: {
-					status: status,
+					status,
 					comment: this.comment
 				}
 			}).subscribe(
@@ -113,13 +113,6 @@ export class ApprovalSummaryComponent implements OnInit {
 				},
 				errorResponse => {
 					this.processing = false;
-					if (errorResponse.error && errorResponse.error.errors) {
-						errorResponse.error.errors.forEach((error: { errorMessage: any; }) => {
-							this.alertService.error({message: error.errorMessage});
-						});
-					} else {
-						console.log(errorResponse);
-					}
 				}
 			);
 		}
@@ -137,4 +130,3 @@ export class ApprovalSummaryComponent implements OnInit {
 		return name;
 	}
 }
-

@@ -15,6 +15,7 @@ import { MatStepper } from "@angular/material/stepper";
 import { ContractMainService } from "../../services/contract-main.service";
 import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
+import { ApiErrorService } from "../../../../services/api-error.service";
 
 @Component({
 	templateUrl: "./create-contract.component.html",
@@ -30,6 +31,7 @@ export class CreateContractComponent implements OnInit {
 		private route: ActivatedRoute,
 		private contractMainService: ContractMainService,
 		private alertService: AlertService,
+		private apiErrorService: ApiErrorService,
 		private translateService: TranslateService) { }
 
 	ngOnInit() {
@@ -68,20 +70,22 @@ export class CreateContractComponent implements OnInit {
 						this.alertService.success({message});
 					});
 				},
-				errorResponse => {
-					if (errorResponse.error && errorResponse.error.errors) {
-						errorResponse.error.errors.forEach((error: { errorMessage: any; errorKey: any; }) => {
-							if (error.errorKey === "_ERR_DUPLICATED_CONTRACT_NAME") {
-								this.translateService.get("CONTRACTS.DUPLICATE_CONTRACT").subscribe((message: string) => {
-									this.alertService.error({message});
-								});
-							} else {
-								this.alertService.error({message: error.errorMessage});
-							}
-						});
-					} else {
-						console.log(errorResponse);
-					}
+				createErrorResponse => {
+					this.apiErrorService.handleError(createErrorResponse, errorResponse => {
+						if (errorResponse.error && errorResponse.error.errors) {
+							errorResponse.error.errors.forEach((error: { errorMessage: any; errorKey: any; }) => {
+								if (error.errorKey === "_ERR_DUPLICATED_CONTRACT_NAME") {
+									this.translateService.get("CONTRACTS.DUPLICATE_CONTRACT").subscribe((message: string) => {
+										this.alertService.error({message});
+									});
+								} else {
+									this.alertService.error({message: error.errorMessage});
+								}
+							});
+						} else {
+							console.log(errorResponse);
+						}
+					});
 				});
 			} else if (!valid) {
 				this.translateService.get("CONTRACTS.INPUT_ERROR").subscribe((message: string) => {

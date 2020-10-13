@@ -69,13 +69,6 @@ export class ClearAllJobStatusDialogComponent implements OnInit {
 			},
 			errorResponse => {
 				this.processing = false;
-				if (errorResponse.error && errorResponse.error.errors) {
-					errorResponse.error.errors.forEach(error => {
-						this.alertService.error({message: error.errorMessage});
-					});
-				} else {
-					console.log(errorResponse);
-				}
 			});
 		}
 	}

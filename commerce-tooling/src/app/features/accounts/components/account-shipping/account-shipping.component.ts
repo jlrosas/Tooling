@@ -178,8 +178,6 @@ export class AccountShippingComponent implements OnInit, OnDestroy, AfterViewIni
 					};
 				});
 				this.searchShippingAddresses(this.shippingAddressSearch.value);
-			}, error => {
-				console.log(error);
 			});
 		}
 	}

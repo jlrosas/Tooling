@@ -1,6 +1,7 @@
 {
 	"GENERAL": {
-		"NO_SELECTION_MADE": "No selections have been made."
+		"NO_SELECTION_MADE": "No selections have been made.",
+		"DISMISS": "Dismiss"
 	},
 	"USER_MANAGEMENT": {
 		"USERS": "Users",
@@ -70,7 +71,27 @@
 		"USER_ENABLED_MESSAGE": "User enabled successfully.",
 		"USER_DISABLED_MESSAGE": "User disabled successfully.",
 		"MORE": "More",
-		"REFRESH": "Refresh"
+		"REFRESH": "Refresh",
+		"RESET_PASSWORD": "Reset password",
+		"PASSWORD_RESET_CONFIRMATION": "Do you want to reset the password for '{{name}}'?",
+		"PASSWORD_RESET_SUCCESS": "Password reset successfully.",
+		"STORE": "Store",
+		"SELECT_STORE_PLACEHOLDER": "Select store",
+		"PHONE_NUMBER": "Phone number",
+		"IS_THIS_A_REGISTERED_CUSTOMER": "Is this a B2C registered customer?",
+		"SELECT_REGISTERED_CUSTOMER_STORE": "Select store",
+		"PREFERRED_LANGUAGE": "Preferred language",
+		"PREFERRED_CURRENCY": "Preferred currency",
+		"SELECT_PREFERRED_CURRENCY": "Select preferred language",
+		"SELECT_PREFERRED_LANGUAGE": "Select preferred currency",
+		"PREFERRED_METHOD_OF_COMMUNICATION": "Preferred method of communication",
+		"SELECT_PREFERRED_METHOD_OF_COMMUNICATION": "Select preferred method of communication",
+		"PREFERRED_METHOD_EMAIL": "Email",
+		"PREFERRED_METHOD_PHONE": "Phone",
+		"CHALLENGE_QUESTION": "Challenge question",
+		"CHALLENGE_ANSWER": "Answer to challenge question",
+		"PARENT_ORGANIZATION_ERROR": "Invalid parent organization.",
+		"STORE_ERROR": "Invalid store."
 	},
     "ORGANIZATIONS": {
 		"ORGANIZATIONS": "Organizations",
@@ -258,7 +279,8 @@
 		"PHONE_NUMBER": "Phone Number",
 		"EMPLOYEE_ID": "Employee ID",
 		"DISCOUNT": "Discount",
-		"TOTAL": "Total"
+		"TOTAL": "Total",
+		"NO_MATCHING_RECORDS_FOUND": "No matching records found"
 	},
 	"MEMBER_GROUPS": {
 		"GROUPS": "Member Groups",
@@ -504,7 +526,8 @@
 		"CHECKING_ACCOUNT_NUMBER": "Checking account number",
 		"CHECK_ROUTING_NUMBER": "Check routing number",
 		"PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "Purchase order number already exists.",
-		"REFRESH": "Refresh"
+		"REFRESH": "Refresh",
+		"ACTIVE_CONTRACTS_ERROR": "The account could not be deleted because there are active contracts under the account. Suspend or cancel the active contracts before deleting the account."
 	},
 	"SCHEDULER": {
 		"SCHEDULER": "Scheduler",
@@ -964,7 +987,8 @@
 	  "DELETE": "Delete",
 	  "SHIPPING_JURISDICTIONS_DELETED_MESSAGE": "Shipping jurisdiction deleted successfully.",
 	  "NOT_COMPLETE_ERROR": "The information on this page is not complete. Continue to the next step.",
-	  "DUPLICATE_NAME_ERROR": "Shipping jurisdiction name already exists"
+	  "DUPLICATE_NAME_ERROR": "Shipping jurisdiction name already exists",
+	  "NO_MATCHING_RECORDS_FOUND": "No matching records found"
 	},
 	"SHIPPING_MODES": {
 		"SHIPPING_MODES": "Shipping Modes",
@@ -1014,13 +1038,16 @@
 		"TRACKING_URL": "Carrier Tracking URL",
 		"SET_AS_DEFAULT": "Set as default",
 		"LANGUAGE_ALREADY_EXISTS": "Description for this language already exists.",
-		"CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "Selected Carrier-Service combination already exists."
+		"CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "Selected Carrier-Service combination already exists.",
+		"NO_MATCHING_RECORDS_FOUND": "No matching records found"
 	},
 	"SHIPPING_CODES": {
 		"SHIPPING_CODES": "Shipping Codes",
 		"SEARCH": "Search",
 		"CLEAR": "Clear",
 		"ACTIONS": "Actions",
+		"ACTIVATE": "Activate",
+		"DEACTIVATE": "Deactivate",
 		"NEW_BUTTON": "New",
 		"NEW_SHIPPING_CODE": "New shipping code",
 		"SHIPPING_CODE_DETAILS": "Shipping code details",
@@ -1037,7 +1064,7 @@
 		"EDIT_SHIPPING_CODE": "Edit shipping code",
 		"SHIPPING_CODE_SAVED_MESSAGE": "Shipping code saved successfully.",
 		"SHIPPING_CODE_CREATED_MESSAGE": "Shipping code '{{name}}' created successfully.",
-		"DELETE_SHIPPING_CODE": "Delete Shipping code",
+		"DELETE_SHIPPING_CODE": "Delete Shipping Code",
 		"DELETE": "Delete",
 		"SHIPPING_CODES_DELETED_MESSAGE": "Shipping code deleted successfully.",
 		"NOT_COMPLETE_ERROR": "The information on this page is not complete. Continue to the next step.",
@@ -1059,10 +1086,85 @@
 		"SHIPPING_CODE_DELETED_MESSAGE": "Shipping code deleted successfully.",
 		"ACTIVATED": "Activated",
 		"DEACTIVATED": "Deactivated",
-		"ACTIVATE": "Activate",
-		"DEACTIVATE": "Deactivate",
 		"SHIPPING_CODE_ACTIVATED_MESSAGE": "Shipping code activated successfully.",
 		"SHIPPING_CODE_DEACTIVATED_MESSAGE": "Shipping code deactivated successfully."
+	},
+	"SHIPPING_CHARGES": {
+		"SHIPPING_CHARGES": "Shipping charges",
+		"SEARCH": "Search",
+		"CLEAR": "Clear",
+		"ACTIONS": "Actions",
+		"NEW_BUTTON": "New",
+		"OPTIONAL": "(optional)",
+		"NEXT": "Next",
+		"CANCEL": "Cancel",
+		"BACK": "Back",
+		"SAVE": "Save",
+		"INPUT_ERROR": "There are errors on the page.",
+		"DESCRIPTION": "Description",
+		"SHOW_FILTERS": "Show filters",
+		"FINISH": "Finish",
+		"REFRESH": "Refresh",
+		"DELETE": "Delete",
+		"NAME":	"Name",
+		"CHARGES_TYPE": "Charges type",
+		"CHARGES_TYPE_PLACEHOLDER": "Select charges type",
+		"UNIT": "Unit",
+		"START_DATE": "Start date",
+		"END_DATE": "End date",
+		"SHIPPING_CHARGES_FOR": "Shipping Charges for {{shippingCodeName}}",
+		"NO_MATCHING_RECORDS_FOUND": "No matching records found",
+		"UNIT_PLACEHOLDER": "Select unit",
+		"NEW_SHIPPING_CHARGE": "New Shipping charge",
+		"EDIT_SHIPPING_CHARGE": "Edit Shipping charge",
+		"SHIPPING_CHARGE_DETAILS": "Define Charge details",
+		"FULFILLMENT_OPTIONS": "Fulfillment options",
+		"DEFINE_CHARGE_TYPE": "Define charge type",
+		"TIME_PERIOD": "Time period",
+		"CHARGE_IN_EFFECT": "When is this charge in effect?",
+		"DURING_A_SPECIFIED_PERIOD": "During a specified period",
+		"DEFINE_FULFILLMENT_OPTIONS": "Define fulfillment options",
+		"ALWAYS": "Always",
+		"SHIPPING_CHARGE_START": "Start",
+		"SHIPPING_CHARGE_END": "End",
+		"BEFORE_START_DATE": "End date cannot be before start date.",
+		"AFTER_END_DATE": "Start date cannot be after end date.",
+		"RANGE": "Range",
+		"RANGE_START": "Range start",
+		"DELETE_SHIPPING_CHARGE": "Delete Shipping Charge",
+		"DELETE_SHIPPING_CHARGE_CONFIRMATION": "Do you want to delete '{{name}}'?",
+		"FULFILLMENT_CENTER": "Fulfillment center",
+		"JURISDICTION": "Jurisdiction",
+		"SHIPPING_MODE": "Shipping mode",
+		"PRECEDENCE": "Precedence",
+		"FULFILLMENT_OPTION": "Fulfillment option",
+		"INVALID_PRECEDENCE": "Precedence must be a number.",
+		"CREATE_FULFILLMENT_OPTION_MESSAGE": "Create a fulfillment option by associating a fulfillment center with a jurisdiction and shipping mode.",
+		"DUPLICATE_FULFILLMENT_OPTION_ERROR": "Fulfillment option with the same fulfillment center, jurisdiction, and shipping mode already exists.",
+		"MORE": "More",
+		"FULFILLMENT_CENTER_ERROR": "Invalid fulfillment center",
+		"JURISDICTION_ERROR": "Invalid jurisdiction",
+		"SHIPPING_MODE_ERROR": "Invalid shipping mode",
+		"SEARCH_BY_NAME": "By name",
+		"SHIPPING_CHARGE_DELETED_MESSAGE": "Shipping charges deleted successfully.",
+		"SHIPPING_CHARGE_SAVED_MESSAGE": "Shipping charges saved successfully.",
+		"INVALID_DATE": "Invalid date.",
+		"BY_QUANTITY": "By quantity",
+		"BY_WEIGHT": "By weight",
+		"FIXED": "Fixed",
+		"AMOUNT": "Amount",
+		"CHARGE": "Charge",
+		"CURRENCY": "Currency",
+		"UNIT_OF_MEASURE": "Unit of measure",
+		"DUPLICATE_RANGE": "Range already exists",
+		"DUPLICATE_NAME_ERROR": "Shipping charge name already exists",
+		"INVALID_RANGE_START": "Invalid range start",
+		"INVALID_CHARGE": "Invalid charge",
+		"FROM_START_TO_END": "From {{start}} to {{end}}",
+		"FROM_START_AND_UP": "From {{start}} and up",
+		"SHIPPING_CHARGE_CREATED_MESSAGE": "Shipping charge '{{name}}' created successfully.",
+		"NO_RANGES_ERROR": "You must define at least one charge range.",
+		"NOT_COMPLETE_ERROR": "The information on this page is not complete. Continue to the next step."
 	},
 	"TRANSPORTS": {
 		"TRANSPORTS": "Transports",
@@ -1191,6 +1293,8 @@
 		"TAX_CODES_DELETED_MESSAGE": "Tax code deleted successfully.",
 		"NOT_COMPLETE_ERROR": "The information on this page is not complete. Continue to the next step.",
 		"DELETE_TAX_CONFIRMATION": "Do you want to delete '{{taxCodeName}}'?",
+		"DELETE_DEFAULT_SALES_TAX_CODE_ALERT": "You are deleting the default sales tax code. You should set another sales tax code as default after deleting this one.",
+		"DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT": "You are deleting the default shipping tax code. You should set another shipping tax code as default after deleting this one.",
 		"DETAILS": "Details",
 		"NAME": "Name",
 		"TYPE": "Type",
@@ -1202,7 +1306,8 @@
 		"TAX_TYPE_SHIPPING": "Shipping tax",
 		"IS_DEFAULT": "Yes",
 		"SET_AS_DEFAULT": "Set as default",
-		"DEFAULT_SET_SUCCESS_MESSAGE": "Default tax code updated successfully."
+		"DEFAULT_SET_SUCCESS_MESSAGE": "Default tax code updated successfully.",
+		"CODE_BEING_USED_IN_TAX_CATEGORY": "The tax code '{{taxCodeName}}' cannot be deleted, it is being used in a tax category."
 	},
 	"TAX_CATEGORIES": {
 		"TAX_CATEGORIES": "Tax Categories",
@@ -1312,6 +1417,8 @@
 		"TAX_JURISDICTIONS_DELETED_MESSAGE": "Tax jurisdiction deleted successfully.",
 		"NOT_COMPLETE_ERROR": "The information on this page is not complete. Continue to the next step.",
 		"DUPLICATE_NAME_ERROR": "Tax jurisdiction name already exists",
-		"JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "The jurisdiction '{{jurisdictionName}}' cannot be deleted, it is being used in a tax category."
+		"JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "The jurisdiction '{{jurisdictionName}}' cannot be deleted, it is being used in a tax category.",
+		"DUPLICATE_COUNTRY_STATE_COMBINATION": "The selected country and state combination already exists.",
+		"NO_MATCHING_RECORDS_FOUND": "No matching records found"
 	}
 }

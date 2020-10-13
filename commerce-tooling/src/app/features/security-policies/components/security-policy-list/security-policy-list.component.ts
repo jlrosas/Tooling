@@ -46,6 +46,7 @@ export class SecurityPolicesListComponent implements OnInit, OnDestroy, AfterVie
 	preferenceToken: string;
 	activeColumn = "description";
 	sortDirection = "asc";
+	pageIndex = 0;
 
 	private getSecurityPoliciesSubscription: Subscription = null;
 	private searchString: Subject<string> = new Subject<string>();
@@ -69,17 +70,15 @@ export class SecurityPolicesListComponent implements OnInit, OnDestroy, AfterVie
 		this.createFormControls();
 		this.createForm();
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
 			this.currentSearchString = searchString;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getSecurityPolicies();
 		});
 	}
 
 	ngAfterViewInit() {
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getSecurityPolicies();
 		});
 		this.getSecurityPolicies();
@@ -91,15 +90,14 @@ export class SecurityPolicesListComponent implements OnInit, OnDestroy, AfterVie
 
 	handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getSecurityPolicies();
 	}
 
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getSecurityPolicies();
 	}
 
@@ -146,8 +144,14 @@ export class SecurityPolicesListComponent implements OnInit, OnDestroy, AfterVie
 	}
 
 	private getSecurityPolicies() {
+		this.preferenceService.save(this.preferenceToken, {
+			searchString: this.currentSearchString,
+			sort: this.sort,
+			pageIndex: this.pageIndex,
+			pageSize: this.pageSize
+		});
 		const args: UserAccountPolicyDescriptionsService.GetUserAccountPolicyDescriptionsParams = {
-			offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+			offset: this.pageIndex * this.paginator.pageSize,
 			limit: this.paginator.pageSize
 		};
 		if (this.currentSearchString) {
@@ -190,7 +194,8 @@ export class SecurityPolicesListComponent implements OnInit, OnDestroy, AfterVie
 			const {
 				pageSize,
 				sort,
-				searchString
+				searchString,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -202,6 +207,9 @@ export class SecurityPolicesListComponent implements OnInit, OnDestroy, AfterVie
 			}
 			if (searchString) {
 				this.currentSearchString = searchString;
+			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
 			}
 		}
 	}

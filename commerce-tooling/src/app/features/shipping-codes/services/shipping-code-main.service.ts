@@ -55,7 +55,6 @@ export class ShippingCodeMainService {
 				this.processing = false;
 			},
 			error => {
-				console.log(error);
 				observer.error(error);
 				observer.complete();
 				this.processing = false;
@@ -94,7 +93,7 @@ export class ShippingCodeMainService {
 
 	loadCurrentShippingCode(id: number): Observable<void> {
 		return new Observable<undefined>((observer: Observer<void>) => {
-			if (this.currentShippingCode != null && this.currentShippingCode.id === id) {
+			if (this.currentShippingCode !== null && this.currentShippingCode.id === id) {
 				observer.next(undefined);
 				observer.complete();
 			} else {
@@ -103,7 +102,7 @@ export class ShippingCodeMainService {
 					this.currentShippingCodeId = id;
 				}
 				const args: CalculationCodesService.GetCalculationCodeByIdParams = {
-					id: id
+					id
 				};
 				this.calculationCodeServices.getCalculationCodeById(args).subscribe((body: any) => {
 					this.currentShippingCode = body;

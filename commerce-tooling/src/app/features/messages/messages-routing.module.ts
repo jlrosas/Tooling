@@ -14,7 +14,6 @@ import { Routes, RouterModule } from "@angular/router";
 import { MessageListComponent } from "./components/message-list/message-list.component";
 import { ResendMessageComponent } from "./components/resend-message/resend-message.component";
 
-
 const routes: Routes = [
 	{
 		path: "message-list", component: MessageListComponent

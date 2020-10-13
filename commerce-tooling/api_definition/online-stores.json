@@ -1,4 +1,9 @@
 {
+  "host": "hostname.com",
+  "basePath": "/rest/admin/v2",
+  "schemes": [
+    "https"
+  ],
   "swagger": "2.0",
   "info": {
     "title": "Online Store Admin REST APIs",
@@ -35,6 +40,24 @@
             "name": "usage",
             "required": true,
             "type": "string"
+          },
+          {
+            "description": "Limits search results to only include stores with an identifier that matches the value of this parameter.",
+            "in": "query",
+            "name": "searchString",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Limits search results to only include stores with a matching ownerId.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "ownerId",
+            "required": false,
+            "type": "array"
           }
         ],
         "responses": {

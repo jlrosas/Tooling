@@ -134,7 +134,7 @@ export class OrganizationGroupsComponent implements OnInit, OnDestroy, AfterView
 					memberGroupName: memberGroup.name,
 					organizationId: memberGroup.ownerId,
 					organizationName: memberGroup.organizationName,
-					exclude: exclude
+					exclude
 				});
 			}
 		} else {
@@ -195,27 +195,24 @@ export class OrganizationGroupsComponent implements OnInit, OnDestroy, AfterView
 			this.getIncludeMemberGroupsSubscription = null;
 		}
 		this.getIncludeMemberGroupsSubscription = this.memberGroupsService.getMemberGroups({
-			searchString: searchString,
+			searchString,
 			usage: ["RegisteredCustomer"],
 			limit: 10
-		}).subscribe(
-			response => {
-				this.includeMemberGroupList = response.items;
-				this.getIncludeMemberGroupsSubscription = null;
-				this.includeMemberGroupList.forEach(memberGroup => {
-					const organizationId = memberGroup.ownerId;
-					if (this.organizationNames[organizationId]) {
-						memberGroup.organizationName = this.organizationNames[organizationId];
-					} else {
-						this.loadOrganizationName(organizationId);
-					}
-				});
-			},
-			error => {
-				this.getIncludeMemberGroupsSubscription = null;
-				console.log(error);
-			}
-		);
+		}).subscribe(response => {
+			this.includeMemberGroupList = response.items;
+			this.getIncludeMemberGroupsSubscription = null;
+			this.includeMemberGroupList.forEach(memberGroup => {
+				const organizationId = memberGroup.ownerId;
+				if (this.organizationNames[organizationId]) {
+					memberGroup.organizationName = this.organizationNames[organizationId];
+				} else {
+					this.loadOrganizationName(organizationId);
+				}
+			});
+		},
+		error => {
+			this.getIncludeMemberGroupsSubscription = null;
+		});
 	}
 
 	getExcludeMemberGroups(searchString: string) {
@@ -224,27 +221,24 @@ export class OrganizationGroupsComponent implements OnInit, OnDestroy, AfterView
 			this.getExcludeMemberGroupsSubscription = null;
 		}
 		this.getExcludeMemberGroupsSubscription = this.memberGroupsService.getMemberGroups({
-			searchString: searchString,
+			searchString,
 			usage: ["RegisteredCustomer"],
 			limit: 10
-		}).subscribe(
-			response => {
-				this.excludeMemberGroupList = response.items;
-				this.getExcludeMemberGroupsSubscription = null;
-				this.excludeMemberGroupList.forEach(memberGroup => {
-					const organizationId = memberGroup.ownerId;
-					if (this.organizationNames[organizationId]) {
-						memberGroup.organizationName = this.organizationNames[organizationId];
-					} else {
-						this.loadOrganizationName(organizationId);
-					}
-				});
-			},
-			error => {
-				this.getExcludeMemberGroupsSubscription = null;
-				console.log(error);
-			}
-		);
+		}).subscribe(response => {
+			this.excludeMemberGroupList = response.items;
+			this.getExcludeMemberGroupsSubscription = null;
+			this.excludeMemberGroupList.forEach(memberGroup => {
+				const organizationId = memberGroup.ownerId;
+				if (this.organizationNames[organizationId]) {
+					memberGroup.organizationName = this.organizationNames[organizationId];
+				} else {
+					this.loadOrganizationName(organizationId);
+				}
+			});
+		},
+		error => {
+			this.getExcludeMemberGroupsSubscription = null;
+		});
 	}
 
 	removeAssignedMemberGroup(assignedMemberGroup) {

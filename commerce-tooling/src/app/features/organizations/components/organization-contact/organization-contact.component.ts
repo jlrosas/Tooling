@@ -299,28 +299,25 @@ export class OrganizationContactComponent implements OnInit, OnDestroy, AfterVie
 
 	private initCountryList() {
 		this.countriesService.getCountries({
-			languageId: LanguageService.languageId
-		}).subscribe(
-			response => {
-				this.countryList = response.items;
-				const countryCode = this.organizationMainService.organizationData.address.country;
-				if (countryCode) {
-					for (let i = 0; i < this.countryList.length; i++) {
-						const country = this.countryList[i];
-						if (country.countryAbbr === countryCode) {
-							this.selectCountry(country);
-							break;
-						} else if (country.name === this.country.value) {
-							this.selectCountry(country);
-							break;
-						}
+			languageId: LanguageService.languageId,
+			sort: "name"
+		}).subscribe(response => {
+			this.countryList = response.items ? response.items.sort((a, b) => a.name.localeCompare(b.name)) : [];
+			const countryCode = this.organizationMainService.organizationData.address.country;
+			if (countryCode) {
+				for (let i = 0; i < this.countryList.length; i++) {
+					const country = this.countryList[i];
+					if (country.countryAbbr === countryCode || country.name === countryCode) {
+						this.selectCountry(country);
+						break;
+					}
+					if (country.name === this.country.value) {
+						this.selectCountry(country);
+						break;
 					}
 				}
-			},
-			error => {
-				console.log(error);
 			}
-		);
+		});
 	}
 
 	private initStateList() {
@@ -343,19 +340,17 @@ export class OrganizationContactComponent implements OnInit, OnDestroy, AfterVie
 					if (stateCode) {
 						for (let i = 0; i < this.stateList.length; i++) {
 							const state = this.stateList[i];
-							if (state.stateAbbr === stateCode) {
+							if (state.stateAbbr === stateCode || state.name === stateCode) {
 								this.selectState(state);
 								break;
-							} else if (state.name === this.state.value) {
+							}
+							if (state.name === this.state.value) {
 								this.selectState(state);
 								break;
 							}
 						}
 					}
 				}
-			},
-			error => {
-				console.log(error);
 			});
 		}
 	}

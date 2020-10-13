@@ -75,15 +75,6 @@ export class EditSecurityPoliciesComponent {
 						this.translateService.get("SECURITY_POLICIES.SECURITY_POLICY_SAVED_MESSAGE").subscribe((message: string) => {
 							this.alertService.success({message});
 						});
-					},
-					errorResponse => {
-						if (errorResponse.error && errorResponse.error.errors) {
-							errorResponse.error.errors.forEach((error: { errorMessage: string; }) => {
-								this.alertService.error({message: error.errorMessage});
-							});
-						} else {
-							console.log(errorResponse);
-						}
 					});
 				} else {
 					this.translateService.get("SECURITY_POLICIES.INPUT_ERROR").subscribe((message: string) => {

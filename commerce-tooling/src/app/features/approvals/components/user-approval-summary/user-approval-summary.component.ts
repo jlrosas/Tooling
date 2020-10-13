@@ -49,25 +49,20 @@ export class UserApprovalSummaryComponent implements OnInit, OnDestroy, OnChange
 	ngOnChanges(changes) {
 		if (changes.userId.currentValue !== "" && changes.userId.currentValue !== undefined) {
 			const userId = changes.userId.currentValue;
-			this.usersService.UsersFindByUserId(changes.userId.currentValue).subscribe(
-				user => {
-					this.userLogonId = user.logonId;
-					if (user.address) {
-						if (user.address.firstName) {
-							this.userName = user.address.firstName + " " + user.address.lastName;
-						} else {
-							this.userName = user.address.lastName;
-						}
-						this.userEmail = user.address.email1;
+			this.usersService.UsersFindByUserId(changes.userId.currentValue).subscribe(user => {
+				this.userLogonId = user.logonId;
+				if (user.address) {
+					if (user.address.firstName) {
+						this.userName = user.address.firstName + " " + user.address.lastName;
+					} else {
+						this.userName = user.address.lastName;
 					}
-					this.userLogonId = user.logonId;
-					this.userOrganization = user.parentOrganizationName;
-					this.loadUserRoles(user.id);
-				},
-				error => {
-					console.log(error);
+					this.userEmail = user.address.email1;
 				}
-			);
+				this.userLogonId = user.logonId;
+				this.userOrganization = user.parentOrganizationName;
+				this.loadUserRoles(user.id);
+			});
 		}
 	}
 
@@ -130,4 +125,3 @@ export class UserApprovalSummaryComponent implements OnInit, OnDestroy, OnChange
 		});
 	}
 }
-

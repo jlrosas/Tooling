@@ -9,8 +9,6 @@
 *-------------------------------------------------------------------
 -->
 
-<ul class={className}>
-	<li *ngFor="let message of messages">
-		<ibm-notification *ngIf="message" [notificationObj]="message" (close)="onClose(message)"></ibm-notification>
-	</li>
-</ul>
+<ng-template #snackBarTemplate>
+	<hc-alert [messages]="messages" (onClose)="closeAlert()" (onRemoveMessage)="removeMessage($event)"></hc-alert>
+</ng-template>

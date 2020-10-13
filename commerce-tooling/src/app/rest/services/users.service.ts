@@ -16,6 +16,7 @@ class UsersService extends __BaseService {
   static readonly UsersUpdateUserPath = '/rest/admin/v2/users/{id}';
   static readonly UsersGetUserRolesPath = '/rest/admin/v2/users/{id}/roles';
   static readonly UsersCreateUserPath = '/rest/admin/v2/users';
+  static readonly UsersResetUserPasswordPath = '/rest/admin/v2/users/{id}/password-reset';
   static readonly UsersFindSiteAttributesByUserIdPath = '/rest/admin/v2/users/{id}/site-attributes';
   static readonly UsersCreateUserSiteAttributePath = '/rest/admin/v2/users/{id}/site-attributes';
   static readonly UsersFindSiteAttributeByUserIdPath = '/rest/admin/v2/users/{id}/site-attributes/{name}';
@@ -54,6 +55,8 @@ class UsersService extends __BaseService {
    *
    * - `roleId`: Limits search results to only include users whose role ID matches the value of this parameter.
    *
+   * - `roleOrganizationId`: Qualifies roleId to limit search results to only include users who have a matching role ID in the organization that matches this parameter.
+   *
    * - `parentOrganizationId`: Limits search results to only include users whose parent organization ID matches the value of this parameter.
    *
    * @return The request completed successfully.
@@ -70,6 +73,7 @@ class UsersService extends __BaseService {
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.searchString != null) __params = __params.set('searchString', params.searchString.toString());
     if (params.roleId != null) __params = __params.set('roleId', params.roleId.toString());
+    if (params.roleOrganizationId != null) __params = __params.set('roleOrganizationId', params.roleOrganizationId.toString());
     if (params.parentOrganizationId != null) __params = __params.set('parentOrganizationId', params.parentOrganizationId.toString());
     let req = new HttpRequest<any>(
       'GET',
@@ -108,6 +112,8 @@ class UsersService extends __BaseService {
    * - `searchString`: Limits search results to only include users whose first name, last name or logon ID matches the value of this parameter.
    *
    * - `roleId`: Limits search results to only include users whose role ID matches the value of this parameter.
+   *
+   * - `roleOrganizationId`: Qualifies roleId to limit search results to only include users who have a matching role ID in the organization that matches this parameter.
    *
    * - `parentOrganizationId`: Limits search results to only include users whose parent organization ID matches the value of this parameter.
    *
@@ -245,13 +251,18 @@ class UsersService extends __BaseService {
 
   /**
    * Create a user.
-   * @param body Request body.
+   * @param params The `UsersService.UsersCreateUserParams` containing the following parameters:
+   *
+   * - `body`: Request body.
+   *
+   * - `storeId`: The unique numeric ID of the store used to create the user.
    */
-  UsersCreateUserResponse(body: any): __Observable<__StrictHttpResponse<null>> {
+  UsersCreateUserResponse(params: UsersService.UsersCreateUserParams): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = body;
+    __body = params.body;
+    if (params.storeId != null) __params = __params.set('storeId', params.storeId.toString());
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/rest/admin/v2/users`,
@@ -272,10 +283,60 @@ class UsersService extends __BaseService {
 
   /**
    * Create a user.
-   * @param body Request body.
+   * @param params The `UsersService.UsersCreateUserParams` containing the following parameters:
+   *
+   * - `body`: Request body.
+   *
+   * - `storeId`: The unique numeric ID of the store used to create the user.
    */
-  UsersCreateUser(body: any): __Observable<null> {
-    return this.UsersCreateUserResponse(body).pipe(
+  UsersCreateUser(params: UsersService.UsersCreateUserParams): __Observable<null> {
+    return this.UsersCreateUserResponse(params).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * Reset a user's password.
+   * @param params The `UsersService.UsersResetUserPasswordParams` containing the following parameters:
+   *
+   * - `id`: The unique numeric ID for identifying the user.
+   *
+   * - `storeId`: The unique numeric ID of the store used to compose the password reset notification message.
+   */
+  UsersResetUserPasswordResponse(params: UsersService.UsersResetUserPasswordParams): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    if (params.storeId != null) __params = __params.set('storeId', params.storeId.toString());
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/rest/admin/v2/users/${params.id}/password-reset`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+
+  /**
+   * Reset a user's password.
+   * @param params The `UsersService.UsersResetUserPasswordParams` containing the following parameters:
+   *
+   * - `id`: The unique numeric ID for identifying the user.
+   *
+   * - `storeId`: The unique numeric ID of the store used to compose the password reset notification message.
+   */
+  UsersResetUserPassword(params: UsersService.UsersResetUserPasswordParams): __Observable<null> {
+    return this.UsersResetUserPasswordResponse(params).pipe(
       __map(_r => _r.body as null)
     );
   }
@@ -852,7 +913,12 @@ module UsersService {
     /**
      * Limits search results to only include users whose role ID matches the value of this parameter.
      */
-    roleId?: string;
+    roleId?: number;
+
+    /**
+     * Qualifies roleId to limit search results to only include users who have a matching role ID in the organization that matches this parameter.
+     */
+    roleOrganizationId?: string;
 
     /**
      * Limits search results to only include users whose parent organization ID matches the value of this parameter.
@@ -874,6 +940,38 @@ module UsersService {
      * Request body.
      */
     body?: any;
+  }
+
+  /**
+   * Parameters for UsersCreateUser
+   */
+  export interface UsersCreateUserParams {
+
+    /**
+     * Request body.
+     */
+    body: any;
+
+    /**
+     * The unique numeric ID of the store used to create the user.
+     */
+    storeId?: number;
+  }
+
+  /**
+   * Parameters for UsersResetUserPassword
+   */
+  export interface UsersResetUserPasswordParams {
+
+    /**
+     * The unique numeric ID for identifying the user.
+     */
+    id: string;
+
+    /**
+     * The unique numeric ID of the store used to compose the password reset notification message.
+     */
+    storeId: number;
   }
 
   /**

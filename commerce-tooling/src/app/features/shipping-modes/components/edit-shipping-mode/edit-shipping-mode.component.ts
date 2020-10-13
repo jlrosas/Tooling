@@ -75,15 +75,6 @@ export class EditShippingModeComponent {
 						this.translateService.get("SHIPPING_MODES.SHIPPING_MODE_SAVED_MESSAGE").subscribe((message: string) => {
 							this.alertService.success({message});
 						});
-					},
-					errorResponse => {
-						if (errorResponse.error && errorResponse.error.errors) {
-							errorResponse.error.errors.forEach((error: { message: string; }) => {
-								this.alertService.error({message: error.message});
-							});
-						} else {
-							console.log(errorResponse);
-						}
 					});
 				} else {
 					this.translateService.get("SHIPPING_MODES.INPUT_ERROR").subscribe((message: string) => {

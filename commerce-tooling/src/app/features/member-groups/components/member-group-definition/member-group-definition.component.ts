@@ -513,29 +513,26 @@ export class MemberGroupDefinitionComponent implements OnInit, AfterViewInit, On
 		this.getOrganizationsSubscription = this.organizationsService.OrganizationGetManageableOrganizations({
 			organizationName: searchString,
 			limit: 10
-		}).subscribe(
-			response => {
-				if (response.items.length === 1 && response.items[0].organizationName === searchString) {
-					this.selectOrganization(response.items[0]);
-				} else {
-					response.items.sort((org1, org2) => {
-						let result = 0;
-						if (org1.organizationName < org2.organizationName) {
-							result = -1;
-						} else if (org1.organizationName > org2.organizationName) {
-							result = 1;
-						}
-						return result;
-					});
-					this.organizationList = response.items;
-				}
-				this.getOrganizationsSubscription = null;
-			},
-			error => {
-				this.getOrganizationsSubscription = null;
-				console.log(error);
+		}).subscribe(response => {
+			if (response.items.length === 1 && response.items[0].organizationName === searchString) {
+				this.selectOrganization(response.items[0]);
+			} else {
+				response.items.sort((org1, org2) => {
+					let result = 0;
+					if (org1.organizationName < org2.organizationName) {
+						result = -1;
+					} else if (org1.organizationName > org2.organizationName) {
+						result = 1;
+					}
+					return result;
+				});
+				this.organizationList = response.items;
 			}
-		);
+			this.getOrganizationsSubscription = null;
+		},
+		error => {
+			this.getOrganizationsSubscription = null;
+		});
 	}
 
 	private loadRoles() {

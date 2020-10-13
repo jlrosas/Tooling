@@ -16,7 +16,7 @@
 				<mat-label>{{'TAX_CODES.TYPE_FILTER'| translate}}</mat-label>
 				<mat-select id="taxType" placeholder="{{'TAX_CATEGORYS.SELECT_TYPE_PLACEHOLDER'| translate}}"
 						formControlName="taxType" (selectionChange)="selectTaxType($event.value)"
-						#taxTypeSelect required>									
+						#taxTypeSelect required>
 					<mat-option *ngFor="let taxType of taxTypes" [value]="taxType">
 						{{taxType.textKey | translate}}
 					</mat-option>

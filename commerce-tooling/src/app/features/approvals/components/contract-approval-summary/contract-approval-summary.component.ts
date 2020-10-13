@@ -19,6 +19,7 @@ import { CatalogFiltersService } from "../../../../rest/services/catalog-filters
 import { PriceRulesService } from "../../../../rest/services/price-rules.service";
 import { PaymentMethodsService } from "../../../../rest/services/payment-methods.service";
 import { LanguageService } from "../../../../services/language.service";
+import { DATE_FORMAT_OPTIONS } from "../../../../shared/constants";
 import { AddressesService } from "../../../../rest/services/addresses.service";
 import { Subject, Observable, Subscription } from "rxjs";
 import { DataSource } from "@angular/cdk/table";
@@ -116,8 +117,10 @@ export class ContractApprovalSummaryComponent implements OnInit, OnDestroy {
 			this.description = contract.description;
 			this.comment = contract.comment;
 			this.statusTextKey = this.statusTextKeys[contract.status] ? this.statusTextKeys[contract.status] : contract.status;
-			this.startDate = (!contract.startDate) ? null : (new Date(contract.startDate)).toLocaleString();
-			this.endDate = (!contract.endDate) ? null : (new Date(contract.endDate)).toLocaleString();
+			this.startDate = (!contract.startDate) ? null :
+					new Intl.DateTimeFormat(LanguageService.language, DATE_FORMAT_OPTIONS).format((new Date(contract.startDate)));
+			this.endDate = (!contract.endDate) ? null :
+					new Intl.DateTimeFormat(LanguageService.language, DATE_FORMAT_OPTIONS).format((new Date(contract.endDate)));
 			this.accountId = contract.accountId;
 			this.baseContract = contract.baseContractName;
 			this.allowPersonalBillingAddress = contract.allowPersonalBillingAddress ? true : false;
@@ -143,19 +146,22 @@ export class ContractApprovalSummaryComponent implements OnInit, OnDestroy {
 						this.catalogFilter = catalogFilter.description;
 					});
 				}
+				if (contract.priceRuleId) {
+					this.priceRulesService.getPriceRuleById({
+						id: contract.priceRuleId,
+						storeId: account.storeId
+					}).subscribe(priceRule => {
+						this.priceRule = priceRule.name;
+						this.storeNameService.getStoreName(priceRule.storeId.toString()).subscribe(storeName => {
+							this.priceRule += " - " + storeName;
+						});
+					});
+				}
 				this.loadAvailableAddresses();
 				this.loadAvailablePaymentMethods();
 				this.loadAvailableShippingCharges();
 				this.loadAvailableShippingMethods();
 			});
-			if (contract.priceRuleId) {
-				this.priceRulesService.getPriceRuleById(contract.priceRuleId).subscribe(priceRule => {
-					this.priceRule = priceRule.name;
-					this.storeNameService.getStoreName(priceRule.storeId.toString()).subscribe(storeName => {
-						this.priceRule += " - " + storeName;
-					});
-				});
-			}
 			this.contractsService.getContractBuyers({
 				contractId: this.contractId
 			}).subscribe(body => {

@@ -75,15 +75,6 @@ export class CreateMemberGroupComponent implements OnInit, OnDestroy {
 						this.translateService.get("MEMBER_GROUPS.MEMBER_GROUP_CREATED_MESSAGE").subscribe((message: string) => {
 							this.alertService.success({message});
 						});
-					},
-					errorResponse => {
-						if (errorResponse.error && errorResponse.error.errors) {
-							errorResponse.error.errors.forEach(error => {
-								this.alertService.error({message: error.message});
-							});
-						} else {
-							console.log(errorResponse);
-						}
 					}
 				);
 			} else if (!valid) {

@@ -62,6 +62,8 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 	filteredStateList: Array<any> = [];
 	selectedState: any = null;
 	selectedCity: any = null;
+	countriesLoading = false;
+	statesLoading = false;
 	model = new ShippingJurisdictionDataSource();
 
 	@ViewChild(MatPaginator, {static: false})
@@ -74,6 +76,7 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 	preferenceToken: string;
 	activeColumn = "code";
 	sortDirection = "asc";
+	pageIndex = 0;
 	private countryList: Array<any> = [];
 	private stateList: Array<any> = [];
 
@@ -109,9 +112,8 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 		this.createFormControls();
 		this.createForm();
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
-			this.preferenceService.save(this.preferenceToken, { searchString });
 			this.currentSearchString = searchString;
-			this.paginator.pageIndex = 0;
+			this.pageIndex = 0;
 			this.getShippingJurisdictions();
 		});
 		this.countrySearchString.pipe(debounceTime(250)).subscribe(searchString => {
@@ -129,6 +131,7 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 			} else {
 				this.filteredCountryList = this.countryList;
 			}
+			this.countriesLoading = false;
 		});
 		this.stateSearchString.pipe(debounceTime(250)).subscribe(searchString => {
 			if (this.stateList.length > 0) {
@@ -152,11 +155,10 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 				} else {
 					this.selectedState = null;
 				}
-				this.preferenceService.saveFilter(this.preferenceToken,
-						{stateFilter: this.selectedState});
-				this.paginator.pageIndex = 0;
+				this.pageIndex = 0;
 				this.getShippingJurisdictions();
 			}
+			this.statesLoading = false;
 		});
 		this.storeSearchString.pipe(debounceTime(250)).subscribe(searchString => {
 			this.getStores(searchString);
@@ -199,8 +201,7 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 			});
 		}
 		this.sort.sortChange.subscribe(sort => {
-			this.paginator.pageIndex = 0;
-			this.preferenceService.save(this.preferenceToken, {sort: this.sort});
+			this.pageIndex = 0;
 			this.getShippingJurisdictions();
 		});
 		this.initCountryList();
@@ -212,15 +213,14 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 
 	handlePage(e: any) {
 		this.pageSize = e.pageSize;
-		this.preferenceService.save(this.preferenceToken, {pageSize: this.pageSize});
+		this.pageIndex = e.pageIndex;
 		this.getShippingJurisdictions();
 	}
 
 	clearSearch() {
 		this.currentSearchString = null;
 		this.searchText.setValue("");
-		this.paginator.pageIndex = 0;
-		this.preferenceService.save(this.preferenceToken, { searchString: ""});
+		this.pageIndex = 0;
 		this.getShippingJurisdictions();
 	}
 
@@ -277,20 +277,17 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 			usage: "HCL_ShippingTool",
 			identifier: "*" + searchString + "*",
 			limit: 10
-	 	}).subscribe(
-	 		response => {
-		 		this.getStoresSubscription = null;
-		 		if (response.items.length === 1 && response.items[0].identifier === this.store.value) {
-		 			this.selectStore(response.items[0]);
-		 		} else {
-		 			this.storeList = response.items;
-		 		}
-			},
-			error => {
-				this.getStoresSubscription = null;
-				console.log(error);
-			}
-		);
+	 	}).subscribe(response => {
+	 		this.getStoresSubscription = null;
+	 		if (response.items.length === 1 && response.items[0].identifier === this.store.value) {
+	 			this.selectStore(response.items[0]);
+	 		} else {
+	 			this.storeList = response.items;
+	 		}
+		},
+		error => {
+			this.getStoresSubscription = null;
+		});
 	}
 
 	selectStore(store: any) {
@@ -303,7 +300,9 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 		this.selectedStore = store;
 		this.store.setValue(store.identifier);
 		if (currentStoreId !== store.id) {
-			this.paginator.pageIndex = 0;
+			if (currentStoreId !== null) {
+				this.pageIndex = 0;
+			}
 			this.getShippingJurisdictions();
 			this.storeList = [];
 			this.searchStores("");
@@ -316,25 +315,45 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 		}
 	}
 
+	resetCountryFilter() {
+		if (this.selectedCountry) {
+			this.country.setValue(this.selectedCountry.name);
+		} else if (this.country.value !== "") {
+			this.country.setValue("");
+			this.searchCountries("");
+		}
+	}
+
+	resetStateFilter() {
+		if (this.stateList.length > 0) {
+			if (this.selectedState) {
+				this.state.setValue(this.selectedState.name);
+			} else if (this.state.value !== "") {
+				this.state.setValue("");
+				this.searchStates("");
+			}
+		}
+	}
+
 	searchCountries(searchString) {
+		this.countriesLoading = true;
 		this.countrySearchString.next(searchString);
 	}
 
 	selectCountry(country: any) {
-		const countryName = country != null ? country.name : null;
-		const countryCode = country != null ? country.countryAbbr : null;
-		this.country.setValue(countryName);
-		if (!this.selectedCountry || this.selectedCountry.countryAbbr !== country.countryAbbr) {
-			this.selectedCountry = country;
-			this.state.setValue("");
-			this.selectedState = null;
-			this.initStateList(countryCode);
-			this.preferenceService.saveFilter(this.preferenceToken,
-					{countryFilter: country});
-			this.preferenceService.saveFilter(this.preferenceToken,
-					{stateFilter: null});
-			this.paginator.pageIndex = 0;
-			this.getShippingJurisdictions();
+		if (country) {
+			const countryName = country.name;
+			const countryCode = country.countryAbbr;
+			this.country.setValue(countryName);
+			this.filteredCountryList = [];
+			if (!this.selectedCountry || this.selectedCountry.countryAbbr !== countryCode) {
+				this.selectedCountry = country;
+				this.state.setValue("");
+				this.selectedState = null;
+				this.initStateList(countryCode);
+				this.pageIndex = 0;
+				this.getShippingJurisdictions();
+			}
 		}
 	}
 
@@ -344,50 +363,43 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 		this.filteredCountryList = this.countryList;
 		this.stateList = [];
 		this.filteredStateList = [];
-		this.preferenceService.saveFilter(this.preferenceToken,
-				{countryFilter: null});
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getShippingJurisdictions();
 	}
 
 	searchStates(searchString) {
+		this.statesLoading = true;
 		this.stateSearchString.next(searchString);
 	}
 
 	selectState(state: any) {
-		const stateCode = state != null ? state.stateAbbr : null;
-		this.state.setValue(state ? state.name : "");
-		this.selectedState = state;
-		this.preferenceService.saveFilter(this.preferenceToken,
-				{stateFilter: state});
-		this.paginator.pageIndex = 0;
-		this.getShippingJurisdictions();
+		if (state) {
+			this.state.setValue(state.name);
+			this.filteredStateList = [];
+			this.selectedState = state;
+			this.pageIndex = 0;
+			this.getShippingJurisdictions();
+		}
 	}
 
 	clearState() {
 		this.state.setValue("");
 		this.selectedState = null;
 		this.filteredStateList = this.stateList;
-		this.preferenceService.saveFilter(this.preferenceToken,
-				{stateFilter: null});
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getShippingJurisdictions();
 	}
 
 	validateCity() {
 		this.selectedCity = this.city.value;
-		this.preferenceService.saveFilter(this.preferenceToken,
-			{cityFilter: this.selectedCity});
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getShippingJurisdictions();
 	}
 
 	clearCity() {
 		this.selectedCity = null;
 		this.city.setValue("");
-		this.preferenceService.saveFilter(this.preferenceToken,
-				{cityFilter: null});
-		this.paginator.pageIndex = 0;
+		this.pageIndex = 0;
 		this.getShippingJurisdictions();
 	}
 
@@ -426,14 +438,25 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 	}
 
 	private getShippingJurisdictions() {
+		this.preferenceService.save(this.preferenceToken, {
+			searchString: this.currentSearchString,
+			sort: this.sort,
+			pageIndex: this.pageIndex,
+			pageSize: this.pageSize,
+			filter: {
+				countryFilter: this.selectedCountry,
+				stateFilter: this.selectedState,
+				cityFilter: this.selectedCity
+			}
+		});
 		const args: JurisdictionsService.GetJurisdictionsParams = {
 			subclass: 1, // 1 for shipping jurisdiction and 2 for tax jurisdiction
 			storeId:  this.selectedStore.id,
-			offset: (this.paginator.pageIndex) * this.paginator.pageSize,
+			offset: (this.pageIndex) * this.paginator.pageSize,
 			limit: this.paginator.pageSize
 		};
 		if (this.currentSearchString) {
-		 	args.searchString = this.currentSearchString;
+			args.searchString = this.currentSearchString;
 		}
 		if (this.selectedCountry) {
 			args.countryAbbreviation = this.selectedCountry.countryAbbr;
@@ -494,7 +517,8 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 				sort,
 				searchString,
 				filter,
-				showFilters
+				showFilters,
+				pageIndex
 			} = preference;
 			if (pageSize) {
 				this.pageSize = pageSize;
@@ -522,36 +546,38 @@ export class ShippingJurisdictionListComponent implements OnInit, OnDestroy, Aft
 			if (showFilters) {
 				this.showFilters = showFilters;
 			}
+			if (pageIndex) {
+				this.pageIndex = pageIndex;
+			}
 		}
 	}
 
 	private initCountryList() {
+		this.countriesLoading = true;
 		this.countriesService.getCountries({
-			languageId: LanguageService.languageId
-		}).subscribe(
-			response => {
-				this.countryList = response.items;
+			languageId: LanguageService.languageId,
+			sort: "name"
+		}).subscribe(response => {
+			this.countryList = response.items ? response.items.sort((a, b) => a.name.localeCompare(b.name)) : [];
+			this.countriesLoading = false;
+			if (this.selectedCountry == null) {
 				this.searchCountries(this.country.value);
-			},
-			error => {
-				console.log(error);
 			}
-		);
+		});
 	}
 
 	private initStateList(countryCode: any) {
 		this.stateList = [];
 		this.filteredStateList = [];
 		if (countryCode != null && countryCode !== "") {
+			this.statesLoading = true;
 			this.statesService.getStates({
 				countryAbbr: countryCode,
 				languageId: LanguageService.languageId
 			}).subscribe(response => {
+				this.statesLoading = false;
 				this.stateList = response.items;
 				this.searchStates(this.state.value);
-			},
-			error => {
-				console.log(error);
 			});
 		}
 	}
