@@ -1,6 +1,7 @@
 {
   "GENERAL": {
-    "NO_SELECTION_MADE": "Es wurde keine Auswahl getroffen."
+    "NO_SELECTION_MADE": "Es wurde keine Auswahl getroffen.",
+    "DISMISS": "Verwerfen"
   },
   "USER_MANAGEMENT": {
     "USERS": "Benutzer",
@@ -70,7 +71,27 @@
     "USER_ENABLED_MESSAGE": "Benutzer erfolgreich aktiviert.",
     "USER_DISABLED_MESSAGE": "Benutzer erfolgreich deaktiviert.",
     "MORE": "Mehr",
-    "REFRESH": "Aktualisieren"
+    "REFRESH": "Aktualisieren",
+    "RESET_PASSWORD": "Kennwort zurücksetzen",
+    "PASSWORD_RESET_CONFIRMATION": "Möchten Sie das Kennwort für '{{name}}' zurücksetzen?",
+    "PASSWORD_RESET_SUCCESS": "Kennwort erfolgreich zurückgesetzt.",
+    "STORE": "Geschäft",
+    "SELECT_STORE_PLACEHOLDER": "Geschäft auswählen",
+    "PHONE_NUMBER": "Telefonnummer",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "Handelt es sich hierbei um einen registrierten B2C-Kunden?",
+    "SELECT_REGISTERED_CUSTOMER_STORE": "Geschäft auswählen",
+    "PREFERRED_LANGUAGE": "Bevorzugte Sprache",
+    "PREFERRED_CURRENCY": "Bevorzugte Währung",
+    "SELECT_PREFERRED_CURRENCY": "Bevorzugte Sprache auswählen",
+    "SELECT_PREFERRED_LANGUAGE": "Bevorzugte Währung auswählen",
+    "PREFERRED_METHOD_OF_COMMUNICATION": "Bevorzugter Kommunikationsweg",
+    "SELECT_PREFERRED_METHOD_OF_COMMUNICATION": "Bevorzugten Kommunikationsweg auswählen",
+    "PREFERRED_METHOD_EMAIL": "E-Mail",
+    "PREFERRED_METHOD_PHONE": "Telefon",
+    "CHALLENGE_QUESTION": "Sicherheitsfrage",
+    "CHALLENGE_ANSWER": "Antwort auf die Sicherheitsfrage",
+    "PARENT_ORGANIZATION_ERROR": "Ungültige übergeordnete Organisation.",
+    "STORE_ERROR": "Ungültiges Geschäft."
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Organisationen",
@@ -1265,6 +1286,8 @@
     "TAX_CODES_DELETED_MESSAGE": "Steuercode erfolgreich gelöscht.",
     "NOT_COMPLETE_ERROR": "Die Informationen auf dieser Seite sind nicht vollständig. Fahren Sie mit dem nächsten Schritt fort.",
     "DELETE_TAX_CONFIRMATION": "Möchten Sie '{{taxCodeName}}' löschen?",
+    "DELETE_DEFAULT_SALES_TAX_CODE_ALERT": "Sie löschen den Standard-Umsatzsteuercode. Sie sollten einen neuen Standard-Umsatzsteuercode festlegen, nachdem Sie diesen gelöscht haben.",
+    "DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT": "Sie löschen den Standard-Versandsteuercode. Sie sollten einen neuen Standard-Versandsteuercode festlegen, nachdem Sie diesen gelöscht haben.",
     "DETAILS": "Details",
     "NAME": "Name",
     "TYPE": "Typ",
@@ -1386,6 +1409,7 @@
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "Steuergebiet erfolgreich gelöscht.",
     "NOT_COMPLETE_ERROR": "Die Informationen auf dieser Seite sind nicht vollständig. Fahren Sie mit dem nächsten Schritt fort.",
     "DUPLICATE_NAME_ERROR": "Name des Steuergebiets ist bereits vorhanden",
-    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "Die Zuständigkeit '{{jurisdictionName}}' kann nicht gelöscht werden, da sie in einer Steuerkategorie verwendet wird."
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "Die Zuständigkeit '{{jurisdictionName}}' kann nicht gelöscht werden, da sie in einer Steuerkategorie verwendet wird.",
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "Die ausgewählte Kombination von Land und Bundesland existiert bereits."
   }
 }

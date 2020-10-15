@@ -1,6 +1,7 @@
 {
   "GENERAL": {
-    "NO_SELECTION_MADE": "未进行选择。"
+    "NO_SELECTION_MADE": "未进行选择。",
+    "DISMISS": "驳回"
   },
   "USER_MANAGEMENT": {
     "USERS": "用户",
@@ -70,7 +71,27 @@
     "USER_ENABLED_MESSAGE": "已成功启用用户。",
     "USER_DISABLED_MESSAGE": "已成功禁用用户。",
     "MORE": "更多",
-    "REFRESH": "刷新"
+    "REFRESH": "刷新",
+    "RESET_PASSWORD": "重置密码",
+    "PASSWORD_RESET_CONFIRMATION": "是否要重置“{{name}}”的密码？",
+    "PASSWORD_RESET_SUCCESS": "密码重置成功。",
+    "STORE": "商店",
+    "SELECT_STORE_PLACEHOLDER": "选择商店",
+    "PHONE_NUMBER": "电话号码",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "这是 B2C 注册客户吗？",
+    "SELECT_REGISTERED_CUSTOMER_STORE": "选择商店",
+    "PREFERRED_LANGUAGE": "首选语言",
+    "PREFERRED_CURRENCY": "首选货币",
+    "SELECT_PREFERRED_CURRENCY": "选择首选语言",
+    "SELECT_PREFERRED_LANGUAGE": "选择首选货币",
+    "PREFERRED_METHOD_OF_COMMUNICATION": "首选通信方法",
+    "SELECT_PREFERRED_METHOD_OF_COMMUNICATION": "选择首选通信方法",
+    "PREFERRED_METHOD_EMAIL": "电子邮件",
+    "PREFERRED_METHOD_PHONE": "电话",
+    "CHALLENGE_QUESTION": "验证问题",
+    "CHALLENGE_ANSWER": "回答验证问题",
+    "PARENT_ORGANIZATION_ERROR": "父组织无效。",
+    "STORE_ERROR": "商店无效。"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "组织",
@@ -1265,6 +1286,8 @@
     "TAX_CODES_DELETED_MESSAGE": "已成功删除税码。",
     "NOT_COMPLETE_ERROR": "此页面上的信息不完整。继续下一步操作。",
     "DELETE_TAX_CONFIRMATION": "是否要删除“{{taxCodeName}}”？",
+    "DELETE_DEFAULT_SALES_TAX_CODE_ALERT": "您正在删除缺省销售税代码。删除此代码后，您应设置另一个销售税代码作为缺省值。",
+    "DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT": "您正在删除缺省航运税代码。删除此代码后，您应设置另一个航运税代码作为缺省值。",
     "DETAILS": "详细信息",
     "NAME": "名称",
     "TYPE": "类型",
@@ -1386,6 +1409,7 @@
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "已成功删除税收管辖区域。",
     "NOT_COMPLETE_ERROR": "此页面上的信息不完整。继续下一步操作。",
     "DUPLICATE_NAME_ERROR": "税收管辖区域名称已存在",
-    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "管辖区域 '{{jurisdictionName}}' 正用于税种中，无法删除。"
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "管辖区域 '{{jurisdictionName}}' 正用于税种中，无法删除。",
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "所选国家/地区和州/省组合已存在。"
   }
 }

@@ -1,6 +1,7 @@
 {
   "GENERAL": {
-    "NO_SELECTION_MADE": "No se ha realizado ninguna selección."
+    "NO_SELECTION_MADE": "No se ha realizado ninguna selección.",
+    "DISMISS": "Descartar"
   },
   "USER_MANAGEMENT": {
     "USERS": "Usuarios",
@@ -70,7 +71,27 @@
     "USER_ENABLED_MESSAGE": "El usuario se ha habilitado correctamente.",
     "USER_DISABLED_MESSAGE": "El usuario se ha deshabilitado correctamente.",
     "MORE": "Más",
-    "REFRESH": "Actualizar"
+    "REFRESH": "Actualizar",
+    "RESET_PASSWORD": "Restablecer contraseña",
+    "PASSWORD_RESET_CONFIRMATION": "¿Desea restablecer la contraseña para '{{name}}'?",
+    "PASSWORD_RESET_SUCCESS": "Se ha restablecido la contraseña correctamente.",
+    "STORE": "Tienda",
+    "SELECT_STORE_PLACEHOLDER": "Seleccionar tienda",
+    "PHONE_NUMBER": "Número de teléfono",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "¿Es este un cliente registrado B2C?",
+    "SELECT_REGISTERED_CUSTOMER_STORE": "Seleccionar tienda",
+    "PREFERRED_LANGUAGE": "Idioma preferido",
+    "PREFERRED_CURRENCY": "Moneda preferida",
+    "SELECT_PREFERRED_CURRENCY": "Seleccione su idioma preferido",
+    "SELECT_PREFERRED_LANGUAGE": "Seleccione su moneda preferida",
+    "PREFERRED_METHOD_OF_COMMUNICATION": "Método de comunicación preferido",
+    "SELECT_PREFERRED_METHOD_OF_COMMUNICATION": "Seleccione su método de comunicación preferido",
+    "PREFERRED_METHOD_EMAIL": "Correo electrónico",
+    "PREFERRED_METHOD_PHONE": "Teléfono",
+    "CHALLENGE_QUESTION": "Pregunta de seguridad",
+    "CHALLENGE_ANSWER": "Responda la pregunta de seguridad",
+    "PARENT_ORGANIZATION_ERROR": "Organización principal no válida.",
+    "STORE_ERROR": "Tienda no válida."
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Organización",
@@ -1265,6 +1286,8 @@
     "TAX_CODES_DELETED_MESSAGE": "El código fiscal se ha suprimido correctamente.",
     "NOT_COMPLETE_ERROR": "La información de esta página no está completa. Vaya al siguiente paso.",
     "DELETE_TAX_CONFIRMATION": "¿Desea suprimir '{{taxCodeName}}'?",
+    "DELETE_DEFAULT_SALES_TAX_CODE_ALERT": "Va a eliminar el código fiscal de ventas predeterminado. Deberá establecer otro código fiscal de ventas como predeterminado después de eliminar este.",
+    "DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT": "Va a eliminar el código fiscal de envío predeterminado. Deberá establecer otro código fiscal de envío como predeterminado después de eliminar este.",
     "DETAILS": "Detalles",
     "NAME": "Nombre",
     "TYPE": "Tipo",
@@ -1386,6 +1409,7 @@
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "Se ha eliminado la jurisdicción fiscal correctamente.",
     "NOT_COMPLETE_ERROR": "La información de esta página no está completa. Vaya al siguiente paso.",
     "DUPLICATE_NAME_ERROR": "El nombre de esta jurisdicción fiscal ya existe",
-    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "No se ha podido eliminar la jurisdicción '{{jurisdictionName}}', está en uso en una categoría fiscal."
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "No se ha podido eliminar la jurisdicción '{{jurisdictionName}}', está en uso en una categoría fiscal.",
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "La combinación de país y estado seleccionada ya existe."
   }
 }

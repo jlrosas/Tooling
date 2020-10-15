@@ -1,6 +1,7 @@
 {
   "GENERAL": {
-    "NO_SELECTION_MADE": "Nenhuma seleção foi feita."
+    "NO_SELECTION_MADE": "Nenhuma seleção foi feita.",
+    "DISMISS": "Desconsiderar"
   },
   "USER_MANAGEMENT": {
     "USERS": "Usuários",
@@ -70,7 +71,27 @@
     "USER_ENABLED_MESSAGE": "Usuário ativado com êxito.",
     "USER_DISABLED_MESSAGE": "Usuário desativado com êxito.",
     "MORE": "Mais",
-    "REFRESH": "Atualizar"
+    "REFRESH": "Atualizar",
+    "RESET_PASSWORD": "Redefinir senha",
+    "PASSWORD_RESET_CONFIRMATION": "Você deseja redefinir a senha para '{{name}}'?",
+    "PASSWORD_RESET_SUCCESS": "Senha redefinida com êxito.",
+    "STORE": "Loja",
+    "SELECT_STORE_PLACEHOLDER": "Selecionar loja",
+    "PHONE_NUMBER": "Número de telefone",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "Este é um cliente B2C registrado?",
+    "SELECT_REGISTERED_CUSTOMER_STORE": "Selecionar loja",
+    "PREFERRED_LANGUAGE": "Idioma de preferência",
+    "PREFERRED_CURRENCY": "Moeda de preferência",
+    "SELECT_PREFERRED_CURRENCY": "Selecione o idioma de preferência",
+    "SELECT_PREFERRED_LANGUAGE": "Selecione a moeda de preferência",
+    "PREFERRED_METHOD_OF_COMMUNICATION": "Método de comunicação de preferência",
+    "SELECT_PREFERRED_METHOD_OF_COMMUNICATION": "Selecione o método de comunicação de preferência",
+    "PREFERRED_METHOD_EMAIL": "E-mail",
+    "PREFERRED_METHOD_PHONE": "Telefone",
+    "CHALLENGE_QUESTION": "Pergunta de desafio",
+    "CHALLENGE_ANSWER": "Resposta da pergunta de desafio",
+    "PARENT_ORGANIZATION_ERROR": "Organização pai inválida.",
+    "STORE_ERROR": "Loja inválida."
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Organizações",
@@ -1265,6 +1286,8 @@
     "TAX_CODES_DELETED_MESSAGE": "Código fiscal excluído com êxito.",
     "NOT_COMPLETE_ERROR": "As informações desta página não estão completas. Vá para a próxima etapa.",
     "DELETE_TAX_CONFIRMATION": "Deseja excluir '{{taxCodeName}}'?",
+    "DELETE_DEFAULT_SALES_TAX_CODE_ALERT": "Você está excluindo o código de taxa sobre vendas padrão. Você deve definir outro código de taxa sobre vendas como padrão depois de excluir este.",
+    "DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT": "Você está excluindo o código de imposto sobre envio. Você deve definir outro código de imposto sobre envio como padrão depois de excluir este.",
     "DETAILS": "Detalhes",
     "NAME": "Nome",
     "TYPE": "Tipo",
@@ -1386,6 +1409,7 @@
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "Jurisdição fiscal excluída com êxito.",
     "NOT_COMPLETE_ERROR": "As informações desta página não estão completas. Vá para a próxima etapa.",
     "DUPLICATE_NAME_ERROR": "O nome da jurisdição fiscal já existe",
-    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "A jurisdição '{{jurisdictionName}}' não pode ser excluída, está sendo usada em uma categoria de imposto."
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "A jurisdição '{{jurisdictionName}}' não pode ser excluída, está sendo usada em uma categoria de imposto.",
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "A combinação de país e estado selecionada já existe."
   }
 }

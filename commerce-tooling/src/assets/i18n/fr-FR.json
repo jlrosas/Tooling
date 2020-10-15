@@ -1,6 +1,7 @@
 {
   "GENERAL": {
-    "NO_SELECTION_MADE": "Aucune sélection."
+    "NO_SELECTION_MADE": "Aucune sélection.",
+    "DISMISS": "Ignorer"
   },
   "USER_MANAGEMENT": {
     "USERS": "Utilisateurs",
@@ -70,7 +71,27 @@
     "USER_ENABLED_MESSAGE": "Utilisateur activé.",
     "USER_DISABLED_MESSAGE": "Utilisateur désactivé.",
     "MORE": "Plus",
-    "REFRESH": "Actualiser"
+    "REFRESH": "Actualiser",
+    "RESET_PASSWORD": "Réinitialiser le mot de passe",
+    "PASSWORD_RESET_CONFIRMATION": "Voulez-vous réinitialiser le mot de passe pour\"{{name}}\" ?",
+    "PASSWORD_RESET_SUCCESS": "Le mot de passe a bien été réinitialisé.",
+    "STORE": "Magasin",
+    "SELECT_STORE_PLACEHOLDER": "Sélectionner un magasin",
+    "PHONE_NUMBER": "Numéro de téléphone",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "S'agit-il d'un client B2C enregistré ?",
+    "SELECT_REGISTERED_CUSTOMER_STORE": "Sélectionner un magasin",
+    "PREFERRED_LANGUAGE": "Langue préférée",
+    "PREFERRED_CURRENCY": "Devise préférée",
+    "SELECT_PREFERRED_CURRENCY": "Sélectionner la langue préférée",
+    "SELECT_PREFERRED_LANGUAGE": "Sélectionner la devise préférée",
+    "PREFERRED_METHOD_OF_COMMUNICATION": "Mode de communication préféré",
+    "SELECT_PREFERRED_METHOD_OF_COMMUNICATION": "Sélectionner le mode de communication préféré",
+    "PREFERRED_METHOD_EMAIL": "E-mail",
+    "PREFERRED_METHOD_PHONE": "Téléphone",
+    "CHALLENGE_QUESTION": "Question secrète",
+    "CHALLENGE_ANSWER": "Répondre à la question secrète",
+    "PARENT_ORGANIZATION_ERROR": "Organisation mère non valide.",
+    "STORE_ERROR": "Magasin non valide."
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Organisations",
@@ -1265,6 +1286,8 @@
     "TAX_CODES_DELETED_MESSAGE": "Code de taxe supprimé avec succès.",
     "NOT_COMPLETE_ERROR": "Les informations affichées sur cette page ne sont pas complètes. Passez à l'étape suivante.",
     "DELETE_TAX_CONFIRMATION": "Souhaitez-vous supprimer \"{{taxCodeName}}\" ?",
+    "DELETE_DEFAULT_SALES_TAX_CODE_ALERT": "Vous allez supprimer le code de la taxe sur la valeur ajoutée. Vous devrez définir un autre code par défaut après avoir supprimé celui-ci.",
+    "DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT": "Vous allez supprimer le code de la taxe afférente aux frais de port. Vous devrez définir un autre code par défaut après avoir supprimé celui-ci.",
     "DETAILS": "Détails",
     "NAME": "Nom",
     "TYPE": "Type",
@@ -1386,6 +1409,7 @@
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "Juridiction fiscale supprimée avec succès.",
     "NOT_COMPLETE_ERROR": "Les informations affichées sur cette page ne sont pas complètes. Passez à l'étape suivante.",
     "DUPLICATE_NAME_ERROR": "Le nom de la juridiction fiscale existe déjà.",
-    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "La juridiction \"{{jurisdictionName}}\" est utilisée dans une catégorie de taxe, elle ne peut donc pas être supprimée."
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "La juridiction \"{{jurisdictionName}}\" est utilisée dans une catégorie de taxe, elle ne peut donc pas être supprimée.",
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "La combinaison Pays/Etat sélectionnée existe déjà."
   }
 }

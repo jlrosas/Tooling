@@ -1,6 +1,7 @@
 {
   "GENERAL": {
-    "NO_SELECTION_MADE": "선택한 항목이 없습니다."
+    "NO_SELECTION_MADE": "선택한 항목이 없습니다.",
+    "DISMISS": "취소"
   },
   "USER_MANAGEMENT": {
     "USERS": "사용자",
@@ -70,7 +71,27 @@
     "USER_ENABLED_MESSAGE": "사용자가 사용하도록 설정되었습니다.",
     "USER_DISABLED_MESSAGE": "사용자가 사용하지 않도록 설정되었습니다.",
     "MORE": "더 보기",
-    "REFRESH": "새로 고침"
+    "REFRESH": "새로 고침",
+    "RESET_PASSWORD": "암호 재설정",
+    "PASSWORD_RESET_CONFIRMATION": "'{{name}}'의 암호를 재설정하시겠습니까?",
+    "PASSWORD_RESET_SUCCESS": "암호가 성공적으로 재설정되었습니다.",
+    "STORE": "스토어",
+    "SELECT_STORE_PLACEHOLDER": "스토어 선택",
+    "PHONE_NUMBER": "전화번호",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "B2C 등록 고객입니까?",
+    "SELECT_REGISTERED_CUSTOMER_STORE": "스토어 선택",
+    "PREFERRED_LANGUAGE": "선호 언어",
+    "PREFERRED_CURRENCY": "선호 통화",
+    "SELECT_PREFERRED_CURRENCY": "선호 언어 선택",
+    "SELECT_PREFERRED_LANGUAGE": "선호 통화 선택",
+    "PREFERRED_METHOD_OF_COMMUNICATION": "선호 커뮤니케이션 수단",
+    "SELECT_PREFERRED_METHOD_OF_COMMUNICATION": "선호 커뮤니케이션 수단 선택",
+    "PREFERRED_METHOD_EMAIL": "이메일",
+    "PREFERRED_METHOD_PHONE": "전화번호",
+    "CHALLENGE_QUESTION": "암호 질문",
+    "CHALLENGE_ANSWER": "암호 질문에 대한 답변",
+    "PARENT_ORGANIZATION_ERROR": "상위 조직이 올바르지 않습니다.",
+    "STORE_ERROR": "스토어가 올바르지 않습니다."
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "조직",
@@ -1265,6 +1286,8 @@
     "TAX_CODES_DELETED_MESSAGE": "세금 코드가 성공적으로 삭제되었습니다.",
     "NOT_COMPLETE_ERROR": "이 페이지의 정보가 완전하지 않습니다. 다음 단계로 계속하십시오.",
     "DELETE_TAX_CONFIRMATION": "'{{taxCodeName}}'을(를) 삭제하시겠습니까?",
+    "DELETE_DEFAULT_SALES_TAX_CODE_ALERT": "기본 판매세 코드가 삭제됩니다. 이 코드를 삭제한 후에는 다른 판매세 코드를 기본값으로 설정해야 합니다.",
+    "DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT": "기본 운송세 코드가 삭제됩니다. 이 코드를 삭제한 후에는 다른 운송세 코드를 기본값으로 설정해야 합니다.",
     "DETAILS": "정보",
     "NAME": "이름",
     "TYPE": "유형",
@@ -1386,6 +1409,7 @@
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "세금 관할 지역이 성공적으로 삭제되었습니다.",
     "NOT_COMPLETE_ERROR": "이 페이지의 정보가 완전하지 않습니다. 다음 단계로 계속하십시오.",
     "DUPLICATE_NAME_ERROR": "세금 관할 지역 이름이 이미 존재합니다.",
-    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "관할 지역 '{{jurisdictionName}}'이(가) 세금 카테고리에서 사용되고 있으므로 삭제할 수 없습니다."
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "관할 지역 '{{jurisdictionName}}'이(가) 세금 카테고리에서 사용되고 있으므로 삭제할 수 없습니다.",
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "선택한 국가 및 시/도 조합이 이미 존재합니다."
   }
 }

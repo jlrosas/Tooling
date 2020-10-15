@@ -1,6 +1,7 @@
 {
   "GENERAL": {
-    "NO_SELECTION_MADE": "Nie dokonano wyboru."
+    "NO_SELECTION_MADE": "Nie dokonano wyboru.",
+    "DISMISS": "Odrzuć"
   },
   "USER_MANAGEMENT": {
     "USERS": "Użytkownicy",
@@ -70,7 +71,27 @@
     "USER_ENABLED_MESSAGE": "Użytkownik został włączony.",
     "USER_DISABLED_MESSAGE": "Użytkownik został wyłączony.",
     "MORE": "Więcej",
-    "REFRESH": "Odśwież"
+    "REFRESH": "Odśwież",
+    "RESET_PASSWORD": "Resetuj hasło",
+    "PASSWORD_RESET_CONFIRMATION": "Czy chcesz zresetować hasło dla użytkownika {{name}}?",
+    "PASSWORD_RESET_SUCCESS": "Hasło zostało zresetowane.",
+    "STORE": "Sklep",
+    "SELECT_STORE_PLACEHOLDER": "Wybierz sklep",
+    "PHONE_NUMBER": "Numer telefonu",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "Czy to jest zarejestrowany klient B2C?",
+    "SELECT_REGISTERED_CUSTOMER_STORE": "Wybierz sklep",
+    "PREFERRED_LANGUAGE": "Preferowany język",
+    "PREFERRED_CURRENCY": "Preferowana waluta",
+    "SELECT_PREFERRED_CURRENCY": "Wybierz preferowany język",
+    "SELECT_PREFERRED_LANGUAGE": "Wybierz preferowaną walutę",
+    "PREFERRED_METHOD_OF_COMMUNICATION": "Preferowany sposób komunikacji",
+    "SELECT_PREFERRED_METHOD_OF_COMMUNICATION": "Wybierz preferowany sposób komunikacji",
+    "PREFERRED_METHOD_EMAIL": "Adres e-mail",
+    "PREFERRED_METHOD_PHONE": "Telefon",
+    "CHALLENGE_QUESTION": "Sekretne pytanie",
+    "CHALLENGE_ANSWER": "Odpowiedz na sekretne pytanie",
+    "PARENT_ORGANIZATION_ERROR": "Niepoprawna organizacja macierzysta.",
+    "STORE_ERROR": "Niepoprawny sklep."
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Organizacje",
@@ -1265,6 +1286,8 @@
     "TAX_CODES_DELETED_MESSAGE": "Kod podatku został usunięty.",
     "NOT_COMPLETE_ERROR": "Informacje na tej stronie są niekompletne. Przejdź do następnego kroku.",
     "DELETE_TAX_CONFIRMATION": "Czy chcesz usunąć nazwę kodu podatkowego „{{taxCodeName}}”?",
+    "DELETE_DEFAULT_SALES_TAX_CODE_ALERT": "Usuwasz domyślny kod podatku od sprzedaży. Po usunięciu należy ustawić inny domyślny kod podatku od sprzedaży.",
+    "DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT": "Usuwasz domyślny kod podatku od dostawy. Po usunięciu należy ustawić inny domyślny kod podatku od dostawy.",
     "DETAILS": "Szczegóły",
     "NAME": "Nazwa",
     "TYPE": "Typ",
@@ -1386,6 +1409,7 @@
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "Jurysdykcja podatkowa została usunięta.",
     "NOT_COMPLETE_ERROR": "Informacje na tej stronie są niekompletne. Przejdź do następnego kroku.",
     "DUPLICATE_NAME_ERROR": "Nazwa jurysdykcji podatkowej już istnieje",
-    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "Nie można usunąć jurysdykcji „{{jurisdictionName}}”, ponieważ jest wykorzystywana w kategorii podatku."
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "Nie można usunąć jurysdykcji „{{jurisdictionName}}”, ponieważ jest wykorzystywana w kategorii podatku.",
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "Wybrane połączenie kraju i województwa już istnieje."
   }
 }

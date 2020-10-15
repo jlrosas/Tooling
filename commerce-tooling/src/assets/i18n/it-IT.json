@@ -1,6 +1,7 @@
 {
   "GENERAL": {
-    "NO_SELECTION_MADE": "Non sono state effettuate selezioni."
+    "NO_SELECTION_MADE": "Non sono state effettuate selezioni.",
+    "DISMISS": "Ignora"
   },
   "USER_MANAGEMENT": {
     "USERS": "Utenti",
@@ -70,7 +71,27 @@
     "USER_ENABLED_MESSAGE": "Utente abilitato correttamente.",
     "USER_DISABLED_MESSAGE": "Utente disabilitato correttamente.",
     "MORE": "Altro",
-    "REFRESH": "Aggiorna"
+    "REFRESH": "Aggiorna",
+    "RESET_PASSWORD": "Reimposta password",
+    "PASSWORD_RESET_CONFIRMATION": "Reimpostare la password per \"{{name}}\"?",
+    "PASSWORD_RESET_SUCCESS": "Password reimpostata correttamente.",
+    "STORE": "Punto vendita",
+    "SELECT_STORE_PLACEHOLDER": "Seleziona punto vendita",
+    "PHONE_NUMBER": "Numero di telefono",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "È un cliente registrato B2C?",
+    "SELECT_REGISTERED_CUSTOMER_STORE": "Seleziona punto vendita",
+    "PREFERRED_LANGUAGE": "Lingua preferita",
+    "PREFERRED_CURRENCY": "Valuta preferita",
+    "SELECT_PREFERRED_CURRENCY": "Seleziona la lingua preferita",
+    "SELECT_PREFERRED_LANGUAGE": "Seleziona la valuta preferita",
+    "PREFERRED_METHOD_OF_COMMUNICATION": "Metodo di comunicazione preferito",
+    "SELECT_PREFERRED_METHOD_OF_COMMUNICATION": "Seleziona il metodo di comunicazione preferito",
+    "PREFERRED_METHOD_EMAIL": "Email",
+    "PREFERRED_METHOD_PHONE": "Telefono",
+    "CHALLENGE_QUESTION": "Domanda per la richiesta di verifica",
+    "CHALLENGE_ANSWER": "Risposta alla domanda per la richiesta di verifica",
+    "PARENT_ORGANIZATION_ERROR": "Organizzazione padre non valida.",
+    "STORE_ERROR": "Punto vendita non valido."
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Organizzazioni",
@@ -1265,6 +1286,8 @@
     "TAX_CODES_DELETED_MESSAGE": "Codice imposta eliminato correttamente.",
     "NOT_COMPLETE_ERROR": "Le informazioni in questa pagina non sono complete. Proseguire al passaggio successivo.",
     "DELETE_TAX_CONFIRMATION": "Eliminare '{{taxCodeName}}'?",
+    "DELETE_DEFAULT_SALES_TAX_CODE_ALERT": "È in corso l'eliminazione del codice IVA predefinito. Impostare un altro codice IVA predefinito dopo l'eliminazione.",
+    "DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT": "È in corso l'eliminazione del codice di spedizione predefinito. Impostare un altro codice di spedizione predefinito dopo l'eliminazione.",
     "DETAILS": "Dettagli",
     "NAME": "Nome",
     "TYPE": "Tipo",
@@ -1386,6 +1409,7 @@
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "Giurisdizione fiscale eliminata correttamente.",
     "NOT_COMPLETE_ERROR": "Le informazioni in questa pagina non sono complete. Proseguire al passaggio successivo.",
     "DUPLICATE_NAME_ERROR": "Il nome della giurisdizione fiscale esiste già",
-    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "La giurisdizione '{{jurisdictionName}}' non può essere eliminata perché è in uso in una categoria imposta."
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "La giurisdizione '{{jurisdictionName}}' non può essere eliminata perché è in uso in una categoria imposta.",
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "La combinazione di Paese e stato selezionata già esiste."
   }
 }

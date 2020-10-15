@@ -1,6 +1,7 @@
 {
   "GENERAL": {
-    "NO_SELECTION_MADE": "何も選択されていません。"
+    "NO_SELECTION_MADE": "何も選択されていません。",
+    "DISMISS": "破棄"
   },
   "USER_MANAGEMENT": {
     "USERS": "ユーザー",
@@ -70,7 +71,27 @@
     "USER_ENABLED_MESSAGE": "ユーザーは正常に有効化されました。",
     "USER_DISABLED_MESSAGE": "ユーザーは正常に無効化されました。",
     "MORE": "もっと見る",
-    "REFRESH": "リフレッシュ"
+    "REFRESH": "リフレッシュ",
+    "RESET_PASSWORD": "パスワードのリセット",
+    "PASSWORD_RESET_CONFIRMATION": "'{{name}}' のパスワードをリセットしますか?",
+    "PASSWORD_RESET_SUCCESS": "パスワードは正常にリセットされました。",
+    "STORE": "ストア",
+    "SELECT_STORE_PLACEHOLDER": "ストアの選択",
+    "PHONE_NUMBER": "電話番号",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "これは B2C 登録済み顧客ですか?",
+    "SELECT_REGISTERED_CUSTOMER_STORE": "ストアの選択",
+    "PREFERRED_LANGUAGE": "使用言語",
+    "PREFERRED_CURRENCY": "優先通貨",
+    "SELECT_PREFERRED_CURRENCY": "使用言語の選択",
+    "SELECT_PREFERRED_LANGUAGE": "優先通貨の選択",
+    "PREFERRED_METHOD_OF_COMMUNICATION": "使用するコミュニケーション方法",
+    "SELECT_PREFERRED_METHOD_OF_COMMUNICATION": "使用するコミュニケーション方法の選択",
+    "PREFERRED_METHOD_EMAIL": "E メール",
+    "PREFERRED_METHOD_PHONE": "電話",
+    "CHALLENGE_QUESTION": "確認のための質問",
+    "CHALLENGE_ANSWER": "確認のための質問に答える",
+    "PARENT_ORGANIZATION_ERROR": "無効な親組織です。",
+    "STORE_ERROR": "ストアが無効です。"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "組織",
@@ -1265,6 +1286,8 @@
     "TAX_CODES_DELETED_MESSAGE": "税コードは正常に削除されました。",
     "NOT_COMPLETE_ERROR": "このページの情報は不完全です。次のステップに進みます。",
     "DELETE_TAX_CONFIRMATION": "'{{taxCodeName}}' を削除しますか?",
+    "DELETE_DEFAULT_SALES_TAX_CODE_ALERT": "デフォルトの消費税コードを削除しています。このコードを削除した後に別の消費税コードをデフォルトとして設定する必要があります。",
+    "DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT": "デフォルトの配送税コードを削除しています。このコードを削除した後に別の配送税コードをデフォルトとして設定する必要があります。",
     "DETAILS": "詳細情報",
     "NAME": "名前",
     "TYPE": "タイプ",
@@ -1386,6 +1409,7 @@
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "税務管轄区域は正常に削除されました。",
     "NOT_COMPLETE_ERROR": "このページの情報は不完全です。次のステップに進みます。",
     "DUPLICATE_NAME_ERROR": "税務管轄区域名は既に存在します",
-    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "管轄区域 '{{jurisdictionName}}' は削除できません。税カテゴリーで使用されています。"
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "管轄区域 '{{jurisdictionName}}' は削除できません。税カテゴリーで使用されています。",
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "選択された国と都道府県の組み合わせは既に存在します。"
   }
 }

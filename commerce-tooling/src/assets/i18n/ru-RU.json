@@ -1,6 +1,7 @@
 {
   "GENERAL": {
-    "NO_SELECTION_MADE": "Ничего не выбрано."
+    "NO_SELECTION_MADE": "Ничего не выбрано.",
+    "DISMISS": "Закрыть"
   },
   "USER_MANAGEMENT": {
     "USERS": "Пользователи",
@@ -70,7 +71,27 @@
     "USER_ENABLED_MESSAGE": "Пользователь включен.",
     "USER_DISABLED_MESSAGE": "Пользователь отключен.",
     "MORE": "Дополнительно",
-    "REFRESH": "Обновить"
+    "REFRESH": "Обновить",
+    "RESET_PASSWORD": "Сбросить пароль",
+    "PASSWORD_RESET_CONFIRMATION": "Сбросить пароль для '{{name}}'?",
+    "PASSWORD_RESET_SUCCESS": "Пароль успешно сброшен.",
+    "STORE": "Магазин",
+    "SELECT_STORE_PLACEHOLDER": "Выберите магазин",
+    "PHONE_NUMBER": "Номер телефона",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "Этот клиент зарегистрирован в качестве B2C?",
+    "SELECT_REGISTERED_CUSTOMER_STORE": "Выберите магазин",
+    "PREFERRED_LANGUAGE": "Предпочитаемый язык",
+    "PREFERRED_CURRENCY": "Предпочитаемая валюта",
+    "SELECT_PREFERRED_CURRENCY": "Выберите предпочитаемый язык",
+    "SELECT_PREFERRED_LANGUAGE": "Выберите предпочитаемую валюту",
+    "PREFERRED_METHOD_OF_COMMUNICATION": "Предпочитаемый способ связи",
+    "SELECT_PREFERRED_METHOD_OF_COMMUNICATION": "Выберите предпочитаемый способ связи",
+    "PREFERRED_METHOD_EMAIL": "Эл. почта",
+    "PREFERRED_METHOD_PHONE": "Телефон",
+    "CHALLENGE_QUESTION": "Секретный вопрос",
+    "CHALLENGE_ANSWER": "Ответ на секретный вопрос",
+    "PARENT_ORGANIZATION_ERROR": "Недопустимая родительская организация.",
+    "STORE_ERROR": "Недопустимый магазин."
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Организации",
@@ -1117,7 +1138,7 @@
     "DUPLICATE_FULFILLMENT_OPTION_ERROR": "Параметр выполнения с таким центром выполнения, юрисдикцией и режимом доставки уже существует.",
     "MORE": "Дополнительно",
     "FULFILLMENT_CENTER_ERROR": "Недействительный центр выполнения",
-    "JURISDICTION_ERROR": "Недействительная юрисдикция",
+    "JURISDICTION_ERROR": "Недопустимая юрисдикция",
     "SHIPPING_MODE_ERROR": "Недействительный режим доставки",
     "SEARCH_BY_NAME": "По имени",
     "SHIPPING_CHARGE_DELETED_MESSAGE": "Оплаты за доставку удалены.",
@@ -1265,6 +1286,8 @@
     "TAX_CODES_DELETED_MESSAGE": "Код налога удален.",
     "NOT_COMPLETE_ERROR": "Страница не заполнена. Перейдите к следующему шагу.",
     "DELETE_TAX_CONFIRMATION": "Удалить '{{taxCodeName}}'?",
+    "DELETE_DEFAULT_SALES_TAX_CODE_ALERT": "Вы удаляете стандартный код налога с продаж. После его удаления задайте другой код налога с продаж в качестве стандартного.",
+    "DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT": "Вы удаляете стандартный код налога на доставку. После его удаления задайте другой код налога на доставку в качестве стандартного.",
     "DETAILS": "Сведения",
     "NAME": "Имя",
     "TYPE": "Тип",
@@ -1386,6 +1409,7 @@
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "Налоговая юрисдикция удалена.",
     "NOT_COMPLETE_ERROR": "Страница не заполнена. Перейдите к следующему шагу.",
     "DUPLICATE_NAME_ERROR": "Имя налоговой юрисдикции уже существует",
-    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "Юрисдикцию '{{jurisdictionName}}' невозможно удалить. Она используется в категории налога."
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "Юрисдикцию '{{jurisdictionName}}' невозможно удалить. Она используется в категории налога.",
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "Выбранное сочетание страны и региона уже существует."
   }
 }

@@ -1,6 +1,7 @@
 {
   "GENERAL": {
-    "NO_SELECTION_MADE": "尚未進行任何選擇。"
+    "NO_SELECTION_MADE": "尚未進行任何選擇。",
+    "DISMISS": "關閉"
   },
   "USER_MANAGEMENT": {
     "USERS": "使用者",
@@ -70,7 +71,27 @@
     "USER_ENABLED_MESSAGE": "已順利啟用使用者。",
     "USER_DISABLED_MESSAGE": "已順利停用使用者。",
     "MORE": "更多",
-    "REFRESH": "重新整理"
+    "REFRESH": "重新整理",
+    "RESET_PASSWORD": "重設密碼",
+    "PASSWORD_RESET_CONFIRMATION": "您是否要重設「{{name}}」的密碼？",
+    "PASSWORD_RESET_SUCCESS": "已順利重設密碼。",
+    "STORE": "商店",
+    "SELECT_STORE_PLACEHOLDER": "選取商店",
+    "PHONE_NUMBER": "電話號碼",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "這是否為已註冊 B2C 的客戶？",
+    "SELECT_REGISTERED_CUSTOMER_STORE": "選取商店",
+    "PREFERRED_LANGUAGE": "偏好語言",
+    "PREFERRED_CURRENCY": "偏好貨幣",
+    "SELECT_PREFERRED_CURRENCY": "選取偏好語言",
+    "SELECT_PREFERRED_LANGUAGE": "選取偏好貨幣",
+    "PREFERRED_METHOD_OF_COMMUNICATION": "偏好的通訊方法",
+    "SELECT_PREFERRED_METHOD_OF_COMMUNICATION": "選取偏好的通訊方法",
+    "PREFERRED_METHOD_EMAIL": "電子郵件",
+    "PREFERRED_METHOD_PHONE": "電話",
+    "CHALLENGE_QUESTION": "挑戰問題",
+    "CHALLENGE_ANSWER": "挑戰問題的答案",
+    "PARENT_ORGANIZATION_ERROR": "母項組織無效。",
+    "STORE_ERROR": "商店無效。"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "組織",
@@ -1265,6 +1286,8 @@
     "TAX_CODES_DELETED_MESSAGE": "已順利刪除稅籍代碼。",
     "NOT_COMPLETE_ERROR": "此頁面上的資訊未完成。請繼續進行下一步。",
     "DELETE_TAX_CONFIRMATION": "您是否要刪除「{{taxCodeName}}」？",
+    "DELETE_DEFAULT_SALES_TAX_CODE_ALERT": "您即將刪除預設的營業稅代碼。刪除此營業稅代碼之後，應將另一個營業稅代碼設為預設值。",
+    "DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT": "您即將刪除預設的運輸稅代碼。刪除此運輸稅代碼之後，應將另一個運輸稅代碼設為預設值。",
     "DETAILS": "詳細資料",
     "NAME": "名稱",
     "TYPE": "類型",
@@ -1386,6 +1409,7 @@
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "已順利刪除稅金適用範圍。",
     "NOT_COMPLETE_ERROR": "此頁面上的資訊未完成。請繼續進行下一步。",
     "DUPLICATE_NAME_ERROR": "稅金適用範圍名稱已存在",
-    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "此適用範圍 '{{jurisdictionName}}' 無法刪除，已用於稅金種類。"
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "此適用範圍 '{{jurisdictionName}}' 無法刪除，已用於稅金種類。",
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "選取的國家/地區和州組合已存在。"
   }
 }

@@ -1,6 +1,7 @@
 {
   "GENERAL": {
-    "NO_SELECTION_MADE": "Nu s-a făcut nicio selecție."
+    "NO_SELECTION_MADE": "Nu s-a făcut nicio selecție.",
+    "DISMISS": "Respingere"
   },
   "USER_MANAGEMENT": {
     "USERS": "Utilizatori",
@@ -70,7 +71,27 @@
     "USER_ENABLED_MESSAGE": "Utilizatorul a fost activat cu succes.",
     "USER_DISABLED_MESSAGE": "Utilizatorul a fost dezactivat cu succes.",
     "MORE": "Mai mult",
-    "REFRESH": "Reîncărcare"
+    "REFRESH": "Reîncărcare",
+    "RESET_PASSWORD": "Resetare parolă",
+    "PASSWORD_RESET_CONFIRMATION": "Doriți să resetați parola pentru '{{name}}'?",
+    "PASSWORD_RESET_SUCCESS": "Resetarea parolei a reușit.",
+    "STORE": "Magazin",
+    "SELECT_STORE_PLACEHOLDER": "Selectare magazin",
+    "PHONE_NUMBER": "Număr de telefon",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "Acesta este un client B2C înregistrat?",
+    "SELECT_REGISTERED_CUSTOMER_STORE": "Selectare magazin",
+    "PREFERRED_LANGUAGE": "Limbă preferată",
+    "PREFERRED_CURRENCY": "Valută preferată",
+    "SELECT_PREFERRED_CURRENCY": "Selectați limba preferată",
+    "SELECT_PREFERRED_LANGUAGE": "Selectați valuta preferată",
+    "PREFERRED_METHOD_OF_COMMUNICATION": "Metoda preferată de comunicare",
+    "SELECT_PREFERRED_METHOD_OF_COMMUNICATION": "Selectați metoda preferată de comunicare",
+    "PREFERRED_METHOD_EMAIL": "E-mail",
+    "PREFERRED_METHOD_PHONE": "Telefon",
+    "CHALLENGE_QUESTION": "Întrebare de verificare",
+    "CHALLENGE_ANSWER": "Răspundeți la întrebarea de verificare",
+    "PARENT_ORGANIZATION_ERROR": "Organizație părinte nevalidă.",
+    "STORE_ERROR": "Magazin nevalid."
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Organizații",
@@ -1265,6 +1286,8 @@
     "TAX_CODES_DELETED_MESSAGE": "Codul de impozitare a fost șters cu succes.",
     "NOT_COMPLETE_ERROR": "Informațiile din această pagină nu sunt complete. Continuați cu pasul următor.",
     "DELETE_TAX_CONFIRMATION": "Doriți să ștergeți '{{taxCodeName}}'?",
+    "DELETE_DEFAULT_SALES_TAX_CODE_ALERT": "Sunteți pe cale să ștergeți codul implicit pentru impozitul pe vânzări. Trebuie să setați un alt cod implicit pentru impozitul pe vânzări după ce-l ștergeți pe acesta.",
+    "DELETE_DEFAULT_SHIPPING_TAX_CODE_ALERT": "Sunteți pe cale să ștergeți codul implicit pentru taxa de livrare. Trebuie să setați un alt cod implicit pentru taxa de livrare după ce-l ștergeți pe acesta.",
     "DETAILS": "Detalii",
     "NAME": "Nume",
     "TYPE": "Tip",
@@ -1386,6 +1409,7 @@
     "TAX_JURISDICTIONS_DELETED_MESSAGE": "Jurisdicția fiscală a fost ștearsă cu succes.",
     "NOT_COMPLETE_ERROR": "Informațiile din această pagină nu sunt complete. Continuați cu pasul următor.",
     "DUPLICATE_NAME_ERROR": "Numele jurisdicției fiscale există deja",
-    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "Jurisdicția '{{jurisdictionName}}' nu poate fi ștearsă, aceasta fiind folosită într-o categorie de impozitare."
+    "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "Jurisdicția '{{jurisdictionName}}' nu poate fi ștearsă, aceasta fiind folosită într-o categorie de impozitare.",
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "Există deja combinația selectată de țară și stat."
   }
 }
