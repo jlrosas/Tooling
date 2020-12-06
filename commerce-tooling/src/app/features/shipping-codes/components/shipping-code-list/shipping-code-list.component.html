@@ -75,7 +75,9 @@
 				<ng-container matColumnDef="calculationCode" sticky>
 					<th mat-header-cell *matHeaderCellDef mat-sort-header="">{{'SHIPPING_CODES.NAME' | translate}}</th>
 					<td mat-cell *matCellDef="let row">
-						<a [routerLink]="['/shipping-codes/edit-shipping-code', row.id, {storeId: selectedStore.id}]">{{row.calculationCode}}</a>
+						<a [routerLink]="['/shipping-codes/edit-shipping-code', row.id, {storeId: selectedStore.id}]">
+							{{row.calculationCode}}
+						</a>
 					</td>
 				</ng-container>
 				<ng-container matColumnDef="status">
@@ -89,7 +91,8 @@
 				<ng-container matColumnDef="actions" stickyEnd>
 					<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CODES.ACTIONS' | translate}}</th>
 					<td mat-cell *matCellDef="let element">
-						<button matTooltip="{{'SHIPPING_CODES.DELETE' | translate}}" mat-icon-button aria-label="delete" (click)="deleteShippingCode(element)">
+						<button *ngIf="element.storeId === selectedStore.id" matTooltip="{{'SHIPPING_CODES.DELETE' | translate}}"
+								mat-icon-button aria-label="delete" (click)="deleteShippingCode(element)">
 							<mat-icon color="primary">delete</mat-icon>
 						</button>
 						<button class="button-icon" mat-icon-button [matMenuTriggerFor]="appMenu">
@@ -97,11 +100,11 @@
 						</button>
 						<mat-menu #appMenu="matMenu">
 							<ng-template matMenuContent>
-								<button mat-menu-item *ngIf="element.status === 0"
+								<button mat-menu-item *ngIf="element.status === 0 && element.storeId === selectedStore.id"
 										(click)="setShippingCodeStatus(element.id, 1)">
 										{{'SHIPPING_CODES.ACTIVATE' | translate}}
 								</button>
-								<button mat-menu-item *ngIf="element.status === 1"
+								<button mat-menu-item *ngIf="element.status === 1 && element.storeId === selectedStore.id"
 										(click)="setShippingCodeStatus(element.id, 0)">
 										{{'SHIPPING_CODES.DEACTIVATE' | translate}}
 								</button>

@@ -39,7 +39,7 @@ export class TaxCategoryDisplayNameComponent implements OnInit, OnDestroy, After
 	languageList: Array<any> = [];
 	descriptions: Array<any> = [];
 
-	@ViewChild("languageSelect", {static: false}) languageSelect: MatSelect;
+	@ViewChild("languageSelect") languageSelect: MatSelect;
 
 	private onLanguageChangeSubscription: Subscription = null;
 

@@ -1,7 +1,8 @@
 {
   "GENERAL": {
     "NO_SELECTION_MADE": "Es wurde keine Auswahl getroffen.",
-    "DISMISS": "Verwerfen"
+    "DISMISS": "Verwerfen",
+    "NO_RECORDS_FOUND": "Keine Datensätze gefunden"
   },
   "USER_MANAGEMENT": {
     "USERS": "Benutzer",
@@ -78,7 +79,7 @@
     "STORE": "Geschäft",
     "SELECT_STORE_PLACEHOLDER": "Geschäft auswählen",
     "PHONE_NUMBER": "Telefonnummer",
-    "IS_THIS_A_REGISTERED_CUSTOMER": "Handelt es sich hierbei um einen registrierten B2C-Kunden?",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "Handelt es sich hierbei um einen registrierten Kunden?",
     "SELECT_REGISTERED_CUSTOMER_STORE": "Geschäft auswählen",
     "PREFERRED_LANGUAGE": "Bevorzugte Sprache",
     "PREFERRED_CURRENCY": "Bevorzugte Währung",
@@ -91,7 +92,10 @@
     "CHALLENGE_QUESTION": "Sicherheitsfrage",
     "CHALLENGE_ANSWER": "Antwort auf die Sicherheitsfrage",
     "PARENT_ORGANIZATION_ERROR": "Ungültige übergeordnete Organisation.",
-    "STORE_ERROR": "Ungültiges Geschäft."
+    "STORE_ERROR": "Ungültiges Geschäft.",
+    "BUYER_ADMINISTRATOR": "Käufer-Administrator",
+    "BUYER_APPROVER": "Käufer-Genehmiger",
+    "BUYER": "Käufer"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Organisationen",
@@ -279,7 +283,8 @@
     "PHONE_NUMBER": "Telefonnummer",
     "EMPLOYEE_ID": "Mitarbeiter-ID",
     "DISCOUNT": "Rabatt",
-    "TOTAL": "Gesamt"
+    "TOTAL": "Gesamt",
+    "NO_MATCHING_RECORDS_FOUND": "Es wurden keine passenden Datensätze gefunden"
   },
   "MEMBER_GROUPS": {
     "GROUPS": "Mitgliedsgruppen",
@@ -525,7 +530,8 @@
     "CHECKING_ACCOUNT_NUMBER": "Kontonummer wird geprüft",
     "CHECK_ROUTING_NUMBER": "Bankleitzahl prüfen",
     "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "Die Bestellnummer ist bereits vorhanden.",
-    "REFRESH": "Aktualisieren"
+    "REFRESH": "Aktualisieren",
+    "ACTIVE_CONTRACTS_ERROR": "Das Konto konnte nicht gelöscht werden, da unter dem Konto aktive Verträge vorhanden sind. Setzen Sie aktive Verträge aus oder kündigen Sie sie, bevor Sie das Konto löschen."
   },
   "SCHEDULER": {
     "SCHEDULER": "Scheduler",
@@ -985,7 +991,8 @@
     "DELETE": "Löschen",
     "SHIPPING_JURISDICTIONS_DELETED_MESSAGE": "Versandland erfolgreich gelöscht.",
     "NOT_COMPLETE_ERROR": "Die Informationen auf dieser Seite sind nicht vollständig. Fahren Sie mit dem nächsten Schritt fort.",
-    "DUPLICATE_NAME_ERROR": "Name des Versandlandes ist bereits vorhanden"
+    "DUPLICATE_NAME_ERROR": "Name des Versandlandes ist bereits vorhanden",
+    "NO_MATCHING_RECORDS_FOUND": "Es wurden keine passenden Datensätze gefunden"
   },
   "SHIPPING_MODES": {
     "SHIPPING_MODES": "Versandmethoden",
@@ -1035,7 +1042,8 @@
     "TRACKING_URL": "URL zur Sendungsverfolgung",
     "SET_AS_DEFAULT": "Als Standard festlegen",
     "LANGUAGE_ALREADY_EXISTS": "Für diese Sprache ist bereits eine Beschreibung vorhanden.",
-    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "Ausgewählte Spediteur-Service-Kombination ist bereits vorhanden."
+    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "Ausgewählte Spediteur-Service-Kombination ist bereits vorhanden.",
+    "NO_MATCHING_RECORDS_FOUND": "Es wurden keine passenden Datensätze gefunden"
   },
   "SHIPPING_CODES": {
     "SHIPPING_CODES": "Versandcodes",
@@ -1073,17 +1081,41 @@
     "CHARGES": "Gebühren",
     "SELECT_STORE_PLACEHOLDER": "Geschäft auswählen",
     "SELECTED_STORE": "Ausgewähltes Geschäft",
-    "PRODUCT_OR_CATEGORIES": "Produkt oder Kategorien",
+    "PRODUCTS_OR_CATEGORIES": "Geben Sie Kategorien und Produkte an.",
     "SELECT_PRODUCT_OR_CATEGORIES": "Wählen Sie die mit diesem Versandcode verknüpften Produkte oder Kategorien aus.",
     "ALL_PRODUCTS": "Alle Produkte",
-    "SPECIFIC_PRODUCTS": "Spezifisches Produkt bzw. spezifische Produkte",
+    "SPECIFIC_CATEGORIES_AND_PRODUCTS": "Spezifische Kategorien und Produkte",
     "CATEGORIES": "Kategorien",
     "DELETE_SHIPPING_CODE_CONFIRMATION": "Möchten Sie '{{name}}' löschen?",
     "SHIPPING_CODE_DELETED_MESSAGE": "Versandcode erfolgreich gelöscht.",
     "ACTIVATED": "Aktiviert",
     "DEACTIVATED": "Deaktiviert",
     "SHIPPING_CODE_ACTIVATED_MESSAGE": "Versandcode erfolgreich aktiviert.",
-    "SHIPPING_CODE_DEACTIVATED_MESSAGE": "Versandcode erfolgreich deaktiviert."
+    "SHIPPING_CODE_DEACTIVATED_MESSAGE": "Versandcode erfolgreich deaktiviert.",
+    "SELECTED_CATEGORIES": "Ausgewählte Kategorien",
+    "SELECTED_PRODUCTS": "Ausgewählte Produkte",
+    "SKU": "Artikelposition",
+    "CATALOG": "Katalog",
+    "DELETE_SELECTED": "Ausgewählte löschen",
+    "CLEAR_SELECTION": "Auswahl löschen",
+    "SELECT_CATEGORIES_AND_PRODUCTS": "Kategorien und Produkte auswählen",
+    "CATALOG_BROWSER": "Katalog-Browser",
+    "SEARCH_PRODUCTS": "Produkte suchen",
+    "PRODUCTS_SEARCH_BY": "Suche nach Artikelposition, Name oder Kurzbeschreibung",
+    "VIEW_FULL_LIST": "Vollständige Liste anzeigen",
+    "SHOWING_ITEM_OF_TOTAL_ITEMS": "Zeige {{totalItemsInList}} von {{totalItems}} an",
+    "MORE": "Mehr",
+    "FILTER_CATALOG": "Katalog filtern",
+    "NO_MATCHING_RECORDS_FOUND": "Es wurden keine passenden Datensätze gefunden",
+    "CATALOG_ERROR": "Ungültiger Katalog",
+    "SELECT_CATEGORY": "Kategorie auswählen",
+    "SELECT_PRODUCT": "Produkt auswähleb",
+    "CATEGORY": "Kategorie",
+    "PRODUCT": "Produkt",
+    "ADD": "Hinzufügen",
+    "SHORT_DESCRIPTION": "Kurzbeschreibung",
+    "FILTER": "Filter",
+    "FILTER_BY_NAME": "Nach Name filtern"
   },
   "SHIPPING_CHARGES": {
     "SHIPPING_CHARGES": "Versandgebühren",
@@ -1124,6 +1156,7 @@
     "SHIPPING_CHARGE_START": "Beginn",
     "SHIPPING_CHARGE_END": "Ende",
     "BEFORE_START_DATE": "Enddatum kann nicht vor Startdatum liegen.",
+    "AFTER_END_DATE": "Das Startdatum kann nicht nach dem Enddatum liegen.",
     "RANGE": "Bereich",
     "RANGE_START": "Bereichsstart",
     "DELETE_SHIPPING_CHARGE": "Versandgebühr löschen",
@@ -1147,6 +1180,7 @@
     "BY_QUANTITY": "Nach Menge",
     "BY_WEIGHT": "Nach Gewicht",
     "FIXED": "Festgelegt",
+    "AMOUNT": "Betrag",
     "CHARGE": "Gebühr",
     "CURRENCY": "Währung",
     "UNIT_OF_MEASURE": "Maßeinheit",
@@ -1157,12 +1191,17 @@
     "FROM_START_TO_END": "Von {{start}} bis {{end}}",
     "FROM_START_AND_UP": "Von {{start}} und bis",
     "SHIPPING_CHARGE_CREATED_MESSAGE": "Versandgebühr '{{name}}' erfolgreich erstellt.",
-    "NO_RANGES_ERROR": "Sie müssen mindestens einen Gebührenbereich definieren."
+    "NO_RANGES_ERROR": "Sie müssen mindestens einen Gebührenbereich definieren.",
+    "NOT_COMPLETE_ERROR": "Die Informationen auf dieser Seite sind nicht vollständig. Fahren Sie mit dem nächsten Schritt fort."
   },
   "TRANSPORTS": {
     "TRANSPORTS": "Transporte",
     "SEARCH": "Suche",
     "CLEAR": "Löschen",
+    "REFRESH": "Aktualisieren",
+    "STORE_FILTER": "Geschäftsfilter",
+    "STATUS_FILTER": "Statusfilter",
+    "SELECT_STORE_PLACEHOLDER": "Geschäft auswählen",
     "ACTIONS": "Aktionen",
     "NEW_BUTTON": "Neu",
     "NEW_TRANSPORT": "Neuer Transport",
@@ -1183,7 +1222,55 @@
     "DELETE_TRANSPORT": "Transport löschen",
     "DELETE": "Löschen",
     "TRANSPORTS_DELETED_MESSAGE": "Transport erfolgreich gelöscht.",
-    "NOT_COMPLETE_ERROR": "Die Informationen auf dieser Seite sind nicht vollständig. Fahren Sie mit dem nächsten Schritt fort."
+    "NOT_COMPLETE_ERROR": "Die Informationen auf dieser Seite sind nicht vollständig. Fahren Sie mit dem nächsten Schritt fort.",
+    "ACTIVE": "Aktiv",
+    "INACTIVE": "Inaktiv",
+    "NAME": "Transportname",
+    "STATUS": "Status",
+    "DESCRIPTION_FILTER": "Beschreibungsfilter",
+    "SEARCH_BY_DESCRIPTION": "Suche nach Beschreibung",
+    "SEARCH_BY_TRANSPORT": "Suche nach Transportname",
+    "CONFIGURATION": "Transportkonfiguration",
+    "CONFIGURATOR": "Sterling",
+    "CONFIGURATOR_DESC": "Verbindungseinstellungen für Sterling",
+    "STERLINGOMS": "Sterling OMS",
+    "STERLINGOMS_DESC": "Verbindungseinstellungen für Sterling OMS",
+    "DEMANDTECFTP": "DemandTec SFTP",
+    "DEMANDTECFTP_DESC": "Verbindungseinstellungen für DemandTec SFTP",
+    "DPEXPORTFTP": "SFTP-Export mit dynamischer Preisgestaltung",
+    "DPEXPORTFTP_DESC": "Verbindungseinstellungen für SFTP-Export mit dynamischer Preisgestaltung",
+    "DPIMPORTFTP": "SFTP-Import mit dynamischer Preisgestaltung",
+    "DPIMPORTFTP_DESC": "Verbindungseinstellungen für SFTP-Import mit dynamischer Preisgestaltung",
+    "JCAUBX": "UBX-Integration",
+    "JCAUBX_DESC": "Konfiguration für UBX-Integration",
+    "JCAWCH": "ehemalige Watson Content Hub-Integration",
+    "JCAWCH_DESC": "Konfiguration für ehemalige Watson Content Hub-Integration",
+    "COMMERCEFTP": "ehemalige Commerce Insights SFTP",
+    "COMMERCEFTP_DESC": "Verbindungseinstellungen für ehemalige Commerce Insights SFTP",
+    "EMAILSENDER": "E-Mail",
+    "EMAILSENDER_DESC": "E-Mail-Absender",
+    "FILE": "Datei",
+    "FILE_DESC": "Dateischreiber",
+    "MQ": "IBM MQ",
+    "MQ_DESC": "IBM MQ",
+    "FAX": "Fax",
+    "FAX_DESC": "Fax-Absender",
+    "SMSHTTP": "SMS HTTP",
+    "SMSWS": "SMS-Webdienste",
+    "SMSHTTP_DESC": "SMS HTTP-Adapter",
+    "SMSWS_DESC": "SMS Webservices-Adapter",
+    "WEBSERVICES_HTTP": "Webdienste über HTTP",
+    "WEBSERVICES_JMS": "Webdienste über JMS",
+    "HTTP": "HTTP",
+    "SILVERPOP": "Silverpop",
+    "SILVERPOP_DESC": "Senden Sie Transaktions-E-Mails mit Silverpop Transact",
+    "SAMPLE_CONNECTOR": "Beispieladapter",
+    "SAMPLE_CONNECTOR_DESC": "Beispieladapter",
+    "DATALOAD_SFTP": "Datenlast-SFTP",
+    "DATALOAD_SFTP_DESC": "SFTP-Verbindungseinstellungen für Geschäfterstellungsdaten-Dateispeicher",
+    "SUCCESS_360": "Success 360",
+    "SUCCESS_360_DESC": "Success 360-Integrationseinstellungen",
+    "NO_PROPERTIES": "Dieser Transport hat keine Konfigurationseigenschaften"
   },
   "MESSAGE_TYPES": {
     "MESSAGE_TYPES": "Nachrichtentypen",
@@ -1299,7 +1386,8 @@
     "TAX_TYPE_SHIPPING": "Versandsteuer",
     "IS_DEFAULT": "Ja",
     "SET_AS_DEFAULT": "Als Standard festlegen",
-    "DEFAULT_SET_SUCCESS_MESSAGE": "Standardsteuercode erfolgreich aktualisiert."
+    "DEFAULT_SET_SUCCESS_MESSAGE": "Standardsteuercode erfolgreich aktualisiert.",
+    "CODE_BEING_USED_IN_TAX_CATEGORY": "Der Steuercode '{{taxCodeName}}' kann nicht gelöscht werden, da er in einer Steuerkategorie verwendet wird."
   },
   "TAX_CATEGORIES": {
     "TAX_CATEGORIES": "Steuerkategorien",
@@ -1410,6 +1498,7 @@
     "NOT_COMPLETE_ERROR": "Die Informationen auf dieser Seite sind nicht vollständig. Fahren Sie mit dem nächsten Schritt fort.",
     "DUPLICATE_NAME_ERROR": "Name des Steuergebiets ist bereits vorhanden",
     "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "Die Zuständigkeit '{{jurisdictionName}}' kann nicht gelöscht werden, da sie in einer Steuerkategorie verwendet wird.",
-    "DUPLICATE_COUNTRY_STATE_COMBINATION": "Die ausgewählte Kombination von Land und Bundesland existiert bereits."
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "Die ausgewählte Kombination von Land und Bundesland existiert bereits.",
+    "NO_MATCHING_RECORDS_FOUND": "Es wurden keine passenden Datensätze gefunden"
   }
 }

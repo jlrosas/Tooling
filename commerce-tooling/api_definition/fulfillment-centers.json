@@ -44,6 +44,14 @@
                         }
                     },
                     {
+		                "name": "storeId",
+		                "in": "query",
+		                "description": "The store ID.",
+		                "required": false,
+		                "type": "integer",
+		                "format": "int32"
+                    },
+                    {
                         "name": "memberId",
                         "in": "query",
                         "description": "The owning organization ID.",

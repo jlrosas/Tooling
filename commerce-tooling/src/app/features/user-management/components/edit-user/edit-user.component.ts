@@ -10,7 +10,7 @@
  */
 
 import { Component, ViewChild } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { UserMainService } from "../../services/user-main.service";
 import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
@@ -21,9 +21,10 @@ import { MatStepper } from "@angular/material/stepper";
 	styleUrls: ["./edit-user.component.scss"]
 })
 export class EditUserComponent {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	constructor(private router: Router,
+			private route: ActivatedRoute,
 			private userMainService: UserMainService,
 			private alertService: AlertService,
 			private translateService: TranslateService) { }
@@ -42,7 +43,7 @@ export class EditUserComponent {
 	cancel() {
 		this.alertService.clear();
 		this.userMainService.clearData();
-		this.router.navigate(["/users"]);
+		this.router.navigate(["/users", {storeId: this.route.snapshot.params.storeId}]);
 	}
 
 	save() {
@@ -58,7 +59,7 @@ export class EditUserComponent {
 			if (valid) {
 				this.userMainService.updateUser().subscribe(response => {
 					this.userMainService.clearData();
-					this.router.navigate(["/users"]);
+					this.router.navigate(["/users", {storeId: this.route.snapshot.params.storeId}]);
 					this.translateService.get("USER_MANAGEMENT.USER_SAVED_MESSAGE").subscribe((message: string) => {
 						this.alertService.success({message});
 					});

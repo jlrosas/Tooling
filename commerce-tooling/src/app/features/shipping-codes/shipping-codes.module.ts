@@ -34,6 +34,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatRadioModule } from "@angular/material/radio";
+import { MatTabsModule } from "@angular/material/tabs";
 import { ShippingCodesRoutingModule } from "./shipping-codes-routing.module";
 import { ShippingCodeListComponent } from "./components/shipping-code-list/shipping-code-list.component";
 import { ShippingCodeDetailsComponent } from "./components/shipping-code-details/shipping-code-details.component";
@@ -42,6 +43,17 @@ import { CreateShippingCodeComponent } from "./components/create-shipping-code/c
 import { ShippingCodeCategoriesComponent } from "./components/shipping-code-categories/shipping-code-categories.component";
 import { EditShippingCodeComponent } from "./components/edit-shipping-code/edit-shipping-code.component";
 import { DeleteShippingCodeDialogComponent } from "./components/delete-shipping-code-dialog/delete-shipping-code-dialog.component";
+import { ShippingCategoryListComponent } from "./components/shipping-category-list/shipping-category-list.component";
+import { ShippingProductListComponent } from "./components/shipping-product-list/shipping-product-list.component";
+import {
+	SelectShippingCategoriesAndProductsComponent
+} from "./components/select-shipping-categories-and-products/select-shipping-categories-and-products.component";
+import { ShippingCatalogBrowserComponent } from "./components/shipping-catalog-browser/shipping-catalog-browser.component";
+import { SearchShippingProductsComponent } from "./components/search-shipping-products/search-shipping-products.component";
+import { SearchShippingCategoriesComponent } from "./components/search-shipping-categories/search-shipping-categories.component";
+import { ShippingChipViewerComponent } from "./components/shipping-chip-viewer/shipping-chip-viewer.component";
+import { MatTreeModule } from "@angular/material/tree";
+import { MatProgressBarModule } from "@angular/material";
 
 @NgModule({
 	imports: [
@@ -71,7 +83,10 @@ import { DeleteShippingCodeDialogComponent } from "./components/delete-shipping-
 		MatListModule,
 		MatChipsModule,
 		MatTooltipModule,
-		MatRadioModule
+		MatRadioModule,
+		MatTabsModule,
+		MatTreeModule,
+		MatProgressBarModule
 	],
 	declarations: [
 		ShippingCodeListComponent,
@@ -79,12 +94,16 @@ import { DeleteShippingCodeDialogComponent } from "./components/delete-shipping-
 		ShippingCodeDetailsComponent,
 		ShippingCodeCategoriesComponent,
 		EditShippingCodeComponent,
-		DeleteShippingCodeDialogComponent
+		DeleteShippingCodeDialogComponent,
+		ShippingCategoryListComponent,
+		ShippingProductListComponent,
+		SelectShippingCategoriesAndProductsComponent,
+		ShippingCatalogBrowserComponent,
+		SearchShippingProductsComponent,
+		SearchShippingCategoriesComponent,
+		ShippingChipViewerComponent
 	],
 	providers: [
-	],
-	entryComponents: [
-		DeleteShippingCodeDialogComponent
 	]
 })
 export class ShippingCodesModule {}

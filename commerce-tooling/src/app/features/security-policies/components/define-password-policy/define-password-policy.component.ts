@@ -37,7 +37,7 @@ export class DefinePasswordPolicyComponent implements OnInit, AfterViewInit {
 	@Input() reusePassword: FormControl;
 	@Input() matchUserId: FormControl;
 	@Output() save: EventEmitter<any> = new EventEmitter<any>();
-	@ViewChild("matchUserIdInput", {static: false}) matchUserIdInput: MatSlideToggle;
+	@ViewChild("matchUserIdInput") matchUserIdInput: MatSlideToggle;
 
 	passwordPolicyForm: FormGroup | any;
 

@@ -12,6 +12,9 @@
 <form [formGroup]="paymentBillingForm" (ngSubmit)="$event.preventDefault()">
 	<div class="bx--row">
 		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<mat-checkbox *ngIf="allowAccountCreditLineCheckVisibility" formControlName="allowAccountCreditLine" (change)="changeAllowAccountCreditLine($event)">
+				{{'CONTRACTS.ALLOW_PAYMENT_USING_CREDIT_LINE' | translate}}
+			</mat-checkbox>
 			<hc-contract-payment-method-list mode="{{mode}}"></hc-contract-payment-method-list>
 			
 			<div class="hc-type-text">

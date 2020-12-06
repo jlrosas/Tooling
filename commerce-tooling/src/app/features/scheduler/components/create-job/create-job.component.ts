@@ -22,7 +22,7 @@ import { AlertService } from "../../../../services/alert.service";
 	styleUrls: ["./create-job.component.scss"]
 })
 export class CreateJobComponent implements OnInit, OnDestroy {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	applicationType: string = null;
 	onApplicationTypeChangeSubscription: Subscription = null;

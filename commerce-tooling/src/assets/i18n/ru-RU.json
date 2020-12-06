@@ -1,7 +1,8 @@
 {
   "GENERAL": {
     "NO_SELECTION_MADE": "Ничего не выбрано.",
-    "DISMISS": "Закрыть"
+    "DISMISS": "Закрыть",
+    "NO_RECORDS_FOUND": "Записи не найдены"
   },
   "USER_MANAGEMENT": {
     "USERS": "Пользователи",
@@ -78,7 +79,7 @@
     "STORE": "Магазин",
     "SELECT_STORE_PLACEHOLDER": "Выберите магазин",
     "PHONE_NUMBER": "Номер телефона",
-    "IS_THIS_A_REGISTERED_CUSTOMER": "Этот клиент зарегистрирован в качестве B2C?",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "Этот клиент зарегистрирован?",
     "SELECT_REGISTERED_CUSTOMER_STORE": "Выберите магазин",
     "PREFERRED_LANGUAGE": "Предпочитаемый язык",
     "PREFERRED_CURRENCY": "Предпочитаемая валюта",
@@ -91,7 +92,10 @@
     "CHALLENGE_QUESTION": "Секретный вопрос",
     "CHALLENGE_ANSWER": "Ответ на секретный вопрос",
     "PARENT_ORGANIZATION_ERROR": "Недопустимая родительская организация.",
-    "STORE_ERROR": "Недопустимый магазин."
+    "STORE_ERROR": "Недопустимый магазин.",
+    "BUYER_ADMINISTRATOR": "Администратор покупателя",
+    "BUYER_APPROVER": "Утверждающий покупателя",
+    "BUYER": "Покупатель"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Организации",
@@ -279,7 +283,8 @@
     "PHONE_NUMBER": "Телефон",
     "EMPLOYEE_ID": "ИД сотрудника",
     "DISCOUNT": "Скидка",
-    "TOTAL": "Итого"
+    "TOTAL": "Итого",
+    "NO_MATCHING_RECORDS_FOUND": "Совпадающие записи не найдены"
   },
   "MEMBER_GROUPS": {
     "GROUPS": "Группы участников",
@@ -525,7 +530,8 @@
     "CHECKING_ACCOUNT_NUMBER": "Проверка номера банковского счета",
     "CHECK_ROUTING_NUMBER": "Проверить код банка",
     "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "Номер заказа на покупку уже существует.",
-    "REFRESH": "Обновить"
+    "REFRESH": "Обновить",
+    "ACTIVE_CONTRACTS_ERROR": "Невозможно удалить учетную запись, поскольку в ней есть активные контракты. Приостановите или отмените активные контракты, прежде чем удалять учетную запись."
   },
   "SCHEDULER": {
     "SCHEDULER": "Планировщик",
@@ -985,7 +991,8 @@
     "DELETE": "Удалить",
     "SHIPPING_JURISDICTIONS_DELETED_MESSAGE": "Юрисдикция доставки удалена.",
     "NOT_COMPLETE_ERROR": "Страница не заполнена. Перейдите к следующему шагу.",
-    "DUPLICATE_NAME_ERROR": "Имя юрисдикции доставки уже существует"
+    "DUPLICATE_NAME_ERROR": "Имя юрисдикции доставки уже существует",
+    "NO_MATCHING_RECORDS_FOUND": "Совпадающие записи не найдены"
   },
   "SHIPPING_MODES": {
     "SHIPPING_MODES": "Режимы доставки",
@@ -1035,7 +1042,8 @@
     "TRACKING_URL": "URL страницы отслеживания службы доставки",
     "SET_AS_DEFAULT": "Установить по умолчанию",
     "LANGUAGE_ALREADY_EXISTS": "Описание для этого языка уже существует.",
-    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "Выбранное сочетание службы доставки и услуги уже существует."
+    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "Выбранное сочетание службы доставки и услуги уже существует.",
+    "NO_MATCHING_RECORDS_FOUND": "Совпадающие записи не найдены"
   },
   "SHIPPING_CODES": {
     "SHIPPING_CODES": "Коды доставки",
@@ -1073,17 +1081,41 @@
     "CHARGES": "Оплаты",
     "SELECT_STORE_PLACEHOLDER": "Выбрать магазин",
     "SELECTED_STORE": "Выбранный магазин",
-    "PRODUCT_OR_CATEGORIES": "Продукт или категории",
+    "PRODUCTS_OR_CATEGORIES": "Укажите категории и товары",
     "SELECT_PRODUCT_OR_CATEGORIES": "Выберите продукты или категории, связанные с этим кодом доставки.",
     "ALL_PRODUCTS": "Все продукты",
-    "SPECIFIC_PRODUCTS": "Специальные продукты",
+    "SPECIFIC_CATEGORIES_AND_PRODUCTS": "Определенные категории и товары",
     "CATEGORIES": "Категории",
     "DELETE_SHIPPING_CODE_CONFIRMATION": "Удалить '{{name}}'?",
     "SHIPPING_CODE_DELETED_MESSAGE": "Код доставки удален.",
     "ACTIVATED": "Активирован",
     "DEACTIVATED": "Деактивирован",
     "SHIPPING_CODE_ACTIVATED_MESSAGE": "Код доставки активирован.",
-    "SHIPPING_CODE_DEACTIVATED_MESSAGE": "Код доставки деактивирован."
+    "SHIPPING_CODE_DEACTIVATED_MESSAGE": "Код доставки деактивирован.",
+    "SELECTED_CATEGORIES": "Выбранные категории",
+    "SELECTED_PRODUCTS": "Выбранные товары",
+    "SKU": "Артикул",
+    "CATALOG": "Каталог",
+    "DELETE_SELECTED": "Удалить выбранные",
+    "CLEAR_SELECTION": "Очистить выбор",
+    "SELECT_CATEGORIES_AND_PRODUCTS": "Выберите категории и товары",
+    "CATALOG_BROWSER": "Браузер каталогов",
+    "SEARCH_PRODUCTS": "Поиск товаров",
+    "PRODUCTS_SEARCH_BY": "Поиск по артикулу, имени или короткому описанию",
+    "VIEW_FULL_LIST": "Показать весь список",
+    "SHOWING_ITEM_OF_TOTAL_ITEMS": "Показано {{totalItemsInList}} из {{totalItems}}",
+    "MORE": "Дополнительно",
+    "FILTER_CATALOG": "Каталог фильтров",
+    "NO_MATCHING_RECORDS_FOUND": "Совпадающие записи не найдены",
+    "CATALOG_ERROR": "Недействительный каталог",
+    "SELECT_CATEGORY": "Выберите категорию",
+    "SELECT_PRODUCT": "Выберите товар",
+    "CATEGORY": "Категория",
+    "PRODUCT": "Товар",
+    "ADD": "Добавить",
+    "SHORT_DESCRIPTION": "Короткое описание",
+    "FILTER": "Фильтр",
+    "FILTER_BY_NAME": "Фильтровать по имени"
   },
   "SHIPPING_CHARGES": {
     "SHIPPING_CHARGES": "Оплаты за доставку",
@@ -1124,6 +1156,7 @@
     "SHIPPING_CHARGE_START": "Начало",
     "SHIPPING_CHARGE_END": "Окончание",
     "BEFORE_START_DATE": "Дата окончания не может быть раньше даты начала.",
+    "AFTER_END_DATE": "Дата начала не может быть после даты окончания.",
     "RANGE": "Диапазон",
     "RANGE_START": "Начало диапазона",
     "DELETE_SHIPPING_CHARGE": "Удалить плату за доставку",
@@ -1147,6 +1180,7 @@
     "BY_QUANTITY": "По количеству",
     "BY_WEIGHT": "По весу",
     "FIXED": "Фиксированная",
+    "AMOUNT": "Сумма",
     "CHARGE": "Оплата",
     "CURRENCY": "Валюта",
     "UNIT_OF_MEASURE": "Единица измерения",
@@ -1157,12 +1191,17 @@
     "FROM_START_TO_END": "От {{start}} до {{end}}",
     "FROM_START_AND_UP": "От {{start}} и выше",
     "SHIPPING_CHARGE_CREATED_MESSAGE": "Плата за доставку '{{name}}' создана.",
-    "NO_RANGES_ERROR": "Вы должны определить хотя бы один диапазон платы."
+    "NO_RANGES_ERROR": "Вы должны определить хотя бы один диапазон платы.",
+    "NOT_COMPLETE_ERROR": "Страница не заполнена. Перейдите к следующему шагу."
   },
   "TRANSPORTS": {
     "TRANSPORTS": "Транспорт",
     "SEARCH": "Поиск",
     "CLEAR": "Очистить",
+    "REFRESH": "Обновить",
+    "STORE_FILTER": "Фильтр магазина",
+    "STATUS_FILTER": "Фильтр статуса",
+    "SELECT_STORE_PLACEHOLDER": "Выберите магазин",
     "ACTIONS": "Действия",
     "NEW_BUTTON": "Создать",
     "NEW_TRANSPORT": "Создать транспорт",
@@ -1183,7 +1222,55 @@
     "DELETE_TRANSPORT": "Удалить транспорт",
     "DELETE": "Удалить",
     "TRANSPORTS_DELETED_MESSAGE": "Транспорт удален.",
-    "NOT_COMPLETE_ERROR": "Страница не заполнена. Перейдите к следующему шагу."
+    "NOT_COMPLETE_ERROR": "Страница не заполнена. Перейдите к следующему шагу.",
+    "ACTIVE": "Активные",
+    "INACTIVE": "Неактивные",
+    "NAME": "Имя транспорта",
+    "STATUS": "Статус",
+    "DESCRIPTION_FILTER": "Фильтр описания",
+    "SEARCH_BY_DESCRIPTION": "Поиск по описанию",
+    "SEARCH_BY_TRANSPORT": "Поиск по имени транспорта",
+    "CONFIGURATION": "Конфигурация транспорта",
+    "CONFIGURATOR": "Sterling",
+    "CONFIGURATOR_DESC": "Настройки подключения Sterling",
+    "STERLINGOMS": "Sterling OMS",
+    "STERLINGOMS_DESC": "Настройки подключения Sterling OMS",
+    "DEMANDTECFTP": "DemandTec SFTP",
+    "DEMANDTECFTP_DESC": "Настройки подключения DemandTec SFTP",
+    "DPEXPORTFTP": "Экспорт динамических цен по SFTP",
+    "DPEXPORTFTP_DESC": "Настройки подключения экспорта динамических цен по SFTP",
+    "DPIMPORTFTP": "Импорт динамических цен по SFTP",
+    "DPIMPORTFTP_DESC": "Настройки подключения импорта динамических цен по SFTP",
+    "JCAUBX": "Интеграция UBX",
+    "JCAUBX_DESC": "Конфигурация интеграции UBX",
+    "JCAWCH": "Интеграция Watson Content Hub (бывш.)",
+    "JCAWCH_DESC": "Конфигурация Watson Content Hub (бывш.)",
+    "COMMERCEFTP": "Commerce Insights SFTP (бывш.)",
+    "COMMERCEFTP_DESC": "Настройки подключения Commerce Insights SFTP (бывш.)",
+    "EMAILSENDER": "Электронная почта",
+    "EMAILSENDER_DESC": "Отправитель электронной почты",
+    "FILE": "Файл",
+    "FILE_DESC": "Средство записи файлов",
+    "MQ": "IBM MQ",
+    "MQ_DESC": "IBM MQ",
+    "FAX": "Факс",
+    "FAX_DESC": "Отправитель факса",
+    "SMSHTTP": "SMS HTTP",
+    "SMSWS": "Веб-службы SMS",
+    "SMSHTTP_DESC": "HTTP-адаптер SMS",
+    "SMSWS_DESC": "Адаптер веб-служб SMS",
+    "WEBSERVICES_HTTP": "Веб-службы по HTTP",
+    "WEBSERVICES_JMS": "Веб-службы по JMS",
+    "HTTP": "HTTP",
+    "SILVERPOP": "Silverpop",
+    "SILVERPOP_DESC": "Отправлять транзакционные электронные письма через Silverpop Transact",
+    "SAMPLE_CONNECTOR": "Образец адаптера",
+    "SAMPLE_CONNECTOR_DESC": "Образец адаптера",
+    "DATALOAD_SFTP": "Dataload SFTP",
+    "DATALOAD_SFTP_DESC": "Настройки подключения по SFTP к хранилищу файла с данными о создании магазина",
+    "SUCCESS_360": "Success360",
+    "SUCCESS_360_DESC": "Настройки интеграции Success360",
+    "NO_PROPERTIES": "У транспорта нет свойств конфигурации"
   },
   "MESSAGE_TYPES": {
     "MESSAGE_TYPES": "Типы сообщений",
@@ -1299,7 +1386,8 @@
     "TAX_TYPE_SHIPPING": "Налог на доставку",
     "IS_DEFAULT": "Да",
     "SET_AS_DEFAULT": "Установить по умолчанию",
-    "DEFAULT_SET_SUCCESS_MESSAGE": "Код налога по умолчанию обновлен."
+    "DEFAULT_SET_SUCCESS_MESSAGE": "Код налога по умолчанию обновлен.",
+    "CODE_BEING_USED_IN_TAX_CATEGORY": "Код налога '{{taxCodeName}}' невозможно удалить. Он используется в категории налога."
   },
   "TAX_CATEGORIES": {
     "TAX_CATEGORIES": "Категории налогов",
@@ -1410,6 +1498,7 @@
     "NOT_COMPLETE_ERROR": "Страница не заполнена. Перейдите к следующему шагу.",
     "DUPLICATE_NAME_ERROR": "Имя налоговой юрисдикции уже существует",
     "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "Юрисдикцию '{{jurisdictionName}}' невозможно удалить. Она используется в категории налога.",
-    "DUPLICATE_COUNTRY_STATE_COMBINATION": "Выбранное сочетание страны и региона уже существует."
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "Выбранное сочетание страны и региона уже существует.",
+    "NO_MATCHING_RECORDS_FOUND": "Совпадающие записи не найдены"
   }
 }

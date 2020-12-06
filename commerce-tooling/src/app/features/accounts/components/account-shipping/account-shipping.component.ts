@@ -51,7 +51,7 @@ export class AccountShippingComponent implements OnInit, OnDestroy, AfterViewIni
 	filteredAvailableShippingAddresses = [];
 	shippingAddresses = [];
 
-	@ViewChild("shippingMethodSearchInput", {static: false}) shippingMethodSearchInput: ElementRef<HTMLInputElement>;
+	@ViewChild("shippingMethodSearchInput") shippingMethodSearchInput: ElementRef<HTMLInputElement>;
 
 	private onLanguageChangeSubscription: Subscription = null;
 

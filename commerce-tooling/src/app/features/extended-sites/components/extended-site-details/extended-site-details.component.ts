@@ -43,7 +43,7 @@ export class ExtendedSiteDetailsComponent implements OnInit, AfterViewInit, OnDe
 	languageList: Array<any> = [];
 	isLinear = true;
 
-	@ViewChild("storeIdentifierInput", {static: false}) storeIdentifierInput: ElementRef<HTMLInputElement>;
+	@ViewChild("storeIdentifierInput") storeIdentifierInput: ElementRef<HTMLInputElement>;
 
 	private onLanguageChangeSubscription: Subscription = null;
 

@@ -48,9 +48,9 @@ export class TaxCategoryListComponent implements OnInit, OnDestroy, AfterViewIni
 	];
 	model = new TaxCategoryDataSource();
 
-	@ViewChild(MatPaginator, {static: false})
+	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
-	@ViewChild(MatSort, {static: false})
+	@ViewChild(MatSort)
 	sort: MatSort;
 	// MatPaginator Inputs
 	pageSize = DEFAULT_PAGE_SIZE;

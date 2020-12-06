@@ -1,0 +1,72 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'SHIPPING_CODES.SHIPPING_CODES' | translate}}
+	</h1>
+	<div class="hc-stepper-section hc-paper">
+		<div class="hc-stepper-actions">
+			<h2 class="hc-type-h2">
+				<span>
+					<a *ngIf="mode === 'create'" [routerLink]="['/shipping-codes', 'create-shipping-code', {storeId: storeId, step: 1, tab: activeTab}]">{{'SHIPPING_CODES.NEW_SHIPPING_CODE' | translate}}</a>
+					<a *ngIf="mode === 'edit'" [routerLink]="['/shipping-codes', 'edit-shipping-code', id, {storeId: storeId, step: 1, tab: activeTab}]">{{'SHIPPING_CODES.EDIT_SHIPPING_CODE' | translate}}</a>
+					<span class="icon-top"><mat-icon [inline]="true">chevron_right</mat-icon></span>
+					{{'SHIPPING_CODES.SELECT_CATEGORIES_AND_PRODUCTS' | translate}}
+				</span>
+			</h2>
+			<div>
+				<button class="mat-flat-button" type="button" (click)="back()">{{'SHIPPING_CODES.BACK' | translate}}</button>
+			</div>
+		</div>
+		<div class="selection-container">
+			<div class="item-selection">
+				<mat-tab-group animationDuration="0ms" dynamicHeight [selectedIndex]="activeTab" (selectedTabChange)="tabChanged($event)">
+					<mat-tab label="{{'SHIPPING_CODES.CATALOG_BROWSER' | translate}}">
+						<hc-search-shipping-categories
+								[selectedCategories]="selectedCategories"
+								[selectedProducts]="selectedProducts"
+								(onSelectCategory)="onSelectCategory($event)"
+								(onUnselectCategory)="onUnselectCategory($event)"
+								(onSelectProduct)="onSelectProducts([$event])"
+								(onUnselectProduct)="onUnselectProducts([$event])">
+						</hc-search-shipping-categories>
+					</mat-tab>
+					<mat-tab label="{{'SHIPPING_CODES.SEARCH_PRODUCTS' | translate}}">
+						<hc-search-shipping-products
+								[selectedProducts]="selectedProducts"
+								(onSelect)="onSelectProducts($event)"
+								(onUnselect)="onUnselectProducts($event)">
+						</hc-search-shipping-products>
+					</mat-tab>
+				</mat-tab-group>
+			</div>
+			<div class="selected-items">
+				<hc-shipping-chip-viewer
+						[list]="getCategoriesForSummaryView()"
+						title="{{'SHIPPING_CODES.SELECTED_CATEGORIES' | translate}}"
+						[link]="mode === 'create' ? ['/shipping-codes', 'create-shipping-code', {storeId: storeId, step: 1, tab: 0}] :
+						['/shipping-codes', 'edit-shipping-code', id, {storeId: storeId, step: 1, tab: 0}]"
+						[totalItems]="selectedCategories.length"
+						(onRemove)="onUnselectCategory($event)">
+				</hc-shipping-chip-viewer>
+				<hc-shipping-chip-viewer
+						[list]="getProductsForSummaryView()"
+						title="{{'SHIPPING_CODES.SELECTED_PRODUCTS' | translate}}"
+						[link]="mode === 'create' ? ['/shipping-codes', 'create-shipping-code', {storeId: storeId, step: 1, tab: 1}] :
+						['/shipping-codes', 'edit-shipping-code', id, {storeId: storeId, step: 1, tab: 1}]"
+						(onRemove)="onUnselectProducts([$event])"
+						[totalItems]="selectedProducts.length">
+				</hc-shipping-chip-viewer>
+			</div>
+		</div>
+	</div>
+</div>

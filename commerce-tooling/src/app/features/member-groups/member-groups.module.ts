@@ -12,7 +12,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { Close16Module } from "@carbon/icons-angular/lib/close/16";
 import { TranslateModule } from "@ngx-translate/core";
 import { CdkTableModule } from "@angular/cdk/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
@@ -44,7 +43,6 @@ import { MemberGroupDefinitionComponent } from "./components/member-group-defini
 import { MemberGroupMembersComponent } from "./components/member-group-members/member-group-members.component";
 import { CreateMemberGroupComponent } from "./components/create-member-group/create-member-group.component";
 import { EditMemberGroupComponent } from "./components/edit-member-group/edit-member-group.component";
-
 import { OrganizationNameService } from "../../services/organization-name.service";
 import { DeleteMemberGroupDialogComponent } from "./components/delete-member-group-dialog/delete-member-group-dialog.component";
 
@@ -55,7 +53,6 @@ import { DeleteMemberGroupDialogComponent } from "./components/delete-member-gro
 		ReactiveFormsModule,
 		MemberGroupsRoutingModule,
 		TranslateModule,
-		Close16Module,
 		CdkTableModule,
 		MatPaginatorModule,
 		MatSortModule,
@@ -91,9 +88,6 @@ import { DeleteMemberGroupDialogComponent } from "./components/delete-member-gro
 	],
 	providers: [
 		OrganizationNameService
-	],
-	entryComponents: [
-		DeleteMemberGroupDialogComponent
 	]
 })
 export class MemberGroupsModule {}

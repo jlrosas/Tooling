@@ -46,8 +46,8 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 	userList: Array<any> = [];
 	getUsersSubscription: Subscription = null;
 
-	@ViewChild("organizationInput", {static: false}) organizationInput: ElementRef<HTMLInputElement>;
-	@ViewChild("contactInput", {static: false}) contactInput: ElementRef<HTMLInputElement>;
+	@ViewChild("organizationInput") organizationInput: ElementRef<HTMLInputElement>;
+	@ViewChild("contactInput") contactInput: ElementRef<HTMLInputElement>;
 
 	private organizationSearchString: Subject<string> = new Subject<string>();
 	private userSearchString: Subject<string> = new Subject<string>();

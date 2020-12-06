@@ -144,7 +144,7 @@
           {
             "in": "body",
             "name": "Transport",
-            "description": "An store transport.",
+            "description": "A store transport.",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Transport"
@@ -202,7 +202,7 @@
         ],
         "responses": {
           "200": {
-            "description": "An store transport.",
+            "description": "A store transport.",
             "schema": {
               "$ref": "#/definitions/Transport"
             }
@@ -262,7 +262,7 @@
           {
             "in": "body",
             "name": "Transport",
-            "description": "An store transport.",
+            "description": "A store transport.",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Transport"
@@ -300,20 +300,99 @@
           "format": "int32"
         }
       ]
+    },
+    "/transports/{id}/connection-spec-meta-info": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "The unique numeric ID for identifying the transport.",
+            "format": "int32",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The operation is successful.",
+            "schema": {
+              "$ref": "#/definitions/ConnectionSpecMetaInfo"
+            }
+          },
+          "400": {
+            "description": "There was a client error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          },
+          "404": {
+            "description": "The resource was not found."
+          },
+          "500": {
+            "description": "There was a server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          }
+        },
+        "tags": [
+          "transports"
+        ],
+        "operationId": "getConnectionSpecMetaInfo",
+        "summary": "Gets the connection specification meta-information for the specified transport."
+      }
+    },
+    "/transports/{id}/interaction-spec-meta-info": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "The unique numeric ID for identifying the transport.",
+            "format": "int32",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The operation is successful.",
+            "schema": {
+              "$ref": "#/definitions/InteractionSpecMetaInfo"
+            }
+          },
+          "400": {
+            "description": "There was a client error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          },
+          "404": {
+            "description": "The resource was not found."
+          },
+          "500": {
+            "description": "There was a server error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseContainer"
+            }
+          }
+        },
+        "tags": [
+          "transports"
+        ],
+        "operationId": "getInteractionSpecMetaInfo",
+        "summary": "Gets the interaction specification meta-information for the specified transport."
+      }
     }
   },
   "definitions": {
-    "Link": {
-      "type": "object",
-      "properties": {
-        "href": {
-          "type": "string",
-          "format": "uri",
-          "description": "The URL of the link."
-        }
-      },
-      "description": "Links to related resources."
-    },
     "Error": {
       "type": "object",
       "properties": {
@@ -398,7 +477,7 @@
           "description": "If it is addressable."
         }
       },
-      "description": "An store transport."
+      "description": "A store transport."
     },
     "TransportCollection": {
       "type": "object",
@@ -417,6 +496,68 @@
         }
       },
       "description": "A collection of Store transports."
+    },
+    "ConnectionSpecProperty": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the connection specification property."
+        },
+        "encrypt": {
+          "type": "boolean",
+          "description": "Indicates that the property value is encrypted."
+        },
+        "value": {
+          "type": "string",
+          "description": "The default value of the connection specification property."
+        }
+      },
+      "description": "A connection specification property."
+    },
+    "ConnectionSpecMetaInfo": {
+      "type": "object",
+      "properties": {
+        "properties": {
+          "type": "array",
+          "description": "The connection specification properties.",
+          "items": {
+            "$ref": "#/definitions/ConnectionSpecProperty"
+          }
+        }
+      },
+      "description": "The transport connection specification meta-information."
+    },
+    "InteractionSpecProperty": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the interaction specification property."
+        },
+        "encrypt": {
+          "type": "boolean",
+          "description": "Indicates that the property value is encrypted."
+        },
+        "value": {
+          "type": "string",
+          "description": "The default value of the interaction specification property."
+        }
+      },
+      "description": "An interaction specification property."
+    },
+    "InteractionSpecMetaInfo": {
+      "type": "object",
+      "properties": {
+        "properties": {
+          "type": "array",
+          "description": "The interaction specification properties.",
+          "items": {
+            "$ref": "#/definitions/InteractionSpecProperty"
+          }
+        }
+      },
+      "description": "The transport connection specification meta-information."
     }
   }
 }

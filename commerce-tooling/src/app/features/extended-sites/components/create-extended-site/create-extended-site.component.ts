@@ -22,7 +22,7 @@ import { ApiErrorService } from "../../../../services/api-error.service";
 	styleUrls: ["./create-extended-site.component.scss"]
 })
 export class CreateExtendedSiteComponent {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	constructor(private router: Router,
 			private route: ActivatedRoute,

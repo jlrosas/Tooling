@@ -13,9 +13,6 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
-
-import { Close16Module } from "@carbon/icons-angular/lib/close/16";
-
 import { CdkTableModule } from "@angular/cdk/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
@@ -31,10 +28,8 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatDividerModule } from "@angular/material/divider";
-
 import { DirectivesModule } from "../../directives/directives.module";
 import { MessagesRoutingModule } from "./messages-routing.module";
-
 import { MessageListComponent } from "./components/message-list/message-list.component";
 import { MessageDetailsComponent } from "./components/message-details/message-details.component";
 import { MessageConfigurationComponent } from "./components/message-configuration/message-configuration.component";
@@ -45,7 +40,6 @@ import { ResendMessageComponent } from "./components/resend-message/resend-messa
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
-		Close16Module,
 		MessagesRoutingModule,
 		TranslateModule,
 		CdkTableModule,

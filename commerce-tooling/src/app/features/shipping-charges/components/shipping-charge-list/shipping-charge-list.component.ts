@@ -60,9 +60,9 @@ export class ShippingChargeListComponent implements OnInit, OnDestroy, AfterView
 	];
 	model = new ShippingChargeDataSource();
 
-	@ViewChild(MatPaginator, {static: false})
+	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
-	@ViewChild(MatSort, {static: false})
+	@ViewChild(MatSort)
 	sort: MatSort;
 	// MatPaginator Inputs
 	pageSize = DEFAULT_PAGE_SIZE;
@@ -73,8 +73,8 @@ export class ShippingChargeListComponent implements OnInit, OnDestroy, AfterView
 	pageIndex = 0;
 
 	storeId: number;
-	storeOwnerId: string;
 	shippingCodeId: number;
+	shippingCodeStoreId: number;
 	shippingCodeName: string;
 
 	private getShippingChargesSubscription: Subscription = null;
@@ -112,7 +112,6 @@ export class ShippingChargeListComponent implements OnInit, OnDestroy, AfterView
 	ngOnInit() {
 		this.shippingCodeId = Number(this.route.snapshot.params.shippingCodeId);
 		this.storeId = Number(this.route.snapshot.params.storeId);
-		this.storeOwnerId = this.route.snapshot.params.storeOwnerId;
 		this.getPreferenceData();
 		this.createFormControls();
 		this.createForm();
@@ -120,6 +119,7 @@ export class ShippingChargeListComponent implements OnInit, OnDestroy, AfterView
 			id: Number(this.route.snapshot.params.shippingCodeId)
 		}).subscribe(response => {
 			this.shippingCodeName = response.calculationCode;
+			this.shippingCodeStoreId = response.storeId;
 		});
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
 			this.currentSearchString = searchString;
@@ -205,8 +205,7 @@ export class ShippingChargeListComponent implements OnInit, OnDestroy, AfterView
 	createShippingCharge() {
 		this.router.navigate(["shipping-charges/create-shipping-charge", {
 			storeId: this.storeId,
-			shippingCodeId: this.shippingCodeId,
-			storeOwnerId: this.storeOwnerId
+			shippingCodeId: this.shippingCodeId
 		}]);
 	}
 

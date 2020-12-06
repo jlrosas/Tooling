@@ -30,7 +30,7 @@ export class DefineLockoutPolicyComponent implements OnInit, AfterViewInit {
 	lockoutPolicyForm: FormGroup | any;
 	securityPolicyName: FormControl;
 
-	@ViewChild("lockoutThresholdInput", {static: false}) lockoutThresholdInput: ElementRef<HTMLInputElement>;
+	@ViewChild("lockoutThresholdInput") lockoutThresholdInput: ElementRef<HTMLInputElement>;
 
 	constructor(
 			private router: Router,

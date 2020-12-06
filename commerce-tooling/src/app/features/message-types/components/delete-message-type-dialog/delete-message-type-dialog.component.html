@@ -1,0 +1,21 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<h4 mat-dialog-title>{{'MESSAGE_TYPES.DELETE_MESSAGE_TYPE' | translate}}</h4>
+
+<form [formGroup]="deleteMessageTypeForm" autocomplete="off">
+	<mat-label>{{'MESSAGE_TYPES.DELETE_MESSAGE_TYPE_CONFIRMATION'| translate: {name: messageTypeName} }}</mat-label>
+</form>
+
+<mat-dialog-actions>
+	<button class="mat-flat-button" type="button" (click)="cancel()">{{'MESSAGE_TYPES.CANCEL' | translate}}</button>
+	<button class="mat-flat-button mat-primary" (click)="deleteMessageType()">{{'MESSAGE_TYPES.DELETE' | translate}}</button>
+</mat-dialog-actions>

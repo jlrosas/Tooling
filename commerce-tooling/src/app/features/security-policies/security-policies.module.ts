@@ -27,9 +27,6 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatSelectModule } from "@angular/material/select";
 import { MatStepperModule } from "@angular/material/stepper";
 import { CdkStepperModule } from "@angular/cdk/stepper";
-import { CheckmarkOutline16Module } from "@carbon/icons-angular/lib/checkmark--outline/16";
-import { ArrowDown16Module } from "@carbon/icons-angular/lib/arrow--down/16";
-import { Delete16Module } from "@carbon/icons-angular/lib/delete/16";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
@@ -62,11 +59,8 @@ import { DeleteSecurityPolicyDialogComponent } from "./components/delete-securit
 		MatButtonToggleModule,
 		MatGridListModule,
 		MatAutocompleteModule,
-		CheckmarkOutline16Module,
-		ArrowDown16Module,
 		DirectivesModule,
 		MatDialogModule,
-		Delete16Module,
 		MatButtonModule,
 		MatStepperModule,
 		CdkStepperModule,
@@ -88,9 +82,6 @@ import { DeleteSecurityPolicyDialogComponent } from "./components/delete-securit
 		DeleteSecurityPolicyDialogComponent
 	],
 	providers: [
-	],
-	entryComponents: [
-		DeleteSecurityPolicyDialogComponent
 	]
 })
 export class SecurityPoliciesModule {}

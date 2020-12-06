@@ -79,9 +79,6 @@ import { DeleteTaxJurisdictionDialogComponent } from "./components/delete-tax-ju
 		DeleteTaxJurisdictionDialogComponent
 	],
 	providers: [
-	],
-	entryComponents: [
-		DeleteTaxJurisdictionDialogComponent
 	]
 })
 export class TaxJurisdictionsModule {}

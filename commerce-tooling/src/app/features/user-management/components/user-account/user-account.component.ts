@@ -25,7 +25,6 @@ import { MatStep, MatStepper } from "@angular/material/stepper";
 import { HcValidators } from "../../../../shared/validators";
 import { LanguageDescriptionsService } from "../../../../rest/services/language-descriptions.service";
 import { CurrencyDescriptionsService } from "../../../../rest/services/currency-descriptions.service";
-import { OnlineStoresService } from "../../../../rest/services/online-stores.service";
 import { CurrentUserService } from "../../../../services/current-user.service";
 
 @Component({
@@ -45,8 +44,9 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 	password: FormControl;
 	parentOrganization: FormControl;
 	policy: FormControl;
-	registeredCustomer: FormControl;
-	storeDropdown:  FormControl;
+	buyerAdministrator: FormControl;
+	buyerApprover: FormControl;
+	buyer: FormControl;
 	phoneNumber: FormControl;
 	preferredCurrency: FormControl;
 	preferredLanguage: FormControl;
@@ -62,10 +62,10 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 	organizationCount = 0;
 	organizationSearchString = "";
 
-	hasRolePickerRole = false;
-	hasStoreSelectRole = false;
+	hasBuyerAdminRole = false;
 
 	isRegisteredCustomer = false;
+	isB2BStore = false;
 	storeList: Array<any> = [];
 	currencyList: Array<any> = [];
 	languageList: Array<any> = [];
@@ -80,13 +80,17 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 	];
 
-	@ViewChild("logonIdInput", {static: false}) logonIdInput: ElementRef<HTMLInputElement>;
-	@ViewChild("emailInput", {static: false}) emailInput: ElementRef<HTMLInputElement>;
+	@ViewChild("logonIdInput") logonIdInput: ElementRef<HTMLInputElement>;
+	@ViewChild("emailInput") emailInput: ElementRef<HTMLInputElement>;
 
-	private getStoresSubscription: Subscription = null;
-	private storeSearchString: Subject<string> = new Subject<string>();
 	private organizationSearchString$: Subject<string> = new Subject<string>();
 	private onLanguageChangeSubscription: Subscription = null;
+	private B2C_STORE_TYPES = new Set([
+		"B2C",
+		"BBB",
+		"MHS",
+		"RHS"
+	]);
 
 	constructor(private userMainService: UserMainService,
 			private route: ActivatedRoute,
@@ -98,7 +102,6 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 			private translateService: TranslateService,
 			private currencyDescriptionsService: CurrencyDescriptionsService,
 			private languageDescriptionsService: LanguageDescriptionsService,
-			private onlineStoresService: OnlineStoresService,
 			private currentUserService: CurrentUserService) { }
 
 	ngOnInit() {
@@ -118,44 +121,46 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 			});
 		} else {
 			if (this.userMainService.userData == null) {
+				const storeId = (this.route.snapshot.params.storeId && this.route.snapshot.params.storeId !== "0") ?
+						Number(this.route.snapshot.params.storeId) : null;
 				this.userMainService.userData = {
+					storeId,
+					isRegisteredCustomer: storeId !== null,
 					address: {}
 				};
+				const userData = this.userMainService.userData;
+				if (storeId) {
+					userData.userAccountPolicyId = -1;
+					userData.storeType = this.route.snapshot.params.storeType;
+					if (this.B2C_STORE_TYPES.has(userData.storeType)) {
+						userData.profileType = "C";
+						userData.parentOrganizationId = "-2000";
+						userData.parentOrganizationName = "Default Organization";
+					} else {
+						userData.profileType = null;
+						userData.parentOrganizationId = null;
+						userData.parentOrganizationName = null;
+					}
+				}
 			}
 			this.setValues();
-			this.currentUserService.hasMatchingRole([-1, -3, -14, -20, -21, -27]).subscribe(hasRole => {
-				this.hasRolePickerRole = hasRole;
-				if (this.hasRolePickerRole) {
-					this.getOrganizations();
-					this.organizationSearchString$.pipe(debounceTime(250)).subscribe(searchString => {
-						this.organizationList = [];
-						this.organizationCount = 0;
-						this.organizationSearchString = searchString;
-						this.getOrganizations();
-					});
-				} else {
-					this.isRegisteredCustomer = true;
-					this.userMainService.userData.isRegisteredCustomer = true;
-					this.userMainService.onIsRegisteredCustomerChange.emit(true);
-					this.userMainService.userData.profileType = "C";
-					this.userMainService.userData.userAccountPolicyId = -1;
-					this.policy.setValue(-1);
-					this.policy.disable();
-					this.userMainService.userData.parentOrganizationId = "-2000";
-					this.userMainService.userData.parentOrganizationName = "Default Organization";
-					this.storeDropdown.enable();
-					this.parentOrganization.disable();
-				}
+			this.organizationSearchString$.pipe(debounceTime(250)).subscribe(searchString => {
+				this.organizationList = [];
+				this.organizationCount = 0;
+				this.organizationSearchString = searchString;
+				this.getOrganizations();
 			});
-			this.currentUserService.hasMatchingRole([-1, -3, -4, -12, -14]).subscribe(hasRole => {
-				this.hasStoreSelectRole = hasRole;
-				if (this.hasStoreSelectRole) {
-					this.storeSearchString.pipe(debounceTime(250)).subscribe(searchString => {
-						this.getStores(searchString);
-					});
-					this.getStores("");
-				}
+			this.currentUserService.hasMatchingRole([-1, -21]).subscribe(hasRole => {
+				this.hasBuyerAdminRole = hasRole;
 			});
+			if (this.isRegisteredCustomer) {
+				this.policy.disable();
+			}
+			if (!this.isRegisteredCustomer || this.isB2BStore) {
+				this.getOrganizations();
+			} else {
+				this.parentOrganization.disable();
+			}
 		}
 	}
 
@@ -172,7 +177,6 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	ngOnDestroy() {
 		this.organizationSearchString$.unsubscribe();
-		this.storeSearchString.unsubscribe();
 		if (this.onLanguageChangeSubscription) {
 			this.onLanguageChangeSubscription.unsubscribe();
 		}
@@ -229,71 +233,16 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 	}
 
-	validateRegisteredCustomer($event) {
-		this.isRegisteredCustomer = $event.checked;
-		this.userMainService.userData.isRegisteredCustomer = this.isRegisteredCustomer;
-		this.userMainService.onIsRegisteredCustomerChange.emit(this.userMainService.userData.isRegisteredCustomer);
-		if (!this.isRegisteredCustomer) {
-			if (this.getStoresSubscription !== null) {
-				this.getStoresSubscription.unsubscribe();
-				this.getStoresSubscription = null;
-			}
-			this.userMainService.userData.profileType = null;
-			this.userMainService.userData.userAccountPolicyId = null;
-			this.policy.setValue(null);
-			this.policy.enable();
-			this.userMainService.userData.parentOrganizationId = null;
-			this.userMainService.userData.parentOrganizationName = null;
-			this.parentOrganization.setValue("");
-			this.searchParentOrganizations("");
-			this.storeDropdown.disable();
-			this.parentOrganization.enable();
-		} else {
-			if (this.getOrganizationsSubscription) {
-				this.getOrganizationsSubscription.unsubscribe();
-				this.getOrganizationsSubscription = null;
-			}
-			this.userMainService.userData.profileType = "C";
-			this.userMainService.userData.userAccountPolicyId = -1;
-			this.policy.setValue(-1);
-			this.policy.disable();
-			this.userMainService.userData.parentOrganizationId = "-2000";
-			this.userMainService.userData.parentOrganizationName = "Default Organization";
-			this.storeDropdown.enable();
-			this.parentOrganization.disable();
-			this.searchStores("");
-		}
+	validateBuyerAdministrator($event) {
+		this.userMainService.userData.isBuyerAdministrator = $event.checked;
 	}
 
-	searchStores(searchString: string) {
-		this.storeSearchString.next(searchString);
+	validateBuyerApprover($event) {
+		this.userMainService.userData.isBuyerApprover = $event.checked;
 	}
 
-	getStores(searchString: string) {
-		if (this.getStoresSubscription !== null) {
-			this.getStoresSubscription.unsubscribe();
-			this.getStoresSubscription = null;
-		}
-		this.getStoresSubscription = this.onlineStoresService.getOnlineStoresByIdentifier({
-			usage: "HCL_UserToolB2CStores",
-			identifier: "*" + searchString + "*",
-			limit: 10
-	 	}).subscribe(response => {
-	 		this.getStoresSubscription = null;
-	 		if (response.items.length === 1 && response.items[0].identifier === this.storeDropdown.value) {
-	 			this.selectStore(response.items[0]);
-	 		} else {
-	 			this.storeList = response.items;
-	 		}
-		},
-		error => {
-			this.getStoresSubscription = null;
-		});
-	}
-
-	selectStore(store: any) {
-		this.userMainService.userData.selectedStore = store;
-		this.storeDropdown.setValue(store.identifier);
+	validateBuyer($event) {
+		this.userMainService.userData.isBuyer = $event.checked;
 	}
 
 	validatePhoneNumber() {
@@ -327,28 +276,31 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.getOrganizationsSubscription.unsubscribe();
 			this.getOrganizationsSubscription = null;
 		}
-		this.getOrganizationsSubscription = this.organizationsService.OrganizationGetManageableOrganizations({
+		const args: OrganizationsService.OrganizationGetManageableOrganizationsParams = {
 			organizationName: searchString,
 			sort: "organizationName",
 			limit: 10,
 			offset: this.organizationList.length
-		}).subscribe(
-			response => {
-				if (this.organizationList.length === 0 && response.items.length === 1 && response.items[0].organizationName === searchString) {
-					this.selectParentOrganization(response.items[0]);
-				} else {
-					this.organizationList = [ ...this.organizationList, ...response.items];
-				}
-				this.organizationCount = response.count;
-				this.getOrganizationsSubscription = null;
-				this.organizationsLoading = false;
-			},
-			error => {
-				this.getOrganizationsSubscription = null;
-				this.organizationsLoading = false;
+		};
+		const storeId = this.userMainService.userData.storeId;
+		if (this.isRegisteredCustomer && storeId && !this.B2C_STORE_TYPES.has(this.userMainService.userData.storeType)) {
+			args.taskName = "CreateRegisteredCustomer";
+			args.storeId = storeId;
+		}
+		this.getOrganizationsSubscription = this.organizationsService.OrganizationGetManageableOrganizations(args).subscribe(response => {
+			if (this.organizationList.length === 0 && response.items.length === 1 && response.items[0].organizationName === searchString) {
+				this.selectParentOrganization(response.items[0]);
+			} else {
+				this.organizationList = [ ...this.organizationList, ...response.items];
 			}
-		);
-
+			this.organizationCount = response.count;
+			this.getOrganizationsSubscription = null;
+			this.organizationsLoading = false;
+		},
+		error => {
+			this.getOrganizationsSubscription = null;
+			this.organizationsLoading = false;
+		});
 	}
 
 	private createFormControls() {
@@ -356,7 +308,6 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.logonId = new FormControl({value: "", disabled: true});
 			this.password = new FormControl("");
 			this.parentOrganization = new FormControl({value: "", disabled: true});
-			this.storeDropdown = new FormControl({value: "", disabled: true});
 		} else {
 			this.logonId = new FormControl("", HcValidators.required, control => {
 				return new Observable<ValidationErrors | null>((observer: Observer<ValidationErrors | null>) => {
@@ -408,21 +359,6 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 					return errors;
 				}
 			]);
-			this.storeDropdown = new FormControl({value: "", disabled: true}, [
-				Validators.required,
-				control => {
-					const value = control.value;
-					const userData = this.userMainService.userData;
-					const selectedStore = userData ? userData.selectedStore : null;
-					let errors = null;
-					if (value !== "" && (!selectedStore || value !== selectedStore.identifier)) {
-						errors = {
-							invalidStore: true
-						};
-					}
-					return errors;
-				}
-			]);
 		}
 		this.email1 = new FormControl("", [
 			Validators.required,
@@ -435,7 +371,9 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.phoneNumber = new FormControl();
 		this.challengeQuestion = new FormControl();
 		this.challengeAnswer = new FormControl();
-		this.registeredCustomer = new FormControl();
+		this.buyerAdministrator = new FormControl();
+		this.buyerApprover = new FormControl();
+		this.buyer = new FormControl();
 	}
 
 	private createForm() {
@@ -443,9 +381,10 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 			logonId: this.logonId,
 			email1: this.email1,
 			password: this.password,
-			registeredCustomer: this.registeredCustomer,
-			storeDropdown: this.storeDropdown,
 			parentOrganization: this.parentOrganization,
+			buyerAdministrator: this.buyerAdministrator,
+			buyerApprover: this.buyerApprover,
+			buyer: this.buyer,
 			policy: this.policy,
 			phoneNumber: this.phoneNumber,
 			preferredCurrency: this.preferredCurrency,
@@ -462,8 +401,11 @@ export class UserAccountComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.email1.setValue(userData.address.email1 ? userData.address.email1 : "");
 		this.password.setValue(userData.password ? userData.password : "");
 		this.isRegisteredCustomer = userData.isRegisteredCustomer ? true : false;
-		this.storeDropdown.setValue(userData.selectedStore ? userData.selectedStore.identifier : "");
+		this.isB2BStore = this.isRegisteredCustomer && userData.storeType && !this.B2C_STORE_TYPES.has(userData.storeType);
 		this.parentOrganization.setValue(userData.parentOrganizationName ? userData.parentOrganizationName : "");
+		this.buyerAdministrator.setValue(!!userData.isBuyerAdministrator);
+		this.buyerApprover.setValue(!!userData.isBuyerApprover);
+		this.buyer.setValue(!!userData.isBuyer);
 		this.policy.setValue(userData.userAccountPolicyId ? userData.userAccountPolicyId : null);
 		this.phoneNumber.setValue(userData.address.phone1 ? userData.address.phone1 : "");
 		this.preferredCurrency.setValue(userData.preferredCurrency ? userData.preferredCurrency : null);

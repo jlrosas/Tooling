@@ -20,7 +20,7 @@
 						<ng-container matColumnDef="fulfillmentCenter" sticky>
 							<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CHARGES.FULFILLMENT_CENTER' | translate}}</th>
 							<td mat-cell *matCellDef="let row">
-								{{row.fulfillmentCenterName}}
+								{{row.fulfillmentCenterName ? row.fulfillmentCenterName : ('SHIPPING_CHARGES.FULFILLMENT_CENTER_ANY' | translate)}}
 							</td>
 						</ng-container>
 			

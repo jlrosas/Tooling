@@ -1,0 +1,32 @@
+/*
+ *-------------------------------------------------------------------
+ * Licensed Materials - Property of HCL Technologies
+ *
+ * HCL Commerce
+ *
+ * (C) Copyright HCL Technologies Limited 1996, 2020
+
+ *-------------------------------------------------------------------
+ */
+.mat-tab-group {
+	border: none;
+}
+.form-row {
+	margin-bottom: 20px;
+}
+.selection-container {
+	display: flex;
+	padding: 0 20px 20px 20px;
+ 	.item-selection {
+ 		flex-basis: calc(100% - 300px);
+	}
+	.selected-items{
+		width: 300px;
+		display: flex;
+		flex-flow: column;
+		margin: 5px;
+		flex-wrap: wrap;
+		gap: 20px;
+		margin-top: 48px;
+	}
+}

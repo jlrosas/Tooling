@@ -83,10 +83,6 @@ import { ShippingModeDescriptionListComponent } from "./components/shipping-mode
 		ShippingModeDescriptionListComponent
 	],
 	providers: [
-	],
-	entryComponents: [
-		DeleteShippingModeDialogComponent,
-		ShippingModeDescriptionDialogComponent
 	]
 })
 export class ShippingModesModule {}

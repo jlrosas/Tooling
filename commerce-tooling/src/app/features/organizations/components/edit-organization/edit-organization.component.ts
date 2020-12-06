@@ -21,7 +21,7 @@ import { MatStepper } from "@angular/material/stepper";
 	styleUrls: ["./edit-organization.component.scss"]
 })
 export class EditOrganizationComponent {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	constructor(private router: Router,
 			private organizationMainService: OrganizationMainService,

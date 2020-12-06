@@ -52,9 +52,9 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	displayedColumns: string[] = ["name", "description", "status", "createDate", "actions"];
 
-	@ViewChild(MatPaginator, {static: false})
+	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
-	@ViewChild(MatSort, {static: false})
+	@ViewChild(MatSort)
 	sort: MatSort;
 	// MatPaginator Inputs
 	pageSize = DEFAULT_PAGE_SIZE;
@@ -66,7 +66,7 @@ export class ContractListComponent implements OnInit, OnDestroy, AfterViewInit {
 	accountName: any;
 	pageIndex = 0;
 
-	@ViewChild("importFileInput", {static: false}) importFileInput: ElementRef<HTMLInputElement>;
+	@ViewChild("importFileInput") importFileInput: ElementRef<HTMLInputElement>;
 
 	private searchString: Subject<string> = new Subject<string>();
 	private getContractsSubscription: Subscription = null;

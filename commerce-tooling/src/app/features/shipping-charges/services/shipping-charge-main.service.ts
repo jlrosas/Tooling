@@ -231,7 +231,7 @@ export class ShippingChargeMainService {
 		});
 	}
 
-	loadCurrentFulfillmentOptions(id: number, storeOwnerId: string): Observable<void> {
+	loadCurrentFulfillmentOptions(id: number, storeId: number): Observable<void> {
 		return new Observable<undefined>((observer: Observer<void>) => {
 			if (this.currentCalculationRuleId === id && this.fulfillmentOptions != null) {
 				observer.next(undefined);
@@ -275,7 +275,7 @@ export class ShippingChargeMainService {
 						if (fulfillmentCenterIds.length > 0) {
 							requests.push(this.fulfillmentCentersService.getFulfillmentCenters({
 								id: fulfillmentCenterIds,
-								memberId: storeOwnerId
+								storeId
 							}));
 						}
 						if (jurisdictionGroupIds.length > 0) {
@@ -285,7 +285,8 @@ export class ShippingChargeMainService {
 						}
 						if (shippingModeIds.length > 0) {
 							requests.push(this.shippingModesService.getShippingModes({
-								id: shippingModeIds
+								id: shippingModeIds,
+								storeId
 							}));
 						}
 						if (requests.length > 0) {

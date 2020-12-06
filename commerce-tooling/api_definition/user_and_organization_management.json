@@ -371,7 +371,7 @@
           },
           {
             "default": "Manage",
-            "description": "Limits the results to organizations that match the specified task. The following values are accepted:\n * AssignRoleToUser - Returns organizations for which the current user is allowed to assign roles to other users.\n * CreateAccount - Returns organizations for which the current user is allowed to create accounts.\n * Manage - Returns organizations that the current user is allowed to manage. The organizations may be of type \"O\", \"OU\" or \"AD\".\n * ManageExcludingAD - Returns organizations that the current user is allowed to manage. The organiztaion may be of type \"O\" or \"OU\".\n * ManageO - Returns organizations of type \"O\" that the current user is allowed to manage.\n * ManageOU - Returns organizations of type \"OU\" that the current user is allowed to manage.\n",
+            "description": "Limits the results to organizations that match the specified task. The following values are accepted:\n * AssignRoleToUser - Returns organizations for which the current user is allowed to assign roles to other users.\n * CreateAccount - Returns organizations for which the current user is allowed to create accounts.\n * CreateRegisteredCustomer - Returns organizations for which the current user is allowed to create registered customers.\n * Manage - Returns organizations that the current user is allowed to manage. The organizations may be of type \"O\", \"OU\" or \"AD\".\n * ManageExcludingAD - Returns organizations that the current user is allowed to manage. The organiztaion may be of type \"O\" or \"OU\".\n * ManageO - Returns organizations of type \"O\" that the current user is allowed to manage.\n * ManageOU - Returns organizations of type \"OU\" that the current user is allowed to manage.\n",
             "in": "query",
             "name": "taskName",
             "required": false,
@@ -381,6 +381,7 @@
               "enum": [
                 "AssignRoleToUser",
                 "CreateAccount",
+                "CreateRegisteredCustomer",
                 "Manage",
                 "ManageExcludingAD",
                 "ManageO",
@@ -392,7 +393,7 @@
             "required": false,
             "type": "integer",
             "format": "int32",
-            "description": "The unique numeric ID of the store for which the organizations are being managed. This parameter should be passed if the taskName is CreateAccount.",
+            "description": "The unique numeric ID of the store for which the organizations are being managed. This parameter should be passed if the taskName is CreateAccount or CreateRegisteredCustomer.",
             "in": "query",
             "name": "storeId"
           },
@@ -1193,7 +1194,15 @@
             "format": "int32"
           },
           {
-            "description": "Qualifies roleId to limit search results to only include users who have a matching role ID in the organization that matches this parameter.",
+            "description": "Limits search results to only include users whose role ID matches the value of this parameter. This role ID can be qualified by the organization specified by roleOrganizationId.",
+            "in": "query",
+            "name": "organizationRoleId",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "description": "Qualifies organizationRoleId to limit search results to only include users who have a matching role ID in the organization that matches this parameter.",
             "in": "query",
             "name": "roleOrganizationId",
             "required": false,

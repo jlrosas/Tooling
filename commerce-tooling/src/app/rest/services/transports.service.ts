@@ -16,6 +16,8 @@ class TransportsService extends __BaseService {
   static readonly getTransportByIdPath = '/rest/admin/v2/transports/{id}';
   static readonly deleteTransportByIdPath = '/rest/admin/v2/transports/{id}';
   static readonly updateTransportByIdPath = '/rest/admin/v2/transports/{id}';
+  static readonly getConnectionSpecMetaInfoPath = '/rest/admin/v2/transports/{id}/connection-spec-meta-info';
+  static readonly getInteractionSpecMetaInfoPath = '/rest/admin/v2/transports/{id}/interaction-spec-meta-info';
 
   constructor(
     config: __Configuration,
@@ -126,7 +128,7 @@ class TransportsService extends __BaseService {
 
   /**
    * Create an Store transport.
-   * @param Transport An store transport.
+   * @param Transport A store transport.
    */
   createTransportResponse(Transport: {id?: number, code?: string, name?: string, description?: string, timeout?: number, implemented?: string, addressable?: string}): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
@@ -153,7 +155,7 @@ class TransportsService extends __BaseService {
 
   /**
    * Create an Store transport.
-   * @param Transport An store transport.
+   * @param Transport A store transport.
    */
   createTransport(Transport: {id?: number, code?: string, name?: string, description?: string, timeout?: number, implemented?: string, addressable?: string}): __Observable<null> {
     return this.createTransportResponse(Transport).pipe(
@@ -173,7 +175,7 @@ class TransportsService extends __BaseService {
    *
    * - `sort`: The comma-separated set of properties which controls the order of the items being listed, prefixed by either (-) to sort by descending order, or optionally (+) to sort by ascending order. For example, sort=name,-d which means, order the items based on the name value in ascending order, then by the id value in descending order.
    *
-   * @return An store transport.
+   * @return A store transport.
    */
   getTransportByIdResponse(params: TransportsService.GetTransportByIdParams): __Observable<__StrictHttpResponse<{id?: number, code?: string, name?: string, description?: string, timeout?: number, implemented?: string, addressable?: string}>> {
     let __params = this.newParams();
@@ -213,7 +215,7 @@ class TransportsService extends __BaseService {
    *
    * - `sort`: The comma-separated set of properties which controls the order of the items being listed, prefixed by either (-) to sort by descending order, or optionally (+) to sort by ascending order. For example, sort=name,-d which means, order the items based on the name value in ascending order, then by the id value in descending order.
    *
-   * @return An store transport.
+   * @return A store transport.
    */
   getTransportById(params: TransportsService.GetTransportByIdParams): __Observable<{id?: number, code?: string, name?: string, description?: string, timeout?: number, implemented?: string, addressable?: string}> {
     return this.getTransportByIdResponse(params).pipe(
@@ -262,7 +264,7 @@ class TransportsService extends __BaseService {
    * Update an Store transport.
    * @param params The `TransportsService.UpdateTransportByIdParams` containing the following parameters:
    *
-   * - `Transport`: An store transport.
+   * - `Transport`: A store transport.
    *
    * - `id`: The transport ID.
    */
@@ -294,13 +296,87 @@ class TransportsService extends __BaseService {
    * Update an Store transport.
    * @param params The `TransportsService.UpdateTransportByIdParams` containing the following parameters:
    *
-   * - `Transport`: An store transport.
+   * - `Transport`: A store transport.
    *
    * - `id`: The transport ID.
    */
   updateTransportById(params: TransportsService.UpdateTransportByIdParams): __Observable<null> {
     return this.updateTransportByIdResponse(params).pipe(
       __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param id The unique numeric ID for identifying the transport.
+   * @return The operation is successful.
+   */
+  getConnectionSpecMetaInfoResponse(id: number): __Observable<__StrictHttpResponse<{properties?: Array<{name?: string, encrypt?: boolean, value?: string}>}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/rest/admin/v2/transports/${id}/connection-spec-meta-info`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{properties?: Array<{name?: string, encrypt?: boolean, value?: string}>}>;
+      })
+    );
+  }
+
+  /**
+   * @param id The unique numeric ID for identifying the transport.
+   * @return The operation is successful.
+   */
+  getConnectionSpecMetaInfo(id: number): __Observable<{properties?: Array<{name?: string, encrypt?: boolean, value?: string}>}> {
+    return this.getConnectionSpecMetaInfoResponse(id).pipe(
+      __map(_r => _r.body as {properties?: Array<{name?: string, encrypt?: boolean, value?: string}>})
+    );
+  }
+
+  /**
+   * @param id The unique numeric ID for identifying the transport.
+   * @return The operation is successful.
+   */
+  getInteractionSpecMetaInfoResponse(id: number): __Observable<__StrictHttpResponse<{properties?: Array<{name?: string, encrypt?: boolean, value?: string}>}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/rest/admin/v2/transports/${id}/interaction-spec-meta-info`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{properties?: Array<{name?: string, encrypt?: boolean, value?: string}>}>;
+      })
+    );
+  }
+
+  /**
+   * @param id The unique numeric ID for identifying the transport.
+   * @return The operation is successful.
+   */
+  getInteractionSpecMetaInfo(id: number): __Observable<{properties?: Array<{name?: string, encrypt?: boolean, value?: string}>}> {
+    return this.getInteractionSpecMetaInfoResponse(id).pipe(
+      __map(_r => _r.body as {properties?: Array<{name?: string, encrypt?: boolean, value?: string}>})
     );
   }
 }
@@ -405,7 +481,7 @@ module TransportsService {
   export interface UpdateTransportByIdParams {
 
     /**
-     * An store transport.
+     * A store transport.
      */
     Transport: {id?: number, code?: string, name?: string, description?: string, timeout?: number, implemented?: string, addressable?: string};
 

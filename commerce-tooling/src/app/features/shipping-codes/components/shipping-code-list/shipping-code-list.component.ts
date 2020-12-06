@@ -49,9 +49,9 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 	];
 	model = new ShippingCodeDataSource();
 
-	@ViewChild(MatPaginator, {static: false})
+	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
-	@ViewChild(MatSort, {static: false})
+	@ViewChild(MatSort)
 	sort: MatSort;
 	// MatPaginator Inputs
 	pageSize = DEFAULT_PAGE_SIZE;
@@ -218,7 +218,9 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 
 	createShippingCode() {
 		if (this.selectedStore) {
-			this.router.navigate(["shipping-codes/create-shipping-code", { storeId: this.selectedStore.id }]);
+			this.router.navigate(["shipping-codes/create-shipping-code", {
+				storeId: this.selectedStore.id
+			}]);
 		}
 	}
 
@@ -270,8 +272,7 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 	gotoShippingCharges(row: any) {
 		this.router.navigate(["/shipping-charges/shipping-charge-list", {
 			shippingCodeId: row.id,
-			storeId: this.selectedStore.id,
-			storeOwnerId: this.selectedStore.ownerId
+			storeId: this.selectedStore.id
 		}]);
 	}
 
@@ -351,6 +352,7 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 					const item = body.items[i];
 					const shippingCode: ShippingCode = {
 						id: item.id,
+						storeId: item.storeId,
 						calculationCode: item.calculationCode,
 						status: item.published
 					};
@@ -414,6 +416,7 @@ export class ShippingCodeListComponent implements OnInit, OnDestroy, AfterViewIn
 
 interface ShippingCode {
 	id: number;
+	storeId: number;
 	calculationCode: string;
 	status: number;
 }

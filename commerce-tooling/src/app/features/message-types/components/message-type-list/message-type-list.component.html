@@ -1,0 +1,118 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'MESSAGE_TYPES.MESSAGE_TYPES' | translate}}
+	</h1>
+	<div class="hc-table-section hc-paper">
+		<!-- Search,Filter part(start) -->
+		<div class="hc-table-actions">
+			<form [formGroup]="listSearchForm" autocomplete="off">
+				<mat-form-field appearance="outline" class="icon-suffix">
+					<mat-label>{{'MESSAGE_TYPES.SEARCH' | translate}}</mat-label>
+					<input matInput (input)="searchMessageTypes($event.target.value)"
+							placeholder="{{'MESSAGE_TYPES.SEARCH_BY_NAME' | translate}}"
+							formControlName="searchText" >
+					<mat-icon matSuffix>search</mat-icon>
+					<span class="filter-clear" *ngIf="currentSearchString != null" (click)="clearSearch()">
+						<mat-icon>clear</mat-icon>
+						<span class="clear-margin">{{'MESSAGE_TYPES.CLEAR' | translate}}</span>
+					</span>
+				</mat-form-field>
+			</form>
+			<div class="hc-table-buttons">
+				<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'MESSAGE_TYPES.SHOW_FILTERS' | translate}}</mat-slide-toggle>
+				<button class="mat-flat-button mat-primary" (click)="createMessageType()">{{'MESSAGE_TYPES.NEW_BUTTON' | translate}}</button>
+				<button class="mat-icon-button-label" matTooltip="{{'MESSAGE_TYPES.REFRESH' | translate}}" mat-icon-button (click)="refreshMessageTypes()">
+					<mat-icon color="primary">refresh</mat-icon>
+				</button>
+			</div>
+		</div>
+		<div *ngIf="showFilters">
+			<div class="hc-table-filters">
+				<form [formGroup]="listFilterForm" autocomplete="off">
+					<mat-form-field appearance="outline" class="icon-suffix">
+						<mat-label>{{'MESSAGES.STORE_FILTER'| translate}}</mat-label>
+						<input matInput id="store" (input)="searchStores($event.target.value)" placeholder="{{'MESSAGES.SELECT_STORE_PLACEHOLDER'| translate}}"
+								formControlName="store" [matAutocomplete]="storeAutocomplete">
+						<mat-autocomplete #storeAutocomplete="matAutocomplete" (optionSelected)="selectStore($event.option.value)">
+							<mat-option *ngFor="let store of storeList" [value]="store">
+								{{store.identifier}}
+							</mat-option>
+						</mat-autocomplete>
+						<mat-icon matSuffix>filter_list</mat-icon>
+						<span class="filter-clear" *ngIf="storeFilter != null" (click)="clearStore()">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'MESSAGES.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+					<mat-form-field appearance="outline">
+						<mat-label>{{'MESSAGE_TYPES.TRANSPORT_STATUS_FILTER'| translate}}</mat-label>
+						<mat-select id="statusSelect" placeholder="{{'MESSAGE_TYPES.SELECT_STATUS_PLACEHOLDER'| translate}}"
+								formControlName="status"
+								(selectionChange)="selectStatus($event.value)">
+							<mat-option [value]="0">
+								{{'MESSAGE_TYPES.INACTIVE' | translate}}
+							</mat-option>
+							<mat-option [value]="1">
+								{{'MESSAGE_TYPES.ACTIVE' | translate}}
+							</mat-option>
+						</mat-select>
+						<span class="filter-clear" *ngIf="statusFilter != null" (click)="clearStatus($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'TRANSPORTS.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+				</form>
+			</div>
+		</div>
+		<!-- Search,Filter part(end) -->
+
+		<!-- TABLE PART (START) -->
+		<div class="hc-table-wrapper">
+			<table mat-table [dataSource]="model" matSort matSortActive="{{activeColumn}}" matSortDirection="{{sortDirection}}">
+				<ng-container matColumnDef="messageType" sticky>
+					<th mat-header-cell *matHeaderCellDef mat-sort-header="name">{{'MESSAGE_TYPES.MESSAGE_TYPE' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						<a [routerLink]="['/message-types/edit-message-type', row.id, {storeId: row.storeId}]">{{row.name | translate}}</a>
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="severityRange">
+					<th mat-header-cell *matHeaderCellDef>{{'MESSAGE_TYPES.SEVERITY_RANGE' | translate}}</th>
+					<td mat-cell *matCellDef="let row">{{row.severityRange}}</td>
+				</ng-container>
+				<ng-container matColumnDef="transportName">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header="transportName">{{'MESSAGE_TYPES.TRANSPORT' | translate}}</th>
+					<td mat-cell *matCellDef="let row">{{row.transportName | translate}}</td>
+				</ng-container>
+				<ng-container matColumnDef="transportStatus">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header="active">{{'MESSAGE_TYPES.TRANSPORT_STATUS' | translate}}</th>
+					<td mat-cell *matCellDef="let row">{{(row.active ? 'MESSAGE_TYPES.ACTIVE' : 'MESSAGE_TYPES.INACTIVE') | translate}}</td>
+				</ng-container>
+				<ng-container matColumnDef="actions" stickyEnd>
+					<th mat-header-cell *matHeaderCellDef>{{'MESSAGE_TYPES.ACTIONS' | translate}}</th>
+					<td mat-cell *matCellDef="let element">
+						<button matTooltip="{{'MESSAGE_TYPES.DELETE' | translate}}" mat-icon-button aria-label="delete" (click)="deleteMessageType(element)">
+							<mat-icon color="primary">delete</mat-icon>
+						</button>
+					</td>
+				</ng-container>
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+			<!-- TABLE PART (END) -->
+		</div>
+		<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+				(page)="handlePage($event)">
+		</mat-paginator>
+	</div>
+</div>

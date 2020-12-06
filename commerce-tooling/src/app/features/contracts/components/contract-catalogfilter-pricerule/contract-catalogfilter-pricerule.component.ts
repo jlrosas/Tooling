@@ -42,7 +42,7 @@ export class ContractFilterPriceComponent implements OnInit, OnDestroy, AfterVie
 	priceRuleList: Array<any> = [];
 	getPriceRulesSubscription: Subscription = null;
 
-	@ViewChild("catalogFilterInput", {static: false}) catalogFilterInput: ElementRef<HTMLInputElement>;
+	@ViewChild("catalogFilterInput") catalogFilterInput: ElementRef<HTMLInputElement>;
 
 	private catalogFilterSearchString: Subject<string> = new Subject<string>();
 	private priceRuleSearchString: Subject<string> = new Subject<string>();

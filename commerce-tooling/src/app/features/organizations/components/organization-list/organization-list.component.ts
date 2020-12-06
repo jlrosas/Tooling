@@ -40,9 +40,9 @@ export class OrganizationListComponent implements OnInit, OnDestroy, AfterViewIn
 
 	displayedColumns: string[] = ["organizationName", "parentOrganizationName", "organizationType"];
 
-	@ViewChild(MatPaginator, { static: false })
+	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
-	@ViewChild(MatSort, { static: false })
+	@ViewChild(MatSort)
 	sort: MatSort;
 	// MatPaginator Inputs
 	pageSize = DEFAULT_PAGE_SIZE;

@@ -33,7 +33,7 @@ export class AccountPurchaseOrderComponent implements OnInit, AfterViewInit {
 	mustSpecifyPurchaseOrderNumber: FormControl;
 	checkPurchaseOrderNumberUniqueness: FormControl;
 
-	@ViewChild("mustSpecifyPurchaseOrderNumberCheck", {static: false}) mustSpecifyPurchaseOrderNumberCheck: MatCheckbox;
+	@ViewChild("mustSpecifyPurchaseOrderNumberCheck") mustSpecifyPurchaseOrderNumberCheck: MatCheckbox;
 
 	constructor(private route: ActivatedRoute,
 			private router: Router,

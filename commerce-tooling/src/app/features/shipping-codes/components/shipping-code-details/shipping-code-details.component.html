@@ -11,7 +11,7 @@
 
 <form [formGroup]="detailsForm" autocomplete="off">
 	<div class="bx--row">
-		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+		<div class="form-row bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
 			<mat-form-field appearance="outline">
 				<mat-label>{{'SHIPPING_CODES.NAME'| translate}}</mat-label>
 				<input #nameInput matInput id="name" formControlName="name" required [maxlength]="128"
@@ -21,11 +21,21 @@
 				</mat-error>
 			</mat-form-field>
 		</div>
+		<div class="form-row bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+			<mat-label>{{'SHIPPING_CODES.SELECT_PRODUCT_OR_CATEGORIES'| translate}}</mat-label>
+			<mat-radio-group class="select-product-group" formControlName="productsOrCategories" (change)="validateSelectProductsOrCategories($event)">
+				<mat-radio-button [value]="'allProducts'">{{'SHIPPING_CODES.ALL_PRODUCTS'| translate}}</mat-radio-button>
+				<mat-radio-button *ngIf="!isInheritedAllProducts" [value]="'specificProducts'">{{'SHIPPING_CODES.SPECIFIC_CATEGORIES_AND_PRODUCTS'| translate}}</mat-radio-button>
+				<mat-radio-button *ngIf="isInherited && !isInheritedSpecificProducts" [value]="'cancelInherited'">{{'SHIPPING_CODES.CANCEL_INHERITED'| translate}}</mat-radio-button>
+			</mat-radio-group>
+		</div>
 	</div>
 	<div class="bx--row">
 		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
 			<div>
-				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()">{{'SHIPPING_CODES.SAVE' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="next()" *ngIf="mode === 'create' && productsOrCategories.value === 'specificProducts'">{{'SHIPPING_CODES.NEXT' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode === 'edit'">{{'SHIPPING_CODES.SAVE' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode === 'create' && productsOrCategories.value !== 'specificProducts'">{{'SHIPPING_CODES.FINISH' | translate}}</button>
 			</div>
 		</div>
 	</div>

@@ -1,0 +1,80 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<div class="hc-table-section">
+		<!-- Search,Filter part(start) -->
+		<div class="table-actions">
+			<form [formGroup]="productListSearchForm" autocomplete="off">
+				<div class="form-row">
+					<mat-form-field appearance="outline" class="icon-suffix">
+						<mat-label>{{'SHIPPING_CODES.PRODUCTS_SEARCH_BY' | translate}}</mat-label>
+						<input matInput (input)="searchProducts($event.target.value)" formControlName="searchText">
+						<span class="filter-clear" *ngIf="currentSearchString !== ''" (click)="clearProductSearch()">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'SHIPPING_CODES.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+				</div>
+			</form>
+		</div>
+		<!-- Search,Filter part(end) -->
+		<!-- TABLE PART (START) -->
+		<div [ngStyle]="{'display': tableVisibility ? 'block' : 'none'}">
+			<div class="hc-table-wrapper">
+				<table mat-table [dataSource]="model">
+					<ng-container matColumnDef="select">
+						<th mat-header-cell *matHeaderCellDef>
+							<mat-checkbox (change)="$event ? masterToggle() : null"
+									[checked]="selection.hasValue() && isAllSelected()"
+									[indeterminate]="selection.hasValue() && !isAllSelected()">
+							</mat-checkbox>
+						</th>
+						<td mat-cell *matCellDef="let row">
+							<mat-checkbox (change)="$event ? onSelectionChange(row): null"
+									[checked]="selection.isSelected(row)">
+							</mat-checkbox>
+						</td>
+					</ng-container>
+					<ng-container matColumnDef="name">
+						<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CODES.NAME' | translate}}</th>
+						<td mat-cell *matCellDef="let row">
+							{{row.name}}
+						</td>
+					</ng-container>
+					<ng-container matColumnDef="partNumber">
+						<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CODES.SKU' | translate}}</th>
+						<td mat-cell *matCellDef="let row">
+							{{row.sku}}
+						</td>
+					</ng-container>
+					<ng-container matColumnDef="shortDescription">
+						<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CODES.SHORT_DESCRIPTION' | translate}}</th>
+						<td mat-cell *matCellDef="let row">
+							{{row.shortDescription}}
+						</td>
+					</ng-container>
+					<ng-container matColumnDef="type">
+						<th mat-header-cell *matHeaderCellDef>{{'SHIPPING_CODES.TYPE' | translate}}</th>
+						<td mat-cell *matCellDef="let row">
+							{{'SHIPPING_CODES.'+row.type | translate}}
+						</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+				<!-- TABLE PART (END) -->
+			</div>
+			<mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+					(page)="handlePage($event)">
+			</mat-paginator>
+		</div>
+	</div>
+</div>

@@ -80,9 +80,6 @@ import {
 		DeleteShippingJurisdictionDialogComponent
 	],
 	providers: [
-	],
-	entryComponents: [
-		DeleteShippingJurisdictionDialogComponent
 	]
 })
 export class ShippingJurisdictionsModule {}

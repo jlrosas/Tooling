@@ -17,9 +17,7 @@ import { MatStep, MatStepper } from "@angular/material/stepper";
 import { DataSource } from "@angular/cdk/table";
 import { FormGroup } from "@angular/forms";
 import { ShippingChargeMainService, ShippingChargeFulfillmentOption } from "../../services/shipping-charge-main.service";
-import { FulfillmentCentersService } from "../../../../rest/services/fulfillment-centers.service";
 import { JurisdictionsService } from "../../../../rest/services/jurisdictions.service";
-import { ShippingModesService } from "../../../../rest/services/shipping-modes.service";
 import {
 	ShippingChargeFulfillmentOptionDialogComponent
 } from "../shipping-charge-fulfillment-option-dialog/shipping-charge-fulfillment-option-dialog.component";
@@ -35,7 +33,7 @@ export class ShippingChargeFulfillmentOptionsComponent implements AfterViewInit,
 	@Output() save: EventEmitter<any> = new EventEmitter<any>();
 
 	fulfillmentForm: FormGroup | any;
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	displayedColumns: string[] = ["fulfillmentCenter", "jurisdiction", "shippingMode", "precedence", "actions"];
 
@@ -51,9 +49,7 @@ export class ShippingChargeFulfillmentOptionsComponent implements AfterViewInit,
 
 	constructor(private route: ActivatedRoute,
 		private shippingChargeMainService: ShippingChargeMainService,
-		private fulfillmentCentersService: FulfillmentCentersService,
 		private jurisdictionsService: JurisdictionsService,
-		private shippingModesService: ShippingModesService,
 		private dialog: MatDialog) { }
 
 	ngOnInit() {
@@ -64,7 +60,7 @@ export class ShippingChargeFulfillmentOptionsComponent implements AfterViewInit,
 		this.step.stepControl = this.fulfillmentForm;
 		if (this.mode === "edit") {
 			this.shippingChargeMainService.loadCurrentFulfillmentOptions(Number(this.route.snapshot.params.id),
-					this.route.snapshot.params.storeOwnerId).subscribe(response => {
+					Number(this.route.snapshot.params.storeId)).subscribe(response => {
 				this.model.setData(this.shippingChargeMainService.fulfillmentOptions);
 			});
 		} else {
@@ -85,7 +81,6 @@ export class ShippingChargeFulfillmentOptionsComponent implements AfterViewInit,
 			...this.dialogConfig,
 			data: {
 				storeId: Number(this.route.snapshot.params.storeId),
-				storeOwnerId: this.route.snapshot.params.storeOwnerId,
 				fulfillmentOptions: this.shippingChargeMainService.fulfillmentOptions
 			}
 		});
@@ -103,7 +98,6 @@ export class ShippingChargeFulfillmentOptionsComponent implements AfterViewInit,
 			data: {
 				fulfillmentOption,
 				storeId: Number(this.route.snapshot.params.storeId),
-				storeOwnerId: this.route.snapshot.params.storeOwnerId,
 				fulfillmentOptions: this.shippingChargeMainService.fulfillmentOptions
 			}
 		});

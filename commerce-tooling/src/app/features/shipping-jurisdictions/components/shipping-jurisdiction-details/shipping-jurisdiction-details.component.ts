@@ -45,7 +45,7 @@ export class ShippingJurisdictionDetailsComponent implements OnInit, OnDestroy, 
 	filteredCountryList: Array<any> = [];
 	filteredStateList: Array<any> = [];
 
-	@ViewChild("nameInput", {static: false}) nameInput: ElementRef<HTMLInputElement>;
+	@ViewChild("nameInput") nameInput: ElementRef<HTMLInputElement>;
 	private countryList: Array<any> = [];
 	private stateList: Array<any> = [];
 	private onLanguageChangeSubscription: Subscription = null;

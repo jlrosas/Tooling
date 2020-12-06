@@ -11,14 +11,10 @@
 
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { HttpClientModule, HttpClient } from "@angular/common/http";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { UserManagementRoutingModule } from "./user-management-routing.module";
-import { ChevronRight16Module } from "@carbon/icons-angular/lib/chevron--right/16";
-import { Close16Module } from "@carbon/icons-angular/lib/close/16";
 import { TranslateModule } from "@ngx-translate/core";
-
 import { CdkTableModule } from "@angular/cdk/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
@@ -60,8 +56,6 @@ import { OrganizationNameService } from "../../services/organization-name.servic
 		HttpClientModule,
 		FormsModule,
 		TranslateModule,
-		ChevronRight16Module,
-		Close16Module,
 		CdkTableModule,
 		MatPaginatorModule,
 		MatSortModule,
@@ -98,9 +92,6 @@ import { OrganizationNameService } from "../../services/organization-name.servic
 	],
 	providers: [
 		OrganizationNameService
-	],
-	entryComponents: [
-		PasswordResetDialogComponent
 	]
 })
 export class UserManagementModule { }

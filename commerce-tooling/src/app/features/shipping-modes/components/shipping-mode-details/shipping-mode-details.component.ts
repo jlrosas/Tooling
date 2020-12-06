@@ -42,8 +42,8 @@ export class ShippingModeDetailsComponent implements OnInit, OnDestroy, AfterVie
 	carrierList: Array<any> = [];
 	serviceList: Array<any> = [];
 
-	@ViewChild("carrierInput", {static: false}) carrierInput: ElementRef<HTMLInputElement>;
-	@ViewChild("trackingURLInput", {static: false}) trackingURLInput: ElementRef<HTMLInputElement>;
+	@ViewChild("carrierInput") carrierInput: ElementRef<HTMLInputElement>;
+	@ViewChild("trackingURLInput") trackingURLInput: ElementRef<HTMLInputElement>;
 
 	private statusChangesSubscription: Subscription = null;
 	private carrierSearchString: Subject<string> = new Subject<string>();

@@ -35,7 +35,7 @@ export class ContractOrderApprovalComponent implements OnInit, AfterViewInit {
 
 	currencies: Array<string> = [];
 
-	@ViewChild("orderApprovalRequiredCheck", {static: false}) orderApprovalRequiredCheck: MatCheckbox;
+	@ViewChild("orderApprovalRequiredCheck") orderApprovalRequiredCheck: MatCheckbox;
 
 	private defaultCurrency: string = null;
 

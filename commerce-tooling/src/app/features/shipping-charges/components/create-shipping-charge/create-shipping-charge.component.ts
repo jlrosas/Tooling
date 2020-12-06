@@ -21,11 +21,10 @@ import { AlertService } from "../../../../services/alert.service";
 	styleUrls: ["./create-shipping-charge.component.scss"]
 })
 export class CreateShippingChargeComponent implements OnInit {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	shippingCodeId: string;
 	storeId: string;
-	storeOwnerId: string;
 
 	constructor(private router: Router,
 			private route: ActivatedRoute,
@@ -36,7 +35,6 @@ export class CreateShippingChargeComponent implements OnInit {
 	ngOnInit() {
 		this.shippingCodeId = this.route.snapshot.params.shippingCodeId;
 		this.storeId = this.route.snapshot.params.storeId;
-		this.storeOwnerId = this.route.snapshot.params.storeOwnerId;
 	}
 
 	cancel() {
@@ -44,7 +42,6 @@ export class CreateShippingChargeComponent implements OnInit {
 		this.shippingChargeMainService.clearData();
 		this.router.navigate(["shipping-charges", "shipping-charge-list", {
 			storeId: this.storeId,
-			storeOwnerId: this.storeOwnerId,
 			shippingCodeId: this.shippingCodeId
 		}]);
 	}
@@ -85,7 +82,6 @@ export class CreateShippingChargeComponent implements OnInit {
 							this.shippingChargeMainService.clearData();
 							this.router.navigate(["shipping-charges", "shipping-charge-list", {
 								storeId: this.storeId,
-								storeOwnerId: this.storeOwnerId,
 								shippingCodeId: this.shippingCodeId
 							}]);
 							this.translateService.get("SHIPPING_CHARGES.SHIPPING_CHARGE_CREATED_MESSAGE", {name})

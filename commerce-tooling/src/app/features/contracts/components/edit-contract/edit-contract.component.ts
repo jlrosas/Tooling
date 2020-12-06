@@ -21,7 +21,7 @@ import { ContractMainService } from "../../services/contract-main.service";
 	styleUrls: ["./edit-contract.component.scss"]
 })
 export class EditContractComponent implements OnInit {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	accountId: string;
 	storeId: string;

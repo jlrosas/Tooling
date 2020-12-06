@@ -246,12 +246,13 @@ class OrganizationsService extends __BaseService {
    * - `taskName`: Limits the results to organizations that match the specified task. The following values are accepted:
    *    * AssignRoleToUser - Returns organizations for which the current user is allowed to assign roles to other users.
    *    * CreateAccount - Returns organizations for which the current user is allowed to create accounts.
+   *    * CreateRegisteredCustomer - Returns organizations for which the current user is allowed to create registered customers.
    *    * Manage - Returns organizations that the current user is allowed to manage. The organizations may be of type "O", "OU" or "AD".
    *    * ManageExcludingAD - Returns organizations that the current user is allowed to manage. The organiztaion may be of type "O" or "OU".
    *    * ManageO - Returns organizations of type "O" that the current user is allowed to manage.
    *    * ManageOU - Returns organizations of type "OU" that the current user is allowed to manage.
    *
-   * - `storeId`: The unique numeric ID of the store for which the organizations are being managed. This parameter should be passed if the taskName is CreateAccount.
+   * - `storeId`: The unique numeric ID of the store for which the organizations are being managed. This parameter should be passed if the taskName is CreateAccount or CreateRegisteredCustomer.
    *
    * - `sort`: The comma-separated set of properties that control the order of the listed items. Properties can be prefixed by either (-) to sort in descending order, or (+) to sort in ascending order. By default, properties are sorted in ascending order. For example, sort=name,-id will order the items first based on the name value in ascending order, and then by their ID value in descending order.
    *
@@ -307,12 +308,13 @@ class OrganizationsService extends __BaseService {
    * - `taskName`: Limits the results to organizations that match the specified task. The following values are accepted:
    *    * AssignRoleToUser - Returns organizations for which the current user is allowed to assign roles to other users.
    *    * CreateAccount - Returns organizations for which the current user is allowed to create accounts.
+   *    * CreateRegisteredCustomer - Returns organizations for which the current user is allowed to create registered customers.
    *    * Manage - Returns organizations that the current user is allowed to manage. The organizations may be of type "O", "OU" or "AD".
    *    * ManageExcludingAD - Returns organizations that the current user is allowed to manage. The organiztaion may be of type "O" or "OU".
    *    * ManageO - Returns organizations of type "O" that the current user is allowed to manage.
    *    * ManageOU - Returns organizations of type "OU" that the current user is allowed to manage.
    *
-   * - `storeId`: The unique numeric ID of the store for which the organizations are being managed. This parameter should be passed if the taskName is CreateAccount.
+   * - `storeId`: The unique numeric ID of the store for which the organizations are being managed. This parameter should be passed if the taskName is CreateAccount or CreateRegisteredCustomer.
    *
    * - `sort`: The comma-separated set of properties that control the order of the listed items. Properties can be prefixed by either (-) to sort in descending order, or (+) to sort in ascending order. By default, properties are sorted in ascending order. For example, sort=name,-id will order the items first based on the name value in ascending order, and then by their ID value in descending order.
    *
@@ -892,6 +894,7 @@ module OrganizationsService {
      * Limits the results to organizations that match the specified task. The following values are accepted:
      *  * AssignRoleToUser - Returns organizations for which the current user is allowed to assign roles to other users.
      *  * CreateAccount - Returns organizations for which the current user is allowed to create accounts.
+     *  * CreateRegisteredCustomer - Returns organizations for which the current user is allowed to create registered customers.
      *  * Manage - Returns organizations that the current user is allowed to manage. The organizations may be of type "O", "OU" or "AD".
      *  * ManageExcludingAD - Returns organizations that the current user is allowed to manage. The organiztaion may be of type "O" or "OU".
      *  * ManageO - Returns organizations of type "O" that the current user is allowed to manage.
@@ -900,7 +903,7 @@ module OrganizationsService {
     taskName?: string;
 
     /**
-     * The unique numeric ID of the store for which the organizations are being managed. This parameter should be passed if the taskName is CreateAccount.
+     * The unique numeric ID of the store for which the organizations are being managed. This parameter should be passed if the taskName is CreateAccount or CreateRegisteredCustomer.
      */
     storeId?: number;
 

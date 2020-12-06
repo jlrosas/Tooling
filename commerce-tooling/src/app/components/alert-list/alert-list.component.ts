@@ -23,7 +23,7 @@ export class AlertListComponent implements OnInit, OnDestroy {
 	@Input() className: string;
 	messages: any = [];
 
-	@ViewChild("snackBarTemplate", {static: false})
+	@ViewChild("snackBarTemplate")
 	snackBarTemplate: TemplateRef<any>;
 	private autoHideDuration = 6000;
 	private alertSubscription: Subscription;

@@ -17,7 +17,6 @@ import { AlertService } from "../../../../services/alert.service";
 import { Subject, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { FulfillmentCentersService } from "../../../../rest/services/fulfillment-centers.service";
-import { ShippingArrangementsService } from "../../../../rest/services/shipping-arrangements.service";
 import { JurisdictionGroupsService } from "../../../../rest/services/jurisdiction-groups.service";
 import { ShippingModesService } from "../../../../rest/services/shipping-modes.service";
 import { HcValidators } from "../../../../shared/validators";
@@ -32,10 +31,10 @@ export class ShippingChargeFulfillmentOptionDialogComponent implements OnInit, A
 	jurisdiction: FormControl;
 	shippingMode: FormControl;
 	precedence: FormControl;
+	anyFulfillMentCenter: FormControl;
 
 	data = null;
 	storeId = null;
-	storeOwnerId = null;
 
 	fulfillmentCenters = [];
 	filfullmentCenterSearchString = "";
@@ -60,10 +59,9 @@ export class ShippingChargeFulfillmentOptionDialogComponent implements OnInit, A
 	selectedShippingModeCarrier = null;
 	selectedShippingModeService = null;
 
-	@ViewChild("fulfillmentCenterInput", {static: false}) fulfillmentCenterInput: ElementRef<HTMLInputElement>;
+	@ViewChild("fulfillmentCenterInput") fulfillmentCenterInput: ElementRef<HTMLInputElement>;
 
 	private fulfillmentCenterSearchString$: Subject<string> = new Subject<string>();
-	private fulfillmentCenterIds: Array<number> = null;
 	private jurisdictionSearchString$: Subject<string> = new Subject<string>();
 	private shippingModesSearchString$: Subject<string> = new Subject<string>();
 
@@ -72,13 +70,11 @@ export class ShippingChargeFulfillmentOptionDialogComponent implements OnInit, A
 			private alertService: AlertService,
 			private dialogRef: MatDialogRef<ShippingChargeFulfillmentOptionDialogComponent>,
 			private fulfillmentCentersService: FulfillmentCentersService,
-			private shippingArrangementsService: ShippingArrangementsService,
 			private jurisdictionGroupsService: JurisdictionGroupsService,
 			private shippingModesService: ShippingModesService,
 			@Inject(MAT_DIALOG_DATA) data) {
 		this.data = data;
 		this.storeId = this.data.storeId;
-		this.storeOwnerId = this.data.storeOwnerId;
 	}
 
 	ngOnInit() {
@@ -88,7 +84,12 @@ export class ShippingChargeFulfillmentOptionDialogComponent implements OnInit, A
 			if (this.data.fulfillmentOption) {
 				const fulfillmentOption = this.data.fulfillmentOption;
 				this.selectedFulfillmentCenterId = fulfillmentOption.fulfillmentCenterId;
-				this.fulfillmentCenter.setValue(fulfillmentOption.fulfillmentCenterName);
+				if (fulfillmentOption.fulfillmentCenterId == null) {
+					this.anyFulfillMentCenter.setValue(true);
+					this.fulfillmentCenter.disable();
+				} else {
+					this.fulfillmentCenter.setValue(fulfillmentOption.fulfillmentCenterName);
+				}
 				this.selectedJurisdictionGroupId = fulfillmentOption.jurisdictionGroupId;
 				this.jurisdiction.setValue(fulfillmentOption.jurisdictionGroupCode);
 				this.selectedShippingModeId = fulfillmentOption.shippingModeId;
@@ -98,13 +99,13 @@ export class ShippingChargeFulfillmentOptionDialogComponent implements OnInit, A
 				this.precedence.setValue(fulfillmentOption.precedence.toString());
 			}
 		}
-		this.initFulfillmentCenters();
 		this.fulfillmentCenterSearchString$.pipe(debounceTime(250)).subscribe(searchString => {
 			this.fulfillmentCenters = [];
 			this.filfullmentCenterSearchString = searchString;
 			this.fulfillmentCenterCount = 0;
 			this.getFulfillmentCenters();
 		});
+		this.getFulfillmentCenters();
 		this.jurisdictionSearchString$.pipe(debounceTime(250)).subscribe(searchString => {
 			this.jurisdictions = [];
 			this.jurisdictionSearchString = searchString;
@@ -141,7 +142,7 @@ export class ShippingChargeFulfillmentOptionDialogComponent implements OnInit, A
 			} else {
 				const fulfillmentOption = this.data.fulfillmentOption ? this.data.fulfillmentOption : {};
 				fulfillmentOption.fulfillmentCenterId = this.selectedFulfillmentCenterId;
-				fulfillmentOption.fulfillmentCenterName = this.fulfillmentCenter.value;
+				fulfillmentOption.fulfillmentCenterName = (this.selectedFulfillmentCenterId != null) ? this.fulfillmentCenter.value : null;
 				fulfillmentOption.jurisdictionGroupId = this.selectedJurisdictionGroupId;
 				fulfillmentOption.jurisdictionGroupCode = this.jurisdiction.value;
 				fulfillmentOption.shippingModeId = this.selectedShippingModeId;
@@ -160,6 +161,16 @@ export class ShippingChargeFulfillmentOptionDialogComponent implements OnInit, A
 	cancel() {
 		this.alertService.clear();
 		this.dialogRef.close();
+	}
+
+	changeAnyFulfillMentCenter($event) {
+		if ($event.checked) {
+			this.selectedFulfillmentCenterId = null;
+			this.fulfillmentCenter.reset();
+			this.fulfillmentCenter.disable();
+		} else {
+			this.fulfillmentCenter.enable();
+		}
 	}
 
 	searchFulfillmentCenters(value) {
@@ -221,34 +232,31 @@ export class ShippingChargeFulfillmentOptionDialogComponent implements OnInit, A
 	}
 
 	private getFulfillmentCenters() {
-		if (this.fulfillmentCenterIds) {
-			this.fulfillmentCentersLoading = true;
-			const searchString = this.filfullmentCenterSearchString;
-			if (this.getFulfillmentCenterSubscription) {
-				this.getFulfillmentCenterSubscription.unsubscribe();
-				this.getFulfillmentCenterSubscription = null;
-			}
-			this.getFulfillmentCenterSubscription = this.fulfillmentCentersService.getFulfillmentCenters({
-				id: this.fulfillmentCenterIds,
-				searchString,
-				memberId: this.storeOwnerId,
-				limit: 10,
-				offset: this.fulfillmentCenters.length
-			}).subscribe(response => {
-				if (this.fulfillmentCenters.length === 0 && response.items.length === 1 && response.items[0].name === searchString) {
-					this.selectFulfillmentCenter(response.items[0]);
-				} else {
-					this.fulfillmentCenters = [ ...this.fulfillmentCenters, ...response.items];
-				}
-				this.getFulfillmentCenterSubscription = null;
-				this.fulfillmentCenterCount = response.count;
-				this.fulfillmentCentersLoading = false;
-			},
-			error => {
-				this.getFulfillmentCenterSubscription = null;
-				this.fulfillmentCentersLoading = false;
-			});
+		this.fulfillmentCentersLoading = true;
+		const searchString = this.filfullmentCenterSearchString;
+		if (this.getFulfillmentCenterSubscription) {
+			this.getFulfillmentCenterSubscription.unsubscribe();
+			this.getFulfillmentCenterSubscription = null;
 		}
+		this.getFulfillmentCenterSubscription = this.fulfillmentCentersService.getFulfillmentCenters({
+			storeId: this.storeId,
+			searchString,
+			limit: 10,
+			offset: this.fulfillmentCenters.length
+		}).subscribe(response => {
+			if (this.fulfillmentCenters.length === 0 && response.items.length === 1 && response.items[0].name === searchString) {
+				this.selectFulfillmentCenter(response.items[0]);
+			} else {
+				this.fulfillmentCenters = [ ...this.fulfillmentCenters, ...response.items];
+			}
+			this.getFulfillmentCenterSubscription = null;
+			this.fulfillmentCenterCount = response.count;
+			this.fulfillmentCentersLoading = false;
+		},
+		error => {
+			this.getFulfillmentCenterSubscription = null;
+			this.fulfillmentCentersLoading = false;
+		});
 	}
 
 	private getJurisdictions() {
@@ -364,6 +372,7 @@ export class ShippingChargeFulfillmentOptionDialogComponent implements OnInit, A
 			}
 			return errors;
 		}]);
+		this.anyFulfillMentCenter = new FormControl(false);
 	}
 
 	private createForm() {
@@ -371,21 +380,8 @@ export class ShippingChargeFulfillmentOptionDialogComponent implements OnInit, A
 			fulfillmentCenter: this.fulfillmentCenter,
 			jurisdiction: this.jurisdiction,
 			shippingMode: this.shippingMode,
-			precedence: this.precedence
-		});
-	}
-
-	private initFulfillmentCenters() {
-		this.fulfillmentCentersLoading = true;
-		this.shippingArrangementsService.getShippingArrangements({
-			storeId: this.storeId
-		}).subscribe(response => {
-			const fulfillmentCenterIds = [];
-			response.items.forEach(item => {
-				fulfillmentCenterIds.push(item.fulfillmentCenterId);
-			});
-			this.fulfillmentCenterIds = fulfillmentCenterIds;
-			this.getFulfillmentCenters();
+			precedence: this.precedence,
+			anyFulfillMentCenter: this.anyFulfillMentCenter
 		});
 	}
 }

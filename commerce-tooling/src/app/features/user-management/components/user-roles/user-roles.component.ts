@@ -50,8 +50,8 @@ export class UserRolesComponent implements OnInit, OnDestroy, AfterViewInit {
 	filteredAvailableRoleList: Array<any> = [];
 	rolesLoading = false;
 
-	@ViewChild("availableRolesInput", {static: false}) availableRolesInput: ElementRef<HTMLInputElement>;
-	@ViewChild("orgInput", {static: false}) orgInput: ElementRef<HTMLInputElement>;
+	@ViewChild("availableRolesInput") availableRolesInput: ElementRef<HTMLInputElement>;
+	@ViewChild("orgInput") orgInput: ElementRef<HTMLInputElement>;
 
 	private organizationSearchString: Subject<string> = new Subject<string>();
 	private availableRolesValueChangesSubscription: Subscription = null;

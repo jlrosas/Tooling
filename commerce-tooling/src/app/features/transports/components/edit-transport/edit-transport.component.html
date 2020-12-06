@@ -1,0 +1,40 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'TRANSPORTS.TRANSPORTS' | translate}}
+	</h1>
+	<div class="hc-stepper-section hc-paper">
+		<div class="hc-stepper-actions">
+			<h2 class="hc-type-h2">
+				{{'TRANSPORTS.EDIT_TRANSPORT' | translate}}
+			</h2>
+			<div>
+				<button class="mat-flat-button" type="button" (click)="cancel()">{{'TRANSPORTS.CANCEL' | translate}}</button>
+				<button class="mat-flat-button mat-primary" (click)="save()">{{'TRANSPORTS.SAVE' | translate}}</button>
+			</div>
+		</div>
+		<mat-vertical-stepper #stepper (selectionChange)="handleSelectionChange($event)">
+			<ng-template matStepperIcon="edit">
+				<mat-icon>check</mat-icon>
+			</ng-template>
+			<mat-step #detailsStep label="{{'TRANSPORTS.TRANSPORT_DETAILS' | translate}}">
+				<hc-transport-details [stepper]="stepper" [step]="detailsStep" mode="edit" (save)="save()">
+				</hc-transport-details>
+			</mat-step>		
+			<mat-step #configurationStep label="{{'TRANSPORTS.CONFIGURATION' | translate}}">
+				<hc-transport-configuration *ngIf="stepper.selected === configurationStep" [step]="configurationStep" mode="edit" (save)="save()">
+				</hc-transport-configuration>
+			</mat-step>
+		</mat-vertical-stepper>
+	</div>
+</div>

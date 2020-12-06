@@ -56,9 +56,9 @@ export class MessageListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	model = new MessageDataSource();
 
-	@ViewChild(MatPaginator, {static: false})
+	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
-	@ViewChild(MatSort, {static: false})
+	@ViewChild(MatSort)
 	sort: MatSort;
 	// MatPaginator Inputs
 	pageSize = DEFAULT_PAGE_SIZE;

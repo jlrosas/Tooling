@@ -30,7 +30,7 @@ export class MessageConfigurationComponent implements OnInit {
 	formControls: { [key: string]: AbstractControl; };
 	fields: Array<any>;
 
-	@ViewChild("fieldInput", {static: false}) firstInput: ElementRef<HTMLInputElement>;
+	@ViewChild("fieldInput") firstInput: ElementRef<HTMLInputElement>;
 
 	private fieldTextKeys = {
 		"host": "MESSAGES.CONFIGURATION_PROPERTY_HOST",

@@ -32,7 +32,7 @@ export class MessageDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 	transport: FormControl;
 	content: string;
 
-	@ViewChild("nextButton", {static: false}) nextButton: ElementRef<HTMLInputElement>;
+	@ViewChild("nextButton") nextButton: ElementRef<HTMLInputElement>;
 
 	private onLangChangeSubscription: Subscription;
 

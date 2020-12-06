@@ -14,9 +14,9 @@ import { MatStep } from "@angular/material/stepper";
 import { MatCheckbox } from "@angular/material/checkbox";
 import { FormGroup, FormControl } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { TranslateService } from "@ngx-translate/core";
-import { AlertService } from "../../../../services/alert.service";
+import { PaymentMethodsService } from "../../../../rest/services/payment-methods.service";
 import { ContractMainService } from "../../services/contract-main.service";
+import { AccountsService } from "../../../../rest/services/accounts.service";
 
 @Component({
 	templateUrl: "./contract-payment-billing.component.html",
@@ -29,17 +29,19 @@ export class ContractPaymentBillingComponent implements OnInit, AfterViewInit {
 	@Output() save: EventEmitter<any> = new EventEmitter<any>();
 
 	paymentBillingForm: FormGroup | any;
+	allowAccountCreditLineCheckVisibility  = false;
+	allowAccountCreditLine: FormControl;
 	allowPersonalBillingAddress: FormControl;
 	allowParentOrganizationBillingAddress: FormControl;
 	allowAccountOrganizationBillingAddress: FormControl;
 
-	@ViewChild("allowPersonalBillingAddressCheck", {static: false}) allowPersonalBillingAddressCheck: MatCheckbox;
+	@ViewChild("allowPersonalBillingAddressCheck") allowPersonalBillingAddressCheck: MatCheckbox;
 
 	constructor(private router: Router,
 			private route: ActivatedRoute,
 			private contractMainService: ContractMainService,
-			private alertService: AlertService,
-			private translateService: TranslateService) { }
+			private paymentMethodsService: PaymentMethodsService,
+			private accountsService: AccountsService) { }
 
 	ngOnInit() {
 		this.createFormElement();
@@ -60,6 +62,13 @@ export class ContractPaymentBillingComponent implements OnInit, AfterViewInit {
 		setTimeout(() => {
 			this.allowPersonalBillingAddressCheck.focus();
 		}, 250);
+		this.loadAvailableLineOfCreditPaymentMethod();
+	}
+
+	changeAllowAccountCreditLine($event) {
+		if (this.contractMainService.contractData) {
+			this.contractMainService.contractData.allowAccountCreditLine = $event.checked;
+		}
 	}
 
 	changeAllowPersonalBillingAddress($event) {
@@ -87,6 +96,7 @@ export class ContractPaymentBillingComponent implements OnInit, AfterViewInit {
 	private setValues() {
 		const contractData = this.contractMainService.contractData;
 		if (contractData) {
+			this.allowAccountCreditLine.setValue(contractData.allowAccountCreditLine ? true : false);
 			this.allowPersonalBillingAddress.setValue(contractData.allowPersonalBillingAddress ? true : false);
 			this.allowParentOrganizationBillingAddress.setValue(contractData.allowParentOrganizationBillingAddress ? true : false);
 			this.allowAccountOrganizationBillingAddress.setValue(contractData.allowAccountOrganizationBillingAddress ? true : false);
@@ -98,6 +108,7 @@ export class ContractPaymentBillingComponent implements OnInit, AfterViewInit {
 	}
 
 	private createFormElement() {
+		this.allowAccountCreditLine = new FormControl(false);
 		this.allowPersonalBillingAddress = new FormControl(false);
 		this.allowParentOrganizationBillingAddress = new FormControl(false);
 		this.allowAccountOrganizationBillingAddress = new FormControl(false);
@@ -105,9 +116,26 @@ export class ContractPaymentBillingComponent implements OnInit, AfterViewInit {
 
 	private createForm() {
 		this.paymentBillingForm = new FormGroup({
+			allowAccountCreditLine: this.allowAccountCreditLine,
 			allowPersonalBillingAddress: this.allowPersonalBillingAddress,
 			allowParentOrganizationBillingAddress: this.allowParentOrganizationBillingAddress,
 			allowAccountOrganizationBillingAddress: this.allowAccountOrganizationBillingAddress
+		});
+	}
+
+	private loadAvailableLineOfCreditPaymentMethod() {
+		this.paymentMethodsService.getPaymentMethods({
+			storeId: Number(this.route.snapshot.params.storeId),
+			name: "LineOfCredit"
+		}).subscribe(response => {
+			if (response?.items?.length > 0) {
+				const lineOfCreditId = response.items[0].id;
+				this.accountsService.getAccountPaymentMethods({
+					accountId: this.route.snapshot.params.accountId
+				}).subscribe(body => {
+					this.allowAccountCreditLineCheckVisibility = body?.items?.some(element => element.paymentMethodId === lineOfCreditId);
+				});
+			}
 		});
 	}
 }

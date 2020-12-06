@@ -21,7 +21,7 @@ import { AlertService } from "../../../../services/alert.service";
 	styleUrls: ["./create-shipping-mode.component.scss"]
 })
 export class CreateShippingModeComponent {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	constructor(private router: Router,
 			private route: ActivatedRoute,

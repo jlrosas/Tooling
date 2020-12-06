@@ -45,7 +45,7 @@ export class ContractPaymentMethodDialogComponent implements OnInit, AfterViewIn
 	checkingAccountNumber: FormControl;
 	checkRoutingNumber: FormControl;
 
-	@ViewChild("paymentMethodSelect", {static: false}) paymentMethodSelect: MatSelect;
+	@ViewChild("paymentMethodSelect") paymentMethodSelect: MatSelect;
 
 	constructor(
 		private translateService: TranslateService,

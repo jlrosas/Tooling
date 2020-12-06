@@ -43,7 +43,7 @@ export class ContractParticipantsComponent implements OnInit, OnDestroy, AfterVi
 	buyers: Array<any> = [];
 	customerOrganizationId: null;
 
-	@ViewChild("organizationInput", {static: false}) organizationInput: ElementRef<HTMLInputElement>;
+	@ViewChild("organizationInput") organizationInput: ElementRef<HTMLInputElement>;
 
 	private getOrganizationSubscriptions = {};
 	private organizationSearchString: Subject<string> = new Subject<string>();

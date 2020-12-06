@@ -14,6 +14,9 @@ import { Routes, RouterModule } from "@angular/router";
 import { ShippingCodeListComponent } from "./components/shipping-code-list/shipping-code-list.component";
 import { CreateShippingCodeComponent } from "./components/create-shipping-code/create-shipping-code.component";
 import { EditShippingCodeComponent } from "./components/edit-shipping-code/edit-shipping-code.component";
+import {
+	SelectShippingCategoriesAndProductsComponent
+} from "./components/select-shipping-categories-and-products/select-shipping-categories-and-products.component";
 
 const routes: Routes = [
 	{
@@ -24,6 +27,9 @@ const routes: Routes = [
 	},
 	{
 		path: "edit-shipping-code/:id", component: EditShippingCodeComponent
+	},
+	{
+		path: "select-shipping-categories-and-products", component: SelectShippingCategoriesAndProductsComponent
 	},
 	{
 		path: "", redirectTo: "shipping-code-list", pathMatch: "full"

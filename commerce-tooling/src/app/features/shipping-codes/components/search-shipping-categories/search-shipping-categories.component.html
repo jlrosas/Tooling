@@ -1,0 +1,34 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+<div>
+	<form [formGroup]="catalogSearchForm" autocomplete="off">
+		<mat-form-field appearance="outline" class="icon-suffix">
+			<mat-label>{{'SHIPPING_CODES.FILTER_CATALOG' | translate}}</mat-label>
+			<input #catalogSearchTextInput matInput (input)="searchCatalogs($event.target.value)"
+						placeholder="{{'SHIPPING_CODES.SEARCH_BY_NAME' | translate}}"
+						formControlName="catalogSearchText">
+			<mat-icon matSuffix>search</mat-icon>
+			<span class="filter-clear" *ngIf="catalogSearchString != ''" (click)="clearCatalogSearch()">
+				<mat-icon>clear</mat-icon>
+				<span class="clear-margin">{{'SHIPPING_CODES.CLEAR' | translate}}</span>
+			</span>
+		</mat-form-field>
+	</form>
+	<hc-shipping-catalog-browser *ngIf="catalogs && catalogs.length > 0"
+			[catalogs]="catalogs"
+			[selectedCategories]="selectedCategories"
+			[selectedProducts]="selectedProducts"
+			(onSelectCategory)="onSelectCategory.emit($event)"
+			(onUnselectCategory)="onUnselectCategory.emit($event)"
+			(onSelectProduct)="onSelectProduct.emit($event)"
+			(onUnselectProduct)="onUnselectProduct.emit($event)">
+	</hc-shipping-catalog-browser>
+</div>

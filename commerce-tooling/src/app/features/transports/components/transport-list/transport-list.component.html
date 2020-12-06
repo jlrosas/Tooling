@@ -1,0 +1,108 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<div>
+	<h1 class="hc-type-h1">
+		{{'TRANSPORTS.TRANSPORTS' | translate}}
+	</h1>
+	<div class="hc-table-section hc-paper">
+		<!-- Search,Filter part(start) -->
+		<div class="hc-table-actions">
+			<form [formGroup]="listSearchForm" autocomplete="off">
+				<mat-form-field appearance="outline" class="icon-suffix">
+					<mat-label>{{'TRANSPORTS.SEARCH' | translate}}</mat-label>
+					<input matInput (input)="searchTransports($event.target.value)"
+							placeholder="{{'TRANSPORTS.SEARCH_BY_TRANSPORT' | translate}}"
+							formControlName="searchText" >
+					<mat-icon matSuffix>search</mat-icon>
+					<span class="filter-clear" *ngIf="currentSearchString != null" (click)="clearSearch()">
+						<mat-icon>clear</mat-icon>
+						<span class="clear-margin">{{'TRANSPORTS.CLEAR' | translate}}</span>
+					</span>
+				</mat-form-field>
+			</form>
+			<div class="hc-table-buttons">
+				<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'TRANSPORTS.SHOW_FILTERS' | translate}}</mat-slide-toggle>
+				<button matTooltip="{{'TRANSPORTS.REFRESH' | translate}}" mat-icon-button (click)="refreshTransports()">
+					<mat-icon color="primary">refresh</mat-icon>
+				</button>
+				<button class="mat-flat-button mat-primary" (click)="createTransport()">{{'TRANSPORTS.NEW_BUTTON' | translate}}</button>
+			</div>
+		</div>
+		<div *ngIf="showFilters">
+			<div class="hc-table-filters">
+				<form [formGroup]="listFilterForm" autocomplete="off">
+					<mat-form-field appearance="outline" class="icon-suffix">
+						<mat-label>{{'TRANSPORTS.STORE_FILTER'| translate}}</mat-label>
+						<input matInput id="store" (input)="searchStores($event.target.value)" placeholder="{{'TRANSPORTS.SELECT_STORE_PLACEHOLDER'| translate}}"
+								formControlName="store" [matAutocomplete]="storeAutocomplete">
+						<mat-autocomplete #storeAutocomplete="matAutocomplete" (optionSelected)="selectStore($event.option.value)">
+							<mat-option *ngFor="let store of storeList" [value]="store">
+								{{store.identifier}}
+							</mat-option>
+						</mat-autocomplete>
+						<mat-icon matSuffix>filter_list</mat-icon>
+						<span class="filter-clear" *ngIf="storeFilter != null" (click)="clearStore()">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'TRANSPORTS.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+					<mat-form-field appearance="outline">
+						<mat-label>{{'TRANSPORTS.STATUS_FILTER'| translate}}</mat-label>
+						<mat-select id="statusSelect" placeholder="{{'TRANSPORTS.SELECT_STATUS_PLACEHOLDER'| translate}}"
+								formControlName="status"
+								(selectionChange)="selectStatus($event.value)">
+							<mat-option [value]="0">
+								{{'TRANSPORTS.INACTIVE' | translate}}
+							</mat-option>
+							<mat-option [value]="1">
+								{{'TRANSPORTS.ACTIVE' | translate}}
+							</mat-option>
+						</mat-select>
+						<span class="filter-clear" *ngIf="statusFilter != null" (click)="clearStatus($event)">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'TRANSPORTS.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+				</form>
+			</div>
+		</div>
+		<!-- Search,Filter part(end) -->
+
+		<!-- TABLE PART (START) -->
+		<div class="hc-table-wrapper">
+			<table mat-table [dataSource]="model" matSort matSortActive="{{activeColumn}}" matSortDirection="{{sortDirection}}">
+				<ng-container matColumnDef="name" sticky>
+					<th mat-header-cell *matHeaderCellDef mat-sort-header="name">{{'TRANSPORTS.NAME' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						<a [routerLink]="['/transports/edit-transport', row.transportId, {storeId: row.storeId}]">{{row.name}}</a>
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="description">
+					<th mat-header-cell *matHeaderCellDef  mat-sort-header="description">{{'TRANSPORTS.DESCRIPTION' | translate}}</th>
+					<td mat-cell *matCellDef="let row">{{row.description}}</td>
+				</ng-container>
+				<ng-container matColumnDef="status" stickyEnd>
+					<th mat-header-cell *matHeaderCellDef mat-sort-header="active">{{'TRANSPORTS.STATUS' | translate}}</th>
+					<td mat-cell *matCellDef="let row">
+						<mat-slide-toggle color="primary" [checked]="row.active === 1 ? true : false" (change)="toggleTransportActive($event, row)"></mat-slide-toggle>
+					</td>
+				</ng-container>
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+			<!-- TABLE PART (END) -->
+		</div>
+		<mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+				(page)="handlePage($event)">
+		</mat-paginator>
+	</div>
+</div>

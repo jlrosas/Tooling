@@ -1,7 +1,8 @@
 {
   "GENERAL": {
     "NO_SELECTION_MADE": "未进行选择。",
-    "DISMISS": "驳回"
+    "DISMISS": "驳回",
+    "NO_RECORDS_FOUND": "找不到记录"
   },
   "USER_MANAGEMENT": {
     "USERS": "用户",
@@ -78,7 +79,7 @@
     "STORE": "商店",
     "SELECT_STORE_PLACEHOLDER": "选择商店",
     "PHONE_NUMBER": "电话号码",
-    "IS_THIS_A_REGISTERED_CUSTOMER": "这是 B2C 注册客户吗？",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "这是注册客户吗？",
     "SELECT_REGISTERED_CUSTOMER_STORE": "选择商店",
     "PREFERRED_LANGUAGE": "首选语言",
     "PREFERRED_CURRENCY": "首选货币",
@@ -91,7 +92,10 @@
     "CHALLENGE_QUESTION": "验证问题",
     "CHALLENGE_ANSWER": "回答验证问题",
     "PARENT_ORGANIZATION_ERROR": "父组织无效。",
-    "STORE_ERROR": "商店无效。"
+    "STORE_ERROR": "商店无效。",
+    "BUYER_ADMINISTRATOR": "买家管理员",
+    "BUYER_APPROVER": "买家批准者",
+    "BUYER": "买家"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "组织",
@@ -279,7 +283,8 @@
     "PHONE_NUMBER": "电话号码",
     "EMPLOYEE_ID": "员工标识",
     "DISCOUNT": "折扣",
-    "TOTAL": "总计"
+    "TOTAL": "总计",
+    "NO_MATCHING_RECORDS_FOUND": "找不到匹配记录"
   },
   "MEMBER_GROUPS": {
     "GROUPS": "成员组",
@@ -525,7 +530,8 @@
     "CHECKING_ACCOUNT_NUMBER": "正在检查账号",
     "CHECK_ROUTING_NUMBER": "检查银行代号",
     "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "采购订单号已存在。",
-    "REFRESH": "刷新"
+    "REFRESH": "刷新",
+    "ACTIVE_CONTRACTS_ERROR": "无法删除该帐户，因为该帐户下存在有效合同。在删除帐户之前，先挂起或取消有效合同。"
   },
   "SCHEDULER": {
     "SCHEDULER": "调度员",
@@ -985,7 +991,8 @@
     "DELETE": "删除",
     "SHIPPING_JURISDICTIONS_DELETED_MESSAGE": "已成功删除配送管辖区域。",
     "NOT_COMPLETE_ERROR": "此页面上的信息不完整。继续下一步操作。",
-    "DUPLICATE_NAME_ERROR": "配送管辖区域名称已存在"
+    "DUPLICATE_NAME_ERROR": "配送管辖区域名称已存在",
+    "NO_MATCHING_RECORDS_FOUND": "找不到匹配记录"
   },
   "SHIPPING_MODES": {
     "SHIPPING_MODES": "配送方式",
@@ -1035,7 +1042,8 @@
     "TRACKING_URL": "承运人跟踪 URL",
     "SET_AS_DEFAULT": "设置为缺省值",
     "LANGUAGE_ALREADY_EXISTS": "此语言的描述已存在。",
-    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "所选的承运人-服务组合已存在。"
+    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "所选的承运人-服务组合已存在。",
+    "NO_MATCHING_RECORDS_FOUND": "找不到匹配记录"
   },
   "SHIPPING_CODES": {
     "SHIPPING_CODES": "配送码",
@@ -1073,17 +1081,41 @@
     "CHARGES": "费用",
     "SELECT_STORE_PLACEHOLDER": "选择商店",
     "SELECTED_STORE": "选定商店",
-    "PRODUCT_OR_CATEGORIES": "产品或类别",
+    "PRODUCTS_OR_CATEGORIES": "指定类别和产品",
     "SELECT_PRODUCT_OR_CATEGORIES": "选择与此配送码关联的产品或类别。",
     "ALL_PRODUCTS": "所有产品",
-    "SPECIFIC_PRODUCTS": "特定产品",
+    "SPECIFIC_CATEGORIES_AND_PRODUCTS": "具体类别和产品",
     "CATEGORIES": "类别",
     "DELETE_SHIPPING_CODE_CONFIRMATION": "是否要删除“{{name}}”？",
     "SHIPPING_CODE_DELETED_MESSAGE": "已成功删除配送码。",
     "ACTIVATED": "已激活",
     "DEACTIVATED": "已停用",
     "SHIPPING_CODE_ACTIVATED_MESSAGE": "已成功激活配送码。",
-    "SHIPPING_CODE_DEACTIVATED_MESSAGE": "已成功停用配送码。"
+    "SHIPPING_CODE_DEACTIVATED_MESSAGE": "已成功停用配送码。",
+    "SELECTED_CATEGORIES": "所选类别",
+    "SELECTED_PRODUCTS": "选定的产品",
+    "SKU": "SKU",
+    "CATALOG": "商品目录",
+    "DELETE_SELECTED": "删除所选项",
+    "CLEAR_SELECTION": "清除选项",
+    "SELECT_CATEGORIES_AND_PRODUCTS": "选择类别和产品",
+    "CATALOG_BROWSER": "商品目录浏览器",
+    "SEARCH_PRODUCTS": "搜索产品",
+    "PRODUCTS_SEARCH_BY": "按 SKU、名称或短描述搜索",
+    "VIEW_FULL_LIST": "查看完整列表",
+    "SHOWING_ITEM_OF_TOTAL_ITEMS": "显示 {{totalItemsInList}} 项，共 {{totalItems}} 项",
+    "MORE": "更多",
+    "FILTER_CATALOG": "过滤商品目录",
+    "NO_MATCHING_RECORDS_FOUND": "找不到匹配记录",
+    "CATALOG_ERROR": "无效商品目录",
+    "SELECT_CATEGORY": "选择类别",
+    "SELECT_PRODUCT": "选择产品",
+    "CATEGORY": "类别",
+    "PRODUCT": "产品",
+    "ADD": "添加",
+    "SHORT_DESCRIPTION": "简短描述",
+    "FILTER": "过滤器",
+    "FILTER_BY_NAME": "按名称过滤"
   },
   "SHIPPING_CHARGES": {
     "SHIPPING_CHARGES": "配送费",
@@ -1124,6 +1156,7 @@
     "SHIPPING_CHARGE_START": "开始",
     "SHIPPING_CHARGE_END": "结束",
     "BEFORE_START_DATE": "结束日期不能早于开始日期。",
+    "AFTER_END_DATE": "开始日期不得晚于结束日期。",
     "RANGE": "范围",
     "RANGE_START": "范围开始值",
     "DELETE_SHIPPING_CHARGE": "删除配送费",
@@ -1147,6 +1180,7 @@
     "BY_QUANTITY": "按数量",
     "BY_WEIGHT": "按重量",
     "FIXED": "固定",
+    "AMOUNT": "金额",
     "CHARGE": "费用",
     "CURRENCY": "货币",
     "UNIT_OF_MEASURE": "计量单位",
@@ -1157,12 +1191,17 @@
     "FROM_START_TO_END": "从 {{start}} 到 {{end}}",
     "FROM_START_AND_UP": "从 {{start}} 起",
     "SHIPPING_CHARGE_CREATED_MESSAGE": "配送费 '{{name}}' 已成功创建。",
-    "NO_RANGES_ERROR": "您必须定义至少一个费用范围。"
+    "NO_RANGES_ERROR": "您必须定义至少一个费用范围。",
+    "NOT_COMPLETE_ERROR": "此页面上的信息不完整。继续下一步操作。"
   },
   "TRANSPORTS": {
     "TRANSPORTS": "传输方式",
     "SEARCH": "搜索",
     "CLEAR": "清除",
+    "REFRESH": "刷新",
+    "STORE_FILTER": "商店过滤器",
+    "STATUS_FILTER": "状态过滤器",
+    "SELECT_STORE_PLACEHOLDER": "选择商店",
     "ACTIONS": "操作",
     "NEW_BUTTON": "新建",
     "NEW_TRANSPORT": "新建传输方式",
@@ -1183,7 +1222,55 @@
     "DELETE_TRANSPORT": "删除传输方式",
     "DELETE": "删除",
     "TRANSPORTS_DELETED_MESSAGE": "已成功删除传输方式。",
-    "NOT_COMPLETE_ERROR": "此页面上的信息不完整。继续下一步操作。"
+    "NOT_COMPLETE_ERROR": "此页面上的信息不完整。继续下一步操作。",
+    "ACTIVE": "有效",
+    "INACTIVE": "非活动",
+    "NAME": "传输方式名称",
+    "STATUS": "状态",
+    "DESCRIPTION_FILTER": "描述过滤器",
+    "SEARCH_BY_DESCRIPTION": "按描述搜索",
+    "SEARCH_BY_TRANSPORT": "按传输名称搜索",
+    "CONFIGURATION": "传输方式配置",
+    "CONFIGURATOR": "Sterling",
+    "CONFIGURATOR_DESC": "Sterling Connection 设置",
+    "STERLINGOMS": "Sterling OMS",
+    "STERLINGOMS_DESC": "Sterling OMS 连接设置",
+    "DEMANDTECFTP": "DemandTec SFTP",
+    "DEMANDTECFTP_DESC": "DemandTec SFTP 连接设置",
+    "DPEXPORTFTP": "动态导出定价 SFTP",
+    "DPEXPORTFTP_DESC": "动态导出定价 SFTP 连接设置",
+    "DPIMPORTFTP": "动态导入定价 SFTP",
+    "DPIMPORTFTP_DESC": "动态导入定价 SFTP 连接设置",
+    "JCAUBX": "UBX 集成",
+    "JCAUBX_DESC": "UBX 集成的配置",
+    "JCAWCH": "之前的 Watson Content Hub 集成",
+    "JCAWCH_DESC": "之前 Watson Content Hub 的配置",
+    "COMMERCEFTP": "之前的 Commerce Insights SFTP",
+    "COMMERCEFTP_DESC": "之前 Commerce Insights SFTP 的连接设置",
+    "EMAILSENDER": "电子邮件",
+    "EMAILSENDER_DESC": "电子邮件发件人",
+    "FILE": "文件",
+    "FILE_DESC": "文件作者",
+    "MQ": "IBM MQ",
+    "MQ_DESC": "IBM MQ",
+    "FAX": "传真",
+    "FAX_DESC": "传真发件人",
+    "SMSHTTP": "SMS HTTP",
+    "SMSWS": "SMS Web 服务",
+    "SMSHTTP_DESC": "SMS HTTP 适配器",
+    "SMSWS_DESC": "SMS Web 服务适配器",
+    "WEBSERVICES_HTTP": "通过 HTTP 实现的 Web 服务",
+    "WEBSERVICES_JMS": "通过 JMS 实现的 Web 服务",
+    "HTTP": "HTTP",
+    "SILVERPOP": "Silverpop",
+    "SILVERPOP_DESC": "使用 Silverpop Transact 发送交易电子邮件",
+    "SAMPLE_CONNECTOR": "样品适配器",
+    "SAMPLE_CONNECTOR_DESC": "样品适配器",
+    "DATALOAD_SFTP": "Dataload SFTP",
+    "DATALOAD_SFTP_DESC": "存储创建数据文件存储的 SFTP 连接设置",
+    "SUCCESS_360": "Success360",
+    "SUCCESS_360_DESC": "Success360 集成设置",
+    "NO_PROPERTIES": "此传输没有配置属性"
   },
   "MESSAGE_TYPES": {
     "MESSAGE_TYPES": "消息类型",
@@ -1299,7 +1386,8 @@
     "TAX_TYPE_SHIPPING": "航运税",
     "IS_DEFAULT": "是",
     "SET_AS_DEFAULT": "设置为缺省值",
-    "DEFAULT_SET_SUCCESS_MESSAGE": "缺省税码已成功更新。"
+    "DEFAULT_SET_SUCCESS_MESSAGE": "缺省税码已成功更新。",
+    "CODE_BEING_USED_IN_TAX_CATEGORY": "税码“{{taxCodeName}}”正用于税种中，无法删除。"
   },
   "TAX_CATEGORIES": {
     "TAX_CATEGORIES": "税种",
@@ -1410,6 +1498,7 @@
     "NOT_COMPLETE_ERROR": "此页面上的信息不完整。继续下一步操作。",
     "DUPLICATE_NAME_ERROR": "税收管辖区域名称已存在",
     "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "管辖区域 '{{jurisdictionName}}' 正用于税种中，无法删除。",
-    "DUPLICATE_COUNTRY_STATE_COMBINATION": "所选国家/地区和州/省组合已存在。"
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "所选国家/地区和州/省组合已存在。",
+    "NO_MATCHING_RECORDS_FOUND": "找不到匹配记录"
   }
 }

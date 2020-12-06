@@ -9,7 +9,7 @@
  *-------------------------------------------------------------------
  */
 
-import { Injectable, EventEmitter } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Observable, Observer } from "rxjs";
 import { UsersService } from "../../../rest/services/users.service";
 import { RoleAssignmentsService } from "../../../rest/services/role-assignments.service";
@@ -26,7 +26,6 @@ export class UserMainService {
 	assignedMemberGroups: Array<any> = null;
 	currentUserId: string = null;
 	processing = false;
-	readonly onIsRegisteredCustomerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	private currentUser: any = null;
 	private currentRoles: Array<any> = null;
@@ -57,8 +56,8 @@ export class UserMainService {
 			const args: UsersService.UsersCreateUserParams = {
 				body: this.buildCreateUserBody()
 			};
-			if (this.userData.isRegisteredCustomer && this.userData.selectedStore) {
-				args.storeId = this.userData.selectedStore.id;
+			if (this.userData.storeId) {
+				args.storeId = this.userData.storeId;
 			}
 			this.usersService.UsersCreateUserResponse(args).subscribe(
 				response => {
@@ -66,8 +65,19 @@ export class UserMainService {
 					const id: string = paths[paths.length - 1];
 					this.currentUserId = id;
 					this.activeServicesCount = 0;
-					if (this.assignedRoles && !this.userData.isRegisteredCustomer) {
+					if (this.assignedRoles && !this.userData.storeId) {
 						this.activeServicesCount += this.assignedRoles.length;
+					}
+					if (this.userData.storeId && this.userData.parentOrganizationId !== "-2000") {
+						if (this.userData.isBuyerAdministrator) {
+							this.activeServicesCount++;
+						}
+						if (this.userData.isBuyerApprover) {
+							this.activeServicesCount++;
+						}
+						if (this.userData.isBuyer) {
+							this.activeServicesCount++;
+						}
 					}
 					if (this.assignedMemberGroups) {
 						this.activeServicesCount += this.assignedMemberGroups.length;
@@ -77,8 +87,18 @@ export class UserMainService {
 						observer.complete();
 						this.processing = false;
 					} else {
-						if (!this.userData.isRegisteredCustomer) {
+						if (!this.userData.storeId) {
 							this.createRoleAssignments(id, observer);
+						} else if (this.userData.parentOrganizationId !== "-2000") {
+							if (this.userData.isBuyerAdministrator) {
+								this.createRoleAssignment(id, this.userData.parentOrganizationId, -21, observer);
+							}
+							if (this.userData.isBuyerApprover) {
+								this.createRoleAssignment(id, this.userData.parentOrganizationId, -22, observer);
+							}
+							if (this.userData.isBuyer) {
+								this.createRoleAssignment(id, this.userData.parentOrganizationId, -24, observer);
+							}
 						}
 						this.createMemberGroupMemberships(id, observer);
 					}
@@ -630,30 +650,32 @@ export class UserMainService {
 		const assignedRoles = this.assignedRoles;
 		if (assignedRoles != null && assignedRoles.length > 0) {
 			assignedRoles.forEach(assignedRole => {
-				this.roleAssignmentsService.RoleAssignmentCreateRoleAssignmentResponse({
-					memberId: id,
-					organizationId: assignedRole.organizationId,
-					roleId: assignedRole.roleId
-				}).subscribe(
-					response => {
-						this.activeServicesCount--;
-						if (this.activeServicesCount === 0) {
-							observer.next(this.userData.logonId);
-							observer.complete();
-							this.processing = false;
-						}
-					},
-					error => {
-						this.activeServicesCount--;
-						observer.error(error);
-						if (this.activeServicesCount === 0) {
-							observer.complete();
-							this.processing = false;
-						}
-					}
-				);
+				this.createRoleAssignment(id, assignedRole.organizationId, assignedRole.roleId, observer);
 			});
 		}
+	}
+
+	private createRoleAssignment(id: string, organizationId: string, roleId: number, observer: Observer<string>): void {
+		this.roleAssignmentsService.RoleAssignmentCreateRoleAssignmentResponse({
+			memberId: id,
+			organizationId,
+			roleId
+		}).subscribe(response => {
+			this.activeServicesCount--;
+			if (this.activeServicesCount === 0) {
+				observer.next(this.userData.logonId);
+				observer.complete();
+				this.processing = false;
+			}
+		},
+		error => {
+			this.activeServicesCount--;
+			observer.error(error);
+			if (this.activeServicesCount === 0) {
+				observer.complete();
+				this.processing = false;
+			}
+		});
 	}
 
 	private createMemberGroupMemberships(id: string, observer: Observer<string>): void {

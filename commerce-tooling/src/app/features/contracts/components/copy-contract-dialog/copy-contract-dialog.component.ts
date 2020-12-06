@@ -27,7 +27,7 @@ export class CopyContractDialogComponent implements OnInit, AfterViewInit {
 	contractId: string;
 	processing = false;
 
-	@ViewChild("nameInput", {static: false}) nameInput: ElementRef<HTMLInputElement>;
+	@ViewChild("nameInput") nameInput: ElementRef<HTMLInputElement>;
 
 	constructor(private translateService: TranslateService,
 			private alertService: AlertService,

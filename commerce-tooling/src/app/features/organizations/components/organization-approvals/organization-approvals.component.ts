@@ -37,7 +37,7 @@ export class OrganizationApprovalsComponent implements OnInit, OnDestroy, AfterV
 	filteredApprovalTypeList: Array<{ id: string; approvalName: string; selected: boolean; }> = [];
 	assignedApprovalTypeList: Array<{ id: string; approvalName: string; }> = [];
 
-	@ViewChild("searchTextInput", {static: false}) searchTextInput: ElementRef<HTMLInputElement>;
+	@ViewChild("searchTextInput") searchTextInput: ElementRef<HTMLInputElement>;
 
 	private searchString: Subject<string> = new Subject<string>();
 	constructor(private router: Router,

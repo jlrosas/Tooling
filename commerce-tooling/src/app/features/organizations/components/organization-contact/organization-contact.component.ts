@@ -48,7 +48,7 @@ export class OrganizationContactComponent implements OnInit, OnDestroy, AfterVie
 	filteredCountryList: Array<any> = [];
 	filteredStateList: Array<any> = [];
 
-	@ViewChild("firstNameInput", {static: false}) firstNameInput: ElementRef<HTMLInputElement>;
+	@ViewChild("firstNameInput") firstNameInput: ElementRef<HTMLInputElement>;
 
 	private countryList: Array<any> = [];
 	private stateList: Array<any> = [];

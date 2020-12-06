@@ -46,8 +46,8 @@ export class MemberGroupDetailsComponent implements OnInit, AfterViewInit, OnDes
 	isLinear = true;
 	organizationsLoading = false;
 
-	@ViewChild("memberGroupTypeSelect", {static: false}) memberGroupTypeSelect: MatSelect;
-	@ViewChild("descriptionInput", {static: false}) descriptionInput: ElementRef<HTMLInputElement>;
+	@ViewChild("memberGroupTypeSelect") memberGroupTypeSelect: MatSelect;
+	@ViewChild("descriptionInput") descriptionInput: ElementRef<HTMLInputElement>;
 
 	private onLangChangeSubscription: Subscription = null;
 	private parentOrgSearchString: Subject<string> = new Subject<string>();

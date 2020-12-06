@@ -30,8 +30,8 @@ export class ShippingChargeRangeDialogComponent implements OnInit, AfterViewInit
 	chargeType = null;
 	currency = null;
 
-	@ViewChild("rangeStartInput", {static: false}) rangeStartInput: ElementRef<HTMLInputElement>;
-	@ViewChild("chargeInput", {static: false}) chargeInput: ElementRef<HTMLInputElement>;
+	@ViewChild("rangeStartInput") rangeStartInput: ElementRef<HTMLInputElement>;
+	@ViewChild("chargeInput") chargeInput: ElementRef<HTMLInputElement>;
 
 	constructor(
 			private translateService: TranslateService,

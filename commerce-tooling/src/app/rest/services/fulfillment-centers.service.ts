@@ -33,6 +33,8 @@ class FulfillmentCentersService extends __BaseService {
    *
    * - `id`: The fulfillment center ID.
    *
+   * - `storeId`: The store ID.
+   *
    * - `memberId`: The owning organization ID.
    *
    * - `name`: A string that, along with the owner, uniquely identifies this fulfillment center.
@@ -69,6 +71,7 @@ class FulfillmentCentersService extends __BaseService {
     let __body: any = null;
     if (params.searchString != null) __params = __params.set('searchString', params.searchString.toString());
     (params.id || []).forEach(val => {if (val != null) __params = __params.append('id', val.toString())});
+    if (params.storeId != null) __params = __params.set('storeId', params.storeId.toString());
     if (params.memberId != null) __params = __params.set('memberId', params.memberId.toString());
     if (params.name != null) __params = __params.set('name', params.name.toString());
     if (params.defaultShipOffset != null) __params = __params.set('defaultShipOffset', params.defaultShipOffset.toString());
@@ -108,6 +111,8 @@ class FulfillmentCentersService extends __BaseService {
    * - `searchString`: Limits search results to only include fulfillment centers with a name that matches the value of this parameter. Searches are case-insensitive.
    *
    * - `id`: The fulfillment center ID.
+   *
+   * - `storeId`: The store ID.
    *
    * - `memberId`: The owning organization ID.
    *
@@ -410,6 +415,11 @@ module FulfillmentCentersService {
      * The fulfillment center ID.
      */
     id?: Array<number>;
+
+    /**
+     * The store ID.
+     */
+    storeId?: number;
 
     /**
      * The owning organization ID.

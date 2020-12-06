@@ -30,7 +30,7 @@ export class AccountPurchaseOrderDialogComponent implements OnInit, AfterViewIni
 	data = null;
 	currencies = [];
 
-	@ViewChild("purchaseOrderNumberInput", {static: false}) purchaseOrderNumberInput: ElementRef<HTMLInputElement>;
+	@ViewChild("purchaseOrderNumberInput") purchaseOrderNumberInput: ElementRef<HTMLInputElement>;
 
 	constructor(private translateService: TranslateService,
 			private alertService: AlertService,

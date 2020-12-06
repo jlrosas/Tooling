@@ -12,13 +12,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-
-import { NFormsModule } from "carbon-components-angular";
-import { Filter16Module } from "@carbon/icons-angular/lib/filter/16";
-import { Close16Module } from "@carbon/icons-angular/lib/close/16";
-import { ChevronRight16Module } from "@carbon/icons-angular/lib/chevron--right/16";
 import { TranslateModule } from "@ngx-translate/core";
-
 import { CdkTableModule } from "@angular/cdk/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
@@ -47,21 +41,14 @@ import {
 import { UserApprovalSummaryComponent } from "./components/user-approval-summary/user-approval-summary.component";
 import { OrderApprovalSummaryComponent } from "./components/order-approval-summary/order-approval-summary.component";
 import { ApprovalDialogComponent } from "./components/approval-dialog/approval-dialog.component";
-import { OrganizationNameService } from "../../services/organization-name.service";
-import { StoreNameService } from "../../services/store-name.service";
-import { CurrencyService } from "../../services/currency.service";
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
-		NFormsModule,
 		ApprovalsRoutingModule,
 		TranslateModule,
-		Filter16Module,
-		Close16Module,
-		ChevronRight16Module,
 		CdkTableModule,
 		MatPaginatorModule,
 		MatSortModule,
@@ -89,12 +76,6 @@ import { CurrencyService } from "../../services/currency.service";
 		UserApprovalSummaryComponent,
 		OrderApprovalSummaryComponent,
 		ApprovalDialogComponent
-	],
-	entryComponents: [ApprovalDialogComponent],
-	providers: [
-		OrganizationNameService,
-		StoreNameService,
-		CurrencyService
 	]
 })
 export class ApprovalsModule {}

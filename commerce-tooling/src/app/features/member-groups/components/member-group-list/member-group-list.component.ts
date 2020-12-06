@@ -53,9 +53,9 @@ export class MemberGroupListComponent implements OnInit, AfterViewInit {
 	displayedColumns: string[] = ["name", "parentOrganization", "usage", "description", "actions"];
 	usageArray: string[] = ["CustomerPrice"];
 
-	@ViewChild(MatPaginator, { static: false })
+	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
-	@ViewChild(MatSort, { static: false })
+	@ViewChild(MatSort)
 	sort: MatSort;
 	// MatPaginator Inputs
 	pageSize = DEFAULT_PAGE_SIZE;

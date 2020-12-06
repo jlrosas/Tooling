@@ -33,7 +33,7 @@ export class AccountAndPaymentBillingComponent implements OnInit, AfterViewInit 
 	allowParentOrganizationBillingAddress: FormControl;
 	allowAccountOrganizationBillingAddress: FormControl;
 
-	@ViewChild("allowPersonalBillingAddressCheck", {static: false}) allowPersonalBillingAddressCheck: MatCheckbox;
+	@ViewChild("allowPersonalBillingAddressCheck") allowPersonalBillingAddressCheck: MatCheckbox;
 
 	constructor(private route: ActivatedRoute,
 			private router: Router,

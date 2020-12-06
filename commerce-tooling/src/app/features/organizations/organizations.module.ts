@@ -21,8 +21,6 @@ import { OrganizationApprovalsComponent } from "./components/organization-approv
 import { OrganizationContactComponent } from "./components/organization-contact/organization-contact.component";
 import { OrganizationDetailsComponent } from "./components/organization-details/organization-details.component";
 import { OrganizationRolesComponent } from "./components/organization-roles/organization-roles.component";
-import { ChevronRight16Module } from "@carbon/icons-angular/lib/chevron--right/16";
-import { Close16Module } from "@carbon/icons-angular/lib/close/16";
 
 import { CdkTableModule } from "@angular/cdk/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
@@ -58,8 +56,6 @@ import { EditOrganizationComponent } from "./components/edit-organization/edit-o
 		ReactiveFormsModule,
 		OrganizationsRoutingModule,
 		TranslateModule,
-		ChevronRight16Module,
-		Close16Module,
 		CdkTableModule,
 		MatPaginatorModule,
 		MatSortModule,

@@ -72,7 +72,7 @@ export class JobConfigurationComponent implements OnInit, AfterViewInit {
 		}
 	];
 
-	@ViewChild("associatedUserInput", {static: false}) associatedUserInput: ElementRef<HTMLInputElement>;
+	@ViewChild("associatedUserInput") associatedUserInput: ElementRef<HTMLInputElement>;
 
 	constructor(private router: Router,
 			private route: ActivatedRoute,

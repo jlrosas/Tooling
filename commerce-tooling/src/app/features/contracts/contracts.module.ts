@@ -12,12 +12,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-
-import { Filter16Module } from "@carbon/icons-angular/lib/filter/16";
-import { Close16Module } from "@carbon/icons-angular/lib/close/16";
-import { ChevronRight16Module } from "@carbon/icons-angular/lib/chevron--right/16";
 import { TranslateModule } from "@ngx-translate/core";
-
 import { CdkTableModule } from "@angular/cdk/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
@@ -68,9 +63,6 @@ import { CurrencyService } from "../../services/currency.service";
 		ReactiveFormsModule,
 		ContractsRoutingModule,
 		TranslateModule,
-		Filter16Module,
-		Close16Module,
-		ChevronRight16Module,
 		CdkTableModule,
 		MatPaginatorModule,
 		MatSortModule,
@@ -108,11 +100,6 @@ import { CurrencyService } from "../../services/currency.service";
 		ContractOrderApprovalComponent,
 		ContractShippingComponent,
 		ContractPaymentMethodListComponent,
-		ContractPaymentMethodDialogComponent,
-		DeleteContractDialogComponent,
-		CopyContractDialogComponent
-	],
-	entryComponents: [
 		ContractPaymentMethodDialogComponent,
 		DeleteContractDialogComponent,
 		CopyContractDialogComponent

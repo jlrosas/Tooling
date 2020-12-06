@@ -21,7 +21,7 @@ import { AlertService } from "../../../../services/alert.service";
 	styleUrls: ["./edit-tax-code.component.scss"]
 })
 export class EditTaxCodeComponent {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	constructor(private router: Router,
 			private route: ActivatedRoute,

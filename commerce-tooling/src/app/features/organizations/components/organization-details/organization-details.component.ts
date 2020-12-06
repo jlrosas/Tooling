@@ -42,8 +42,8 @@ export class OrganizationDetailsComponent implements OnInit, OnDestroy, AfterVie
 	getOrganizationsSubscription: Subscription = null;
 	organizationsLoading = false;
 
-	@ViewChild("organizationNameInput", {static: false}) organizationNameInput: ElementRef<HTMLInputElement>;
-	@ViewChild("descriptionInput", {static: false}) descriptionInput: ElementRef<HTMLInputElement>;
+	@ViewChild("organizationNameInput") organizationNameInput: ElementRef<HTMLInputElement>;
+	@ViewChild("descriptionInput") descriptionInput: ElementRef<HTMLInputElement>;
 
 	private parentOrgSearchString: Subject<string> = new Subject<string>();
 	private onLangChangeSubscription: Subscription = null;

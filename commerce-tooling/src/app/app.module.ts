@@ -12,8 +12,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule, Provider, APP_INITIALIZER } from "@angular/core";
-import { HttpModule } from "@angular/http";
-import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { MatNativeDateModule } from "@angular/material/core";
 
@@ -83,7 +82,7 @@ export const INIT_API_CONFIGURATION: Provider = {
 		BrowserAnimationsModule,
 		AppRoutingModule,
 		FormsModule,
-		HttpModule,
+		HttpClientModule,
 		MatNativeDateModule,
 		SharedModule.forRoot(),
 		ApiModule,

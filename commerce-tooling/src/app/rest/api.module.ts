@@ -70,6 +70,17 @@ import { ShippingJurisdictionCalculationRulesService } from './services/shipping
 import { ShippingArrangementsService } from './services/shipping-arrangements.service';
 import { StoreEntityCalculationUsagesService } from './services/store-entity-calculation-usages.service';
 import { StoreDefaultsService } from './services/store-defaults.service';
+import { CatalogEntriesService } from './services/catalog-entries.service';
+import { CatalogGroupsService } from './services/catalog-groups.service';
+import { CatalogEntryCalculationCodesService } from './services/catalog-entry-calculation-codes.service';
+import { CatalogGroupCalculationCodesService } from './services/catalog-group-calculation-codes.service';
+import { CatalogsService } from './services/catalogs.service';
+import { ConnectionSpecsService } from './services/connection-specs.service';
+import { GoogleAnalyticsService } from './services/google-analytics.service';
+import { InteractionSpecsService } from './services/interaction-specs.service';
+import { ProfilesService } from './services/profiles.service';
+import { MessageTypesService } from './services/message-types.service';
+import { DeviceFormatsService } from './services/device-formats.service';
 
 /**
  * Provider for all Api services, plus ApiConfiguration
@@ -150,7 +161,18 @@ import { StoreDefaultsService } from './services/store-defaults.service';
     ShippingJurisdictionCalculationRulesService,
     ShippingArrangementsService,
     StoreEntityCalculationUsagesService,
-    StoreDefaultsService
+    StoreDefaultsService,
+    CatalogEntriesService,
+    CatalogGroupsService,
+    CatalogEntryCalculationCodesService,
+    CatalogGroupCalculationCodesService,
+    CatalogsService,
+    ConnectionSpecsService,
+    GoogleAnalyticsService,
+    InteractionSpecsService,
+    ProfilesService,
+    MessageTypesService,
+    DeviceFormatsService
   ],
 })
 export class ApiModule {

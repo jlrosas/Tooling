@@ -66,9 +66,9 @@ export class ShippingModeListComponent implements OnInit, OnDestroy, AfterViewIn
 	carriersLoading = false;
 	servicesLoading = false;
 
-	@ViewChild(MatPaginator, {static: false})
+	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
-	@ViewChild(MatSort, {static: false})
+	@ViewChild(MatSort)
 	sort: MatSort;
 	// MatPaginator Inputs
 	pageSize = DEFAULT_PAGE_SIZE;

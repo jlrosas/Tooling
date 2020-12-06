@@ -82,9 +82,9 @@ export class ScheduledJobListComponent implements OnInit, OnDestroy, AfterViewIn
 	// The table model
 	model = new SheduledJobStatusDataSource();
 
-	@ViewChild(MatPaginator, { static: false })
+	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
-	@ViewChild(MatSort, { static: false })
+	@ViewChild(MatSort)
 	sort: MatSort;
 	// MatPaginator Inputs
 	pageSize = DEFAULT_PAGE_SIZE;

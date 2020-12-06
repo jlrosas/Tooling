@@ -10,7 +10,7 @@
  */
 
 import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subscription } from "rxjs";
 import { UserMainService } from "../../services/user-main.service";
 import { AlertService } from "../../../../services/alert.service";
@@ -22,32 +22,32 @@ import { MatStepper } from "@angular/material/stepper";
 	styleUrls: ["./create-user.component.scss"]
 })
 export class CreateUserComponent implements OnInit, OnDestroy {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
-	isRegisteredCustomer: boolean = null;
-	onIsRegisteredCustomerSubscription: Subscription = null;
+	isRegisteredCustomer = false;
+	storeIdentifier: string = null;
 
 	constructor(private router: Router,
+			private route: ActivatedRoute,
 			private userMainService: UserMainService,
 			private alertService: AlertService,
 			private translateService: TranslateService) { }
 
 	ngOnInit() {
-		this.onIsRegisteredCustomerSubscription = this.userMainService.onIsRegisteredCustomerChange.subscribe(() => {
-			this.isRegisteredCustomer = this.userMainService.userData.isRegisteredCustomer;
-		});
+		const storeId = this.route.snapshot.params.storeId;
+		if (storeId && storeId !== "0") {
+			this.storeIdentifier = this.route.snapshot.params.storeIdentifier;
+			this.isRegisteredCustomer = true;
+		}
 	}
 
 	ngOnDestroy() {
-		if (this.onIsRegisteredCustomerSubscription) {
-			this.onIsRegisteredCustomerSubscription.unsubscribe();
-		}
 	}
 
 	cancel() {
 		this.alertService.clear();
 		this.userMainService.clearData();
-		this.router.navigate(["/users"]);
+		this.router.navigate(["/users", {storeId: this.route.snapshot.params.storeId}]);
 	}
 
 	submit() {
@@ -70,7 +70,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
 			if (valid && completedSteps >= 1) {
 				this.userMainService.createUser().subscribe(name => {
 					this.userMainService.clearData();
-					this.router.navigate(["/users"]);
+					this.router.navigate(["/users", {storeId: this.route.snapshot.params.storeId}]);
 					this.translateService.get("USER_MANAGEMENT.USER_CREATED_MESSAGE", { name }).subscribe((message: string) => {
 						this.alertService.success({message});
 					});

@@ -9,9 +9,9 @@
  *-------------------------------------------------------------------
  */
 
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { FormGroup, FormControl, ValidationErrors } from "@angular/forms";
+import { FormGroup, FormControl, ValidationErrors, Validators } from "@angular/forms";
 import { Subject, Subscription, Observable, Observer } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { TranslateService } from "@ngx-translate/core";
@@ -26,7 +26,7 @@ import { HcValidators } from "../../../../shared/validators";
 	styleUrls: ["./shipping-code-details.component.scss"],
 	selector: "hc-shipping-code-details"
 })
-export class ShippingCodeDetailsComponent implements OnInit, AfterViewInit {
+export class ShippingCodeDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
 	@Input() stepper: MatStepper;
 	@Input() step: MatStep;
 	@Input() mode: String;
@@ -34,12 +34,19 @@ export class ShippingCodeDetailsComponent implements OnInit, AfterViewInit {
 
 	detailsForm: FormGroup | any;
 	name: FormControl;
+	productsOrCategories: FormControl;
+	hasProductsOrCategories = false;
+	isInherited = false;
+	isInheritedAllProducts = false;
+	isInheritedSpecificProducts = false;
+	storeId: number;
 
-	@ViewChild("nameInput", {static: false}) nameInput: ElementRef<HTMLInputElement>;
+	@ViewChild("nameInput") nameInput: ElementRef<HTMLInputElement>;
 
 	private getShippingCodesSubscription: Subscription = null;
 	private searchString: Subject<string> = new Subject<string>();
 	private matchingShippingCode$: Subject<any> = new Subject<any>();
+	private statusChangesSubscription: Subscription = null;
 
 	constructor(
 			private router: Router,
@@ -52,8 +59,9 @@ export class ShippingCodeDetailsComponent implements OnInit, AfterViewInit {
 	ngOnInit() {
 		this.createFormControls();
 		this.createForm();
+		this.storeId = Number(this.route.snapshot.params.storeId);
 		if (this.mode === "edit") {
-			this.shippingCodeMainService.loadCurrentShippingCode(Number(this.route.snapshot.params.id)).subscribe(response => {
+			this.shippingCodeMainService.loadCurrentShippingCode(Number(this.route.snapshot.params.id), this.storeId).subscribe(response => {
 				this.setValues();
 			});
 		} else {
@@ -62,6 +70,15 @@ export class ShippingCodeDetailsComponent implements OnInit, AfterViewInit {
 		this.searchString.pipe(debounceTime(250)).subscribe(searchString => {
 			this.getShippingCodes(searchString);
 		});
+	}
+
+	ngOnDestroy() {
+		if (this.getShippingCodesSubscription) {
+			this.getShippingCodesSubscription.unsubscribe();
+		}
+		if (this.statusChangesSubscription) {
+			this.statusChangesSubscription.unsubscribe();
+		}
 	}
 
 	ngAfterViewInit() {
@@ -76,9 +93,18 @@ export class ShippingCodeDetailsComponent implements OnInit, AfterViewInit {
 	}
 
 	next() {
+		if (this.statusChangesSubscription) {
+			this.statusChangesSubscription.unsubscribe();
+			this.statusChangesSubscription = null;
+		}
 		this.detailsForm.markAllAsTouched();
 		this.alertService.clear();
-		if (this.detailsForm.valid) {
+		if (this.detailsForm.pending) {
+			this.statusChangesSubscription = this.detailsForm.statusChanges.subscribe(statusChange => {
+				this.statusChangesSubscription.unsubscribe();
+				this.next();
+			});
+		} else if (this.detailsForm.valid) {
 			this.stepper.next();
 		} else {
 			this.translateService.get("SHIPPING_CODES.INPUT_ERROR").subscribe((message: string) => {
@@ -92,15 +118,28 @@ export class ShippingCodeDetailsComponent implements OnInit, AfterViewInit {
 		this.save.emit(null);
 	}
 
+	validateSelectProductsOrCategories($event) {
+		this.shippingCodeMainService.shippingCodeData.productsOrCategories = $event.value;
+		this.shippingCodeMainService.onSelectProductsOrCategories.emit($event.value);
+	}
+
 	private setValues() {
 		if (this.shippingCodeMainService.shippingCodeData !== null) {
 			const shippingCodeData = this.shippingCodeMainService.shippingCodeData;
 			this.name.setValue(shippingCodeData.calculationCode);
+			if (shippingCodeData.storeId !== this.storeId) {
+				this.name.disable();
+			}
 		} else {
 			this.shippingCodeMainService.shippingCodeData = {
-				storeId: Number(this.route.snapshot.params.storeId)
+				storeId: this.storeId,
+				productsOrCategories: "allProducts"
 			};
 		}
+		this.productsOrCategories.setValue(this.shippingCodeMainService.shippingCodeData.productsOrCategories);
+		this.isInherited = this.storeId !== this.shippingCodeMainService.shippingCodeData.storeId;
+		this.isInheritedAllProducts = this.isInherited && this.shippingCodeMainService.inheritedProductsOrCategories === "allProducts";
+		this.isInheritedSpecificProducts = this.isInherited && this.shippingCodeMainService.inheritedProductsOrCategories === "specificProducts";
 	}
 
 	private getShippingCodes(searchString) {
@@ -110,7 +149,7 @@ export class ShippingCodeDetailsComponent implements OnInit, AfterViewInit {
 		}
 		this.getShippingCodesSubscription = this.calculationCodesService.getCalculationCodes({
 			calculationCode: searchString.trim(),
-			storeId: Number(this.route.snapshot.params.storeId),
+			storeId: this.storeId,
 			calculationUsageId: [-2]
 		}).subscribe((body: any) => {
 			this.getShippingCodesSubscription.unsubscribe();
@@ -145,11 +184,13 @@ export class ShippingCodeDetailsComponent implements OnInit, AfterViewInit {
 				}
 			});
 		});
+		this.productsOrCategories = new FormControl(null, Validators.required);
 	}
 
 	private createForm() {
 		this.detailsForm = new FormGroup({
-			name: this.name
+			name: this.name,
+			productsOrCategories: this.productsOrCategories
 		});
 	}
 }

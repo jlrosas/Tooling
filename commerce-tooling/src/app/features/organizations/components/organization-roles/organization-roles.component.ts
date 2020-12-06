@@ -40,7 +40,7 @@ export class OrganizationRolesComponent implements OnInit, OnDestroy, AfterViewI
 	assignedRoles: Array<{roleName: string, roleId: number}> = null;
 	parentRoles: Array<any> = null;
 
-	@ViewChild("availableRolesInput", {static: false}) availableRolesInput: ElementRef<HTMLInputElement>;
+	@ViewChild("availableRolesInput") availableRolesInput: ElementRef<HTMLInputElement>;
 	private onLanguageChangeSubscription: Subscription = null;
 	private availableRolesValueChangesSubscription: Subscription = null;
 	constructor(private router: Router,

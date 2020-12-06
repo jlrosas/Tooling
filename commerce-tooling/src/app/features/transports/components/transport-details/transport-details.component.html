@@ -1,0 +1,68 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form [formGroup]="detailsForm" autocomplete="off">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div class="hc-table-section hc-paper" *ngIf="mode === 'create'">
+				<div class="hc-table-actions">
+					<mat-form-field *ngIf="mode == 'create'" appearance="outline" class="icon-suffix">
+						<mat-label>{{'TRANSPORTS.SEARCH' | translate}}</mat-label>
+						<input #searchInput matInput (input)="searchTransports($event.target.value)"
+								placeholder="{{'TRANSPORTS.SEARCH_BY_TRANSPORT' | translate}}"
+								formControlName="searchText" >
+						<mat-icon matSuffix>search</mat-icon>
+						<span class="filter-clear" *ngIf="currentSearchString != null" (click)="clearSearch()">
+							<mat-icon>clear</mat-icon>
+							<span class="clear-margin">{{'TRANSPORTS.CLEAR' | translate}}</span>
+						</span>
+					</mat-form-field>
+				</div>
+				<mat-radio-group formControlName="transport">
+					<div class="hc-table-wrapper">
+						<table mat-table [dataSource]="model">
+							<ng-container matColumnDef="select" sticky>
+								<th mat-header-cell *matHeaderCellDef></th>
+								<td mat-cell *matCellDef="let row">
+									<mat-radio-button color="primary" [value]="row.transportId"
+											(change)="selectTransport(row.transportId, $event.value)">
+									</mat-radio-button>
+								</td>
+							</ng-container>
+							<ng-container matColumnDef="name">
+								<th mat-header-cell *matHeaderCellDef>{{'TRANSPORTS.NAME' | translate}}</th>
+								<td mat-cell *matCellDef="let row">{{row.name | translate}}</td>
+							</ng-container>
+							<ng-container matColumnDef="description">
+								<th mat-header-cell *matHeaderCellDef>{{'TRANSPORTS.DESCRIPTION' | translate}}</th>
+								<td mat-cell *matCellDef="let row">{{row.description | translate}}</td>
+							</ng-container>
+							<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+							<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+						</table>
+					</div>
+				</mat-radio-group>
+				<div *ngIf="transports && transports.length === 0" class="no-records">
+					{{'TRANSPORTS.NO_TRANSPORTS_AVAILABLE' | translate}}
+				</div>
+			</div>
+			<div class="hc-column" *ngIf="mode === 'edit'">
+				<div class="hc-column-header">{{'TRANSPORTS.NAME' | translate}}</div>
+				<div class="hc-hc-column-data">{{selectedTransportName | translate}}</div>
+				<div class="hc-column-header">{{'TRANSPORTS.DESCRIPTION' | translate}}</div>
+				<div class="hc-hc-column-data">{{selectedTransportDescription | translate}}</div>
+			</div>
+			<div>
+				<button class="mat-flat-button mat-primary" type="button" (click)="next()" *ngIf="mode === 'create'">{{'TRANSPORTS.NEXT' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

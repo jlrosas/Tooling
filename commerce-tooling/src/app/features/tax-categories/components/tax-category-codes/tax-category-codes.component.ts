@@ -35,7 +35,7 @@ export class TaxCategoryCodesComponent implements OnInit, OnDestroy, AfterViewIn
 	taxCodes: Array<any> = [];
 	taxCodeSearchList: Array<any> = [];
 
-	@ViewChild("taxCodeSearchInput", {static: false}) taxCodeSearchInput: ElementRef<HTMLInputElement>;
+	@ViewChild("taxCodeSearchInput") taxCodeSearchInput: ElementRef<HTMLInputElement>;
 
 	private getTaxCodesSubscription: Subscription = null;
 	private searchString: Subject<string> = new Subject<string>();

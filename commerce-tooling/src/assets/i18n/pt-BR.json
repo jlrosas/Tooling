@@ -1,7 +1,8 @@
 {
   "GENERAL": {
     "NO_SELECTION_MADE": "Nenhuma seleção foi feita.",
-    "DISMISS": "Desconsiderar"
+    "DISMISS": "Desconsiderar",
+    "NO_RECORDS_FOUND": "Nenhum registro encontrado"
   },
   "USER_MANAGEMENT": {
     "USERS": "Usuários",
@@ -78,7 +79,7 @@
     "STORE": "Loja",
     "SELECT_STORE_PLACEHOLDER": "Selecionar loja",
     "PHONE_NUMBER": "Número de telefone",
-    "IS_THIS_A_REGISTERED_CUSTOMER": "Este é um cliente B2C registrado?",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "É um cliente registrado?",
     "SELECT_REGISTERED_CUSTOMER_STORE": "Selecionar loja",
     "PREFERRED_LANGUAGE": "Idioma de preferência",
     "PREFERRED_CURRENCY": "Moeda de preferência",
@@ -91,7 +92,10 @@
     "CHALLENGE_QUESTION": "Pergunta de desafio",
     "CHALLENGE_ANSWER": "Resposta da pergunta de desafio",
     "PARENT_ORGANIZATION_ERROR": "Organização pai inválida.",
-    "STORE_ERROR": "Loja inválida."
+    "STORE_ERROR": "Loja inválida.",
+    "BUYER_ADMINISTRATOR": "Administrador do comprador",
+    "BUYER_APPROVER": "Aprovador do comprador",
+    "BUYER": "Comprador"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "Organizações",
@@ -279,7 +283,8 @@
     "PHONE_NUMBER": "Número de telefone",
     "EMPLOYEE_ID": "ID do funcionário",
     "DISCOUNT": "Desconto",
-    "TOTAL": "Total"
+    "TOTAL": "Total",
+    "NO_MATCHING_RECORDS_FOUND": "Nenhum registro correspondente encontrado"
   },
   "MEMBER_GROUPS": {
     "GROUPS": "Grupos de membros",
@@ -525,7 +530,8 @@
     "CHECKING_ACCOUNT_NUMBER": "Verificando o número da conta",
     "CHECK_ROUTING_NUMBER": "Verificar número de roteamento",
     "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "O número da ordem de compra já existe.",
-    "REFRESH": "Atualizar"
+    "REFRESH": "Atualizar",
+    "ACTIVE_CONTRACTS_ERROR": "Não foi possível excluir a conta porque existem contratos ativos na conta. Suspenda ou cancele os contratos ativos antes de excluir a conta."
   },
   "SCHEDULER": {
     "SCHEDULER": "Agendador",
@@ -985,7 +991,8 @@
     "DELETE": "Excluir",
     "SHIPPING_JURISDICTIONS_DELETED_MESSAGE": "Jurisdição da remessa excluída com êxito.",
     "NOT_COMPLETE_ERROR": "As informações desta página não estão completas. Vá para a próxima etapa.",
-    "DUPLICATE_NAME_ERROR": "O nome da jurisdição da remessa já existe"
+    "DUPLICATE_NAME_ERROR": "O nome da jurisdição da remessa já existe",
+    "NO_MATCHING_RECORDS_FOUND": "Nenhum registro correspondente encontrado"
   },
   "SHIPPING_MODES": {
     "SHIPPING_MODES": "Modos de envio",
@@ -1035,7 +1042,8 @@
     "TRACKING_URL": "URL de rastreamento da transportadora",
     "SET_AS_DEFAULT": "Definir como padrão",
     "LANGUAGE_ALREADY_EXISTS": "Já existe uma descrição para este idioma.",
-    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "A combinação de serviço de transportadora selecionada já existe."
+    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "A combinação de serviço de transportadora selecionada já existe.",
+    "NO_MATCHING_RECORDS_FOUND": "Nenhum registro correspondente encontrado"
   },
   "SHIPPING_CODES": {
     "SHIPPING_CODES": "Códigos de envio",
@@ -1073,17 +1081,41 @@
     "CHARGES": "Encargos",
     "SELECT_STORE_PLACEHOLDER": "Selecionar loja",
     "SELECTED_STORE": "Loja selecionada",
-    "PRODUCT_OR_CATEGORIES": "Produto ou categorias",
+    "PRODUCTS_OR_CATEGORIES": "Especificar categorias e produtos",
     "SELECT_PRODUCT_OR_CATEGORIES": "Selecione as categorias ou os produtos associados a este código de remessa.",
     "ALL_PRODUCTS": "Todos os produtos",
-    "SPECIFIC_PRODUCTS": "Produto(s) específico(s)",
+    "SPECIFIC_CATEGORIES_AND_PRODUCTS": "Categorias e produtos específicos",
     "CATEGORIES": "Categorias",
     "DELETE_SHIPPING_CODE_CONFIRMATION": "Deseja excluir '{{name}}'?",
     "SHIPPING_CODE_DELETED_MESSAGE": "Código de remessa excluído com êxito.",
     "ACTIVATED": "Ativado",
     "DEACTIVATED": "Desativado",
     "SHIPPING_CODE_ACTIVATED_MESSAGE": "Código de remessa ativado com êxito.",
-    "SHIPPING_CODE_DEACTIVATED_MESSAGE": "Código de remessa desativado com êxito."
+    "SHIPPING_CODE_DEACTIVATED_MESSAGE": "Código de remessa desativado com êxito.",
+    "SELECTED_CATEGORIES": "Categorias selecionadas",
+    "SELECTED_PRODUCTS": "Produtos selecionados",
+    "SKU": "SKU",
+    "CATALOG": "Catálogo",
+    "DELETE_SELECTED": "Excluir selecionado",
+    "CLEAR_SELECTION": "Limpar seleção",
+    "SELECT_CATEGORIES_AND_PRODUCTS": "Selecionar categorias e produtos",
+    "CATALOG_BROWSER": "Navegador de catálogos",
+    "SEARCH_PRODUCTS": "Pesquisar produtos",
+    "PRODUCTS_SEARCH_BY": "Pesquisar por SKU, nome ou descrição breve",
+    "VIEW_FULL_LIST": "Visualizar lista completa",
+    "SHOWING_ITEM_OF_TOTAL_ITEMS": "Mostrando {{totalItemsInList}} de {{totalItems}}",
+    "MORE": "Mais",
+    "FILTER_CATALOG": "Filtrar catálogo",
+    "NO_MATCHING_RECORDS_FOUND": "Nenhum registro correspondente encontrado",
+    "CATALOG_ERROR": "Catálogo inválido",
+    "SELECT_CATEGORY": "Selecionar categoria",
+    "SELECT_PRODUCT": "Selecionar produto",
+    "CATEGORY": "Categoria",
+    "PRODUCT": "Produto",
+    "ADD": "Incluir",
+    "SHORT_DESCRIPTION": "Descrição breve",
+    "FILTER": "Filtrar",
+    "FILTER_BY_NAME": "Filtrar por nome"
   },
   "SHIPPING_CHARGES": {
     "SHIPPING_CHARGES": "Encargos de envio",
@@ -1124,6 +1156,7 @@
     "SHIPPING_CHARGE_START": "Iniciar",
     "SHIPPING_CHARGE_END": "Término",
     "BEFORE_START_DATE": "A data de término não pode estar antes da data de início.",
+    "AFTER_END_DATE": "A data de início não pode ser posterior à data de término.",
     "RANGE": "Intervalo",
     "RANGE_START": "Início do intervalo",
     "DELETE_SHIPPING_CHARGE": "Excluir encargo de remessa",
@@ -1147,6 +1180,7 @@
     "BY_QUANTITY": "Por quantidade",
     "BY_WEIGHT": "Por peso",
     "FIXED": "Fixo",
+    "AMOUNT": "Valor",
     "CHARGE": "Encargo",
     "CURRENCY": "Moeda",
     "UNIT_OF_MEASURE": "Unidade de medida",
@@ -1157,12 +1191,17 @@
     "FROM_START_TO_END": "De {{start}} até {{end}}",
     "FROM_START_AND_UP": "A partir de {{start}}",
     "SHIPPING_CHARGE_CREATED_MESSAGE": "Encargo de remessa '{{name}}' criado com êxito.",
-    "NO_RANGES_ERROR": "Você deve definir pelo menos um intervalo de encargos."
+    "NO_RANGES_ERROR": "Você deve definir pelo menos um intervalo de encargos.",
+    "NOT_COMPLETE_ERROR": "As informações desta página não estão completas. Vá para a próxima etapa."
   },
   "TRANSPORTS": {
     "TRANSPORTS": "Transportes",
     "SEARCH": "Pesquisar",
     "CLEAR": "Limpar",
+    "REFRESH": "Atualizar",
+    "STORE_FILTER": "Filtro de lojas",
+    "STATUS_FILTER": "Filtro de status",
+    "SELECT_STORE_PLACEHOLDER": "Selecionar loja",
     "ACTIONS": "Ações",
     "NEW_BUTTON": "Novo",
     "NEW_TRANSPORT": "Novo transporte",
@@ -1183,7 +1222,55 @@
     "DELETE_TRANSPORT": "Excluir transporte",
     "DELETE": "Excluir",
     "TRANSPORTS_DELETED_MESSAGE": "Transporte excluído com êxito.",
-    "NOT_COMPLETE_ERROR": "As informações desta página não estão completas. Vá para a próxima etapa."
+    "NOT_COMPLETE_ERROR": "As informações desta página não estão completas. Vá para a próxima etapa.",
+    "ACTIVE": "Ativo",
+    "INACTIVE": "Inativo",
+    "NAME": "Nome do transporte",
+    "STATUS": "Status",
+    "DESCRIPTION_FILTER": "Filtro da descrição",
+    "SEARCH_BY_DESCRIPTION": "Pesquisar por descrição",
+    "SEARCH_BY_TRANSPORT": "Pesquisar por nome de transporte",
+    "CONFIGURATION": "Configuração do transporte",
+    "CONFIGURATOR": "Sterling",
+    "CONFIGURATOR_DESC": "Configurações de conexão do Sterling",
+    "STERLINGOMS": "Sterling OMS",
+    "STERLINGOMS_DESC": "Configuração de conexão do Sterling OMS",
+    "DEMANDTECFTP": "DemandTec SFTP",
+    "DEMANDTECFTP_DESC": "Configurações de conexão SFTP do DemandTec",
+    "DPEXPORTFTP": "Exportação por SFTP de preços dinâmicos",
+    "DPEXPORTFTP_DESC": "Configurações de conexão de exportação por SFTP de preços dinâmicos",
+    "DPIMPORTFTP": "Importação por SFTP de preços dinâmicos",
+    "DPIMPORTFTP_DESC": "Configurações de conexão de importação por SFTP de preços dinâmicos",
+    "JCAUBX": "Integração do UBX",
+    "JCAUBX_DESC": "Configuração para integração do UBX",
+    "JCAWCH": "Antigo Watson Content Hub Integration",
+    "JCAWCH_DESC": "Configuração para antigo Watson Content Hub",
+    "COMMERCEFTP": "Antigo Commerce Insights SFTP",
+    "COMMERCEFTP_DESC": "Configurações de conexão do antigo Commerce Insights SFTP",
+    "EMAILSENDER": "E-mail",
+    "EMAILSENDER_DESC": "Remetente do e-mail",
+    "FILE": "Arquivo",
+    "FILE_DESC": "Gravador de arquivo",
+    "MQ": "IBM MQ",
+    "MQ_DESC": "IBM MQ",
+    "FAX": "Fax",
+    "FAX_DESC": "Remetente do fax",
+    "SMSHTTP": "HTTP SMS",
+    "SMSWS": "Serviços Web SMS",
+    "SMSHTTP_DESC": "Adaptador do HTTP SMS",
+    "SMSWS_DESC": "Adaptador dos Serviços Web SMS",
+    "WEBSERVICES_HTTP": "Serviços Web sobre HTTP",
+    "WEBSERVICES_JMS": "Serviços Web sobre JMS",
+    "HTTP": "HTTP",
+    "SILVERPOP": "Silverpop",
+    "SILVERPOP_DESC": "Enviar e-mails transacionais com o Silverpop Transact",
+    "SAMPLE_CONNECTOR": "Adaptador de amostra",
+    "SAMPLE_CONNECTOR_DESC": "Adaptador de amostra",
+    "DATALOAD_SFTP": "Dataload SFTP",
+    "DATALOAD_SFTP_DESC": "Configurações de conexão SFTP de armazenamento de arquivo de dados de criação de loja",
+    "SUCCESS_360": "Success360",
+    "SUCCESS_360_DESC": "Configurações da integração do Success360",
+    "NO_PROPERTIES": "Este transporte não tem propriedades de configurações"
   },
   "MESSAGE_TYPES": {
     "MESSAGE_TYPES": "Tipos de mensagem",
@@ -1299,7 +1386,8 @@
     "TAX_TYPE_SHIPPING": "Imposto sobre envio",
     "IS_DEFAULT": "Sim",
     "SET_AS_DEFAULT": "Definir como padrão",
-    "DEFAULT_SET_SUCCESS_MESSAGE": "Código fiscal padrão atualizado com êxito."
+    "DEFAULT_SET_SUCCESS_MESSAGE": "Código fiscal padrão atualizado com êxito.",
+    "CODE_BEING_USED_IN_TAX_CATEGORY": "O código fiscal \"{{taxCodeName}}\" não pode ser excluído; ele está sendo usado em uma categoria fiscal."
   },
   "TAX_CATEGORIES": {
     "TAX_CATEGORIES": "Categorias fiscais",
@@ -1410,6 +1498,7 @@
     "NOT_COMPLETE_ERROR": "As informações desta página não estão completas. Vá para a próxima etapa.",
     "DUPLICATE_NAME_ERROR": "O nome da jurisdição fiscal já existe",
     "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "A jurisdição '{{jurisdictionName}}' não pode ser excluída, está sendo usada em uma categoria de imposto.",
-    "DUPLICATE_COUNTRY_STATE_COMBINATION": "A combinação de país e estado selecionada já existe."
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "A combinação de país e estado selecionada já existe.",
+    "NO_MATCHING_RECORDS_FOUND": "Nenhum registro correspondente encontrado"
   }
 }

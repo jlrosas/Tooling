@@ -46,7 +46,7 @@ export class OrganizationGroupsComponent implements OnInit, OnDestroy, AfterView
 	currentSearchInclude = null;
 	currentSearchExclude = null;
 
-	@ViewChild("searchTextIncludeInput", {static: false}) searchTextIncludeInput: ElementRef<HTMLInputElement>;
+	@ViewChild("searchTextIncludeInput") searchTextIncludeInput: ElementRef<HTMLInputElement>;
 
 	private organizationNames = {};
 	private getOrganizationSubscriptions = {};

@@ -49,8 +49,8 @@ export class TaxCategoryDetailsComponent implements OnInit, OnDestroy, AfterView
 		}
 	];
 
-	@ViewChild("taxTypeSelect", {static: false}) taxTypeSelect: MatSelect;
-	@ViewChild("nameInput", {static: false}) nameInput: ElementRef<HTMLInputElement>;
+	@ViewChild("taxTypeSelect") taxTypeSelect: MatSelect;
+	@ViewChild("nameInput") nameInput: ElementRef<HTMLInputElement>;
 
 	private statusChangesSubscription: Subscription = null;
 	private getTaxCategoriesSubscription: Subscription = null;

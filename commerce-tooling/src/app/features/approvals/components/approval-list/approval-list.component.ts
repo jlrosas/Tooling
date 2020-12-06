@@ -55,9 +55,9 @@ export class ApprovalListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	displayedColumns: string[] = ["requestor", "entityId", "process", "status", "lastUpdate", "actions"];
 
-	@ViewChild(MatPaginator, {static: false})
+	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
-	@ViewChild(MatSort, {static: false})
+	@ViewChild(MatSort)
 	sort: MatSort;
 	// MatPaginator Inputs
 	pageSize = DEFAULT_PAGE_SIZE;

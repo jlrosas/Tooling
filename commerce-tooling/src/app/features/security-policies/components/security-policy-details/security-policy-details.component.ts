@@ -35,7 +35,7 @@ export class SecurityPolicyDetailsComponent implements OnInit, OnDestroy, AfterV
 	detailsForm: FormGroup | any;
 	securityPolicyName: FormControl;
 
-	@ViewChild("securityPolicyNameInput", {static: false}) securityPolicyNameInput: ElementRef<HTMLInputElement>;
+	@ViewChild("securityPolicyNameInput") securityPolicyNameInput: ElementRef<HTMLInputElement>;
 
 	private statusChangesSubscription: Subscription = null;
 	private getUserAccountsSubscription: Subscription = null;

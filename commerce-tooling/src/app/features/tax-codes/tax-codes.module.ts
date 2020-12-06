@@ -79,9 +79,6 @@ import { DeleteTaxCodeDialogComponent } from "./components/delete-tax-code-dialo
 		DeleteTaxCodeDialogComponent
 	],
 	providers: [
-	],
-	entryComponents: [
-		DeleteTaxCodeDialogComponent
 	]
 })
 export class TaxCodesModule {}

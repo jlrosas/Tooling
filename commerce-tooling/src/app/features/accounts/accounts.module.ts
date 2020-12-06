@@ -12,12 +12,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-
-import { Filter16Module } from "@carbon/icons-angular/lib/filter/16";
-import { Close16Module } from "@carbon/icons-angular/lib/close/16";
-import { ChevronRight16Module } from "@carbon/icons-angular/lib/chevron--right/16";
 import { TranslateModule } from "@ngx-translate/core";
-
 import { CdkTableModule } from "@angular/cdk/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
@@ -32,9 +27,6 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatSelectModule } from "@angular/material/select";
 import { MatStepperModule } from "@angular/material/stepper";
 import { CdkStepperModule } from "@angular/cdk/stepper";
-import { CheckmarkOutline16Module } from "@carbon/icons-angular/lib/checkmark--outline/16";
-import { ArrowDown16Module } from "@carbon/icons-angular/lib/arrow--down/16";
-import { Delete16Module } from "@carbon/icons-angular/lib/delete/16";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
@@ -55,7 +47,6 @@ import { AccountShippingComponent } from "./components/account-shipping/account-
 import { AccountPaymentMethodListComponent } from "./components/account-payment-method-list/account-payment-method-list.component";
 import { AccountPaymentMethodDialogComponent } from "./components/account-payment-method-dialog/account-payment-method-dialog.component";
 import { EditAccountComponent } from "./components/edit-account/edit-account.component";
-
 import { CurrencyService } from "../../services/currency.service";
 import { DeleteAccountDialogComponent } from "./components/delete-account-dialog/delete-account-dialog.component";
 
@@ -66,9 +57,6 @@ import { DeleteAccountDialogComponent } from "./components/delete-account-dialog
 		ReactiveFormsModule,
 		AccountsRoutingModule,
 		TranslateModule,
-		Filter16Module,
-		Close16Module,
-		ChevronRight16Module,
 		CdkTableModule,
 		MatPaginatorModule,
 		MatSortModule,
@@ -78,11 +66,8 @@ import { DeleteAccountDialogComponent } from "./components/delete-account-dialog
 		MatButtonToggleModule,
 		MatGridListModule,
 		MatAutocompleteModule,
-		CheckmarkOutline16Module,
-		ArrowDown16Module,
 		DirectivesModule,
 		MatDialogModule,
-		Delete16Module,
 		MatButtonModule,
 		MatStepperModule,
 		CdkStepperModule,
@@ -92,7 +77,7 @@ import { DeleteAccountDialogComponent } from "./components/delete-account-dialog
 		MatSlideToggleModule,
 		MatListModule,
 		MatChipsModule,
-		MatTooltipModule
+		MatTooltipModule,
 	],
 	declarations: [
 		AccountListComponent,
@@ -111,11 +96,6 @@ import { DeleteAccountDialogComponent } from "./components/delete-account-dialog
 	],
 	providers: [
 		CurrencyService
-	],
-	entryComponents: [
-		AccountPurchaseOrderDialogComponent,
-		AccountPaymentMethodDialogComponent,
-		DeleteAccountDialogComponent
 	]
 })
 export class AccountsModule {}

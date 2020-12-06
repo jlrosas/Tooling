@@ -36,9 +36,9 @@ export class SecurityPolicesListComponent implements OnInit, OnDestroy, AfterVie
 
 	model = new SecurityPolicyDataSource();
 
-	@ViewChild(MatPaginator, {static: false})
+	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
-	@ViewChild(MatSort, {static: false})
+	@ViewChild(MatSort)
 	sort: MatSort;
 	// MatPaginator Inputs
 	pageSize = DEFAULT_PAGE_SIZE;

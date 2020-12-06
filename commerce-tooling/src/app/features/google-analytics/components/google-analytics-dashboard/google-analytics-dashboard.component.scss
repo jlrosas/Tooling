@@ -1,0 +1,247 @@
+/*
+ *-------------------------------------------------------------------
+ * Licensed Materials - Property of HCL Technologies
+ *
+ * HCL Commerce
+ *
+ * (C) Copyright HCL Technologies Limited 1996, 2020
+
+ *-------------------------------------------------------------------
+ */
+
+$ga-icon-size: 56px;
+
+#auth-button div{
+	color:#1967d2;
+	max-width: 53em;
+	padding: 15px;
+}
+
+#auth-button div.gapi-analytics-auth-styles-signinbutton{
+	padding:0;
+}
+
+.text-muted {
+	color: #7171a6 !important;
+	margin: 0px 0px 15px 0px;
+	font-size: 15px;
+	line-height: 26px;
+	font-weight:600
+}
+
+#ga_category {
+	width: 350px;
+}
+
+.hc-table-section {
+	margin-top: 1rem;
+	margin-bottom: 0;
+
+	.hc-table-buttons {
+		margin-left: 1rem;
+	}
+}
+
+.ga-misconfigured {
+	margin: 1rem auto 0;
+	padding: 2.5rem 0.5rem;
+	text-align: center;
+	max-width: 600px;
+	width: 80%;
+	position: relative;
+
+	@media (max-width: 700px){
+		max-width: 100%;
+		width: 100%;
+	}
+
+	.ga-misconfigured-content {
+		position: relative;
+		width: 400px;
+		max-width: 90%;
+		margin: 0 auto;
+	}
+
+	.ga-misconfigured-heading {
+		font-weight: 500;
+		margin: 1.5rem 0 0.75rem;
+		line-height: 1.25;
+	}
+
+	.ga-misconfigured-button {
+		display: inline-block;
+		background: #0066B2;
+		padding: 0 2rem;
+		line-height: 44px;
+		font-size: 1.1rem;
+		letter-spacing: 0.025rem;
+		color: white;
+		border-radius: 3px;
+		margin-top: 1rem;
+		transition: background 0.25s ease-in-out;
+
+		&:hover {
+			background: #145c92;
+		}
+	}
+}
+
+.ga-dashboard {
+	color: #525252;
+	margin-top: 1rem;
+	font-size: 14px;
+
+	.ga-table {
+		border-top: 2px solid #6699CC;
+	}
+
+	.google-visualization-table-div-page.gradient {
+		background: none;
+	}
+
+	.hc-paper {
+		border-radius: 5px;
+	}
+}
+
+.ga-metric-icon {
+	position: relative;
+	border-radius: 50%;
+	height: $ga-icon-size;
+	width: $ga-icon-size;
+	margin-left: 24px;
+	background-image: linear-gradient(222deg, rgba(67,168,244,0.70) 0%, rgba(0,102,179,0.80) 100%);
+
+	&:before {
+		position: absolute;
+		content: "";
+		border-radius: 50%;
+		height: $ga-icon-size - 4px;
+		width: $ga-icon-size - 4px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		background: white;
+	}
+
+	mat-icon {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		font-size: 24px;
+	}
+}
+
+.ga-date-filters {
+	display: flex;
+	max-width: 100%;
+
+	.ga-date-filter:first-child {
+		margin-right: 1rem;
+	}
+
+	.ga-date-filter:last-child {
+		margin-right: 0;
+	}
+}
+
+.hc-table-section .mat-form-field:not(.mat-paginator-page-size-select).ga-date-filter {
+	width: 184px;
+}
+
+.ga-metric-text {
+	margin-left: 1rem;
+	
+	h2 {
+		font-weight: 300;
+		font-size: 24px;
+		line-height: 35px;
+	}
+
+	h5 {
+		font-weight: 500;
+		font-size: 12px; 
+		line-height: 18px;
+		color: #484848;
+		letter-spacing: 1px;
+	}
+}
+
+.ga-external-link {
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	margin-left: 1rem;
+}
+
+.ga-grid-row {
+	margin-bottom: 1rem;
+}
+
+.ga-widget {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	flex-direction: column;
+
+	&.ga-metric {
+		align-items: center;
+		flex-direction: row;
+		padding: 1rem 0;
+	}
+
+	.ga-widget-header {
+		font-weight: 500;
+		font-size: 18px; 
+		line-height: 35px;
+		color: #484848;
+		width: 100%;
+		padding: 12px 20px;
+	}
+
+	.ga-widget-body {
+		width: 100%;
+	}
+}
+
+.ga-chart {
+	&.ga-chart-sales-funnel,
+	&.ga-chart-revenue-category {
+		.ga-widget-header {
+			position: relative;
+			z-index: 1;
+		}
+		
+		.ga-widget-body {
+			position: relative;
+			top: -24px;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+
+	&.ga-chart-sales-funnel {
+		.ga-widget-body {
+			top: -48px;
+		}
+	}
+}
+
+.ga-product-performance {
+	overflow: auto;
+}
+
+.google-visualization-table-table td.frozen-column {
+	background: red;
+	white-space: nowrap !important;
+}
+
+.gapi-analytics-data-chart-styles-table-td.frozen-column.last-frozen-column {
+	background: blue;
+}

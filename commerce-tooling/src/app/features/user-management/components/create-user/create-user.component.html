@@ -16,7 +16,7 @@
 	<div class="hc-stepper-section hc-paper">
 		<div class="hc-stepper-actions">
 			<h2 class="hc-type-h2">
-				{{'USER_MANAGEMENT.NEW_USER' | translate}}
+				{{'USER_MANAGEMENT.NEW_USER' | translate}} <span *ngIf="isRegisteredCustomer">({{storeIdentifier}})</span>
 			</h2>
 			<div>
 				<button class="mat-flat-button" (click)="cancel()">{{'USER_MANAGEMENT.CANCEL' | translate}}</button>

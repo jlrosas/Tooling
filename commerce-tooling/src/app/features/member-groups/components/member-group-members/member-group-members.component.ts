@@ -46,7 +46,7 @@ export class MemberGroupMembersComponent implements OnInit, AfterViewInit, OnDes
 	currentSearchInclude = null;
 	currentSearchExclude = null;
 
-	@ViewChild("searchTextIncludeInput", {static: false}) searchTextIncludeInput: ElementRef<HTMLInputElement>;
+	@ViewChild("searchTextIncludeInput") searchTextIncludeInput: ElementRef<HTMLInputElement>;
 
 	private includeMembersSearchString: Subject<string> = new Subject<string>();
 	private excludeMembersSearchString: Subject<string> = new Subject<string>();

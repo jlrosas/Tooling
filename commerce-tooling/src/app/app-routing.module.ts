@@ -15,79 +15,91 @@ import { Routes, RouterModule } from "@angular/router";
 const routes: Routes = [
 	{
 		path: "organizations",
-		loadChildren: "./features/organizations/organizations.module#OrganizationsModule"
+		loadChildren: () => import("./features/organizations/organizations.module").then(m => m.OrganizationsModule)
 	},
 	{
 		path: "users",
-		loadChildren: "./features/user-management/user-management.module#UserManagementModule"
+		loadChildren: () => import("./features/user-management/user-management.module").then(m => m.UserManagementModule)
 	},
 	{
 		path: "store-preview",
-		loadChildren: "./features/store-preview/store-preview.module#StorePreviewModule"
+		loadChildren: () => import("./features/store-preview/store-preview.module").then(m => m.StorePreviewModule)
 	},
  	{
  		path: "approvals",
- 		loadChildren: "./features/approvals/approvals.module#ApprovalsModule"
+ 		loadChildren: () => import("./features/approvals/approvals.module").then(m => m.ApprovalsModule)
  	},
  	{
  		path: "member-groups",
- 		loadChildren: "./features/member-groups/member-groups.module#MemberGroupsModule"
+ 		loadChildren: () => import("./features/member-groups/member-groups.module").then(m => m.MemberGroupsModule)
 	 },
 	 {
 		path: "accounts",
-		loadChildren: "./features/accounts/accounts.module#AccountsModule"
+		loadChildren: () => import("./features/accounts/accounts.module").then(m => m.AccountsModule)
 	},
 	{
 		path: "contracts",
-		loadChildren: "./features/contracts/contracts.module#ContractsModule"
+		loadChildren: () => import("./features/contracts/contracts.module").then(m => m.ContractsModule)
 	},
 	{
 		path: "extended-sites",
-		loadChildren: "./features/extended-sites/extended-sites.module#ExtendedSitesModule"
+		loadChildren: () => import("./features/extended-sites/extended-sites.module").then(m => m.ExtendedSitesModule)
 	},
 	{
 		path: "scheduler",
-		loadChildren: "./features/scheduler/scheduler.module#SchedulerModule"
+		loadChildren: () => import("./features/scheduler/scheduler.module").then(m => m.SchedulerModule)
  	},
  	{
 		path: "messages",
-		loadChildren: "./features/messages/messages.module#MessagesModule"
+		loadChildren: () => import("./features/messages/messages.module").then(m => m.MessagesModule)
 	},
 	{
 		path: "registries",
-		loadChildren: "./features/registries/registries.module#RegistriesModule"
+		loadChildren: () => import("./features/registries/registries.module").then(m => m.RegistriesModule)
 	},
 	{
 		path: "shipping-jurisdictions",
-		loadChildren: "./features/shipping-jurisdictions/shipping-jurisdictions.module#ShippingJurisdictionsModule"
+		loadChildren: () => import("./features/shipping-jurisdictions/shipping-jurisdictions.module").then(m => m.ShippingJurisdictionsModule)
 	},
 	{
 		path: "shipping-modes",
-		loadChildren: "./features/shipping-modes/shipping-modes.module#ShippingModesModule"
+		loadChildren: () => import("./features/shipping-modes/shipping-modes.module").then(m => m.ShippingModesModule)
 	},
 	{
 		path: "shipping-codes",
-		loadChildren: "./features/shipping-codes/shipping-codes.module#ShippingCodesModule"
+		loadChildren: () => import("./features/shipping-codes/shipping-codes.module").then(m => m.ShippingCodesModule)
 	},
 	{
 		path: "shipping-charges",
-		loadChildren: "./features/shipping-charges/shipping-charges.module#ShippingChargesModule"
+		loadChildren: () => import("./features/shipping-charges/shipping-charges.module").then(m => m.ShippingChargesModule)
+	},
+	{
+		path: "transports",
+		loadChildren: () => import("./features/transports/transports.module").then(m => m.TransportsModule)
+	},
+	{
+		path: "message-types",
+		loadChildren: () => import("./features/message-types/message-types.module").then(m => m.MessageTypesModule)
 	},
 	{
 		path: "security-policies",
-		loadChildren: "./features/security-policies/security-policies.module#SecurityPoliciesModule"
+		loadChildren: () => import("./features/security-policies/security-policies.module").then(m => m.SecurityPoliciesModule)
  	},
 	{
  		path: "tax-categories",
-		loadChildren: "./features/tax-categories/tax-categories.module#TaxCategoriesModule"
+		loadChildren: () => import("./features/tax-categories/tax-categories.module").then(m => m.TaxCategoriesModule)
 	},
 	{
 		path: "tax-jurisdictions",
-		loadChildren: "./features/tax-jurisdictions/tax-jurisdictions.module#TaxJurisdictionsModule"
+		loadChildren: () => import("./features/tax-jurisdictions/tax-jurisdictions.module").then(m => m.TaxJurisdictionsModule)
 	},
 	{
 		path: "tax-codes",
-		loadChildren: "./features/tax-codes/tax-codes.module#TaxCodesModule"
+		loadChildren: () => import("./features/tax-codes/tax-codes.module").then(m => m.TaxCodesModule)
+	},
+	{
+		path: "google-analytics",
+		loadChildren: () => import("./features/google-analytics/google-analytics.module").then(m => m.GoogleAnalyticsModule)
 	}
 ];
 

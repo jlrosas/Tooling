@@ -21,7 +21,7 @@ import { MatStepper } from "@angular/material/stepper";
 	styleUrls: ["./resend-message.component.scss"]
 })
 export class ResendMessageComponent {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	constructor(private router: Router,
 			private route: ActivatedRoute,

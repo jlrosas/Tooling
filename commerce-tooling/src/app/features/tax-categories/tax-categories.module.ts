@@ -86,10 +86,6 @@ import { TaxCategoryRateDialogComponent } from "./components/tax-category-rate-d
 		TaxCategoryRateDialogComponent
 	],
 	providers: [
-	],
-	entryComponents: [
-		DeleteTaxCategoryDialogComponent,
-		TaxCategoryRateDialogComponent
 	]
 })
 export class TaxCategoriesModule {}

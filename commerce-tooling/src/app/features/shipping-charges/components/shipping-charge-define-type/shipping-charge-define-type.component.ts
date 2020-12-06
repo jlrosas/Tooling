@@ -46,7 +46,7 @@ export class ShippingChargeDefineTypeComponent implements OnInit, OnDestroy, Aft
 	unitOfMeasureDescriptions = {};
 
 	chargeTypeForm: FormGroup | any;
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 	displayedColumns: string[] = ["range", "charge", "actions"];
 	listSearchForm: FormGroup | any;
 	model = new ShippingChargeRangeDataSource();

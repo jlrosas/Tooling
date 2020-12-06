@@ -12,10 +12,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { Close16Module } from "@carbon/icons-angular/lib/close/16";
-import { ChevronRight16Module } from "@carbon/icons-angular/lib/chevron--right/16";
-import { Delete16Module } from "@carbon/icons-angular/lib/delete/16";
-import { Export16Module } from "@carbon/icons-angular/lib/export/16";
 import { TranslateModule } from "@ngx-translate/core";
 import { CdkTableModule } from "@angular/cdk/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
@@ -53,10 +49,6 @@ import { DeleteExtendedSiteDialogComponent } from "./components/delete-extended-
 		ReactiveFormsModule,
 		ExtendedSitesRoutingModule,
 		TranslateModule,
-		Close16Module,
-		ChevronRight16Module,
-		Delete16Module,
-		Export16Module,
 		CdkTableModule,
 		MatPaginatorModule,
 		MatSortModule,
@@ -89,9 +81,6 @@ import { DeleteExtendedSiteDialogComponent } from "./components/delete-extended-
 		DeleteExtendedSiteDialogComponent
 	],
 	providers: [
-	],
-	entryComponents: [
-		DeleteExtendedSiteDialogComponent
 	]
 })
 export class ExtendedSitesModule {}

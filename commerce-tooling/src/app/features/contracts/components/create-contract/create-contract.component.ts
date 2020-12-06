@@ -22,7 +22,7 @@ import { ApiErrorService } from "../../../../services/api-error.service";
 	styleUrls: ["./create-contract.component.scss"]
 })
 export class CreateContractComponent implements OnInit {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	accountId: string;
 	storeId: string;

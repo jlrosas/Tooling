@@ -8,25 +8,23 @@
 
 *-------------------------------------------------------------------
 -->
-
-<form [formGroup]="categoriesForm" autocomplete="off">
-	<div class="bx--row">
-		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
-			<mat-label>{{'SHIPPING_CODES.SELECT_PRODUCT_OR_CATEGORIES'| translate}}</mat-label>
-			<mat-radio-group class="select-product-group">
-				<mat-radio-button value="1">{{'SHIPPING_CODES.ALL_PRODUCTS'| translate}}</mat-radio-button>
-				<mat-radio-button value="2">{{'SHIPPING_CODES.SPECIFIC_PRODUCTS'| translate}}</mat-radio-button>
-				<mat-radio-button value="3">{{'SHIPPING_CODES.CATEGORIES'| translate}}</mat-radio-button>
-			</mat-radio-group>
+<div class="bx--row">
+	<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11 ">
+		<mat-tab-group animationDuration="0ms" dynamicHeight [selectedIndex]="activeTab" (selectedTabChange)="tabChanged($event)">
+			<mat-tab label="{{'SHIPPING_CODES.SELECTED_CATEGORIES' | translate}}">
+				<hc-shipping-category-list [mode]="mode"></hc-shipping-category-list>
+			</mat-tab>
+			<mat-tab label="{{'SHIPPING_CODES.SELECTED_PRODUCTS' | translate}}">
+				<hc-shipping-product-list [mode]="mode"></hc-shipping-product-list>
+			</mat-tab>
+		</mat-tab-group>
+		</div>
+</div>
+<div class="bx--row">
+	<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+		<div>
+			<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'create'">{{'SHIPPING_CODES.FINISH' | translate}}</button>
+			<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'edit'">{{'SHIPPING_CODES.SAVE' | translate}}</button>
 		</div>
 	</div>
-	<div class="bx--row">
-		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
-			<div>
-				<button class="mat-flat-button" type="button" matStepperPrevious *ngIf="mode === 'create'">{{'SHIPPING_CODES.BACK'| translate}}</button>
-				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'create'">{{'SHIPPING_CODES.FINISH' | translate}}</button>
-				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'edit'">{{'SHIPPING_CODES.SAVE' | translate}}</button>
-			</div>
-		</div>
-	</div>
-</form>
+</div>

@@ -748,6 +748,138 @@
           }
         ]
       }
+    },
+    {
+      "url": "./api_definition/catalog-entries.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/catalog-groups.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/catalog-entry-calculation-codes.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/catalog-group-calculation-codes.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/catalogs.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/connection-specs.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/google-analytics.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/interaction-specs.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/profiles.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/message-types.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./api_definition/device-formats.json",
+      "paths": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "/rest/admin/v2$1"
+          }
+        ]
+      }
     }
   ]
 }

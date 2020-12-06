@@ -10,8 +10,8 @@
  */
 
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { Subject, Subscription, Observable } from "rxjs";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Subject, Subscription, Observable, forkJoin } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { UsersService } from "../../../../rest/services/users.service";
 import { RoleAssignmentsService } from "../../../../rest/services/role-assignments.service";
@@ -28,6 +28,7 @@ import { PreferenceService } from "../../../../services/preference.service";
 import { AlertService } from "../../../../services/alert.service";
 import { OnlineStoresService } from "../../../../rest/services/online-stores.service";
 import { PasswordResetDialogComponent } from "../password-reset-dialog/password-reset-dialog.component";
+import { CurrentUserService } from "../../../../services/current-user.service";
 
 @Component({
 	templateUrl: "./user-list.component.html",
@@ -37,7 +38,7 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 	listFilterForm: FormGroup;
 	listSearchForm: FormGroup;
 	parentOrganization: FormControl;
-	storeDropdown: FormControl;
+	store: FormControl;
 	role: FormControl;
 	organizationList: Array<any> = [];
 	roleList: Array<any> = [];
@@ -47,6 +48,9 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 	showFilters = false;
 	responsiveCols = 12;
 
+	storeRequired = false;
+	seller = false;
+
 	model = new UsersDataSource();
 	public userRolesMap = {};
 	public registeredCustomerMap = {};
@@ -54,9 +58,9 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	displayedColumns: string[] = ["loginId", "firstName",  "lastName",  "parentOrganizationName", "role", "status", "actions"];
 
-	@ViewChild(MatPaginator, { static: false })
+	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
-	@ViewChild(MatSort, { static: false })
+	@ViewChild(MatSort)
 	sort: MatSort;
 	// MatPaginator Inputs
 	pageSize = DEFAULT_PAGE_SIZE;
@@ -66,7 +70,8 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 	sortDirection = "asc";
 	currentSearchString = null;
 	organizationsLoading = false;
-	storeFilter = null;
+	selectedStore = null;
+	isB2CStore = false;
 	storeList: Array<any> = [];
 
 	pageIndex = 0;
@@ -77,6 +82,7 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 	private searchString: Subject<string> = new Subject<string>();
 	private getStoresSubscription: Subscription = null;
 	private storeSearchString: Subject<string> = new Subject<string>();
+	private getStoreNameSubscription: Subscription = null;
 	private getManageableUsersSubscription: Subscription = null;
 	private getRoleAssignmentsSubscriptions: Array<Subscription> = [];
 
@@ -90,7 +96,15 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 		autoFocus: true
 	};
 
+	private B2C_STORE_TYPES = new Set([
+		"B2C",
+		"BBB",
+		"MHS",
+		"RHS"
+	]);
+
 	constructor(private router: Router,
+			private route: ActivatedRoute,
 			private usersService: UsersService,
 			private roleAssignmentsService: RoleAssignmentsService,
 			private roleDescriptionsService: RoleDescriptionsService,
@@ -100,6 +114,7 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 			private translateService: TranslateService,
 			private alertService: AlertService,
 			private onlineStoresService: OnlineStoresService,
+			private currentUserService: CurrentUserService,
 			private dialog: MatDialog) { }
 
 	ngOnInit() {
@@ -114,7 +129,6 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.storeSearchString.pipe(debounceTime(250)).subscribe(searchString => {
 			this.getStores(searchString);
 		});
-		this.searchStores("");
 		this.loadRoleNames();
 		this.organizationSearchString.pipe(debounceTime(250)).subscribe(searchString => {
 			if (this.parentOrganization.value === searchString) {
@@ -127,11 +141,64 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	ngAfterViewInit() {
+		// -1 Site Administrator
+		// -3 Customer Service Representative
+		// -4 Seller
+		// -12 Operations Manager
+		// -14 Customer Service Supervisor
+		// -20 Seller Administrator
+		// -21 Buyer Administrator
+		// -27 Channel Manager
+		forkJoin([
+			this.currentUserService.hasMatchingRole([-1, -3, -14, -20, -21, -27]),
+			this.currentUserService.hasMatchingRole([-1, -20, -27]),
+			this.currentUserService.hasMatchingRole([-1, -3, -12, -14, -20, -21, -27])
+		]).subscribe((hasRoleArray: Array<boolean>) => {
+			this.storeRequired = !hasRoleArray[0];
+			const storePreferred = !hasRoleArray[1];
+			this.seller = !hasRoleArray[2];
+			const storeId = this.route.snapshot.params.storeId;
+			if (storeId && storeId !== "0") {
+				this.onlineStoresService.getOnlineStore(Number(storeId)).subscribe(store => {
+					this.selectStore(store);
+				});
+			} else if (this.storeRequired || (storePreferred && storeId !== "0")) {
+				this.getStoreNameSubscription = this.currentUserService.getStoreName().subscribe((storeName: string) => {
+					if (storeName) {
+						this.onlineStoresService.getOnlineStoresByIdentifier({
+							identifier: storeName,
+							usage: "HCL_UserTool",
+							limit: 1
+						}).subscribe(onlineStoreResponse => {
+							if (this.getStoreNameSubscription) {
+								this.getStoreNameSubscription.unsubscribe();
+								this.getStoreNameSubscription = null;
+							}
+							const storeArray = onlineStoreResponse.items;
+							for (let i = 0; i < storeArray.length; i++) {
+								const store = storeArray[i];
+								if (storeName === store.identifier) {
+									this.selectStore(store);
+									break;
+								}
+							}
+							if (this.selectedStore === null) {
+								this.getFirstStore();
+							}
+						});
+					} else {
+						this.getFirstStore();
+					}
+				});
+			} else {
+				this.searchStores("");
+				this.getManageableUsers();
+			}
+		});
 		this.sort.sortChange.subscribe(sort => {
 			this.pageIndex = 0;
 			this.getManageableUsers();
 		});
-		this.getManageableUsers();
 	}
 
 	ngOnDestroy() {
@@ -171,7 +238,15 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	createUser() {
 		this.userMainService.clearData();
-		this.router.navigate(["/users/create-user"]);
+		if (this.selectedStore) {
+			this.router.navigate(["/users/create-user", {
+				storeId: this.selectedStore.id,
+				storeType: this.selectedStore.type,
+				storeIdentifier: this.selectedStore.identifier
+			}]);
+		} else {
+			this.router.navigate(["/users/create-user", {storeId: 0}]);
+		}
 	}
 
 	searchUsers(searchString: string) {
@@ -265,77 +340,76 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	getManageableUsers() {
-		this.preferenceService.save(this.preferenceToken, {
-			searchString: this.currentSearchString,
-			sort: this.sort,
-			pageIndex: this.pageIndex,
-			pageSize: this.pageSize,
-			filter: {
-				parentOrganizationFilter: this.parentOrganizationFilter,
-				roleFilter: this.roleId,
-				storeFilter: this.storeFilter
-			}
-		});
-		const args: UsersService.UsersGetManageableUsersParams = {
-			offset: this.pageIndex * this.paginator.pageSize,
-			limit: this.paginator.pageSize
-		};
-		if (this.currentSearchString) {
-			args.searchString = this.currentSearchString;
-		}
-		if (this.parentOrganizationFilter != null) {
-			args.parentOrganizationId = this.parentOrganizationFilter.id;
-		}
-		if (this.roleId != null) {
-			args.roleId = this.roleId;
-		}
-		if (this.storeFilter != null) {
-			args.roleOrganizationId = this.storeFilter.ownerId;
-			if (!args.roleId) {
-				args.roleId = -29;
-			}
-		}
-		let sort = this.sort.active;
-		if (this.sort.direction === "asc") {
-			sort = sort;
-		} else if (this.sort.direction === "desc") {
-			sort = "-" + sort;
-		}
-		args.sort = sort;
-		if (this.getManageableUsersSubscription != null) {
-			this.getManageableUsersSubscription.unsubscribe();
-			this.getManageableUsersSubscription = null;
-		}
-		if (this.getRoleAssignmentsSubscriptions != null) {
-			this.getRoleAssignmentsSubscriptions.forEach(subscription => {
-				subscription.unsubscribe();
-			});
-			this.getRoleAssignmentsSubscriptions = null;
-		}
-		this.getManageableUsersSubscription = this.usersService.UsersGetManageableUsers(args).subscribe((body: any) => {
-			this.getManageableUsersSubscription.unsubscribe();
-			this.getManageableUsersSubscription = null;
-			this.paginator.length = body.count;
-			const data = [];
-			this.getRoleAssignmentsSubscriptions = [];
-			if (body.items != null) {
-				for (let i = 0; i < body.items.length; i++) {
-					const item = body.items[i];
-					this.populateRoles(item.id);
-					const user: User = {
-						id: item.id,
-						loginId: item.logonId,
-						firstName: (item.address) ? item.address.firstName : "",
-						lastName: (item.address) ? item.address.lastName : "",
-						parentOrganizationName: item.parentOrganizationName,
-						roles: this.userRolesMap[item.id],
-						status: item.status,
-					};
-					data.push(user);
+		if (!this.storeRequired || this.selectedStore) {
+			this.preferenceService.save(this.preferenceToken, {
+				searchString: this.currentSearchString,
+				sort: this.sort,
+				pageIndex: this.pageIndex,
+				pageSize: this.pageSize,
+				filter: {
+					parentOrganizationFilter: this.parentOrganizationFilter,
+					roleFilter: this.roleId
 				}
+			});
+			const args: UsersService.UsersGetManageableUsersParams = {
+				offset: this.pageIndex * this.pageSize,
+				limit: this.pageSize
+			};
+			if (this.currentSearchString) {
+				args.searchString = this.currentSearchString;
 			}
-			this.model.setData(data);
-		});
+			if (this.parentOrganizationFilter != null) {
+				args.parentOrganizationId = this.parentOrganizationFilter.id;
+			}
+			if (this.roleId != null) {
+				args.roleId = this.roleId;
+			}
+			if (this.selectedStore != null) {
+				args.roleOrganizationId = this.selectedStore.ownerId;
+				args.organizationRoleId = -29;
+			}
+			let sort = this.sort.active;
+			if (this.sort.direction === "asc") {
+				sort = sort;
+			} else if (this.sort.direction === "desc") {
+				sort = "-" + sort;
+			}
+			args.sort = sort;
+			if (this.getManageableUsersSubscription != null) {
+				this.getManageableUsersSubscription.unsubscribe();
+				this.getManageableUsersSubscription = null;
+			}
+			if (this.getRoleAssignmentsSubscriptions != null) {
+				this.getRoleAssignmentsSubscriptions.forEach(subscription => {
+					subscription.unsubscribe();
+				});
+				this.getRoleAssignmentsSubscriptions = null;
+			}
+			this.getManageableUsersSubscription = this.usersService.UsersGetManageableUsers(args).subscribe((body: any) => {
+				this.getManageableUsersSubscription.unsubscribe();
+				this.getManageableUsersSubscription = null;
+				this.paginator.length = body.count;
+				const data = [];
+				this.getRoleAssignmentsSubscriptions = [];
+				if (body.items != null) {
+					for (let i = 0; i < body.items.length; i++) {
+						const item = body.items[i];
+						this.populateRoles(item.id);
+						const user: User = {
+							id: item.id,
+							loginId: item.logonId,
+							firstName: (item.address) ? item.address.firstName : "",
+							lastName: (item.address) ? item.address.lastName : "",
+							parentOrganizationName: item.parentOrganizationName,
+							roles: this.userRolesMap[item.id],
+							status: item.status,
+						};
+						data.push(user);
+					}
+				}
+				this.model.setData(data);
+			});
+		}
 	}
 
 	setUserStatus(id: string, status: number) {
@@ -366,7 +440,7 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 			limit: 10
 	 	}).subscribe(response => {
 	 		this.getStoresSubscription = null;
-	 		if (response.items.length === 1 && response.items[0].identifier === this.storeDropdown.value) {
+	 		if (response.items.length === 1 && response.items[0].identifier === this.store.value) {
 	 			this.selectStore(response.items[0]);
 	 		} else {
 	 			this.storeList = response.items;
@@ -378,21 +452,36 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	selectStore(store: any) {
-		this.storeFilter = {
-			id: store.id,
-			ownerId: store.ownerId,
-			identifier: store.identifier
-		};
-		this.storeDropdown.setValue(store.identifier);
-		this.storeList = [];
-		this.paginator.pageIndex = 0;
-		this.getManageableUsers();
+		if (this.getStoreNameSubscription) {
+			this.getStoreNameSubscription.unsubscribe();
+			this.getStoreNameSubscription = null;
+		}
+		const currentStoreId = this.selectedStore ? this.selectedStore.id : null;
+		this.currentUserService.setPreferredStore(store.identifier);
+		this.selectedStore = store;
+		this.store.setValue(store.identifier);
+		this.isB2CStore = this.B2C_STORE_TYPES.has(store.type);
+		if (currentStoreId !== store.id) {
+			if (currentStoreId !== null) {
+				this.pageIndex = 0;
+			}
+			this.getManageableUsers();
+			this.storeList = [];
+			this.searchStores("");
+		}
+	}
+
+	resetSelectedStore() {
+		if (this.selectedStore) {
+			this.store.setValue(this.selectedStore.identifier);
+		}
 	}
 
 	clearStore() {
-		this.storeFilter = null;
-		this.storeDropdown.setValue(null);
-		this.paginator.pageIndex = 0;
+		this.selectedStore = null;
+		this.isB2CStore = false;
+		this.store.setValue(null);
+		this.pageIndex = 0;
 		this.getManageableUsers();
 	}
 
@@ -420,17 +509,17 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.searchText = new FormControl(this.currentSearchString);
 		this.parentOrganization = new FormControl(this.parentOrganizationFilter ? this.parentOrganizationFilter.organizationName : "");
 		this.role = new FormControl(this.roleId);
-		this.storeDropdown = new FormControl(this.storeFilter ? this.storeFilter.identifier : "");
+		this.store = new FormControl("");
 	}
 
 	private createForm() {
 		this.listFilterForm = new FormGroup({
 			parentOrganization: this.parentOrganization,
-			role: this.role,
-			storeDropdown: this.storeDropdown
+			role: this.role
 		});
 		this.listSearchForm = new FormGroup({
-			searchText: this.searchText
+			searchText: this.searchText,
+			store: this.store
 		});
 	}
 
@@ -509,6 +598,20 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 		});
 	}
 
+	private getFirstStore() {
+		this.onlineStoresService.getOnlineStores({
+			usage: "HCL_UserTool",
+			limit: 1
+		}).subscribe(onlineStoreResponse => {
+			const storeArray = onlineStoreResponse.items;
+			for (let index = 0; index < storeArray.length; index++) {
+				const store = storeArray[index];
+				this.selectStore(store);
+				break;
+			}
+		});
+	}
+
 	private getPreferenceData() {
 		this.preferenceToken = this.router.url;
 		const preference = this.preferenceService.get(this.preferenceToken);
@@ -535,7 +638,6 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 			if (filter) {
 				const {roleFilter, parentOrganizationFilter, storeFilter} = filter;
 				this.parentOrganizationFilter = parentOrganizationFilter;
-				this.storeFilter = storeFilter;
 				this.roleId = roleFilter;
 			}
 			if (showFilters) {

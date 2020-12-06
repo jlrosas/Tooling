@@ -36,9 +36,6 @@ import { PreviewSettingsDialogComponent } from "./components/preview-settings-di
 		StorePreviewComponent,
 		PreviewSettingsDialogComponent
 	],
-	entryComponents: [
-		PreviewSettingsDialogComponent
-	],
 	imports: [
 		CommonModule,
 		MatSelectModule,

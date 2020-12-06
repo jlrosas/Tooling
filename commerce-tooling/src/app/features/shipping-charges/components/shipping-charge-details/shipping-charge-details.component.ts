@@ -39,7 +39,7 @@ export class ShippingChargeDetailsComponent implements OnInit, OnDestroy, AfterV
 	endDate: FormControl;
 	timePeriod = "always";
 
-	@ViewChild("nameInput", {static: false}) nameInput: ElementRef<HTMLInputElement>;
+	@ViewChild("nameInput") nameInput: ElementRef<HTMLInputElement>;
 
 	private statusChangesSubscription: Subscription = null;
 	private getCalculationScalesSubscription: Subscription = null;

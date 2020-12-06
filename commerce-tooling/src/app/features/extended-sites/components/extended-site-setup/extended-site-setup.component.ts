@@ -45,7 +45,7 @@ export class ExtendedSiteSetupComponent implements OnInit, AfterViewInit, OnDest
 	organizationCount = 0;
 	organizationSearchString = "";
 
-	@ViewChild("organizationInput", {static: false}) organizationInput: ElementRef<HTMLInputElement>;
+	@ViewChild("organizationInput") organizationInput: ElementRef<HTMLInputElement>;
 
 	private organizationSearchString$: Subject<string> = new Subject<string>();
 	private getOrganizationsSubscription: Subscription = null;

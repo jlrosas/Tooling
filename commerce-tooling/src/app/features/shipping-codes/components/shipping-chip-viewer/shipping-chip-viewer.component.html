@@ -1,0 +1,28 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+<header class="header">
+	{{title}}
+</header>
+<main class="body">
+	<mat-chip-list>
+		<mat-chip *ngFor="let item of list" [selectable]="true"
+				[removable]="true" (removed)="removeSelection(item)">
+			{{item.name}}
+			<mat-icon matChipRemove>cancel</mat-icon>
+		</mat-chip>
+	</mat-chip-list>
+</main>
+<footer class="footer">
+	<button class="mat-icon-button-label" matTooltip="{{'SHIPPING_CODES.VIEW_FULL_LIST' | translate}}" mat-icon-button (click)="goToLink()">
+		<mat-icon color="primary">list</mat-icon> {{'SHIPPING_CODES.VIEW_FULL_LIST' | translate}}
+	</button>
+	<div>{{'SHIPPING_CODES.SHOWING_ITEM_OF_TOTAL_ITEMS' | translate: {totalItemsInList: list.length, totalItems: totalItems} }}</div>
+</footer>

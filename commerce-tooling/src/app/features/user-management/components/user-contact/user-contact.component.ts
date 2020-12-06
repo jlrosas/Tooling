@@ -50,7 +50,7 @@ export class UserContactComponent implements OnInit, OnDestroy, AfterViewInit {
 	filteredStateList: Array<any> = [];
 	lastStep = false;
 
-	@ViewChild("titleInput", {static: false}) titleInput: ElementRef<HTMLInputElement>;
+	@ViewChild("titleInput") titleInput: ElementRef<HTMLInputElement>;
 
 	private countryList: Array<any> = [];
 	private stateList: Array<any> = [];

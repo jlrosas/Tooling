@@ -67,10 +67,10 @@ export class MemberGroupDefinitionComponent implements OnInit, AfterViewInit, On
 
 	registrationDisabled = false;
 
-	@ViewChild("targetOrganizationRolesOptionSelect", {static: false}) targetOrganizationRolesOptionSelect: MatSelect;
-	@ViewChild("availableTargetOrganizationRolesInput", {static: false}) availableTargetOrganizationRolesInput: ElementRef<HTMLInputElement>;
-	@ViewChild("availableAnyOrganizationRolesInput", {static: false}) availableAnyOrganizationRolesInput: ElementRef<HTMLInputElement>;
-	@ViewChild("availableOrganizationRolesInput", {static: false}) availableOrganizationRolesInput: ElementRef<HTMLInputElement>;
+	@ViewChild("targetOrganizationRolesOptionSelect") targetOrganizationRolesOptionSelect: MatSelect;
+	@ViewChild("availableTargetOrganizationRolesInput") availableTargetOrganizationRolesInput: ElementRef<HTMLInputElement>;
+	@ViewChild("availableAnyOrganizationRolesInput") availableAnyOrganizationRolesInput: ElementRef<HTMLInputElement>;
+	@ViewChild("availableOrganizationRolesInput") availableOrganizationRolesInput: ElementRef<HTMLInputElement>;
 
 	private getOrganizationsSubscription: Subscription = null;
 	private getAssignableRolesSubscription: Subscription = null;

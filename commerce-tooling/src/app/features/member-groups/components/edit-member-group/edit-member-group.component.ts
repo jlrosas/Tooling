@@ -22,7 +22,7 @@ import { MatStepper } from "@angular/material/stepper";
 	styleUrls: ["./edit-member-group.component.scss"]
 })
 export class EditMemberGroupComponent implements OnInit, OnDestroy {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	usage: string;
 	onUsageChangeSubscription: Subscription = null;

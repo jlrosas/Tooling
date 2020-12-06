@@ -47,7 +47,7 @@ export class UserGroupsComponent implements OnInit, OnDestroy, AfterViewInit {
 	currentSearchInclude = null;
 	currentSearchExclude = null;
 
-	@ViewChild("searchTextIncludeInput", {static: false}) searchTextIncludeInput: ElementRef<HTMLInputElement>;
+	@ViewChild("searchTextIncludeInput") searchTextIncludeInput: ElementRef<HTMLInputElement>;
 
 	private organizationNames = {};
 	private getOrganizationSubscriptions = {};

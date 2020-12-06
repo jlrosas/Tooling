@@ -23,7 +23,7 @@ import { AlertService } from "../../../../services/alert.service";
 	styleUrls: ["./create-tax-jurisdiction.component.scss"]
 })
 export class CreateTaxJurisdictionComponent {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	private getTaxJurisdictionsSubscription: Subscription = null;
 

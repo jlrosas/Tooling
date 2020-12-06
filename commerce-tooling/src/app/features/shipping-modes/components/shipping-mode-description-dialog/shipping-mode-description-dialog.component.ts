@@ -32,8 +32,8 @@ export class ShippingModeDescriptionDialogComponent implements OnInit, AfterView
 	languageIdList: Array<any> = [];
 	languageList = {};
 
-	@ViewChild("languageSelect", {static: false}) languageSelect: MatSelect;
-	@ViewChild("descriptionInput", {static: false}) descriptionInput: ElementRef<HTMLInputElement>;
+	@ViewChild("languageSelect") languageSelect: MatSelect;
+	@ViewChild("descriptionInput") descriptionInput: ElementRef<HTMLInputElement>;
 
 	constructor(
 			private translateService: TranslateService,

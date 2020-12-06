@@ -45,8 +45,8 @@ export class ContractDetailsComponent implements OnInit, OnDestroy, AfterViewIni
 	baseContractList: Array<any> = [];
 	getBaseContractsSubscription: Subscription = null;
 
-	@ViewChild("nameInput", {static: false}) nameInput: ElementRef<HTMLInputElement>;
-	@ViewChild("descriptionInput", {static: false}) descriptionInput: ElementRef<HTMLInputElement>;
+	@ViewChild("nameInput") nameInput: ElementRef<HTMLInputElement>;
+	@ViewChild("descriptionInput") descriptionInput: ElementRef<HTMLInputElement>;
 
 	private baseContractSearchString: Subject<string> = new Subject<string>();
 

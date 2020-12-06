@@ -1,0 +1,34 @@
+<!--
+*-------------------------------------------------------------------
+* Licensed Materials - Property of HCL Technologies
+*
+* HCL Commerce
+*
+* (C) Copyright HCL Technologies Limited 1996, 2020
+
+*-------------------------------------------------------------------
+-->
+
+<form *ngIf="fields" [formGroup]="configurationForm" autocomplete="off" (ngSubmit)="$event.preventDefault()">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div class="hc-type-text" *ngIf="!fields.length">
+				<p>{{'MESSAGE_TYPES.NO_PROPERTIES' | translate}}</p>
+			</div>
+			<mat-form-field *ngFor="let field of fields" appearance="outline">
+				<mat-label>{{field.label | translate}}</mat-label>
+				<input *ngIf="!field.encrypt" #fieldInput matInput formControlName="{{field.name}}" (input)="validateField(field, $event.target.value)" [maxlength]="1024">
+				<input *ngIf="field.encrypt" #fieldInput matInput type="password" formControlName="{{field.name}}" (input)="validateField(field, $event.target.value)" [maxlength]="50">
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-md-7 bx--col-lg-11">
+			<div>
+				<button class="mat-flat-button" type="button" matStepperPrevious *ngIf="mode === 'create'">{{'MESSAGE_TYPES.BACK' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'create'">{{'MESSAGE_TYPES.FINISH' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="triggerSave()" *ngIf="mode == 'edit'">{{'MESSAGE_TYPES.SAVE' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

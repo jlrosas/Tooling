@@ -12,7 +12,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { Close16Module } from "@carbon/icons-angular/lib/close/16";
 import { TranslateModule } from "@ngx-translate/core";
 import { CdkTableModule } from "@angular/cdk/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
@@ -43,7 +42,6 @@ import { RegistryListComponent } from "./components/registry-list/registry-list.
 		FormsModule,
 		ReactiveFormsModule,
 		TranslateModule,
-		Close16Module,
 		CdkTableModule,
 		MatPaginatorModule,
 		MatSortModule,

@@ -32,10 +32,11 @@
 				</mat-error>
 			</mat-form-field>
 			<mat-form-field appearance="outline">
-				<mat-label>{{'ORGANIZATIONS.STREET_ADDRESS'| translate}}</mat-label>
+				<mat-label>{{'ORGANIZATIONS.STREET_ADDRESS_LINE_1'| translate}}</mat-label>
 				<input matInput id="address1" formControlName="address1" (input)="validateAddress1()" required autocomplete="off">
 			</mat-form-field>
 			<mat-form-field appearance="outline">
+				<mat-label>{{'ORGANIZATIONS.STREET_ADDRESS_LINE_2'| translate}} {{'ORGANIZATIONS.OPTIONAL' | translate}}</mat-label>
 				<input matInput id="address2" formControlName="address2" (input)="validateAddress2()" autocomplete="off">
 			</mat-form-field>
 			

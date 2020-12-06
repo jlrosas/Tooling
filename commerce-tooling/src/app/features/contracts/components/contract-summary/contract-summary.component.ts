@@ -48,6 +48,8 @@ export class ContractSummaryComponent implements OnInit, OnDestroy {
 	contractId: string;
 	baseContract: string;
 	customerOrganizationId: string;
+	allowAccountCreditLineCheckVisibility = false;
+	allowAccountCreditLine: boolean;
 	allowPersonalBillingAddress: boolean;
 	allowParentOrganizationBillingAddress: boolean;
 	allowAccountOrganizationBillingAddress: boolean;
@@ -126,6 +128,7 @@ export class ContractSummaryComponent implements OnInit, OnDestroy {
 					new Intl.DateTimeFormat(LanguageService.language, DATE_FORMAT_OPTIONS).format((new Date(contract.endDate)));
 			this.accountId = contract.accountId;
 			this.baseContract = contract.baseContractName;
+			this.allowAccountCreditLine = contract.allowAccountCreditLine ? true : false;
 			this.allowPersonalBillingAddress = contract.allowPersonalBillingAddress ? true : false;
 			this.allowParentOrganizationBillingAddress = contract.allowParentOrganizationBillingAddress ? true : false;
 			this.allowAccountOrganizationBillingAddress = contract.allowAccountOrganizationBillingAddress ? true : false;
@@ -153,7 +156,7 @@ export class ContractSummaryComponent implements OnInit, OnDestroy {
 					id: contract.catalogFilterId,
 					storeId: Number(this.storeId)
 				}).subscribe(catalogFilter => {
-					this.catalogFilter = catalogFilter.description;
+					this.catalogFilter = catalogFilter.description ? catalogFilter.description : catalogFilter.name;
 				});
 			}
 			if (contract.priceRuleId) {
@@ -195,6 +198,7 @@ export class ContractSummaryComponent implements OnInit, OnDestroy {
 		this.loadAvailablePaymentMethods();
 		this.loadAvailableShippingCharges();
 		this.loadAvailableShippingMethods();
+		this.loadAvailableLineOfCreditPaymentMethod();
 		this.onLanguageChangeSubscription = this.languageService.onLanguageChange.subscribe(() => {
 			this.loadAvailablePaymentMethods();
 			this.loadAvailableShippingCharges();
@@ -372,6 +376,22 @@ export class ContractSummaryComponent implements OnInit, OnDestroy {
 			}
 		});
 		this.paymentModel.setData(this.paymentMethods);
+	}
+
+	private loadAvailableLineOfCreditPaymentMethod() {
+		this.paymentMethodsService.getPaymentMethods({
+			storeId: Number(this.route.snapshot.params.storeId),
+			name: "LineOfCredit"
+		}).subscribe(response => {
+			if (response?.items?.length > 0) {
+				const lineOfCreditId = response.items[0].id;
+				this.accountsService.getAccountPaymentMethods({
+					accountId: this.route.snapshot.params.accountId
+				}).subscribe(body => {
+					this.allowAccountCreditLineCheckVisibility = body?.items?.some(element => element.paymentMethodId === lineOfCreditId);
+				});
+			}
+		});
 	}
 }
 

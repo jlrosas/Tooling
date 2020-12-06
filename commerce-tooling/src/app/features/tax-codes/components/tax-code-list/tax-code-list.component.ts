@@ -55,9 +55,9 @@ export class TaxCodeListComponent implements OnInit, OnDestroy, AfterViewInit {
 	defaultSalesTaxCodeId = -1;
 	defaultShippingTaxCodeId = -1;
 
-	@ViewChild(MatPaginator, {static: false})
+	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
-	@ViewChild(MatSort, {static: false})
+	@ViewChild(MatSort)
 	sort: MatSort;
 	// MatPaginator Inputs
 	pageSize = DEFAULT_PAGE_SIZE;

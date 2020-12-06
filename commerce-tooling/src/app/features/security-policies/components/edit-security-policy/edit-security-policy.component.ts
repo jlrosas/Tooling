@@ -21,7 +21,7 @@ import { AlertService } from "../../../../services/alert.service";
 	styleUrls: ["./edit-security-policy.component.scss"]
 })
 export class EditSecurityPoliciesComponent {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	constructor(private router: Router,
 			private route: ActivatedRoute,

@@ -55,7 +55,9 @@ class UsersService extends __BaseService {
    *
    * - `roleId`: Limits search results to only include users whose role ID matches the value of this parameter.
    *
-   * - `roleOrganizationId`: Qualifies roleId to limit search results to only include users who have a matching role ID in the organization that matches this parameter.
+   * - `organizationRoleId`: Limits search results to only include users whose role ID matches the value of this parameter. This role ID can be qualified by the organization specified by roleOrganizationId.
+   *
+   * - `roleOrganizationId`: Qualifies organizationRoleId to limit search results to only include users who have a matching role ID in the organization that matches this parameter.
    *
    * - `parentOrganizationId`: Limits search results to only include users whose parent organization ID matches the value of this parameter.
    *
@@ -73,6 +75,7 @@ class UsersService extends __BaseService {
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.searchString != null) __params = __params.set('searchString', params.searchString.toString());
     if (params.roleId != null) __params = __params.set('roleId', params.roleId.toString());
+    if (params.organizationRoleId != null) __params = __params.set('organizationRoleId', params.organizationRoleId.toString());
     if (params.roleOrganizationId != null) __params = __params.set('roleOrganizationId', params.roleOrganizationId.toString());
     if (params.parentOrganizationId != null) __params = __params.set('parentOrganizationId', params.parentOrganizationId.toString());
     let req = new HttpRequest<any>(
@@ -113,7 +116,9 @@ class UsersService extends __BaseService {
    *
    * - `roleId`: Limits search results to only include users whose role ID matches the value of this parameter.
    *
-   * - `roleOrganizationId`: Qualifies roleId to limit search results to only include users who have a matching role ID in the organization that matches this parameter.
+   * - `organizationRoleId`: Limits search results to only include users whose role ID matches the value of this parameter. This role ID can be qualified by the organization specified by roleOrganizationId.
+   *
+   * - `roleOrganizationId`: Qualifies organizationRoleId to limit search results to only include users who have a matching role ID in the organization that matches this parameter.
    *
    * - `parentOrganizationId`: Limits search results to only include users whose parent organization ID matches the value of this parameter.
    *
@@ -916,7 +921,12 @@ module UsersService {
     roleId?: number;
 
     /**
-     * Qualifies roleId to limit search results to only include users who have a matching role ID in the organization that matches this parameter.
+     * Limits search results to only include users whose role ID matches the value of this parameter. This role ID can be qualified by the organization specified by roleOrganizationId.
+     */
+    organizationRoleId?: number;
+
+    /**
+     * Qualifies organizationRoleId to limit search results to only include users who have a matching role ID in the organization that matches this parameter.
      */
     roleOrganizationId?: string;
 

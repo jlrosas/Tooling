@@ -15,11 +15,11 @@
 		"baseUrl": "",
 		"types": []
 	},
+  "files": [
+    "main.ts",
+    "polyfills.ts"
+  ],
 	"include": [
 		"**/*"
-	],
-	"exclude": [
-		"test.ts",
-		"**/*.spec.ts"
 	]
 }

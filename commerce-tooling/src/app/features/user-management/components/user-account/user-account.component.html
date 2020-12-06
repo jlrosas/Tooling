@@ -36,24 +36,7 @@
 				<input matInput type="text" id="password" formControlName="password" (input)="validatePassword()" [required]="mode==='create'" autocomplete="off">
 				<mat-icon matSuffix (click)="passwordVisible = !passwordVisible" class="action-icon">{{passwordVisible ? 'visibility' : 'visibility_off'}}</mat-icon>
 			</mat-form-field>
-			<mat-checkbox *ngIf="mode === 'create' && hasRolePickerRole && hasStoreSelectRole" formControlName="registeredCustomer"
-					(change)="validateRegisteredCustomer($event)" [checked]="isRegisteredCustomer">
-				{{'USER_MANAGEMENT.IS_THIS_A_REGISTERED_CUSTOMER' | translate}}
-			</mat-checkbox>
-			<mat-form-field *ngIf="isRegisteredCustomer && mode === 'create'" appearance="outline">
-				<mat-label>{{'USER_MANAGEMENT.STORE'| translate}}</mat-label>
-				<input matInput id="store" (input)="searchStores($event.target.value)" placeholder="{{'USER_MANAGEMENT.SELECT_STORE_PLACEHOLDER'| translate}}"
-						formControlName="storeDropdown" [matAutocomplete]="storeAutocomplete" required>
-				<mat-autocomplete #storeAutocomplete="matAutocomplete" (optionSelected)="selectStore($event.option.value)">
-					<mat-option *ngFor="let store of storeList" [value]="store">
-						{{store.identifier}}
-					</mat-option>
-				</mat-autocomplete>
-				<mat-error *ngIf="storeDropdown.errors && storeDropdown.errors.invalidStore">
-					{{'USER_MANAGEMENT.STORE_ERROR' | translate }}
-				</mat-error>
-			</mat-form-field>
-			<mat-form-field appearance="outline" *ngIf="!isRegisteredCustomer && mode === 'create'">
+			<mat-form-field appearance="outline" *ngIf="(!isRegisteredCustomer || isB2BStore) && mode === 'create'">
 				<mat-label>{{'USER_MANAGEMENT.PARENT_ORGANIZATION'| translate}}</mat-label>
 				<input matInput id="parentOrganization"
 						formControlName="parentOrganization"
@@ -81,6 +64,15 @@
 				<mat-label>{{'USER_MANAGEMENT.PARENT_ORGANIZATION'| translate}}</mat-label>
 				<input matInput id="parentOrganization" formControlName="parentOrganization">
 			</mat-form-field>
+			<mat-checkbox *ngIf="isB2BStore && hasBuyerAdminRole" formControlName="buyerAdministrator" (change)="validateBuyerAdministrator($event)">
+				{{'USER_MANAGEMENT.BUYER_ADMINISTRATOR' | translate}}
+			</mat-checkbox>
+			<mat-checkbox *ngIf="isB2BStore && hasBuyerAdminRole" formControlName="buyerApprover" (change)="validateBuyerApprover($event)">
+				{{'USER_MANAGEMENT.BUYER_APPROVER' | translate}}
+			</mat-checkbox>
+			<mat-checkbox *ngIf="isB2BStore && hasBuyerAdminRole" formControlName="buyer" (change)="validateBuyer($event)">
+				{{'USER_MANAGEMENT.BUYER' | translate}}
+			</mat-checkbox>
 			<mat-form-field appearance="outline">
 				<mat-label>{{'USER_MANAGEMENT.ACCOUNT_POLICY'| translate}}</mat-label>
 				<mat-select	id="accountPolicy"

@@ -23,10 +23,17 @@
 				<button class="mat-flat-button mat-primary" (click)="save()">{{'SHIPPING_CODES.SAVE' | translate}}</button>
 			</div>
 		</div>
-		<mat-vertical-stepper #stepper (selectionChange)="handleSelectionChange($event)">
+		<mat-vertical-stepper #stepper (selectionChange)="handleSelectionChange($event)" [selectedIndex]="selectedStep">
+			<ng-template matStepperIcon="edit">
+				<mat-icon>check</mat-icon>
+			</ng-template>
 			<mat-step #detailsStep label="{{'SHIPPING_CODES.SHIPPING_CODE_DETAILS' | translate}}">
 				<hc-shipping-code-details [stepper]="stepper" [step]="detailsStep" mode="edit" (save)="save()">
 				</hc-shipping-code-details>
+			</mat-step>
+			<mat-step *ngIf="productsOrCategories === 'specificProducts'" #productsOrCategories label="{{'SHIPPING_CODES.PRODUCTS_OR_CATEGORIES' | translate}}">
+				<hc-shipping-code-categories *ngIf="stepper.selected === productsOrCategories || selectedStep === 1" [step]="productsOrCategories" mode="edit" (save)="save()">
+				</hc-shipping-code-categories>
 			</mat-step>
 		</mat-vertical-stepper>
 	</div>

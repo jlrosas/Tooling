@@ -21,7 +21,7 @@ import { AlertService } from "../../../../services/alert.service";
 	styleUrls: ["./edit-shipping-charge.component.scss"]
 })
 export class EditShippingChargeComponent {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	constructor(private router: Router,
 			private route: ActivatedRoute,
@@ -45,7 +45,6 @@ export class EditShippingChargeComponent {
 		this.shippingChargeMainService.clearData();
 		this.router.navigate(["shipping-charges", "shipping-charge-list", {
 			storeId: this.route.snapshot.params.storeId,
-			storeOwnerId: this.route.snapshot.params.storeOwnerId,
 			shippingCodeId: this.route.snapshot.params.shippingCodeId
 		}]);
 	}
@@ -76,7 +75,6 @@ export class EditShippingChargeComponent {
 						this.shippingChargeMainService.clearData();
 						this.router.navigate(["shipping-charges", "shipping-charge-list", {
 							storeId: this.route.snapshot.params.storeId,
-							storeOwnerId: this.route.snapshot.params.storeOwnerId,
 							shippingCodeId: this.route.snapshot.params.shippingCodeId
 						}]);
 						this.translateService.get("SHIPPING_CHARGES.SHIPPING_CHARGE_SAVED_MESSAGE").subscribe((message: string) => {

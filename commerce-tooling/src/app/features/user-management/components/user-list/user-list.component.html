@@ -29,10 +29,25 @@
 						<span class="clear-margin">{{'USER_MANAGEMENT.CLEAR' | translate}}</span>
 					</span>
 				</mat-form-field>
+				<mat-form-field appearance="outline" *hcRole="[-1,-3,-4,-12,-14,-21]" appearance="outline" class="store-filter icon-suffix">
+					<mat-label>{{'USER_MANAGEMENT.STORE'| translate}}</mat-label>
+					<input matInput id="store" (input)="searchStores($event.target.value)" placeholder="{{'USER_MANAGEMENT.SELECT_STORE_PLACEHOLDER'| translate}}"
+							formControlName="store" [matAutocomplete]="storeAutocomplete" (blur)="resetSelectedStore()">
+					<mat-autocomplete #storeAutocomplete="matAutocomplete" (optionSelected)="selectStore($event.option.value)">
+						<mat-option *ngFor="let store of storeList" [value]="store">
+							{{store.identifier}}
+						</mat-option>
+					</mat-autocomplete>
+					<span class="filter-clear" *ngIf="selectedStore != null && !storeRequired" (click)="clearStore()">
+						<mat-icon>clear</mat-icon>
+						<span class="clear-margin">{{'USER_MANAGEMENT.CLEAR' | translate}}</span>
+					</span>
+					<mat-icon matSuffix>filter_list</mat-icon>
+				</mat-form-field>
 			</form>
 			<div class="hc-table-buttons">
 				<mat-slide-toggle color="primary" [checked]="showFilters" (change)="toggleShowFilters($event)">{{'USER_MANAGEMENT.SHOW_FILTERS' | translate}}</mat-slide-toggle>
-				<button class="mat-flat-button mat-primary" (click)="createUser()">{{'USER_MANAGEMENT.NEW_BUTTON' | translate}}</button>
+				<button *ngIf="!seller || isB2CStore" class="mat-flat-button mat-primary" (click)="createUser()">{{'USER_MANAGEMENT.NEW_BUTTON' | translate}}</button>
 				<button class="mat-icon-button-label" matTooltip="{{'USER_MANAGEMENT.REFRESH' | translate}}" mat-icon-button (click)="refreshUsers()">
 					<mat-icon color="primary">refresh</mat-icon>
 				</button>
@@ -75,21 +90,6 @@
 							</mat-option>
 						</mat-select>
 					</mat-form-field>
-
-					<mat-form-field appearance="outline" *hcRole="[-1,-3,-4,-12,-14]">
-						<mat-label>{{'USER_MANAGEMENT.STORE'| translate}}</mat-label>
-						<input matInput id="store" (input)="searchStores($event.target.value)" placeholder="{{'USER_MANAGEMENT.SELECT_STORE_PLACEHOLDER'| translate}}"
-								formControlName="storeDropdown" [matAutocomplete]="storeAutocomplete">
-						<mat-autocomplete #storeAutocomplete="matAutocomplete" (optionSelected)="selectStore($event.option.value)">
-							<mat-option *ngFor="let store of storeList" [value]="store">
-								{{store.identifier}}
-							</mat-option>
-						</mat-autocomplete>
-						<span class="filter-clear" *ngIf="storeFilter != null" (click)="clearStore()">
-							<mat-icon>clear</mat-icon>
-							<span class="clear-margin">{{'USER_MANAGEMENT.CLEAR' | translate}}</span>
-						</span>
-					</mat-form-field>
 				</form>
 			</div>
 		</div>
@@ -101,7 +101,8 @@
 				<ng-container matColumnDef="loginId" sticky>
 					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{'USER_MANAGEMENT.LOGIN_ID' | translate}}</th>
 					<td mat-cell *matCellDef="let row">
-						<a [routerLink]="['/users/edit-user', row.id]">{{row.loginId}}</a>
+						<a *ngIf="!seller || isB2CStore" [routerLink]="['/users/edit-user', row.id, {storeId: this.selectedStore ? this.selectedStore.id : 0}]">{{row.loginId}}</a>
+						<span *ngIf="seller && !isB2CStore">{{row.loginId}}</span>
 					</td>
 				</ng-container>
 

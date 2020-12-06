@@ -47,8 +47,8 @@ export class TaxCategoryRateDialogComponent implements OnInit, AfterViewInit {
 	selectedJurisdiction = null;
 	taxRate = null;
 
-	@ViewChild("fulfillmentCenterInput", {static: false}) fulfillmentCenterInput: ElementRef<HTMLInputElement>;
-	@ViewChild("rateInput", {static: false}) rateInput: ElementRef<HTMLInputElement>;
+	@ViewChild("fulfillmentCenterInput") fulfillmentCenterInput: ElementRef<HTMLInputElement>;
+	@ViewChild("rateInput") rateInput: ElementRef<HTMLInputElement>;
 
 	private fulfillmentCenterIds: Array<number> = null;
 	private getFulfillmentCentersSubscription: Subscription = null;

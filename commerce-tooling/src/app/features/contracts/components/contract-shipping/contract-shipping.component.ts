@@ -52,7 +52,7 @@ export class ContractShippingComponent implements OnInit, OnDestroy, AfterViewIn
 	filteredAvailableShippingAddresses = [];
 	shippingAddresses = [];
 
-	@ViewChild("shippingMethodSearchInput", {static: false}) shippingMethodSearchInput: ElementRef<HTMLInputElement>;
+	@ViewChild("shippingMethodSearchInput") shippingMethodSearchInput: ElementRef<HTMLInputElement>;
 
 	private onLanguageChangeSubscription: Subscription = null;
 

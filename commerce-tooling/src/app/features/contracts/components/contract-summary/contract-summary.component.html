@@ -90,6 +90,9 @@
 			</div>
 			<div class="hc-section-container">
 				<p class="hc-section-header">{{'CONTRACTS.PAYMENTS_BILLING' | translate}}</p>
+				<mat-checkbox *ngIf="allowAccountCreditLineCheckVisibility" [checked]="allowAccountCreditLine" [disabled]="true">
+					{{'CONTRACTS.ALLOW_PAYMENT_USING_CREDIT_LINE' | translate}}
+				</mat-checkbox>
 				<div class="bx--row">
 					<div class="bx--col-sm-4 bx--col-md-8 bx--col-lg-12">
 						<div class="hc-column hc-table-section hc-paper-section hc-paper">

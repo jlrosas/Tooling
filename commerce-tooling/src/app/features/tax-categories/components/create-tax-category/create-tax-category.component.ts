@@ -22,7 +22,7 @@ import { AlertService } from "../../../../services/alert.service";
 	styleUrls: ["./create-tax-category.component.scss"]
 })
 export class CreateTaxCategoryComponent {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	constructor(private router: Router,
 			private route: ActivatedRoute,

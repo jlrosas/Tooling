@@ -97,12 +97,6 @@ import { CurrencyService } from "../../services/currency.service";
 	],
 	providers: [
 		CurrencyService
-	],
-	entryComponents: [
-		DeleteShippingChargeDialogComponent,
-		ShippingChargeRangeDialogComponent,
-		ShippingChargeRangeDialogComponent,
-		ShippingChargeFulfillmentOptionDialogComponent
 	]
 })
 export class ShippingChargesModule {}

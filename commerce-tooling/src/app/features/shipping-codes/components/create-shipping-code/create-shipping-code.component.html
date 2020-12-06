@@ -20,13 +20,20 @@
 			</h2>
 			<div>
 				<button class="mat-flat-button" type="button" (click)="cancel()">{{'SHIPPING_CODES.CANCEL' | translate}}</button>
-				<button class="mat-flat-button mat-primary" type="button" (click)="submit()">{{'SHIPPING_CODES.SAVE' | translate}}</button>
+				<button class="mat-flat-button mat-primary" type="button" (click)="submit()">{{'SHIPPING_CODES.FINISH' | translate}}</button>
 			</div>
 		</div>
-		<mat-vertical-stepper [linear]="true" #stepper>
+		<mat-vertical-stepper [linear]="true" #stepper [selectedIndex]="selectedStep">
+			<ng-template matStepperIcon="edit">
+				<mat-icon>check</mat-icon>
+			</ng-template>
 			<mat-step #detailsStep label="{{'SHIPPING_CODES.SHIPPING_CODE_DETAILS' | translate}}">
 				<hc-shipping-code-details [stepper]="stepper" [step]="detailsStep" mode="create" (save)="submit()">
 				</hc-shipping-code-details>
+			</mat-step>
+			<mat-step *ngIf="productsOrCategories === 'specificProducts'" #productsOrCategories label="{{'SHIPPING_CODES.PRODUCTS_OR_CATEGORIES' | translate}}">
+				<hc-shipping-code-categories *ngIf="stepper.selected === productsOrCategories || selectedStep === 1" [step]="productsOrCategories" mode="create" (save)="submit()">
+				</hc-shipping-code-categories>
 			</mat-step>
 		</mat-vertical-stepper>
 	</div>

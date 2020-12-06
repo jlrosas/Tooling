@@ -1,7 +1,8 @@
 {
   "GENERAL": {
     "NO_SELECTION_MADE": "何も選択されていません。",
-    "DISMISS": "破棄"
+    "DISMISS": "破棄",
+    "NO_RECORDS_FOUND": "レコードが見つかりませんでした"
   },
   "USER_MANAGEMENT": {
     "USERS": "ユーザー",
@@ -78,7 +79,7 @@
     "STORE": "ストア",
     "SELECT_STORE_PLACEHOLDER": "ストアの選択",
     "PHONE_NUMBER": "電話番号",
-    "IS_THIS_A_REGISTERED_CUSTOMER": "これは B2C 登録済み顧客ですか?",
+    "IS_THIS_A_REGISTERED_CUSTOMER": "これは登録済み顧客ですか?",
     "SELECT_REGISTERED_CUSTOMER_STORE": "ストアの選択",
     "PREFERRED_LANGUAGE": "使用言語",
     "PREFERRED_CURRENCY": "優先通貨",
@@ -91,7 +92,10 @@
     "CHALLENGE_QUESTION": "確認のための質問",
     "CHALLENGE_ANSWER": "確認のための質問に答える",
     "PARENT_ORGANIZATION_ERROR": "無効な親組織です。",
-    "STORE_ERROR": "ストアが無効です。"
+    "STORE_ERROR": "ストアが無効です。",
+    "BUYER_ADMINISTRATOR": "購入者管理者",
+    "BUYER_APPROVER": "購入者承認者",
+    "BUYER": "購入者"
   },
   "ORGANIZATIONS": {
     "ORGANIZATIONS": "組織",
@@ -279,7 +283,8 @@
     "PHONE_NUMBER": "電話番号",
     "EMPLOYEE_ID": "社員 ID",
     "DISCOUNT": "割引",
-    "TOTAL": "合計"
+    "TOTAL": "合計",
+    "NO_MATCHING_RECORDS_FOUND": "一致するレコードが見つかりませんでした"
   },
   "MEMBER_GROUPS": {
     "GROUPS": "メンバー・グループ",
@@ -525,7 +530,8 @@
     "CHECKING_ACCOUNT_NUMBER": "アカウント番号の確認中",
     "CHECK_ROUTING_NUMBER": "ルーティング番号の確認",
     "PURCHASE_ORDER_NUMBER_NOT_UNIQUE": "購入オーダー番号は既に存在します。",
-    "REFRESH": "リフレッシュ"
+    "REFRESH": "リフレッシュ",
+    "ACTIVE_CONTRACTS_ERROR": "アカウントにアクティブな契約があるため、アカウントは削除できませんでした。アカウントを削除するには、アクティブな契約を中断またはキャンセルしてください。"
   },
   "SCHEDULER": {
     "SCHEDULER": "スケジューラー",
@@ -985,7 +991,8 @@
     "DELETE": "削除",
     "SHIPPING_JURISDICTIONS_DELETED_MESSAGE": "配送管轄区域は正常に削除されました。",
     "NOT_COMPLETE_ERROR": "このページの情報は不完全です。次のステップに進みます。",
-    "DUPLICATE_NAME_ERROR": "配送管轄区域名は既に存在します"
+    "DUPLICATE_NAME_ERROR": "配送管轄区域名は既に存在します",
+    "NO_MATCHING_RECORDS_FOUND": "一致するレコードが見つかりませんでした"
   },
   "SHIPPING_MODES": {
     "SHIPPING_MODES": "配送モード",
@@ -1035,7 +1042,8 @@
     "TRACKING_URL": "配送業者追跡 URL",
     "SET_AS_DEFAULT": "デフォルトに設定",
     "LANGUAGE_ALREADY_EXISTS": "この言語の説明は既に存在します。",
-    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "選択された配送サービスの組み合わせは既に存在します。"
+    "CARRIER_SERVICE_COMBINATION_ALREADY_EXISTS": "選択された配送サービスの組み合わせは既に存在します。",
+    "NO_MATCHING_RECORDS_FOUND": "一致するレコードが見つかりませんでした"
   },
   "SHIPPING_CODES": {
     "SHIPPING_CODES": "配送コード",
@@ -1073,17 +1081,41 @@
     "CHARGES": "料金",
     "SELECT_STORE_PLACEHOLDER": "ストアの選択",
     "SELECTED_STORE": "ストアの選択",
-    "PRODUCT_OR_CATEGORIES": "商品またはカテゴリー",
+    "PRODUCTS_OR_CATEGORIES": "カテゴリーと商品の指定",
     "SELECT_PRODUCT_OR_CATEGORIES": "配送コードに関連付けられている商品またはカテゴリーを選択します。",
     "ALL_PRODUCTS": "すべての商品",
-    "SPECIFIC_PRODUCTS": "特定の商品",
+    "SPECIFIC_CATEGORIES_AND_PRODUCTS": "特定のカテゴリーと商品",
     "CATEGORIES": "カテゴリー",
     "DELETE_SHIPPING_CODE_CONFIRMATION": "'{{name}}' を削除しますか?",
     "SHIPPING_CODE_DELETED_MESSAGE": "配送コードは正常に削除されました。",
     "ACTIVATED": "アクティブ化済み",
     "DEACTIVATED": "非アクティブ化済み",
     "SHIPPING_CODE_ACTIVATED_MESSAGE": "配送コードは正常にアクティブ化されました。",
-    "SHIPPING_CODE_DEACTIVATED_MESSAGE": "配送コードは正常に非アクティブ化されました。"
+    "SHIPPING_CODE_DEACTIVATED_MESSAGE": "配送コードは正常に非アクティブ化されました。",
+    "SELECTED_CATEGORIES": "選択したカテゴリー",
+    "SELECTED_PRODUCTS": "選択した商品",
+    "SKU": "SKU",
+    "CATALOG": "カタログ",
+    "DELETE_SELECTED": "選択の削除",
+    "CLEAR_SELECTION": "選択をクリア",
+    "SELECT_CATEGORIES_AND_PRODUCTS": "カテゴリーと商品の選択",
+    "CATALOG_BROWSER": "カタログ・ブラウザー",
+    "SEARCH_PRODUCTS": "商品検索",
+    "PRODUCTS_SEARCH_BY": "SKU、名前、または短い説明で検索",
+    "VIEW_FULL_LIST": "完全なリストの表示",
+    "SHOWING_ITEM_OF_TOTAL_ITEMS": "{{totalItems}} 個中の {{totalItemsInList}} 個を表示しています",
+    "MORE": "もっと見る",
+    "FILTER_CATALOG": "カタログのフィルター",
+    "NO_MATCHING_RECORDS_FOUND": "一致するレコードが見つかりませんでした",
+    "CATALOG_ERROR": "カタログが無効です",
+    "SELECT_CATEGORY": "カテゴリーの選択",
+    "SELECT_PRODUCT": "商品の選択",
+    "CATEGORY": "カテゴリー",
+    "PRODUCT": "商品",
+    "ADD": "追加",
+    "SHORT_DESCRIPTION": "短い説明",
+    "FILTER": "フィルター",
+    "FILTER_BY_NAME": "名前別にフィルター"
   },
   "SHIPPING_CHARGES": {
     "SHIPPING_CHARGES": "配送料",
@@ -1124,6 +1156,7 @@
     "SHIPPING_CHARGE_START": "開始",
     "SHIPPING_CHARGE_END": "終了",
     "BEFORE_START_DATE": "終了日を開始日より前にすることはできません。",
+    "AFTER_END_DATE": "開始日を終了日より後にすることはできません。",
     "RANGE": "範囲",
     "RANGE_START": "範囲の開始",
     "DELETE_SHIPPING_CHARGE": "配送料の削除",
@@ -1147,6 +1180,7 @@
     "BY_QUANTITY": "数量別",
     "BY_WEIGHT": "重量別",
     "FIXED": "固定",
+    "AMOUNT": "金額",
     "CHARGE": "料金",
     "CURRENCY": "通貨",
     "UNIT_OF_MEASURE": "計量単位",
@@ -1157,12 +1191,17 @@
     "FROM_START_TO_END": "{{start}} ～ {{end}}",
     "FROM_START_AND_UP": "{{start}} 以上",
     "SHIPPING_CHARGE_CREATED_MESSAGE": "配送料 '{{name}}' は正常に作成されました。",
-    "NO_RANGES_ERROR": "少なくとも 1 つの料金範囲を定義する必要があります。"
+    "NO_RANGES_ERROR": "少なくとも 1 つの料金範囲を定義する必要があります。",
+    "NOT_COMPLETE_ERROR": "このページの情報は不完全です。次のステップに進みます。"
   },
   "TRANSPORTS": {
     "TRANSPORTS": "トランスポート",
     "SEARCH": "検索",
     "CLEAR": "クリア",
+    "REFRESH": "リフレッシュ",
+    "STORE_FILTER": "ストア・フィルター",
+    "STATUS_FILTER": "状況フィルター",
+    "SELECT_STORE_PLACEHOLDER": "ストアの選択",
     "ACTIONS": "アクション",
     "NEW_BUTTON": "新規",
     "NEW_TRANSPORT": "新しいトランスポート",
@@ -1183,7 +1222,55 @@
     "DELETE_TRANSPORT": "トランスポートの削除",
     "DELETE": "削除",
     "TRANSPORTS_DELETED_MESSAGE": "トランスポートは正常に削除されました。",
-    "NOT_COMPLETE_ERROR": "このページの情報は不完全です。次のステップに進みます。"
+    "NOT_COMPLETE_ERROR": "このページの情報は不完全です。次のステップに進みます。",
+    "ACTIVE": "アクティブ",
+    "INACTIVE": "非アクティブ",
+    "NAME": "トランスポート名",
+    "STATUS": "状況",
+    "DESCRIPTION_FILTER": "説明フィルター",
+    "SEARCH_BY_DESCRIPTION": "説明で検索",
+    "SEARCH_BY_TRANSPORT": "トランスポート名で検索",
+    "CONFIGURATION": "トランスポートの構成",
+    "CONFIGURATOR": "Sterling",
+    "CONFIGURATOR_DESC": "Sterling 接続設定",
+    "STERLINGOMS": "Sterling OMS",
+    "STERLINGOMS_DESC": "Sterling OMS 接続設定",
+    "DEMANDTECFTP": "DemandTec SFTP",
+    "DEMANDTECFTP_DESC": "DemandTec SFTP 接続設定",
+    "DPEXPORTFTP": "動的価格設定の SFTP エクスポート",
+    "DPEXPORTFTP_DESC": "動的価格設定の SFTP エクスポート接続設定",
+    "DPIMPORTFTP": "動的価格設定の SFTP インポート",
+    "DPIMPORTFTP_DESC": "動的価格設定の SFTP インポート接続設定",
+    "JCAUBX": "UBX 統合",
+    "JCAUBX_DESC": "UBX 統合の構成",
+    "JCAWCH": "前の Watson Content Hub 統合",
+    "JCAWCH_DESC": "前の Watson Content Hub の構成",
+    "COMMERCEFTP": "前の Commerce Insights SFTP",
+    "COMMERCEFTP_DESC": "前の Commerce Insights SFTP 接続設定",
+    "EMAILSENDER": "E メール",
+    "EMAILSENDER_DESC": "E メール送信者",
+    "FILE": "ファイル",
+    "FILE_DESC": "ファイル作成者",
+    "MQ": "IBM MQ",
+    "MQ_DESC": "IBM MQ",
+    "FAX": "FAX",
+    "FAX_DESC": "FAX 送信者",
+    "SMSHTTP": "SMS HTTP",
+    "SMSWS": "SMS Web サービス",
+    "SMSHTTP_DESC": "SMS HTTP アダプター",
+    "SMSWS_DESC": "SMS Web サービス・アダプター",
+    "WEBSERVICES_HTTP": "HTTP を介した Web サービス",
+    "WEBSERVICES_JMS": "JMS を介した Web サービス",
+    "HTTP": "HTTP",
+    "SILVERPOP": "Silverpop",
+    "SILVERPOP_DESC": "Silverpop Transact を使用してトランザクション E メールを送信します",
+    "SAMPLE_CONNECTOR": "サンプル・アダプター",
+    "SAMPLE_CONNECTOR_DESC": "サンプル・アダプター",
+    "DATALOAD_SFTP": "Dataload SFTP",
+    "DATALOAD_SFTP_DESC": "ストア作成データ・ファイル・ストレージ SFTP 接続設定",
+    "SUCCESS_360": "Success360",
+    "SUCCESS_360_DESC": "Success360 統合設定",
+    "NO_PROPERTIES": "このトランスポートには構成プロパティーがありません"
   },
   "MESSAGE_TYPES": {
     "MESSAGE_TYPES": "メッセージ・タイプ",
@@ -1299,7 +1386,8 @@
     "TAX_TYPE_SHIPPING": "配送税",
     "IS_DEFAULT": "はい",
     "SET_AS_DEFAULT": "デフォルトに設定",
-    "DEFAULT_SET_SUCCESS_MESSAGE": "デフォルトの税コードは正常に更新されました。"
+    "DEFAULT_SET_SUCCESS_MESSAGE": "デフォルトの税コードは正常に更新されました。",
+    "CODE_BEING_USED_IN_TAX_CATEGORY": "税コード '{{taxCodeName}}' は削除できません。税カテゴリーで使用されています。"
   },
   "TAX_CATEGORIES": {
     "TAX_CATEGORIES": "税区分",
@@ -1410,6 +1498,7 @@
     "NOT_COMPLETE_ERROR": "このページの情報は不完全です。次のステップに進みます。",
     "DUPLICATE_NAME_ERROR": "税務管轄区域名は既に存在します",
     "JURISDICTION_BEING_USED_IN_TAX_CATEGORY": "管轄区域 '{{jurisdictionName}}' は削除できません。税カテゴリーで使用されています。",
-    "DUPLICATE_COUNTRY_STATE_COMBINATION": "選択された国と都道府県の組み合わせは既に存在します。"
+    "DUPLICATE_COUNTRY_STATE_COMBINATION": "選択された国と都道府県の組み合わせは既に存在します。",
+    "NO_MATCHING_RECORDS_FOUND": "一致するレコードが見つかりませんでした"
   }
 }

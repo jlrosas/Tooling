@@ -25,10 +25,11 @@
 				<input matInput id="lastName" formControlName="lastName" (input)="validateLastName()" required autocomplete="off" [maxlength]="128">
 			</mat-form-field>
 			<mat-form-field appearance="outline">
-				<mat-label>{{'USER_MANAGEMENT.STREET_ADDRESS'| translate}}</mat-label>
+				<mat-label>{{'USER_MANAGEMENT.STREET_ADDRESS_LINE_1'| translate}}</mat-label>
 				<input matInput id="address1" formControlName="address1" (input)="validateAddress1()" required autocomplete="off" [maxlength]="256">
 			</mat-form-field>
 			<mat-form-field appearance="outline">
+				<mat-label>{{'USER_MANAGEMENT.STREET_ADDRESS_LINE_2'| translate}} {{'USER_MANAGEMENT.OPTIONAL' | translate}}</mat-label>
 				<input matInput id="address2" formControlName="address2" (input)="validateAddress2()" autocomplete="off" [maxlength]="128">
 			</mat-form-field>
 

@@ -38,7 +38,7 @@ export class AccountCreditLineComponent implements OnInit, AfterViewInit {
 
 	addressList: Array<any> = [];
 
-	@ViewChild("accountNumberInput", {static: false}) accountNumberInput: ElementRef<HTMLInputElement>;
+	@ViewChild("accountNumberInput") accountNumberInput: ElementRef<HTMLInputElement>;
 
 	constructor(private route: ActivatedRoute,
 			private router: Router,

@@ -143,7 +143,7 @@ export class ContractApprovalSummaryComponent implements OnInit, OnDestroy {
 						id: contract.catalogFilterId,
 						storeId: account.storeId
 					}).subscribe(catalogFilter => {
-						this.catalogFilter = catalogFilter.description;
+						this.catalogFilter = catalogFilter.description ? catalogFilter.description : catalogFilter.name;
 					});
 				}
 				if (contract.priceRuleId) {

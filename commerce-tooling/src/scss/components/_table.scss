@@ -122,6 +122,7 @@
 			flex-direction: row;
 			justify-content: left;
 			align-items: center;
+			max-width: 100%;
 			
 			@include breakpoint-down(sm) {
 				width: 100%;
@@ -207,5 +208,13 @@
 					color: map-get($hc-color-blue, 100);
 			}
 		}
-	}	
+	}
+
+	.no-records {
+		height: 100px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: white;	
+	}
 }

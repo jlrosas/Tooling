@@ -9,10 +9,11 @@
  *-------------------------------------------------------------------
  */
 
-import { Component, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatStepper } from "@angular/material/stepper";
 import { TranslateService } from "@ngx-translate/core";
+import { Subscription } from "rxjs";
 import { ShippingCodeMainService } from "../../services/shipping-code-main.service";
 import { AlertService } from "../../../../services/alert.service";
 
@@ -20,14 +21,34 @@ import { AlertService } from "../../../../services/alert.service";
 	templateUrl: "./create-shipping-code.component.html",
 	styleUrls: ["./create-shipping-code.component.scss"]
 })
-export class CreateShippingCodeComponent {
-	@ViewChild("stepper", {static: false}) stepper: MatStepper;
+export class CreateShippingCodeComponent implements OnInit, OnDestroy {
+	onSelectProductsOrCategoriesSubscription: Subscription = null;
+	productsOrCategories = null;
+	selectedStep = 0;
+	@ViewChild("stepper") stepper: MatStepper;
 
 	constructor(private router: Router,
 			private route: ActivatedRoute,
 			private shippingCodeMainService: ShippingCodeMainService,
 			private alertService: AlertService,
 			private translateService: TranslateService) { }
+
+	ngOnInit() {
+		this.onSelectProductsOrCategoriesSubscription = this.shippingCodeMainService.onSelectProductsOrCategories.subscribe(() => {
+			this.productsOrCategories = this.shippingCodeMainService.shippingCodeData.productsOrCategories;
+		});
+		this.productsOrCategories = this.shippingCodeMainService.shippingCodeData ?
+				this.shippingCodeMainService.shippingCodeData.productsOrCategories : null;
+		if (this.route.snapshot.params.step && this.productsOrCategories) {
+			this.selectedStep = Number(this.route.snapshot.params.step);
+		}
+	}
+
+	ngOnDestroy() {
+		if (this.onSelectProductsOrCategoriesSubscription) {
+			this.onSelectProductsOrCategoriesSubscription.unsubscribe();
+		}
+	}
 
 	cancel() {
 		this.alertService.clear();
@@ -62,13 +83,26 @@ export class CreateShippingCodeComponent {
 			});
 			if (!pending) {
 				if (valid && completedMandatorySteps >= 0) {
-					this.shippingCodeMainService.createShippingCode().subscribe(name => {
-						this.shippingCodeMainService.clearData();
-						this.router.navigate(["shipping-codes", "shipping-code-list", {storeId: this.route.snapshot.params.storeId}]);
-						this.translateService.get("SHIPPING_CODES.SHIPPING_CODE_CREATED_MESSAGE", {name}).subscribe((message: string) => {
-							this.alertService.success({message});
+					const {
+						shippingCodeData: {productsOrCategories},
+						selectedCategories,
+						selectedProducts
+					} = this.shippingCodeMainService;
+					const isSelectionAvailableToSave = selectedCategories?.length > 0 || selectedProducts?.length > 0;
+					const allowSave = productsOrCategories === "specificProducts" ? isSelectionAvailableToSave : true;
+					if (allowSave) {
+						this.shippingCodeMainService.createShippingCode().subscribe(name => {
+							this.shippingCodeMainService.clearData();
+							this.router.navigate(["shipping-codes", "shipping-code-list", {storeId: this.route.snapshot.params.storeId}]);
+							this.translateService.get("SHIPPING_CODES.SHIPPING_CODE_CREATED_MESSAGE", {name}).subscribe((message: string) => {
+								this.alertService.success({message});
+							});
 						});
-					});
+					} else {
+						this.translateService.get("SHIPPING_CODES.CATEGORY_OR_PRODUCT_NOT_SELECTED").subscribe((message: string) => {
+							this.alertService.error({message, clear: true});
+						});
+					}
 				} else if (!valid) {
 					this.translateService.get("SHIPPING_CODES.INPUT_ERROR").subscribe((message: string) => {
 						this.alertService.error({message, clear: true});
